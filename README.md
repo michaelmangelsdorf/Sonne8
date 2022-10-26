@@ -23,7 +23,16 @@ The assembled development kit i.e. hardware portion of this project:
 
 ![CPU board](https://github.com/Dosflange/Sonne/blob/main/board_ready.jpg)
 
-== Address space
+### Address space
 
 The address space of this CPU is unusual. Eight bits give you 256 address places. The first 128 places form a region, which can be switched to point to another memory segment ("bank switching"). The next 64 places after that are fixed (for global variables). The remaining 64 places form a region again, which can be switched out to point to another memory segment (for local variables).
+
+### Instruction format
+
+There are four types of instructions. (1) The high order four bits of the instruction word are 0000: These are sixteen "signal" instructions that take no operands. (2) The high order bit is zero, but bits 4-6 are not all zero: These are register-to-register transfers, where bits 4-6 encode the source register, bits 0-3 encode the target register. (3) The high order bit is one, bit 6 is 0: These are micro-calls, where bits 0-5 encode the call-target. (4) Bits 6 and 7 or both one: These are register-to-memory transfers, from the two accumulator registers to the first 8 bytes of the global or local memory section, respectively.
+
+
+
+
+
 
