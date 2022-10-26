@@ -23,3 +23,7 @@ The assembled development kit i.e. hardware portion of this project:
 
 ![CPU board](https://github.com/Dosflange/Sonne/blob/main/board_ready.jpg)
 
+== Address space
+
+The address space of this CPU is unusual. Eight bits give you 256 address places. The first 128 places form a region, which can be switched to point to another memory segment ("bank switching"). The next 64 places after that are fixed (for global variables). The remaining 64 places form a region again, which can be switched out to point to another memory segment (for local variables).
+
