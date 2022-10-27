@@ -42,6 +42,8 @@ L stands for literal. It's a pseudo-register that can only be a source in regist
 M is a pseudo-register. Reading or writing it transfers between memory and a register operand.
 By default, the G register holds the byte offset to which reading from or writing to M will go in memory. The G register can be forced to take on this role by executing the SETG signal. The SETA signal switches to register A to provide the byte offset.
 
+The CLIP signal restores the previously held value of G. Writing to G places the current value into a buffer register, before it is overwritten. G is the default address register. It is enabled (a) on reset, (b) when writing to G, (c) when branching or calling, (d) upon a memory transfer, when SETG is executed. G is not active after the SETA signal until the next of the aforementioned events.
+
 ### R
 
 The R register holds the bank prefix of the 128 byte "row" region from 0-127 of the address space. Changing R switches all 128 bytes simultaneously by address mapping.
@@ -60,13 +62,14 @@ Q and A are two accumulator registers. These are the two input operands connecte
 
 ### U, V, S, P
 
-Each bit in the U and V registers selects an implementation specific IO device. Writing to P transfers a value onto the tri-state IO bus. Reading from P transfers a value from the IO-bus. Use the OFF signal to tri-state the bus. Writing to P removes the tri-state.
+Each bit in the U and V registers selects an implementation specific IO device (for example SPI device select etc). Writing to P transfers a value onto the tri-state IO bus. Reading from P transfers a value from the IO-bus. Use the OFF signal to tri-state the bus. Writing to P removes the tri-state.
 
-Writing to the S register prepares the transfered byte for serialization. The CSO signal ("clock serial out") shifts out one bit on the MOSI line. Reading from S yields the currently deserialized byte in the shift-register. The CSI signal ("clock serial in") shift in one bit from the MISO line. The SCH and SCL signals respectively toggle the serial master clock high or low.
-
-
+Writing to the S register prepares the transfered byte for serialization. The CSO signal ("clock serial out") shifts out one bit on the MOSI line. Reading from S yields the currently deserialized byte in the shift-register. The CSI signal ("clock serial in") shifts in one bit from the MISO line. The SCH and SCL signals respectively toggle the serial master clock high or low.
 
 
+## Leave and Enter
+
+The LEAVE signal increments the local address prefix. The ENTER signal decrements the local address prefix. These instructions create and destroy a local variable frame of 64 bytes, respectively.
 
 
 
