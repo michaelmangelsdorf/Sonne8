@@ -76,6 +76,7 @@ The LEAVE signal increments the local address prefix. The ENTER signal decrement
 
 ALU instruction words (to be written to the F register) are bytes. The low order 4 bits encode the following 16 instructions:
 
+```
 0 IDQ ("Identity Q" / OP:=Q) DEFAULT (!)
 1 IDA ("Identity A" / OP:=A)
 2 OCQ ("Ones Complement Q" / OP:=~Q)
@@ -84,15 +85,18 @@ ALU instruction words (to be written to the F register) are bytes. The low order
 5 SLA ("Shift left A" / OP:=A<<1)
 6 SRQ ("Shift right arithmetic Q" / OP:=Q>>1)
 7 SRA ("Shift right arithmetic A" / OP:=A>>1)
+```
 
- 8 AND (OP:=Q&A)
- 9 IOR (OP:=Q|A)
+```
+8  AND (OP:=Q&A)
+9  IOR (OP:=Q|A)
 10 EOR (OP:=Q^A)
 11 ADD ("Add" / OP:=Q+A, bits 0-7)
 12 CYF ("Carry Flag" / OP:= Carry, 9th bit of Q+A) 00h or 01h
 13 QLA ("Flag: Q less than P" / OP:= (Q<A)? 0xFF:0
 14 QEA ("Flag: Q equals A" / OP := (Q==A)? 0xFF:0
 15 QGA ("Flag: Q greater than A" / OP:= (Q>A)? 0xFF:0
+```
 
 (C>=A use CLA+1 etc.)
 
