@@ -77,17 +77,14 @@ The LEAVE signal increments the local address prefix. The ENTER signal decrement
 ALU instruction words (to be written to the F register) are bytes. The low order 4 bits encode the following 16 instructions:
 
 ```
-0 IDQ ("Identity Q" / OP:=Q) DEFAULT (!)
-1 IDA ("Identity A" / OP:=A)
-2 OCQ ("Ones Complement Q" / OP:=~Q)
-3 OCA ("Ones Complement A" / OP:=~A)
-4 SLQ ("Shift left Q" / OP:=Q<<1)
-5 SLA ("Shift left A" / OP:=A<<1)
-6 SRQ ("Shift right arithmetic Q" / OP:=Q>>1)
-7 SRA ("Shift right arithmetic A" / OP:=A>>1)
-```
-
-```
+0  IDQ ("Identity Q" / OP:=Q) DEFAULT (!)
+1  IDA ("Identity A" / OP:=A)
+2  OCQ ("Ones Complement Q" / OP:=~Q)
+3  OCA ("Ones Complement A" / OP:=~A)
+4  SLQ ("Shift left Q" / OP:=Q<<1)
+5  SLA ("Shift left A" / OP:=A<<1)
+6  SRQ ("Shift right arithmetic Q" / OP:=Q>>1)
+7  SRA ("Shift right arithmetic A" / OP:=A>>1)
 8  AND (OP:=Q&A)
 9  IOR (OP:=Q|A)
 10 EOR (OP:=Q^A)
@@ -97,8 +94,6 @@ ALU instruction words (to be written to the F register) are bytes. The low order
 14 QEA ("Flag: Q equals A" / OP := (Q==A)? 0xFF:0
 15 QGA ("Flag: Q greater than A" / OP:= (Q>A)? 0xFF:0
 ```
-
-(C>=A use CLA+1 etc.)
 
 The high order 4 bits hold a signed 3 bit offset which is added to the ALU result. The default ALU operation is "IDQ+0".
 
