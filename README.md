@@ -96,4 +96,4 @@ ALU instruction words (to be written to the F register) are bytes. The low order
 ```
 
 The high order 4 bits hold a signed 3 bit offset which is added to the ALU result. The default ALU operation is "IDQ+0".
-
+Read ALU results from the F register.
