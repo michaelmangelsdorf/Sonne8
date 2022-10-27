@@ -39,7 +39,7 @@ L stands for literal. It's a pseudo-register that can only be a source in regist
 
 ### A, G and M
 
-M is a pseudo-register. Reading or writing it transfers between memory and register operand.
+M is a pseudo-register. Reading or writing it transfers between memory and a register operand.
 By default, the G register holds the byte offset to which reading from or writing to M will go in memory. The G register can be forced to take on this role by executing the SETG signal. The SETA signal switches to register A to provide the byte offset.
 
 ### R
@@ -53,6 +53,18 @@ These are pseudo-registers, that can only occur as register-targets in transfers
 ### C, X, Y
 
 The C register is a pseudo register, that can only occur as a register-target in transfers. Transfering a value to C executes a subroutine call. The "branch" get's stored in T, the byte offset for instruction fetches within that "branch" gets stored in X. By writing values into X and Y, the return address can be redirected. The RET signal returns from the subroutine, by restoring the "branch" and byte offset from X and Y. The PULL signal transfers the current X into A, and the current Y into R.
+
+### Q, A, F
+
+Q and A are two accumulator registers. These are the two input operands connected to the ALU (Arithmetic-Logic Unit). F stands for Function. Writing an ALU opcode to F computes the respective function. Reading from F yields the result. Reading from F has the side effect of restoring the default function ("Value of Q"). So in the default state, reading from F is the same as reading Q.
+
+### U, V, S, P
+
+Each bit in the U and V registers selects an implementation specific IO device. Writing to P transfers a value onto the tri-state IO bus. Reading from P transfers a value from the IO-bus. Use the OFF signal to tri-state the bus. Writing to P removes the tri-state.
+
+Writing to the S register prepares the transfered byte for serialization. The CSO signal ("clock serial out") shifts out one bit on the MOSI line. Reading from S yields the currently deserialized byte in the shift-register. The CSI signal ("clock serial in") shift in one bit from the MISO line. The SCH and SCL signals respectively toggle the serial master clock high or low.
+
+
 
 
 
