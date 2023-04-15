@@ -42,7 +42,7 @@ L stands for literal. It's a pseudo-register that can only be a source in regist
 M is a pseudo-register. Reading or writing it transfers between memory and a register operand.
 By default, the G register holds the byte offset to which reading from or writing to M will go in memory. The G register can be forced to take on this role by executing the SETG signal. The SETA signal switches to register A to provide the byte offset.
 
-The CLIP signal restores the previously held value of G. Writing to G places the current value into a buffer register, before it is overwritten. G is the default address register. It is enabled (a) on reset, (b) when writing to G, (c) when branching or calling, (d) upon a memory transfer, when SETG is executed. G is not active after the SETA signal until the next of the aforementioned events.
+The CLIP signal restores the previously held value of G. Writing to G places the current value into a buffer register, before it is overwritten. G is the default address register upon reset.
 
 ### R
 
@@ -58,7 +58,7 @@ The C register is a pseudo register, that can only occur as a register-target in
 
 ### Q, A, F
 
-Q and A are two accumulator registers. These are the two input operands connected to the ALU (Arithmetic-Logic Unit). F stands for Function. Writing an ALU opcode to F computes the respective function. Reading from F yields the result. Reading from F has the side effect of restoring the default function ("Value of Q"). So in the default state, reading from F is the same as reading Q.
+Q and A are two accumulator registers. These are the two input operands connected to the ALU (Arithmetic-Logic Unit). F stands for Function. Writing an ALU opcode to F computes the respective function. Reading from F yields the result.
 
 ### U, V, S, P
 
