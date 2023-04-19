@@ -69,7 +69,7 @@ Writing to the S (Serial) register puts that byte into a shift-register for seri
 
 ## Leave and Enter
 
-The LEAVE signal increments the local address prefix. This causes the final 64-bytes ("local" segment) of the address space to point to the previous stack frame. The ENTER signal decrements the local address prefix, causing the next stack frame to appear in the "local" segment.
+The LEAVE signal increments the local address prefix. This causes the final 64-bytes ("local" segment) of the address space to point to the previous stack frame. The ENTER signal decrements the local address prefix, causing a new stack frame to appear in the "local" segment.
 
 ## ALU instructions
 
