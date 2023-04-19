@@ -62,9 +62,9 @@ Q and A are two accumulator registers. These are the two input operands connecte
 
 ### U, V, S, P
 
-Each bit in the U and V registers selects an implementation specific IO device (for example SPI device select etc). Writing to P transfers a value onto the tri-state IO bus. Reading from P transfers a value from the IO-bus. Use the OFF signal to tri-state the bus. Writing to P removes the tri-state.
+Each bit in the U and V registers selects an implementation specific IO device (for example SPI device select etc). Writing to P (Parallel) transfers a byte onto the tri-state IO bus. Reading from P transfers a byte from the IO-bus. Use the OFF signal to tri-state the bus. Writing to P also removes the tri-state.
 
-Writing to the S register prepares the transfered byte for serialization. The CSO signal ("clock serial out") shifts out one bit on the MOSI line. Reading from S yields the currently deserialized byte in the shift-register. The CSI signal ("clock serial in") shifts in one bit from the MISO line. The SCH and SCL signals respectively toggle the serial master clock high or low.
+Writing to the S (Serial) register puts that byte into a shift-register for serialization. The CSO signal ("clock serial out") shifts out one bit on the MOSI line. Reading from S yields the currently deserialized byte in the shift-register. The CSI signal ("clock serial in") shifts in one bit from the MISO line. The SCH and SCL signals respectively toggle the serial master clock high or low.
 
 
 ## Leave and Enter
