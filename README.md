@@ -66,6 +66,10 @@ Each bit in the U and V registers selects an implementation specific IO device (
 
 Writing to the S (Serial) register puts that byte into a shift-register for serialization. The CSO signal ("clock serial out") shifts out one bit on the MOSI line. Reading from S yields the currently deserialized byte in the shift-register. The CSI signal ("clock serial in") shifts in one bit from the MISO line. The SCH and SCL signals respectively toggle the serial master clock high or low.
 
+## Global and Local regions
+
+Addresses 128-135 are referred to as G0-G7 (G for global) in the assembler mnemonic for register-memory transfer instructions.
+Addresses 192-199 are referred to as L0-L7 (L for local) in the assembler mnemonic for register-memory transfer instructions.
 
 ## Leave and Enter
 
