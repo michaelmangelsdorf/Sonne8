@@ -69,8 +69,7 @@ Writing to the S (Serial) register puts that byte into a shift-register for seri
 
 ## Leave and Enter
 
-The LEAVE signal increments the local address prefix. The ENTER signal decrements the local address prefix. These instructions create and destroy a local variable frame of 64 bytes, respectively.
-
+The LEAVE signal increments the local address prefix. This causes the final 64-bytes ("local" segment) of the address space to point to the previous stack frame. The ENTER signal decrements the local address prefix, causing the next stack frame to appear in the "local" segment.
 
 ## ALU instructions
 
@@ -95,7 +94,7 @@ ALU instruction words (to be written to the F register) are bytes. The low order
 15 QGA ("Flag: Q greater than A" / OP:= (Q>A)? 0xFF:0
 ```
 
-The high order 4 bits hold a signed 3 bit offset which is added to the ALU result. In the assembly language, these mnemonics can be followed by an optional number term, such as IDQ+2, SLA+1 etc. The default ALU operation is "IDQ+0".
+The high order 4 bits hold a signed 3 bit offset which is added to the ALU result. In the assembly language, these mnemonics can be followed by an optional number term, such as IDQ+2, SLA+1 etc. The default ALU operation on reset is "IDQ+0".
 Read ALU results from the F register.
 
 
