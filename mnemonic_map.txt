@@ -23,10 +23,10 @@ XFER	14h		RET			Scrounge return
 XFER	15h		LF			Set ALU function L
 XFER	16h		LS			Copy L into S
 XFER	17h		LP			Copy L into P
-XFER	18h		LB			Branch to L
-XFER	19h		LT			Branch to L if F not zero
-XFER	1Ah		LE			Branch to L if F zero
-XFER	1Bh		LC			Call L
+XFER	18h		LB			Branch to L (B=branch)
+XFER	19h		LT			Branch to L if F not zero (T=Then)
+XFER	1Ah		LE			Branch to L if F zero (E=Else)
+XFER	1Bh		LC			Call L (C=Call)
 XFER	1Ch		LX			Copy L into X
 XFER	1Dh		LY			Copy L into Y
 XFER	1Eh		LU			Copy L into U
