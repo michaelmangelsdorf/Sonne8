@@ -127,7 +127,7 @@ XFER	7Ch		PX			Copy P into X
 XFER	7Dh		PY			Copy P into Y
 XFER	7Eh		PU			Copy P into U
 XFER	7Fh		PV			Copy P into V
-TRAP	80h		T00h
+TRAP	80h		T00h    (Trap call to address 00h)
 TRAP	81h		T01h
 TRAP	82h		T02h
 TRAP	83h		T03h
