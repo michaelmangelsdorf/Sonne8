@@ -23,11 +23,20 @@ The assembled development kit i.e. hardware portion of this project:
 
 ![CPU board](https://github.com/Dosflange/Sonne/blob/main/board_ready.jpg)
 
-### Address space
+## Address space
 
 The address space of this CPU is unusual. Eight bits give you 256 address places. The first 128 places form a region, which can be switched to point to another memory segment ("bank switching"). The next 64 places after that are fixed (for global variables). The remaining 64 places form a region again, which can be switched out to point to another memory segment (for local variables).
 
-### Instruction format
+### Global and Local regions
+
+Addresses 128-135 are referred to as G0-G7 (G for global) in the assembler mnemonic for register-memory transfer instructions.
+Addresses 192-199 are referred to as L0-L7 (L for local) in the assembler mnemonic for register-memory transfer instructions.
+
+### Leave and Enter
+
+The LEAVE signal increments the local address prefix. This causes the final 64-bytes ("local" segment) of the address space to point to the previous stack frame. The ENTER signal decrements the local address prefix, causing a new stack frame to appear in the "local" segment.
+
+## Instruction format
 
 There are four types of instructions. (1) The high order four bits of the instruction word are all zero: These are sixteen "signal" instructions that take no operands, where the signal is encoded in bits 0-3. (2) The high order bit is zero, but bits 4-6 are not all zero: These are register-to-register transfers, where bits 4-6 encode the source register, bits 0-3 encode the target register. (3) The high order bit is one, bit 6 is 0: These are micro-calls, where bits 0-5 encode the call-target. (4) Bits 6 and 7 or both one: These are register-to-memory transfers, from the two accumulator registers to the first 8 bytes of the global or local memory section, where bit 5 encodes which register it is, bit 4 encodes global or local, bit 3 is whether it's load or store, and bits 0-2 encode the address offset. (See the opcode_matrix file in the repo for details.)
 
@@ -117,14 +126,6 @@ ALU instruction words (to be written to the F register) are bytes. The low order
 The high order 4 bits hold a signed 3 bit offset which is added to the ALU result. In the assembly language, these mnemonics can be followed by an optional number term, such as IDQ+2, SLA+1 etc. The default ALU operation on reset is "IDQ+0".
 Read ALU results from the F register.
 
-## Global and Local regions
-
-Addresses 128-135 are referred to as G0-G7 (G for global) in the assembler mnemonic for register-memory transfer instructions.
-Addresses 192-199 are referred to as L0-L7 (L for local) in the assembler mnemonic for register-memory transfer instructions.
-
-## Leave and Enter
-
-The LEAVE signal increments the local address prefix. This causes the final 64-bytes ("local" segment) of the address space to point to the previous stack frame. The ENTER signal decrements the local address prefix, causing a new stack frame to appear in the "local" segment.
 
 ## IO
 
