@@ -135,6 +135,13 @@ Each bit in the U and V registers selects an implementation specific IO device (
 
 Writing to the S (Serial) register puts that byte into a shift-register for serialization. The CSO signal ("clock serial out") shifts out one bit on the MOSI line. Reading from S yields the currently deserialized byte in the shift-register. The CSI signal ("clock serial in") shifts in one bit from the MISO line. The SCH and SCL signals respectively toggle the serial master clock high or low.
 
+The serial interface facilitates serial communication between the CPU and external devices.
+The S (Serial) register acts as a shift register, allowing data to be transmitted or received bit by bit.
+The CSI (Clock Serial In) instruction clocks the serial input shift register, reading in data.
+The CSO (Clock Serial Out) instruction clocks the serial output shift register, sending out data.
+Device Selection:
+The U and V registers are involved in device selection for serial or parallel communication.
+By setting specific bit patterns in the U or V registers, the CPU can select specific devices connected to the bus for communication.
 
 ### Parallel IO
 
