@@ -117,12 +117,6 @@ ALU instruction words (to be written to the F register) are bytes. The low order
 The high order 4 bits hold a signed 3 bit offset which is added to the ALU result. In the assembly language, these mnemonics can be followed by an optional number term, such as IDQ+2, SLA+1 etc. The default ALU operation on reset is "IDQ+0".
 Read ALU results from the F register.
 
-### U, V, S, P
-
-Each bit in the U and V registers selects an implementation specific IO device (for example SPI device select etc). Writing to P (Parallel) transfers a byte onto the tri-state IO bus. Reading from P transfers a byte from the IO-bus. Use the OFF signal to tri-state the bus. Writing to P also removes the tri-state.
-
-Writing to the S (Serial) register puts that byte into a shift-register for serialization. The CSO signal ("clock serial out") shifts out one bit on the MOSI line. Reading from S yields the currently deserialized byte in the shift-register. The CSI signal ("clock serial in") shifts in one bit from the MISO line. The SCH and SCL signals respectively toggle the serial master clock high or low.
-
 ## Global and Local regions
 
 Addresses 128-135 are referred to as G0-G7 (G for global) in the assembler mnemonic for register-memory transfer instructions.
@@ -132,16 +126,23 @@ Addresses 192-199 are referred to as L0-L7 (L for local) in the assembler mnemon
 
 The LEAVE signal increments the local address prefix. This causes the final 64-bytes ("local" segment) of the address space to point to the previous stack frame. The ENTER signal decrements the local address prefix, causing a new stack frame to appear in the "local" segment.
 
-##IO
+## IO
 
-###Parallel IO
+### U, V, S, P
+
+Each bit in the U and V registers selects an implementation specific IO device (for example SPI device select etc). Writing to P (Parallel) transfers a byte onto the tri-state IO bus. Reading from P transfers a byte from the IO-bus. Use the OFF signal to tri-state the bus. Writing to P also removes the tri-state.
+
+Writing to the S (Serial) register puts that byte into a shift-register for serialization. The CSO signal ("clock serial out") shifts out one bit on the MOSI line. Reading from S yields the currently deserialized byte in the shift-register. The CSI signal ("clock serial in") shifts in one bit from the MISO line. The SCH and SCL signals respectively toggle the serial master clock high or low.
+
+
+### Parallel IO
 
 Parallel Interface:
 The parallel interface enables communication between the CPU and external devices using a parallel bus.
 The P (Parallel) register is used for data transfer. Reading from the P register retrieves a byte value from the parallel bus, and writing to it sends a byte value onto the bus.
 The OFF instruction can be used to tristate the parallel bus, disabling its output when necessary.
 
-###Serial IO
+### Serial IO
 
 The Serial Peripheral Interface (SPI) protocol can be implemented using the Sonne processor's instructions, including SCL, SCH, CSI, and CSO, along with proper configuration of control signals. Here's a description of how the SPI protocol can be implemented with the Sonne instructions:
 
@@ -174,7 +175,7 @@ After communication, clear the bit pattern in the U or V register to deselect th
 By combining the SCL, SCH, CSI, and CSO instructions along with appropriate configuration of the control signals, the Sonne processor can effectively implement the SPI protocol. This allows for synchronized and controlled data transfer with SPI-compatible devices, including the flexibility to configure CPOL, CPHA, and SS signals to meet the specific requirements of the SPI interface.
 
 
-##Trap calls
+## Trap calls
 
 When a TRAP instruction is encountered during program execution, it triggers a transparent subroutine call to a user-defined TRAP handler routine. This handler routine acts as the implementation of the custom instruction, enabling the execution of specialized operations that go beyond the capabilities of the standard built-in instructions.
 
