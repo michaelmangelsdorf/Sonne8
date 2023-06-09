@@ -226,7 +226,7 @@ An example of an XFER mnemonic following this format is "aG3g", which denotes a 
 
 ### Examples
 
-The mnemonic "aG3g" would mean:
+The mnemonic "aG3g" ("a G3 get") would mean:
 
 "a": Register A is the target of the operation.
 "G": Global memory is being used.
