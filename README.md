@@ -44,6 +44,19 @@ By default, the G register holds the byte offset to which reading from or writin
 
 The CLIP signal restores the previously held value of G. Writing to G places the current value into a buffer register, before it is overwritten. G is the default address register upon reset.
 
+G Register and A Register (Memory Addressing):
+
+The G register and A register are both involved in memory addressing operations in the Sonne CPU.
+The G register holds a byte offset that, when combined with the frame value stored in the R register, forms the effective memory address for instruction fetches.
+
+An internal flag determines whether A or G is used as the byte offset during data access memory operations.
+SETA Instruction:
+The SETA instruction is used to set the internal flag to that the A register should be used as the byte offset during data access memory operations. The PULL instruction does this as a side-effect.
+
+When executing SETG or during a reset, the internal bit is flipped, indicating that G should be used as the byte offset during data access memory operations.
+This ensures that the byte offset is provided by the G register for memory addressing.
+By toggling the "AGToggle" hardware bit using instructions like SETA, PULL, SETG, and during reset, the Sonne CPU can determine whether the A or G register is 
+
 ### R
 
 The R register holds the bank prefix of the 128 byte "row" region from 0-127 of the address space. Changing R switches all 128 bytes simultaneously by address mapping.
@@ -60,22 +73,25 @@ The C register is a pseudo register, that can only occur as a register-target in
 
 Q and A are two accumulator registers. These are the two input operands connected to the ALU (Arithmetic-Logic Unit). F stands for Function. Writing an ALU opcode to F computes the respective function. Reading from F yields the result.
 
-### U, V, S, P
+A and Q are not readable directly. The intended way is to execute one of the identity functions of the ALU, IDA or IDQ.
 
-Each bit in the U and V registers selects an implementation specific IO device (for example SPI device select etc). Writing to P (Parallel) transfers a byte onto the tri-state IO bus. Reading from P transfers a byte from the IO-bus. Use the OFF signal to tri-state the bus. Writing to P also removes the tri-state.
+To prepare ALU input values, program the ALU, and retrieve the result, the following steps are typically involved:
 
-Writing to the S (Serial) register puts that byte into a shift-register for serialization. The CSO signal ("clock serial out") shifts out one bit on the MOSI line. Reading from S yields the currently deserialized byte in the shift-register. The CSI signal ("clock serial in") shifts in one bit from the MISO line. The SCH and SCL signals respectively toggle the serial master clock high or low.
+Load Operand Values: The input values for the ALU operation need to be loaded into the A and Q registers. This can be done by transferring values from memory or other registers to the A and Q registers using appropriate transfer instructions.
+Set ALU Opcode: Determine the specific ALU operation you want to perform and set the corresponding ALU opcode. The ALU opcode is written to the F register, which programs the ALU to perform the desired operation.
+Execute ALU Operation: Trigger the execution of the ALU operation by performing an ALU instruction that uses the A and Q registers as source operands and the F register as the target. The ALU will perform the specified operation on the input operands and store the result in the F register.
+Retrieve Result: After the ALU operation is executed, the result will be stored in the F register. Retrieve the result from the F register for further processing or storing in memory if needed.
+These steps ensure that the input values are properly prepared, the ALU is programmed with the desired operation, the ALU operation is executed, and the result is retrieved for subsequent use or storage.
 
-## Global and Local regions
+In Sonne, the F register functions differently depending on whether it is used as an input register or when it is read from. This distinction is important and can be easily overlooked.
 
-Addresses 128-135 are referred to as G0-G7 (G for global) in the assembler mnemonic for register-memory transfer instructions.
-Addresses 192-199 are referred to as L0-L7 (L for local) in the assembler mnemonic for register-memory transfer instructions.
+When the F register is used as an input register, it serves as a parameter to program the ALU's operation. The value written to the F register determines the specific ALU opcode, which in turn determines the arithmetic or logical operation to be performed. It essentially configures the ALU's behavior for the subsequent operation.
 
-## Leave and Enter
+On the other hand, when the F register is read from, it holds the most recent result produced by the ALU. This result reflects the outcome of the operation executed using the previously programmed ALU opcode. In this context, the F register acts as a storage location for the ALU result, allowing it to be accessed by subsequent instructions or transferred to other registers.
 
-The LEAVE signal increments the local address prefix. This causes the final 64-bytes ("local" segment) of the address space to point to the previous stack frame. The ENTER signal decrements the local address prefix, causing a new stack frame to appear in the "local" segment.
+This distinction highlights the dual role of the F register in Sonne: as a configuration parameter for the ALU when written to, and as a storage location for the ALU result when read from. It is important to understand this behavior to properly utilize the ALU and interpret the effects of instructions involving the F register.
 
-## ALU instructions
+### ALU instructions
 
 ALU instruction words (to be written to the F register) are bytes. The low order 4 bits encode the following 16 instructions:
 
@@ -100,6 +116,73 @@ ALU instruction words (to be written to the F register) are bytes. The low order
 
 The high order 4 bits hold a signed 3 bit offset which is added to the ALU result. In the assembly language, these mnemonics can be followed by an optional number term, such as IDQ+2, SLA+1 etc. The default ALU operation on reset is "IDQ+0".
 Read ALU results from the F register.
+
+### U, V, S, P
+
+Each bit in the U and V registers selects an implementation specific IO device (for example SPI device select etc). Writing to P (Parallel) transfers a byte onto the tri-state IO bus. Reading from P transfers a byte from the IO-bus. Use the OFF signal to tri-state the bus. Writing to P also removes the tri-state.
+
+Writing to the S (Serial) register puts that byte into a shift-register for serialization. The CSO signal ("clock serial out") shifts out one bit on the MOSI line. Reading from S yields the currently deserialized byte in the shift-register. The CSI signal ("clock serial in") shifts in one bit from the MISO line. The SCH and SCL signals respectively toggle the serial master clock high or low.
+
+## Global and Local regions
+
+Addresses 128-135 are referred to as G0-G7 (G for global) in the assembler mnemonic for register-memory transfer instructions.
+Addresses 192-199 are referred to as L0-L7 (L for local) in the assembler mnemonic for register-memory transfer instructions.
+
+## Leave and Enter
+
+The LEAVE signal increments the local address prefix. This causes the final 64-bytes ("local" segment) of the address space to point to the previous stack frame. The ENTER signal decrements the local address prefix, causing a new stack frame to appear in the "local" segment.
+
+##IO
+
+###Parallel IO
+
+Parallel Interface:
+The parallel interface enables communication between the CPU and external devices using a parallel bus.
+The P (Parallel) register is used for data transfer. Reading from the P register retrieves a byte value from the parallel bus, and writing to it sends a byte value onto the bus.
+The OFF instruction can be used to tristate the parallel bus, disabling its output when necessary.
+
+###Serial IO
+
+The Serial Peripheral Interface (SPI) protocol can be implemented using the Sonne processor's instructions, including SCL, SCH, CSI, and CSO, along with proper configuration of control signals. Here's a description of how the SPI protocol can be implemented with the Sonne instructions:
+
+In addition to the serial input and output shift registers, the Sonne processor utilizes the U and V registers for device selection and deselection in serial communication.
+
+Here's an expanded summary of the serial communication capabilities of Sonne, including the roles of U and V:
+
+Device Selection: Before communicating with a specific device connected to the serial bus, the corresponding bit pattern representing the device must be set in either the U or V register. This selection process ensures that the desired device is enabled for communication.
+Data Transmission: To transmit data to the selected device, the processor loads the data to be sent into a register or memory location. The CSO (Clock Serial Out) instruction is then executed, which clocks the serial output shift register. As each bit is shifted out, it is sent to the selected device through the serial bus.
+Device Deselection: After data transmission is complete, the selected device needs to be deselected to allow other devices to communicate on the bus. This is done by clearing the bit pattern in the U or V register corresponding to the device. Deselecting the device prevents further communication with it.
+Data Reception: To receive data from an external device, the CSI (Clock Serial In) instruction is used. It clocks the serial input shift register, allowing the processor to receive one bit of data at a time from the selected device. The received data can then be processed or stored in registers or memory.
+By utilizing the U and V registers for device selection and deselection, the Sonne processor can communicate with different devices connected to the serial bus in a controlled and synchronized manner. It allows for flexible communication with multiple devices using a serial interface such as SPI, ensuring proper device selection and enabling reliable data transmission and reception.
+
+CPOL (Clock Polarity):
+The CPOL parameter determines the idle state of the clock signal.
+In Sonne, the SCL (Set Clock Low) and SCH (Set Clock High) instructions can be used to control the clock signal's state.
+To configure CPOL=0 (clock idles low), execute SCL to set the clock signal low during the idle state.
+To configure CPOL=1 (clock idles high), execute SCH to set the clock signal high during the idle state.
+CPHA (Clock Phase):
+The CPHA parameter determines the edge of the clock signal where data is captured or changed.
+In Sonne, the CSI (Clock Serial In) and CSO (Clock Serial Out) instructions can be used to control data transfer on each clock transition.
+To configure CPHA=0 (data captured on the leading edge), execute CSI before the clock transition to capture the incoming data.
+To configure CPHA=1 (data captured on the trailing edge), execute CSI after the clock transition to capture the incoming data.
+Similarly, to transmit data on the leading or trailing edge, execute CSO before or after the clock transition, respectively.
+Slave Select (SS) Signal:
+In SPI, a Slave Select signal is used to enable/disable specific devices on the bus during communication.
+In Sonne, the U and V registers can be utilized to control the Slave Select (SS) signal.
+Before initiating communication with a specific device, set the corresponding bit pattern in the U or V register to select the device.
+After communication, clear the bit pattern in the U or V register to deselect the device.
+By combining the SCL, SCH, CSI, and CSO instructions along with appropriate configuration of the control signals, the Sonne processor can effectively implement the SPI protocol. This allows for synchronized and controlled data transfer with SPI-compatible devices, including the flexibility to configure CPOL, CPHA, and SS signals to meet the specific requirements of the SPI interface.
+
+
+##Trap calls
+
+When a TRAP instruction is encountered during program execution, it triggers a transparent subroutine call to a user-defined TRAP handler routine. This handler routine acts as the implementation of the custom instruction, enabling the execution of specialized operations that go beyond the capabilities of the standard built-in instructions.
+
+User-defined instructions implemented through trap handlers are indistinguishable from pre-existing built-in instructions. They allow developers to create new instructions that appear and behave just like native instructions to the processor.
+
+Flexible Byte Lengths:
+Custom instructions defined through trap calls can have variable byte lengths. The PULL instruction facilitates this. It allows the custom instruction's handler routine to access subsequent bytes in the instruction stream, enabling the retrieval of data or parameters specific to the functionality of the custom instruction. This flexibility opens up possibilities for instructions with different byte lengths tailored to specific requirements, such as immediate addressing.
+
 
 
 
