@@ -191,7 +191,7 @@ TRAP	BCh		T3Ch
 TRAP	BDh		T3Dh
 TRAP	BEh		T3Eh
 TRAP	BFh		T3Fh
-RMEM	C0h		aG0g
+RMEM	C0h		aG0g    (g=get register a from value at location G0)
 RMEM	C1h		aG1g
 RMEM	C2h		aG2g
 RMEM	C3h		aG3g
@@ -199,7 +199,7 @@ RMEM	C4h		aG4g
 RMEM	C5h		aG5g
 RMEM	C6h		aG6g
 RMEM	C7h		aG7g
-RMEM	C8h		aG0p
+RMEM	C8h		aG0p    (p=put value of register a into location G0)
 RMEM	C9h		aG1p
 RMEM	CAh		aG2p
 RMEM	CBh		aG3p
