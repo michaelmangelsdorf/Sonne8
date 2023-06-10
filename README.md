@@ -33,11 +33,11 @@ Addresses 128-135 are referred to as G0-G7 (G for global) in the assembler mnemo
 
 ### Local segment
 
-Addresses 192-199 are referred to as L0-L7 (L for local) in the assembler mnemonic for register-memory transfer instructions.
+Addresses 192-199 are referred to as L0-L7 (L for local) in the assembler mnemonic for register-memory transfer instructions. This works as a stack frame, which can be swapped out by the following two instructions.
 
 #### Leave and Enter
 
-The LEAVE signal increments the local address prefix. This causes the final 64-bytes ("local" segment) of the address space to point to the previous stack frame. The ENTER signal decrements the local address prefix, causing a new stack frame to appear in the "local" segment.
+The LEAVE signal increments an internal address prefix. This causes the final 64-bytes ("local" segment) of the address space to point to the previous stack frame. The ENTER signal decrements the internal address prefix, causing a new stack frame to appear in the "local" segment.
 
 ## Instruction format
 
