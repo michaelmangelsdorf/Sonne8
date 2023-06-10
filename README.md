@@ -274,4 +274,8 @@ Here are examples of few other XFER instructions:
 "qL5p": This instruction would put the value from register Q into the fifth location of local memory.
 Remember that in these mnemonics, the first character ("a" or "q") denotes the register being operated upon, the second character ("G" or "L") specifies the scope of the memory being accessed (Global or Local), the third character (a digit from 0-7) specifies the location in the specified memory, and the last character ("g" or "p") specifies the operation (Get or Put).
 
+## Scrounge instructions
+
+Instructions such as MM or SS that would essentially do nothing ("NOP"), and instructions such as LM which would conflict with the timing requirements and the complexity of the hardware required, are detected (preselected) by a logic module called the scrounger, and they are treated as entirely different instructions -- their opcode is "repurposed". For instance, the opcode with regular mnemonic LM is scrounged and repurposed as RET.
+
 
