@@ -276,7 +276,7 @@ Remember that in these mnemonics, the first character ("a" or "q") denotes the r
 
 ## Scrounge instructions
 
-Instructions such as MM or SS that would essentially do nothing ("NOP"), and instructions such as LM which would conflict with the timing requirements and the complexity of the hardware required, are detected (preselected) by a logic module called the scrounger, and they are treated as entirely different instructions -- their opcode is "repurposed". For instance, the opcode with regular mnemonic LM is scrounged and repurposed as RET.
+Instructions such as MM or SS that would essentially do nothing ("NOP"), and instructions such as LM which would conflict with the timing requirements and the complexity of the hardware required, are detected (preselected) by a logic module called the scrounger, and they are treated as entirely different instructions -- their opcode is "repurposed". For instance, the opcode with regular mnemonic LM is scrounged and repurposed as opcode for the RET instruction.
 
 Not all such "NOP" opcodes are "scrounged" and could potentially be used as CPU instruction set extensions in future versions.
 
