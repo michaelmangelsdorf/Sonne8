@@ -80,7 +80,6 @@ The SETA instruction is used to set the internal flag to that the A register sho
 
 When executing SETG or during a reset, the internal bit is flipped, indicating that G should be used as the byte offset during data access memory operations.
 This ensures that the byte offset is provided by the G register for memory addressing.
-By toggling the internal flag using instructions like SETA, PULL, SETG, and during reset, the Sonne CPU can determine whether the A or G register is 
 
 ### R
 
