@@ -205,15 +205,15 @@ User-defined instructions implemented through trap handlers are indistinguishabl
 Flexible Byte Lengths:
 Custom instructions defined through trap calls can have variable byte lengths. The PULL instruction facilitates this. It allows the custom instruction's handler routine to access subsequent bytes in the instruction stream, enabling the retrieval of data or parameters specific to the functionality of the custom instruction. This flexibility opens up possibilities for instructions with different byte lengths tailored to specific requirements, such as immediate addressing.
 
-###1 **TRAP instruction:** The TRAP mechanism is triggered by executing a specific TRAP instruction. In the Sonne architecture, there are 64 such instructions, ranging from T00h (opcode 80h) to T3Fh (opcode BFh). The specific trap to be executed is determined by bits 0-6 of the opcode.
+#### 1 **TRAP instruction:** The TRAP mechanism is triggered by executing a specific TRAP instruction. In the Sonne architecture, there are 64 such instructions, ranging from T00h (opcode 80h) to T3Fh (opcode BFh). The specific trap to be executed is determined by bits 0-6 of the opcode.
 
-###2 **Saving the execution context:** When a TRAP instruction is executed, the Sonne processor first saves the current frame and byte offset in dedicated hardware registers. This context saving is crucial as it allows the processor to resume execution from where it left off once the trap handler has finished its work.
+#### 2 **Saving the execution context:** When a TRAP instruction is executed, the Sonne processor first saves the current frame and byte offset in dedicated hardware registers. This context saving is crucial as it allows the processor to resume execution from where it left off once the trap handler has finished its work.
 
-###3 **Calling the Trap call handler:** After saving the execution context, the processor branches to a specific location in memory where the handler for the triggered trap resides. This memory address is determined by bits 0-6 of the TRAP opcode.
+#### 3 **Calling the Trap call handler:** After saving the execution context, the processor branches to a specific location in memory where the handler for the triggered trap resides. This memory address is determined by bits 0-6 of the TRAP opcode.
 
-###4 **Writing the Trap call handler:** You as the programmer can write a trap handler to perform any desired operation. This could be a simple operation such as adding a new arithmetic function, or it could be a complex routine for interacting with the operating system or hardware. The trap handler needs to be written in Sonne machine language and loaded into the memory location that corresponds to the trap number.
+#### 4 **Writing the Trap call handler:** You as the programmer can write a trap handler to perform any desired operation. This could be a simple operation such as adding a new arithmetic function, or it could be a complex routine for interacting with the operating system or hardware. The trap handler needs to be written in Sonne machine language and loaded into the memory location that corresponds to the trap number.
 
-###5 **Returning from the Trap call:** Once the trap handler has completed its operation, it needs to return control back to the main program. This is done by executing the RET instruction. The processor will then resume executing instructions from where it left off.
+#### 5 **Returning from the Trap call:** Once the trap handler has completed its operation, it needs to return control back to the main program. This is done by executing the RET instruction. The processor will then resume executing instructions from where it left off.
 
 In this way, the TRAP mechanism in Sonne architecture allows you to effectively "extend" the instruction set with your own custom operations. By strategically writing and calling these trap handlers, you can enhance the functionality of the processor in ways that go beyond the capabilities of the built-in instructions. 
 
