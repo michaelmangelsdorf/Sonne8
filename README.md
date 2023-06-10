@@ -195,6 +195,21 @@ Before initiating communication with a specific device, set the corresponding bi
 After communication, clear the bit pattern in the U or V register to deselect the device.
 By combining the SCL, SCH, CSI, and CSO instructions along with appropriate configuration of the control signals, the Sonne processor can effectively implement the SPI protocol. This allows for synchronized and controlled data transfer with SPI-compatible devices, including the flexibility to configure CPOL, CPHA, and SS signals to meet the specific requirements of the SPI interface.
 
+### Parallel Interface
+The P (Parallel) Register: Writing to the P register sends a byte of data onto the parallel bus, and reading from the P register receives a byte of data from the parallel bus.
+The OFF instruction: This is used to tristate the parallel bus, disabling its output when necessary.
+
+### Serial Interface
+The S (Serial) Register: Writing to this register puts a byte into a shift-register for serialization. Reading from this register yields the currently deserialized byte in the shift register.
+The CSO Instruction (Clock Serial Out): This instruction shifts out one bit on the MOSI (Master Out Slave In) line from the byte currently held in the shift register.
+The CSI Instruction (Clock Serial In): This instruction shifts in one bit from the MISO (Master In Slave Out) line to the shift register.
+The SCH and SCL Instructions: These are used to toggle the serial master clock high or low respectively.
+
+### Device Selection
+The U and V Registers: Each bit in these registers selects a specific I/O device, like an SPI device select. This allows for specific device communication during parallel or serial transmission.
+ 
+### Implementing SPI protocol
+Through the appropriate use of the S Register and the CSO, CSI, SCH and SCL instructions, the Sonne CPU can implement Serial Peripheral Interface (SPI) communication with external devices.
 
 ## Trap calls
 
