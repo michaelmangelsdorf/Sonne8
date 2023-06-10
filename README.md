@@ -25,14 +25,17 @@ The assembled development kit i.e. hardware portion of this project:
 
 ## Address space
 
-The address space of this CPU is unusual. Eight bits give you 256 address places. The first 128 places form a region, which can be switched to point to another memory segment ("bank switching"). The next 64 places after that are fixed (for global variables). The remaining 64 places form a region again, which can be switched out to point to another memory segment (for local variables).
+The address space of this CPU is unusual. Eight bits give you 256 address places. The first 128 places form a segment, which can be switched to point to another memory segment ("bank switching"). The next 64 places after that are fixed (for global variables). The remaining 64 places form a segment again, which can be switched out to point to another memory segment (for local variables).
 
-### Global and Local regions
+### Global segment
 
 Addresses 128-135 are referred to as G0-G7 (G for global) in the assembler mnemonic for register-memory transfer instructions.
+
+### Local segment
+
 Addresses 192-199 are referred to as L0-L7 (L for local) in the assembler mnemonic for register-memory transfer instructions.
 
-### Leave and Enter
+#### Leave and Enter
 
 The LEAVE signal increments the local address prefix. This causes the final 64-bytes ("local" segment) of the address space to point to the previous stack frame. The ENTER signal decrements the local address prefix, causing a new stack frame to appear in the "local" segment.
 
