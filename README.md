@@ -54,7 +54,7 @@ Instructions such as MM or SS that would essentially do nothing ("NOP"), and ins
 Not all such "NOP" opcodes are "scrounged" and could potentially be used as CPU instruction set extensions in future versions.
 
 
-### Trap calls
+### Trap calls ("TRAP")
 
 When a TRAP instruction is encountered during program execution, it triggers a transparent subroutine call to a user-defined TRAP handler routine. This handler routine acts as the implementation of the custom instruction, enabling the execution of specialized operations that go beyond the capabilities of the standard built-in instructions.
 
@@ -80,7 +80,19 @@ Once the trap handler has completed its operation, it needs to return control ba
 
 In this way, the TRAP mechanism in Sonne architecture allows you to effectively "extend" the instruction set with your own custom operations. By strategically writing and calling these trap handlers, you can enhance the functionality of the processor in ways that go beyond the capabilities of the built-in instructions. 
 
-### XFER (transfer) mnemonics are formatted as follows:
+### Memory-Register-Memory transfers ("XFER")
+
+These instructions copy values between the 8 bytes G0-G7 of the global segment or the 8 bytes L0-L7 of the local segment and registers A or Q.
+
+#### Examples
+
+The mnemonic "aG3g" ("a G3 get") would mean:
+
+"a": Register A is the target of the operation.
+"G": Global memory is being used.
+"3": The third location in global memory is being accessed.
+"g": Get operation, the value from the specified memory location is being read and loaded into register A.
+So, "aG3g" instruction gets the value from the third location of global memory and loads it into register A.
 
 [Register][Memory Scope][Memory Location][Operation]
 
@@ -97,16 +109,6 @@ Operation (g or p): This specifies whether the operation is a 'get' or 'put'.
 g: Get operation. The value from the specified memory location is being read and loaded into the specified register.
 p: Put operation. The value from the specified register is being written to the specified memory location.
 An example of an XFER mnemonic following this format is "aG3g", which denotes a 'get' operation that loads the value from the third location in global memory into the accumulator (A) register.
-
-#### Examples
-
-The mnemonic "aG3g" ("a G3 get") would mean:
-
-"a": Register A is the target of the operation.
-"G": Global memory is being used.
-"3": The third location in global memory is being accessed.
-"g": Get operation, the value from the specified memory location is being read and loaded into register A.
-So, "aG3g" instruction gets the value from the third location of global memory and loads it into register A.
 
 Here are examples of few other XFER instructions:
 
