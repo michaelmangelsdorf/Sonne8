@@ -29,11 +29,13 @@ The address space of this CPU is unusual. Eight bits give you 256 address places
 
 ### Global segment
 
-Addresses 128-135 are referred to as G0-G7 (G for global) in the assembler mnemonic for register-memory transfer instructions.
+This 64 byte segment serves as a global (i.e. persistent during subroutine calls) data repository.
+The first eight addresses (128-135) of it are referred to as G0-G7 (G for global) in the assembler mnemonic for register-memory transfer instructions.
 
 ### Local segment
 
-Addresses 192-199 are referred to as L0-L7 (L for local) in the assembler mnemonic for register-memory transfer instructions. This works as a stack frame, which can be swapped out by the following two instructions.
+This 64 byte segment serves as a stack frame, which can be swapped out by the following two instructions.
+The first eight addresses (192-199) of it are referred to as L0-L7 (L for local) in the assembler mnemonic for register-memory transfer instructions.
 
 #### Leave and Enter
 
