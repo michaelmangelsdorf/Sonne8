@@ -41,9 +41,7 @@ The first eight addresses (192-199) of it are referred to as L0-L7 (L for local)
 
 The LEAVE signal increments an internal address prefix. This causes the final 64-bytes ("local" segment) of the address space to point to the previous stack frame. The ENTER signal decrements the internal address prefix, causing a new stack frame to appear in the "local" segment.
 
-## Instruction format
-
-Binary Instruction Format
+## Binary Instruction Format
 
 There are four types of instructions.
 
@@ -57,7 +55,7 @@ TRAP
 If bit 7 is set, but bit 6 is clear, the instruction is of type TRAP, and bits 0-5 encode the memory bank address of a trap handler function. Each TRAP instruction performs a function call to the first byte of its trap handler bank.
 
 RLOCAL
-If bits 6-7 are both set, the instrucion is of type RLOCAL. These instructions copy values between the first eight bytes (G0-G7) of the global segment or the first eight bytes (L0-L7) of the local segment and registers A or B.
+If bits 6-7 are both set, the instruction is of type RLOCAL. These instructions copy values between the first eight bytes (G0-G7) of the global segment or the first eight bytes (L0-L7) of the local segment and registers A or B.
 Bits 0-5 encode the operation of each such instruction in the following way.
 Bit 5 encodes the source or destination register: 0=A, 1=B
 Bit 4 encodes the segment: 0=Global, 1=Local
