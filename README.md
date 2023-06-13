@@ -65,7 +65,7 @@ Example:
 The mnemonic "aG3g" ("a G3 get") would mean:
 "a": Register A is the target of the operation. "G": Global memory is being used. "3": The third location in global memory is being accessed. "g": Get operation, the value from the specified memory location is being read and loaded into register A. So, "aG3g" instruction gets the value from the third location of global memory and loads it into register A.
 
-### Register-to-register transfers ("APPLY")
+### Register-to-register transfers ("RCOPY")
 
 These instructions copy the content of one register into another. GA for instance copies the value of G into A. Some registers are pseudo registers, such as B (Branch) -- copying a source register into B branches to the location stored in the source register. See the descriptions of individual registers below. 
 
@@ -85,24 +85,9 @@ User-defined instructions implemented through trap handlers are indistinguishabl
 Flexible Byte Lengths:
 Custom instructions defined through trap calls can have variable byte lengths. The PULL instruction facilitates this. It allows the custom instruction's handler routine to access subsequent bytes in the instruction stream, enabling the retrieval of data or parameters specific to the functionality of the custom instruction. This flexibility opens up possibilities for instructions with different byte lengths tailored to specific requirements, such as immediate addressing.
 
-#### TRAP instruction
-The TRAP mechanism is triggered by executing a specific TRAP instruction. In the Sonne architecture, there are 64 such instructions, ranging from T00h (opcode 80h) to T3Fh (opcode BFh). The specific trap to be executed is determined by bits 0-6 of the opcode.
-
-#### Saving the execution context
-When a TRAP instruction is executed, the Sonne processor first saves the current frame and byte offset in dedicated hardware registers. This context saving is crucial as it allows the processor to resume execution from where it left off once the trap handler has finished its work.
-
-#### Calling the Trap call handler
-After saving the execution context, the processor branches to a specific location in memory where the handler for the triggered trap resides. This memory address is determined by bits 0-6 of the TRAP opcode.
-
-#### Writing the Trap call handler
-You as the programmer can write a trap handler to perform any desired operation. This could be a simple operation such as adding a new arithmetic function, or it could be a complex routine for interacting with the operating system or hardware. The trap handler needs to be written in Sonne machine language and loaded into the memory location that corresponds to the trap number.
-
-#### Returning from the Trap call
-Once the trap handler has completed its operation, it needs to return control back to the main program. This is done by executing the RET instruction. The processor will then resume executing instructions from where it left off.
-
 In this way, the TRAP mechanism in Sonne architecture allows you to effectively "extend" the instruction set with your own custom operations. By strategically writing and calling these trap handlers, you can enhance the functionality of the processor in ways that go beyond the capabilities of the built-in instructions. 
 
-### Memory-Register-Memory transfers ("XFER")
+### Memory-Register-Memory transfers ("RLOCAL")
 
 These instructions copy values between the 8 bytes G0-G7 of the global segment or the 8 bytes L0-L7 of the local segment and registers A or Q.
 
@@ -116,31 +101,11 @@ The mnemonic "aG3g" ("a G3 get") would mean:
 "g": Get operation, the value from the specified memory location is being read and loaded into register A.
 So, "aG3g" instruction gets the value from the third location of global memory and loads it into register A.
 
-[Register][Memory Scope][Memory Location][Operation]
-
-Each of these components has specific valid values:
-
-Register (a or q): This indicates the register involved in the transfer operation.
-a: Indicates that the accumulator (A) register is the source or target of the operation.
-q: Indicates that the data (Q) register is the source or target of the operation.
-Memory Scope (G or L): This indicates whether the operation involves global or local memory.
-G: Indicates that the operation is interacting with global memory.
-L: Indicates that the operation is interacting with local memory.
-Memory Location (0-7): This is a digit specifying the particular location in memory being accessed. This value ranges from 0 to 7.
-Operation (g or p): This specifies whether the operation is a 'get' or 'put'.
-g: Get operation. The value from the specified memory location is being read and loaded into the specified register.
-p: Put operation. The value from the specified register is being written to the specified memory location.
-An example of an XFER mnemonic following this format is "aG3g", which denotes a 'get' operation that loads the value from the third location in global memory into the accumulator (A) register.
-
-Here are examples of few other XFER instructions:
-
 "aL7p": This instruction would put the value from register A into the seventh location of local memory.
+q: Indicates that the data (Q) register is the source or target of the operation.
 "qG2g": This instruction would get the value from the second location of global memory and load it into register Q.
 "qL5p": This instruction would put the value from register Q into the fifth location of local memory.
 Remember that in these mnemonics, the first character ("a" or "q") denotes the register being operated upon, the second character ("G" or "L") specifies the scope of the memory being accessed (Global or Local), the third character (a digit from 0-7) specifies the location in the specified memory, and the last character ("g" or "p") specifies the operation (Get or Put).
-
-
-
 
 
 ## Fetch mechanism
