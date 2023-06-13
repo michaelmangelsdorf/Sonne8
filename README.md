@@ -43,7 +43,29 @@ The LEAVE signal increments an internal address prefix. This causes the final 64
 
 ## Instruction format
 
-There are four types of instructions. (1) The high order four bits of the instruction word are all zero: These are sixteen "signal" instructions that take no operands, where the signal is encoded in bits 0-3. (2) The high order bit is zero, but bits 4-6 are not all zero: These are register-to-register transfers, where bits 4-6 encode the source register, bits 0-3 encode the target register. (3) The high order bit is one, bit 6 is 0: These are TRAP calls, where bits 0-5 encode the call-target. (4) Bits 6 and 7 or both one: These are register-to-memory transfers, from the two accumulator registers to the first 8 bytes of the global or local memory section, where bit 5 encodes which register it is, bit 4 encodes global or local, bit 3 is whether it's load or store, and bits 0-2 encode the address offset. (See the opcode_matrix file in the repo for details.)
+Binary Instruction Format
+
+There are four types of instructions.
+
+SIGNAL
+If bit 7 is clear, and bits 4-6 are all zero, the instruction is of type SIGNAL. There are sixteen such instructions, corresponding to each combination of bits 0-3. These instructions trigger internal signals.
+
+RCOPY
+If bit 7 is clear, and bits 4-6 are *not* all zero, the instruction is of type RCOPY. In this case, bits 4-6 encode one of eight possible source registers, and bits 0-3 encode one of sixteen possible target registers. Each instruction of type RCOPY copies the value of its source register into its target register.
+
+TRAP
+If bit 7 is set, but bit 6 is clear, the instruction is of type TRAP, and bits 0-5 encode the memory bank address of a trap handler function. Each TRAP instruction performs a function call to the first byte of its trap handler bank.
+
+RLOCAL
+If bits 6-7 are both set, the instrucion is of type RLOCAL. These instructions copy values between the first eight bytes (G0-G7) of the global segment or the first eight bytes (L0-L7) of the local segment and registers A or B.
+Bits 0-5 encode the operation of each such instruction in the following way.
+Bit 5 encodes the source or destination register: 0=A, 1=B
+Bit 4 encodes the segment: 0=Global, 1=Local
+Bit 3 encodes the operation: 0=Read (Get), 1=Write (Put)
+Bits 0-2 encode the byte offset within the segment
+Example:
+The mnemonic "aG3g" ("a G3 get") would mean:
+"a": Register A is the target of the operation. "G": Global memory is being used. "3": The third location in global memory is being accessed. "g": Get operation, the value from the specified memory location is being read and loaded into register A. So, "aG3g" instruction gets the value from the third location of global memory and loads it into register A.
 
 ### Register-to-register transfers ("APPLY")
 
