@@ -65,6 +65,10 @@ Example:
 The mnemonic "aG3g" ("a G3 get") would mean:
 "a": Register A is the target of the operation. "G": Global memory is being used. "3": The third location in global memory is being accessed. "g": Get operation, the value from the specified memory location is being read and loaded into register A. So, "aG3g" instruction gets the value from the third location of global memory and loads it into register A.
 
+### Signal instructions
+
+These are used to trigger specific operations that don't require explicit arguments, such as IO operations or creating/destroying stack frames.
+
 ### Register-to-register transfers ("RCOPY")
 
 These instructions copy the content of one register into another. GA for instance copies the value of G into A. Some registers are pseudo registers, such as B (Branch) -- copying a source register into B branches to the location stored in the source register. See the descriptions of individual registers below. 
