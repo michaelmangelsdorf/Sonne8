@@ -45,7 +45,7 @@ The LEAVE signal increments an internal address prefix. This causes the final 64
 
 ## Binary Instruction Format
 
-There are four types of instructions.
+There are four types of instructions. The format is completely regular and you would have no problem hand-coding these opcodes!
 
 SIGNAL
 If bit 7 is clear, and bits 4-6 are all zero, the instruction is of type SIGNAL. There are sixteen such instructions, corresponding to each combination of bits 0-3. These instructions trigger internal signals.
