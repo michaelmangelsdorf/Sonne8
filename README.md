@@ -32,12 +32,12 @@ The address space of this CPU is unusual. Eight bits give you 256 address places
 ### Global segment
 
 This 64 byte segment serves as a global (i.e. persistent during subroutine calls) data repository.
-The first eight addresses (128-135) of it are referred to as G0-G7 (G for global) and there are special single-cycle instructions for transfering these values to and from the two accumulor registers. These locations are essentially additional registers.
+The first eight addresses (128-135) of it are referred to as G0-G7 (G for global) and there are special single-cycle instructions for transfering these values to and from the two accumulator registers. These locations are essentially additional registers.
 
 ### Local segment
 
 This 64 byte segment serves as a stack frame, which can be swapped out by the following two instructions.
-The first eight addresses (192-199) of it are referred to as L0-L7 (L for local) and there are special single-cycle instructions for transfering these values to and from the two accumulor registers. These locations are essentially additional registers local to the current subroutine!
+The first eight addresses (192-199) of it are referred to as L0-L7 (L for local) and there are special single-cycle instructions for transfering these values to and from the two accumulator registers. These locations are essentially additional registers local to the current subroutine!
 
 #### Leave and Enter
 
