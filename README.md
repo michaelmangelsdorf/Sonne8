@@ -3,6 +3,8 @@ Welcome to this project!
 
 This repo contains all files you need to build and program an 8-bit CPU that I have designed und built.
 
+It's actually a micro-controller. It's not micro-coded, so it's very simple and it's easy to create custom instructions via trap handlers. I wanted it to be easy to code for instead of minimal.
+
 You would need to have the two PCBs fabricated: Firstly, there's the CPU board itself.
 It is actually a micro-controller, in that this board implements RAM and an IO interface.
 Then secondly, there is an IO expansion board, that fits on top of the CPU board via Arduino type stackable headers.
