@@ -25,6 +25,11 @@ The assembled development kit i.e. hardware portion of this project:
 
 ![CPU board](https://github.com/Dosflange/Sonne/blob/main/board_ready.jpg)
 
+The entire lower right quarter of the IO board doesn't really need to be populated, but you can of course. The larget chip socket on the right
+can be connected straight through to the EEPROM socket just below it on the CPU board.
+That EEPROM is actually the ALU of the CPU. It does via simple look-up tables, what the discrete version on the IO board does with logic chips.
+So if you're a purist, you can replace the large EEPROM with (cheaper!) logic chips. It works, I've tried.
+
 ## Address space
 
 The address space of this CPU is unusual. Eight bits give you 256 address places. The first 128 places form a segment, which can be switched to point to another memory segment ("bank switching"). The next 64 places after that are fixed (for global variables). The remaining 64 places form a segment again, which can be switched out to point to another memory segment (for local variables).
