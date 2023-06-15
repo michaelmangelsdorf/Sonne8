@@ -25,8 +25,8 @@ The assembled development kit i.e. hardware portion of this project:
 
 ![CPU board](https://github.com/Dosflange/Sonne/blob/main/board_ready.jpg)
 
-The entire lower right quarter of the IO board doesn't really need to be populated, but you can of course. The larget chip socket on the right
-can be connected straight through to the EEPROM socket just below it on the CPU board.
+The entire lower right quarter of the IO board doesn't really need to be populated, but you can of course. The large chip socket on the right
+is just a place-holder that connects straight through to the identical EEPROM socket just below it on the CPU board.
 That EEPROM is actually the ALU of the CPU. It does via simple look-up tables, what the discrete version on the IO board does with logic chips.
 So if you're a purist, you can replace the large EEPROM with (cheaper!) logic chips. It works, I've tried.
 
