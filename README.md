@@ -9,7 +9,7 @@ You would need to have the two PCBs fabricated: Firstly, there's the CPU board i
 It is actually a micro-controller, in that this board implements RAM and an IO interface.
 Then secondly, there is an IO expansion board, that fits on top of the CPU board via Arduino type stackable headers.
 
-The CPU board looks like this:
+The CPU board looks like this (this is an older version, notice the wire patch):
 
 ![CPU board](https://github.com/Dosflange/Sonne/blob/main/board_and_screws.jpg)
 
