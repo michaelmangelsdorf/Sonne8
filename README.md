@@ -9,7 +9,7 @@ You would need to have the two PCBs fabricated: Firstly, there's the CPU board i
 It is actually a micro-controller, in that this board implements RAM and an IO interface.
 Then secondly, there is an IO expansion board, that fits on top of the CPU board via Arduino type stackable headers.
 
-What can it do? Well, the demo program computes 7 x 13 and shows the result on a 7-segment display... Behind the scenes, it reads the code for doing that by bit-banging an SPI interface connected to a serial EEPROM. So it's a micro-controller alright.
+What can it do? Well, the demo program computes 7 x 13 and shows the result on a 7-segment display (see the mul16 movie in the repo)... Behind the scenes, it reads the code for doing that by bit-banging an SPI interface connected to a serial EEPROM. So it's a micro-controller alright.
 
 The CPU board looks like this (this is an older version, notice the wire patch):
 
