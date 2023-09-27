@@ -31,7 +31,7 @@ The entire lower right quarter of the IO board doesn't really need to be populat
 is just a place-holder that connects straight through to the identical EEPROM socket just below it on the CPU board.
 That EEPROM is actually the ALU of the CPU. It does via simple look-up tables, what the discrete version on the IO board does with logic chips.
 
-The two KiCad boards work as intended, I've had them manufactured by JLCPCB. The project files in the repo correspond to what I sent them. The screenshots of the boards show details. I've used an 8MHz quartz oscillator, which corresponds to roughly 1 Million instructions per second.
+The two KiCad boards work fine!, I've had them manufactured by JLCPCB. The project files in the repo correspond to what I sent them. The screenshots of the boards show details. I've used an 8MHz quartz oscillator, which corresponds to roughly 1 Million instructions per second.
 
 ## Address space
 
