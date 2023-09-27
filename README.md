@@ -11,6 +11,8 @@ Then secondly, there is an IO expansion board, that fits on top of the CPU board
 
 What can it do? Well, the demo program computes 7 x 13 and shows the result on a 7-segment display (see the mul16 movie in the repo)... Behind the scenes, it reads the code for doing that by bit-banging an SPI interface connected to a serial EEPROM. So it's a micro-controller alright.
 
+The two KiCad boards work fine!, I've had them manufactured by JLCPCB. The project files in the repo correspond to what I sent them. The screenshots (jpeg) of the boards show details. I've soldered sockets for all chips to be safe. The quartz oscillator I used is 8MHz, which corresponds to roughly 1 Million instructions per second.
+
 The CPU board looks like this (this is an older version, notice the wire patch):
 
 ![CPU board](https://github.com/Dosflange/Sonne-THT-74HC/blob/main/board_and_screws.jpg)
@@ -30,8 +32,6 @@ The assembled development kit i.e. hardware portion of this project:
 The entire lower right quarter of the IO board doesn't really need to be populated, but you can of course. The large chip socket on the right
 is just a place-holder that connects straight through to the identical EEPROM socket just below it on the CPU board.
 That EEPROM is actually the ALU of the CPU. It does via simple look-up tables, what the discrete version on the IO board does with logic chips.
-
-The two KiCad boards work fine!, I've had them manufactured by JLCPCB. The project files in the repo correspond to what I sent them. The screenshots of the boards show details. I've used an 8MHz quartz oscillator, which corresponds to roughly 1 Million instructions per second.
 
 ## Address space
 
