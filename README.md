@@ -202,7 +202,7 @@ ALU instruction words (to be written to the F register) are bytes. The low order
 | 15 |  AGB |A greater than B | F:= (A>B)? 0xFF:0 |
 ```
 
-The high order 4 bits hold a signed 3 bit offset which is added to the ALU result. In the assembly language, these mnemonics can be followed by an optional number term, such as IDQ+2, SLA+1 etc. The default ALU operation on reset is "IDQ+0".
+The high order 4 bits hold a signed 3 bit offset which is added to the ALU result. In the assembly language, these mnemonics can be followed by an optional number term, such as IDA+2, SLB+1 etc. The default ALU operation on reset is "IDA+0".
 Read ALU results from the F register.
 
 
