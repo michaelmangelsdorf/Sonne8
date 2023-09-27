@@ -9,7 +9,7 @@ You would need to have the two PCBs fabricated: Firstly, there's the CPU board i
 It is actually a micro-controller, in that this board implements RAM and an IO interface.
 Then secondly, there is an IO expansion board, that fits on top of the CPU board via Arduino type stackable headers.
 
-What can it do? Well, the demo program computes 7 x 13 and shows the result on a 7-segment display (see the mul16 movie in the repo)... Behind the scenes, it reads the code for doing that by bit-banging an SPI interface connected to a serial EEPROM. So it's a micro-controller alright.
+What can it do? Well, the demo program computes 7 x 13 and shows the result (5B in hexadecimal) on a 7-segment display (see the mul16 movie in the repo)... Behind the scenes, it reads the code for doing that by bit-banging the SPI interface of a serial EEPROM on the IO board. So it's a micro-controller alright.
 
 The two KiCad boards work fine!, I've had them manufactured by JLCPCB. The project files in the repo correspond to what I sent them. The screenshots (jpeg) of the boards show details. I've soldered sockets for all chips to be safe. The quartz oscillator I used is 8MHz, which corresponds to roughly 1 Million instructions per second.
 
