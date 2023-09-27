@@ -182,6 +182,7 @@ This distinction highlights the dual role of the F register in Sonne: as a confi
 
 ALU instruction words (to be written to the F register) are bytes. The low order 4 bits encode the following 16 instructions:
 
+```
 |--- | --- | --- |--- |
 | 0 |   IDA | Identity A | F := A |
 | 1 |   IDB | Identity B | F := B |
@@ -199,7 +200,7 @@ ALU instruction words (to be written to the F register) are bytes. The low order
 | 13 |  ALB | A less than B | F := (A<B)? 0xFF:0 |
 | 14 |  AEB |A equals B | F := (A==B)? 0xFF:0 |
 | 15 |  AGB |A greater than B | F:= (A>B)? 0xFF:0 |
-
+```
 
 The high order 4 bits hold a signed 3 bit offset which is added to the ALU result. In the assembly language, these mnemonics can be followed by an optional number term, such as IDQ+2, SLA+1 etc. The default ALU operation on reset is "IDQ+0".
 Read ALU results from the F register.
