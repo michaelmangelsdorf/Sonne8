@@ -142,8 +142,8 @@ void shift_in()
 }
 
 void shift_out() {
-	uint8_t bit = serial_out_byte & 1; // MSB out first
-	serial_out_byte >>= 1;
+	uint8_t bit = (serial_out_byte & 128) >> 7; // MSB out first
+	serial_out_byte <<= 1;
 	// Bit should go out to a physical bit stream clocked by sclock
 	// Emulates a 74HC165 shift register
 }
