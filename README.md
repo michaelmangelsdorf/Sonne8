@@ -1,6 +1,8 @@
 
 Welcome to this project!
 
+/* Update: I've presented this at CrashSpace in Culver City (Los Angeles) on October 10th, 2023 and donated my build of the controller, including two spare PCBs. So if you're in the area and would like to work on it / have questions, ask anytime. Thanks to all who where there, physically and online, and for the tour of your premises! */
+
 This repo contains all files you need to build and program an 8-bit CPU that I have designed und built.
 
 It's not even micro-coded, so it's very simple, although I wanted it to be sane and fun to code for instead of minimal. It's easy to create custom instructions, it's got single-cycle trap calls that don't appear different from inbuilt opcodes.
