@@ -26,13 +26,14 @@ uint8_t	pc_low, pc_low_copy,
 
 uint8_t par_in()
 {
-	tristate = 0;
 	return 0;
+	// Parallel bus device select via bits in D register
 }
 
 void par_out( uint8_t source)
 {
 	tristate = 0;
+	// Parallel bus device select via bits in D register
 }
 
 uint8_t alu_result()
@@ -138,7 +139,7 @@ void shift_in()
 	serial_in_byte <<= 1; // MSB first
 	serial_in_byte |= bit;
 	// Emulates a 74HC595 shift register
-	
+	// Serial bus device select via bits in D register
 }
 
 void shift_out() {
@@ -146,6 +147,7 @@ void shift_out() {
 	serial_out_byte <<= 1;
 	// Bit should go out to a physical bit stream clocked by sclock
 	// Emulates a 74HC165 shift register
+	// Serial bus device select via bits in D register
 }
 
 
