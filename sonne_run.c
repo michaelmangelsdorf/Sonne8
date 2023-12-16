@@ -9,11 +9,10 @@
 
 uint8_t	pc_low, pc_low_copy,
 		pc_high, pc_high_copy,
-		greg,
 		rreg,
 		dreg,
 		greg,
-		aacc, bacc,	*wptr,
+		aacc, bacc, *wptr, // Pointer to most recently set
 		sptr,
 		tristate,
 		sclock,
