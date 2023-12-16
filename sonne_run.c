@@ -26,13 +26,13 @@ uint8_t	pc_low, pc_low_copy,
 
 uint8_t par_in()
 {
-	tristate = 1;
+	tristate = 0;
 	return 0;
 }
 
 void par_out( uint8_t source)
 {
-	tristate = 1;
+	tristate = 0;
 }
 
 uint8_t alu_result()
@@ -77,6 +77,7 @@ uint8_t effective()
 void reset_cpu()
 {
 	wptr = &aacc;
+	tristate = 1;
 }
 
 uint8_t fetch()
