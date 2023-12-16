@@ -64,13 +64,13 @@ uint8_t alu_result()
 }
 
 
-uint8_t effective()
+uint16_t effective()
 {
 	uint8_t addr_high;
 	if ( *wptr < 128) addr_high = rreg;
 	else if ( *wptr < 192) addr_high = greg;
 	else addr_high = sptr;
-	return addr_high + *wptr;
+	return 256*addr_high + *wptr;
 }
 
 
