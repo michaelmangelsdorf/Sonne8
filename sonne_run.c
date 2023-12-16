@@ -100,8 +100,8 @@ void act_pseudo( uint8_t dest, uint8_t source)
 	case 0: break; // SIG This case handled by caller
 	case 1: rreg = source; break; // R
 	case 2: memory[effective()] = source; break; // M
-	case 3: pc_low = source; break; // X
-	case 4: pc_high = source; break; // Y
+	case 3: pc_low_copy = source; break; // X
+	case 4: pc_high_copy = source; break; // Y
 	case 5: serial_out_byte = source; break; // S
 	case 6: par_out( source); break; // P
 	case 7: alu_op=source; alu_lock=0; break; // F
