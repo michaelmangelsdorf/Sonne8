@@ -1,5 +1,5 @@
 
-// Sonne CPU Simulator (rev. Abuladdin)
+// Sonne CPU Simulator (rev. Daffodil)
 // 2023 Dec 16  Michael Mangelsdorf
 
 #include <stdio.h>
