@@ -173,8 +173,8 @@ void exec_SIGNAL( uint8_t instr)
 	else {
 		switch (source) {
 		case 0: break; /* NOP */
-		case 1: shift_in(); break; /* SCI */
-		case 2: shift_out(); break; /* SCO */
+		case 1: shift_in(); break; /* SSI */
+		case 2: shift_out(); break; /* SSO */
 		case 3: sclock = 0; break; /* SCL */
 		case 4: sclock = 1; break; /* SCH */
 		case 5: tristate = 1; break; /* OFF */
