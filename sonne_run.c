@@ -159,7 +159,7 @@ void exec_SIGNAL( uint8_t instr)
 			pc_low = pc_low_copy;
 			pc_high = pc_high_copy;
 		}
-		else if ((source == 2) && (dest == 2)) pc_high++; // Scrounge LID
+		else if ((source == 2) && (dest == 2)) {pc_high++; pc_low=0;} // Scrounge LID
 		else act_pseudo( dest, get_pseudo( source));
 	}
 	else {
