@@ -38,7 +38,8 @@ void par_out( uint8_t source)
 uint8_t alu_result()
 {
 	if (alu_lock) return alu_copy;
-	uint8_t offs = alu_op & (15<<4);
+	uint8_t offs = alu_op >> 4;
+	if (offs>7) offs += (15<<4); // Sign  extend
 	uint8_t op = alu_op & 15;
 	switch(op){
 	case 0: alu_copy = aacc; break; // IDA
