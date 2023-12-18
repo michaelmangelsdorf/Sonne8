@@ -120,7 +120,7 @@ void act_pseudo( uint8_t dest, uint8_t source)
 
 uint8_t get_pseudo( uint8_t source)
 {
-	switch (source & 7) {
+	switch (source) {
 	case 0: return fetch(); // L
 	case 1: return rreg; // R
 	case 2: return memory[effective()]; // M
@@ -153,7 +153,7 @@ void shift_out() {
 void exec_SIGNAL( uint8_t instr)
 {
 	uint8_t dest = instr & 15;
-	uint8_t source = (instr & 127) >> 4; /* Low order 3 bits */
+	uint8_t source = (instr >> 4) & 7; /* High order 3 bits */
 	if (dest) { // Transfer
 		if ((source == 0) && (dest == 2)) { // Scrounge RET
 			pc_low = pc_low_copy;
@@ -206,7 +206,7 @@ void exec_GETPUT( uint8_t instr)
 void decode()
 {
 	uint8_t instr = fetch();
-	if ((instr & 128) == 0) exec_SIGNAL( instr & 0x127); /* Strip off b7 */
+	if ((instr & 128) == 0) exec_SIGNAL( instr); /* Strip off b7 */
 	else if (instr & 64) exec_GETPUT( instr & 63); /* Strip off b7 and b6 */
 	else exec_TRAP( instr & 63); /* Strip off b7 and b6 */
 }
