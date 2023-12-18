@@ -12,6 +12,6 @@ for how the controller works.
 The next step after bootstrapping a native assembler within the firmware project
 will be a Verilog/FPGA version.
 
-This folder contains a modified assembler, crummy and sketchy as it should be. But it does assemble the multiplication example.
+This folder contains a modified assembler, crummy and sketchy as it should be. It now contains an obscure global variable called "theDamned". But it does assemble the multiplication example.
 Run the assembler first, then run the emulator. The multiplication result shows up as the first byte (G0) of the Global section.
   
