@@ -112,7 +112,7 @@ void act_pseudo( uint8_t dest, uint8_t source)
 	case 4: pc_high_copy = source; break; // H
 	case 5: serial_out_byte = source; quit=1; break; // S
 	case 6: par_out( source); break; // P
-	case 7: alu_op = source; alu_lock = 0; break; // F
+	case 7: alu_op = source; alu_lock = 0; alu_result(); break; // F
 	case 8: dreg = source; break; // D
 	case 9: greg = source; break; // G
 	case 10: pc_low = source; break; // J
