@@ -9,6 +9,10 @@ The architecture I use going forward has changed slightly, but significantly:
 and is ignoring the Global/Local mapping, so that the segment size is the full 256 bytes
 when accessing the code stream. This sounds much more complicated than it is. See the tiny emulator written in C
 for how the controller works.
+4. LEAVE and ENTER now function like GETPUT instructions: ENTER first decrements the stack frame pointer and then
+latches L and H into memory at local segments 254 and 255, respectively.
+LEAVE does the reverse, copying the memory values back into L and H, and THEN incrementing the stack frame pointer.
+
 The next step after bootstrapping a native assembler within the firmware project
 will be a Verilog/FPGA version.
 
