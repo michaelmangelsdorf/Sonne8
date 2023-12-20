@@ -14,17 +14,9 @@ and is ignoring the Global/Local mapping, so that the segment size is the full 2
 when accessing the code stream. This sounds much more complicated than it is. See the tiny emulator written in C
 for how the controller works.
 
-4. Call, TRAP, ENTER and LEAVE now access fixed memory locations, like GETPUT instructions, and work in conjunction in
-storing the two byte return address for nested calls.
-During a call or TRAP, the bank number (pc high order = H) is latched into memory cell 255 (last byte of stack segment).
-During ENTER the stack frame pointer is decremented, and then L is stored into memory cell 254 (penultimate in stack segment).
-During LEAVE, L is copied back from cell 254, and then the stack frame pointer is incremented.
-During RET, the back number (H) is copied back from memory cell 255.
-
 The next step after bootstrapping a native assembler within the firmware project
 will be a Verilog/FPGA version.
 
-This folder contains a modified assembler, crummy and sketchy as it should be.
-It now contains an obscure global variable called "theDamned". But it does assemble the multiplication example.
+This folder contains a modified assembler.
 Run the assembler first, then run the emulator. The multiplication result shows up as the first byte (G0) of the Global section.
   
