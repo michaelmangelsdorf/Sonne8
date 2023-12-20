@@ -190,23 +190,35 @@ void exec_GETPUT( uint8_t instr)
 	if (instr & 32) { /* B register */
 		if (instr & 16) { /* Local */
 			if (instr & 8) memory[sptr*256 + 128 + 64 + offs] = bacc;
-			else bacc = memory[sptr*256 + 128 + 64 + offs];
+			else {
+				bacc = memory[sptr*256 + 128 + 64 + offs];
+				wptr = &bacc;
+			}
 		}
 		else { /* Global */
 			if (instr & 8) memory[greg*256 + 128 + offs] = bacc;
-			else bacc = memory[greg*256 + 128 + offs];
+			else {
+				bacc = memory[greg*256 + 128 + offs];
+				wptr = &bacc;
+			}
 		}
 	}
 	else { /* A register */
 		if (instr & 16) { /* Local */
 			if (instr & 8) memory[sptr*256 + 128 + 64 + offs] = aacc;
-			else aacc = memory[sptr*256 + 128 + 64 + offs];
+			else {
+				aacc = memory[sptr*256 + 128 + 64 + offs];
+				wptr = &aacc;
+			}
 		}
 		else { /* Global */
 			if (instr & 8) {
 				memory[greg*256 + 128 + offs] = aacc;
 			}
-			else aacc = memory[greg*256 + 128 + offs];
+			else {
+				aacc = memory[greg*256 + 128 + offs];
+				wptr = &aacc;
+			}
 		}
 	}
 }
