@@ -116,8 +116,8 @@ void act_pseudo( uint8_t dest, uint8_t source)
 	case 8: dreg = source; break; // D
 	case 9: greg = source; break; // G
 	case 10: pc_low = source; break; // J
-	case 11: alu_result(); if (!zflag) pc_low = source; break; // T
-	case 12: alu_result(); if (zflag)  pc_low = source; break; // E
+	case 11: if (!zflag) pc_low = source; break; // T
+	case 12: if (zflag)  pc_low = source; break; // E
 	case 13: exec_TRAP( source); break; // C
 	case 14: aacc = source; wptr = &aacc; alu_lock = 1; break; // A
 	case 15: bacc = source; wptr = &bacc; alu_lock = 1; break; // B
