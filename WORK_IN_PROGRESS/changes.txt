@@ -3,16 +3,23 @@ It was a proof-of-concept that this controller really is small enough to be buil
 I am currently writing firmware for a software emulator for this CPU.
 
 The architecture I use going forward has changed slightly, but significantly (rev. Daffodil):
+
 1. xJ, xT and xE (jump instructions) now change the PC (low order) instead of branching to banks
 (and setting the PC to zero).
+
 2. Also, X and Y have been renamed to L and H (for low and high program counter).
+
 3. The address mapping has been simplified: any fetch instruction uses the PC high register,
 and is ignoring the Global/Local mapping, so that the segment size is the full 256 bytes
 when accessing the code stream. This sounds much more complicated than it is. See the tiny emulator written in C
 for how the controller works.
-4. LEAVE and ENTER now function like GETPUT instructions: ENTER first decrements the stack frame pointer and then
-latches L and H into memory at local segments 254 and 255, respectively.
-LEAVE does the reverse, copying the memory values back into L and H, and THEN incrementing the stack frame pointer.
+
+4. Call, TRAP, ENTER and LEAVE now access fixed memory locations, like GETPUT instructions, and work in conjunction in
+storing the two byte return address for nested calls.
+During a call or TRAP, the bank number (pc high order = H) is latched into memory cell 255 (last byte of stack segment).
+During ENTER the stack frame pointer is decremented, and then L is stored into memory cell 254 (penultimate in stack segment).
+During LEAVE, L is copied back from cell 254, and then the stack frame pointer is incremented.
+During RET, the back number (H) is copied back from memory cell 255.
 
 The next step after bootstrapping a native assembler within the firmware project
 will be a Verilog/FPGA version.
