@@ -85,7 +85,7 @@ void act_pseudo( uint8_t dest, uint8_t source)
 	case 4: break; // ALU increment This case handled by caller
 	case 5: serial_out_byte = source; quit=1; break; // S
 	case 6: par_out( source); break; // P
-	case 7: alu_copy = source; alu_offs = 0; break;
+	case 7: alu_copy = source; alu_offs = 0; calc_zflag(); break; // F
 	case 8: dreg = source; break; // D
 	case 9: greg = source; break; // G
 	case 10: pc_low = source; break; // J
