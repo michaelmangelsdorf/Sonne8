@@ -1,22 +1,34 @@
 As of December 2023, I haven't any plans to continue experimenting with this particular hardware, but who knows.
-It was a proof-of-concept that this controller really is small enough to be built discretely.
-I am currently writing firmware for a software emulator for this CPU.
+It was a proof-of-concept, to show that this controller really is small enough to be built discretely.
 
-The architecture I use going forward has changed slightly, but significantly (rev. Daffodil):
+I am currently writing firmware for a software emulator for the next revision of this CPU.
+The architecture I am using going forward has changed slightly, but significantly (rev. Daffodil):
 
 1. xJ, xT and xE (jump instructions) now change the PC (low order) instead of branching to banks
 (and setting the PC to zero).
 
-2. Also, X and Y have been renamed to L and H (for low and high program counter).
+2. xC has been removed. CALL is now the scrounge pair "RR" (like "NM"=>RET). CALL copies the PC high order
+into local memory at position 255. The Y register has been removed. PC low order is copied into X as before.
 
-3. The address mapping has been simplified: any fetch instruction uses the PC high register,
-and is ignoring the Global/Local mapping, so that the segment size is the full 256 bytes
-when accessing the code stream. This sounds much more complicated than it is. See the tiny emulator written in C
-for how the controller works.
+3. ENTER stores the X register into local memory at position 254 before decrementing the stack frame pointer.
 
-The next step after bootstrapping a native assembler within the firmware project
-will be a Verilog/FPGA version.
+4. LEAVE retrieves the X register from position 254 after incrementing the stack frame pointer.
 
-This folder contains a modified assembler.
-Run the assembler first, then run the emulator. The multiplication result shows up as the first byte (G0) of the Global section.
+5. The RET instruction retrieves PC high order from position 255, instead of from Y.
+
+6. The address mapping has been simplified: any fetch instruction uses only the PC high register prefix,
+thus ignoring the Global/Local mapping, so that the segment size is the full 256 bytes when accessing code.
+
+7. The ALU has changed. The need for locking is now obviated. ALU opcodes are now dedicated opcodes. There are
+also dedicated opcodes for incrementing and decrementing the ALU result by 3 bit signed constants.
+
+This sounds much more complicated than it is. See the tiny emulator written in C for how the controller works
+after these changes. The hardware changes for this should be quite small.
+
+The next step after bootstrapping a native assembler within the firmware project will be a Verilog/FPGA version.
+
+This folder contains a modified assembler, an emulator, and more sample code.
+Run the assembler first, then run the emulator.
+The assembler program converts a number into an ASCII string. The result shows up in the debug print of the
+global region.
   
