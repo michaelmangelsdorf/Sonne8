@@ -19,8 +19,10 @@ into local memory at position 255. The Y register has been removed. PC low order
 6. The address mapping has been simplified: any fetch instruction uses only the PC high register prefix,
 thus ignoring the Global/Local mapping, so that the segment size is the full 256 bytes when accessing code.
 
-7. The ALU has changed. The need for locking is now obviated. ALU opcodes are now dedicated opcodes. There are
-also dedicated opcodes for incrementing and decrementing the ALU result by 3 bit signed constants.
+7. The ALU has changed. The need for locking is now obviated. ALU opcodes are now dedicated opcodes, switched
+by the source decoder slot previously occupied by Yx.
+There are also dedicated opcodes for incrementing and decrementing the ALU result by 3 bit signed constants,
+switched similarly to SIG.
 
 This sounds much more complicated than it is. See the tiny emulator written in C for how the controller works
 after these changes. The hardware changes for this should be quite small.
