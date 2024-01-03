@@ -7,22 +7,23 @@ The architecture I am using going forward has changed slightly, but significantl
 1. xJ, xT and xE (jump instructions) now change the PC (low order) instead of branching to banks
 (and setting the PC to zero).
 
-2. xC has been removed. CALL is now the scrounge pair "RR" (like "NM"=>RET). CALL copies the PC high order
-into local memory at position 255. The Y register has been removed. PC low order is copied into X as before.
+2. xC has been removed. CALL is now the scrounge pair "RR" (like "NM"=>RET). The CALL target is the
+most recently used accumulator register (W).
 
-3. ENTER stores the X register into local memory at position 254 before decrementing the stack frame pointer.
+3. The X and Y registers are gone. F is used for X, R is used for Y. This means that during a CALL or TRAP,
+the R register is set to the high-order return address, the F register is set to the low-order return address,
+and the RET instruction expects these values to be there.
 
-4. LEAVE retrieves the X register from position 254 after incrementing the stack frame pointer.
+4. There is a new scrounge opcode EXIT. It behaves like a far FAR jump (sets low-order PC to zero).
 
-5. The RET instruction retrieves PC high order from position 255, instead of from Y.
+5. The ALU has changed. ALU opcodes are now dedicated opcodes, using bits
+of GETPUT instructions. Alu results feed into an independent F register when executing an ALU opcode.
+Hence no need for locking.
 
-6. The address mapping has been simplified: any fetch instruction uses only the PC high register prefix,
+6. There are additional instructions INC and DEC that add signed offsets to F.
+
+7. The address mapping has been simplified: any fetch instruction uses only the PC high register prefix,
 thus ignoring the Global/Local mapping, so that the segment size is the full 256 bytes when accessing code.
-
-7. The ALU has changed. The need for locking is now obviated. ALU opcodes are now dedicated opcodes, switched
-by the source decoder slot previously occupied by Yx.
-There are also dedicated opcodes for incrementing and decrementing the ALU result by 3 bit signed constants,
-switched similarly to SIG.
 
 This sounds much more complicated than it is. See the tiny emulator written in C for how the controller works
 after these changes. The hardware changes for this should be quite small.
@@ -31,6 +32,5 @@ The next step after bootstrapping a native assembler within the firmware project
 
 This folder contains a modified assembler, an emulator, and more sample code.
 Run the assembler first, then run the emulator.
-The assembler program converts a number into an ASCII string. The result shows up in the debug print of the
-global region.
+The assembler program converts an ASCII string into a number in B.
   
