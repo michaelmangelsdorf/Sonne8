@@ -3,6 +3,8 @@
    na >End EXIT  ; Dec 2023 Michael Mangelsdorf <mim@ok-schalter.de>
 CLOSE            ; See https://github.com/Dosflange/Sonne
 
+; CLOSE is
+; an assembler directive, that object code goes into the next 256 byte bank
 
 ; ----------------------------- mul8 ----------------------------------------
 
