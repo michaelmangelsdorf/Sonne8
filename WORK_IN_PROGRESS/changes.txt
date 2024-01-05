@@ -35,3 +35,297 @@ Run the assembler first, then run the emulator.
 The assembler program converts an ASCII string into a number in B.
 
 
+
+
+
+
+--------------------------------------- Daffodil spec.
+
+
+
+
+
+Memory Addressing
+
+In this architecture, an effective memory address is composed of a high order 8 bit number called the bank,
+and a low order 8-bit number called the offset. The 8-bit offset ranges from 0-255. This range is partitioned into three segments. The segment in which a particular offset is located determines, which 8-bit bank prefix register is used in generating the effective address. This offset segmentation mechanism achieves, that any 8-bit offset carries a fully implied bank register, making the addressable range more versatile in an intuitive way.
+
+Banks
+
+Bank numbers are stored in dedicated bank registers. Which bank register is used in accessing memory depends on the segment in which a given offset address is located, and also depends on whether the memory access is fetching code or data.
+
+
+
+Code Bank (Code access only)
+
+When fetching instructions or literals from the code stream, the (hidden) Code Bank register is used, independent of the program counter offset.
+
+Frame segment (Data access only)
+
+If the offset is in the range 0-127, bank register F (Frame) is used.
+
+Global segment (Data access only)
+
+If the offset is in the range 128-191, bank register G (Global) is used.
+
+This 64 byte segment serves as a global (i.e. persistent during subroutine calls) data repository. The first four addresses (128-131) of it are referred to as G0-G3 (G for global) and there are special single-cycle ALU instructions for transferring these values to and from the two accumulator registers. These locations are essentially additional accumulator registers.
+
+Local segment (Data access only)
+
+If the offset is in the range 192-255, bank register L (Local) is used.
+
+This 64 byte segment serves as a stack frame, which can be swapped out by the ENTER and LEAVE instruction. The first four addresses (192-195) of this segment are referred to as L0-L3 (L for local) and there are special single-cycle ALU instructions for transferring these values to and from the two accumulator registers. These locations are essentially additional accumulator registers local to the current subroutine ("Local variables").
+
+Pseudo-Register M
+
+When writing values to the A and B accumulator registers, the last recently used accumulator register is marked as the WORKING (W) accumulator register. The value in the working accumulator register is the implied offset for memory transfers. Reading from the M pseudo-register (instructions of type Mx) combines the implied BANK register address prefix and the implied OFFSET in W to form the effective address. The memory value of that address is then copied into the target register of the instruction. For instance the instruction "ma" transfers that memory content into the A register.
+Writing to the M pseudo-register (instructions of type xM) does as before, put replaces the memory content at the effective address with the source register of the instruction. For instance "rm" stores the ALU result into the implied effective memory address.
+
+
+
+
+Instruction Fetch
+
+Instruction fetch makes use of three "hidden" registers, IW (Instruction Word), PC (Program Counter) and CB (Code Bank).
+When the CPU is reset, the instruction fetch-decode-execute cycle begins by setting these three registers to zero.
+At the beginning of each cycle, an effective address is formed by prefixing the bank byte in the code bank register (high-order) before the offset byte in the program counter (low-order).
+The memory value stored at that effective address is copied into the instruction word register for decoding.
+After decoding, the instruction is executed.
+The offset in the program counter is incremented by 1 to point to the next instruction in memory, and the cycle repeats.
+
+
+
+
+Instruction Word Format
+
+
+Pair Instructions
+
+Any opcode in which the most significant bit is 0 represents a Pair instruction. This name indicates that the remaining low-order bits of such opcodes are composed of two logical bit groups, called Source (bits 4-6) and Target (bits 0-3).
+If the Target is 0, the opcode represents a Signal instruction.
+If the Target is 0 (SIG), Source encodes 1 of 8 Signals as follows: 000=NOP, 001=SSI, 010=SSO, 011=SCL, 100=SCH, 101=HIZ, 110=LEAVE, 111=ENTER.
+If the Target is 12 (INC) or 13 (DEC), the opcode represents an ALU Offset instruction. 
+If the Target is 12 (INC), Source directly encodes the number added to R. If the opcode is 13 (DEC), Source represents a two's complement bit pattern which is sign-extended to 8 bits, and then added to R.
+
+Every INC or DEC instruction has a mnemonic of the form: "r" + decimal value + number sign. For example: "r3+" meaning "Increment the R register by 3", and "r1-" meaning "Decrement the R register by 1".  The mnemonic "r" is shorthand for "r0+".
+
+Any Pair opcode which is not Signal or Offset is either a Transfer Pair, or a special Pair called a Scrounge.
+In Transfer Pairs, Source encodes 1 of 8 possible source registers as follows: 000=N, 001=M, 010=F (Frame), 011=G, 100=L, 101=S, 110=P, 111=R.
+In Transfer Pairs, Target encodes 1 of 13 possible target registers as follows: 0000=n.a.(SIG), 0001=M, 0010=F (Frame), 0011=G, 0100=L, 0101=S, 0110=P, 0111=R, 1000=D, 1001=J, 1010=I, 1011=E, 1100=n.a.(INC), 1101=n.a.(DEC), 1110=A, 1111=B.
+
+Scrounge instructions re-purpose otherwise needless Source-Target combinations such as ff or gg, or instructions that would be unpractical in hardware given timing constraints, such as nm. The opcode nm is scrounged (does not exist) and gives RET, mm is scrounged and gives LID, ff is scrounged and gives CALL, gg is scrounged and gives EXIT.
+
+
+
+Trap Instructions
+
+Any opcode in which bit 7 (MSB) is 1 and bit 6 is 0 represents a Trap instruction.
+The remaining bits 0-6 directly encode the destination address for the corresponding Trap call.
+
+When a Trap instruction is encountered during program execution, it triggers a transparent subroutine call to a user-defined Trap handler routine. These calls are indistinguishable from executing hardware instructions. They allow developers to create new instructions that appear and behave just like native instructions to the processor and to effectively "extend" the instruction set.
+
+
+
+ALU Instructions
+
+There are two types of ALU instructions, Get-Put instructions and Function instructions.
+Any opcode which has bits 6-7 set to 1 represents an ALU opcode.
+Any ALU opcode which has 4-5 set to 1 represents a Function instruction.
+There are 16 Function instructions, corresponding to the possible values of bits 0-3, mapped as follows: 0000=IDA, 0001=IDB, 0010=OCA, 0011=OCB, 0100=SLA, 0101=SLB, 0110=SRA, 0111=SRB, 1000=AND, 1001=IOR, 1010=EOR, 1011=ADD, 1100=CYF, 1101=ALB, 1110=AEB, 1111=AGB. See the ALU section for the semantics of these instructions.
+
+Any ALU opcode which does not represent a Function instruction is a Get-Put instruction. Opcodes for Get-Put instructions encode the Register in bits 4-5, mapped as follows: 00=A, 01=B, 10=R. Bit 3 selects one of two address prefixes. If bit 3 is 0, the implied address prefix is 80h (Global segment). If bit 3 is 1, the implied address prefix is C0h (Local segment). Bit 2 encodes whether the Register value is retrieved from the Get-Put location (GET, bit=0), or written into it (PUT, bit=1).
+Bits 0-1 encode an offset which is added to the address prefix base register to obtain the effective Get-Put location.
+
+
+
+
+
+Control Flow
+
+Branching
+
+Branching is done by changing the offset of the current instruction within the current Code Bank. This is done by writing the desired offset into one of three pseudo-registers.
+
+Registers J, E, I
+
+These are pseudo-registers, that can only occur as target registers of transfer instructions. Transferring an offset value into J (Jump) does an unconditional branch to that offset within the current code bank.
+E means Else: Transferring an offset value into E branches only if the ALU result is FALSE (zero).
+I means If: Transferring an offset value into I branches only if the ALU result is TRUE (not zero).
+
+Calling and TRAP mechanism
+
+The LID instruction is an implicit jump to offset 0 of the next bank (numerically following the current bank). LID resets PC to 0 and increments the bank register by 1.
+
+The EXIT instruction is an explicit jump to offset 0 of the bank number contained in the working (W) accumulator register.
+
+Trap instructions jump to offset 0 of the bank encoded in their respective opcode. They also save the current code bank into the F register, overwriting its value. The current code offset is saved into the R register, overwriting its value, before the code offset is set to 0.
+
+The CALL instruction jumps to offset 0 of the bank number contained in the working (W) accumulator register. The instruction also saves the current code bank into the F register, overwriting its value. The current code offset is saved into the R register, overwriting its value, before the code offset is set to 0.
+
+The RET instruction ("Return") overwrites the current code bank by the value of the F register, and overwrites the current code offset by the value in the R register, conceptually reversing a preceding CALL or Trap instruction.
+
+
+
+
+
+
+Arithmetic-Logic Unit (ALU)
+
+The ALU is a conceptual part of the CPU comprised of the two accumulators (A and B), the Result register R and the Get-Put locations G0-3 and L0-3.
+Function instructions compute mathematical functions that take the values stored in one or both of the accumulators as input arguments. The function results are stored in the Result register R. The Result register can also be written to directly by means of Transfer Pair instructions. The Result register can be incremented or decremented by offset instructions.
+Offset instructions are Pair instructions, in which the Target part (bits 0-3) of the opcode is INC or DEC.
+
+The function instructions have the following semantics, results are stored in R.
+
+IDA Identity of A
+IDB Identity of B
+OCA One's complement of A
+OCB One's complement of B
+SLA Shift left A
+SLB Shift left B
+SRA Shift right logical A
+SRB Shift right logical B
+AND Bitwise AND between A and B
+IOR Bitwise inclusive OR between A and B
+EOR Bitwise exclusive OR between A and B
+ADD 8-bit Addition result of A plus B
+CYF Carry bit of addition result of A plus B, zero or one
+ALB Logical flag (TRUE=255, FALSE=0) A less than B
+AEB Logical flag (TRUE=255, FALSE=0) A equals B
+AGB Logical flag (TRUE=255, FALSE=0) A greater than B
+
+
+
+
+
+
+Communication
+
+Sonne comes with a built-in communication subsystem that can handle both serial and parallel communication. These additional features are for controlling device selection, serial input/output, and parallel input/output.
+
+Communication Registers
+
+On the hardware side, communication is done using the following implements:
+
+D
+
+An 8-bit write-only device select register D. The bit pattern stored in this register is intended to be used for enabling/disabling devices attached to the serial/parallel buses. Writing a device select pattern is done by transferring values into register D.
+
+In the reference implementation, the device select byte logically consists of two four-bit halves (nybbles). Each nybble selects one of 16 enable signals via an attached 4-bit decoder. For instance, the lower nybble could generate an enable signal for an input (listening) device on the bus, while the higher nybble could generate a similar signal that enables the transmitting output device required for a particular data bus transfer.
+
+By convention, the value zero selects a null device (not connected), or some initialisation logic, since both nybbles of the D register will typically be zero upon power-up or reset.
+
+SOR (Serial Output Register)
+
+A write-only parallel-to-serial shift register for serialising an output byte.
+Writing an output value for serialisation is done by writing to register S.
+
+SIR (Serial Input Register)
+
+A read-only serial-to-parallel shift register for deserialising an input byte.
+Reading a deserialised input byte is done by reading register S.
+
+POR (Parallel Output Register)
+
+A write-only tri-state register with 8-bit parallel output.
+Writing an output byte onto the parallel bus is done by writing to register P. If the parallel bus is in tri-state mode (HIZ instruction), a write-operation will end tri-state mode.
+
+PIR (Parallel Input Register)
+
+A read-only 8-bit parallel input register.
+Reading the current 8-bit value on the parallel bus is done by reading register P.
+
+Communication Instructions
+
+The following Signal instructions operate on the communication registers:
+
+SSI (Serial Shift In): Shift in one bit from serial data input line into SIR (at LSB position)
+
+SSO (Serial Shift Out): Shift out one bit from SOR onto serial data output line (from MSB position)
+
+SCL: Set serial clock line high
+
+SCH: Set serial clock line low
+
+HIZ: Put parallel bus into tristate mode
+
+Serial IO and implementing SPI
+
+The Serial Peripheral Interface (SPI) protocol can be implemented using the device select register D, serial register S, and instructions SCL, SCH, SSI, and SSO.
+
+Device Selection: Before communicating with a specific device connected to the serial bus, the corresponding bit pattern representing the device must be set in the D register.
+
+Data Transmission: To transmit data to the selected device, the processor loads the data to be sent into a SOR register.
+The SSO (Serial Shift Out) instruction is then executed repeatedly, which clocks the serial output shift register. As each bit is shifted out, it is sent to the selected device through the serial bus.
+
+Device Deselection: After data transmission is complete, the selected device needs to be deselected to allow other devices to communicate on the bus. This is done by clearing the bit pattern corresponding to the device in the D register.
+
+Data Reception: To receive data from an external device, the SSI (Serial Shift In) instruction is used. It clocks the serial input shift register, allowing the processor to receive one bit of data at a time from the selected device. The received data can then be read from the S register.
+
+CPOL (Clock Polarity): The CPOL parameter determines the idle state of the clock signal.
+In Sonne, the SCL (Serial Clock Low) and SCH (Serial Clock High) instructions can be used to control the clock signal's state. To configure CPOL=0 (clock idles low), execute SCL to set the clock signal low during the idle state. To configure CPOL=1 (clock idles high), execute SCH to set the clock signal high during the idle state.
+
+CPHA (Clock Phase): The CPHA parameter determines the edge of the clock signal where data is captured or changed. In Sonne, the SSI (Serial shift in) and SSO (Serial shift out) instructions can be used to control data transfer on each clock transition. To configure CPHA=0 (data captured on the leading edge), execute SSI before the clock transition to capture the incoming data. To configure CPHA=1 (data captured on the trailing edge), execute SSI after the clock transition to capture the incoming data. Similarly, to transmit data on the leading or trailing edge, execute SSO before or after the clock transition, respectively.
+
+
+
+Review of Source and Target Registers
+
+N (Number Literal)
+
+Register N is a pseudo-register. It can only by the Source of a Transfer instruction.
+During a transfer instruction involving N, the value copied is the byte following the opcode of the current instruction in memory. After the transfer, the offset in the program counter is incremented to skip the literal.
+The Pair NM is a Scrounge pair (see above), meaning that NM as a transfer is suppressed, and RET is executed instead.
+
+M (Memory)
+
+Register M is a pseudo-register. It can be used as Source or Target of a Transfer instruction.
+It is used to transfer values from/to an implied memory cell from/into a register, as described above.
+
+F (Frame)
+
+It can be used as Source or Target of a Transfer instruction.
+Register F contains the bank number for data offsets between 0 and 127. During Trap and Call instructions, the current code bank is stored in F, and during RET instructions, the current code bank is restored from F.
+
+G (Global)
+
+It can be used as Source or Target of a Transfer instruction.
+Register G contains the bank number for data offsets between 128 and 191.
+
+L (Local)
+
+It can be used as Source or Target of a Transfer instruction.
+Register L contains the bank number for data offsets between 192 and 255.
+The ENTER instruction decrements L by 1. The LEAVE instruction increments L by 1.
+
+S (Serial)
+
+Register S is a pseudo-register. It can be used as Source or Target of a Transfer instruction.
+Reading a deserialised input byte is done by reading register S as source.
+Writing an output value for serialisation is done by writing to register S as target.
+
+P (Parallel)
+
+Register P is a pseudo-register. It can be used as Source or Target of a Transfer instruction.
+Reading the current 8-bit value on the parallel bus is done by reading register P as source.
+Writing an output byte onto the parallel bus is done by writing to register P as target.
+
+R (Result)
+
+It can be used as Source or Target of a Transfer instruction.
+This register is part of the ALU. An offset can be added to R using the Offset Pair instructions INC and DEC.
+An ALU function can be computed and stored into R, from the values in the A and B registers by executing an ALU function instruction.
+
+D (Device)
+
+It can only by the Source of a Transfer instruction.
+This register is used for device selection (SPI "Slave Select", latch/output enable pins etc).
+
+J (JUMP), I (If), E (Else)
+These can only be Targets of Transfer instructions.
+The semantics of these instructions are discussed above under "Control Flow".
+
+A, B (Accumulator Registers)
+These can only be Sources of Transfer instructions.
+The values in these registers are the implied arguments for ALU function instructions.
+
