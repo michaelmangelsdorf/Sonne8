@@ -334,6 +334,56 @@ The values in these registers are the implied arguments for ALU function instruc
 
 --------------------------------------- Assembler syntax
 
+Comments are introduced by a semicolon (";"). Everything on the same line after the semicolon is ignored.
+
+Commas ("," and ".") can be used for grouping "phrases" of instructions that logically belong together. They don't generate code and are just for visual clarity.
+
+The assembler directive CLOSE "closes" the current bank for object code placement. Subsequent code is placed from offset zero of the following bank.
+
+Number Literals
+
+Decimal numbers from 0-255 can be included the source text as literals, and be prefixed by an optional minus sign. Hexadecimal numbers must be in two uppercase digits and marked with the suffix "h", for instance: "80h" for 128. Binary numbers must be formatted as two 4-bit groups separated by a dot (".") and have the suffix "b", for instance: "0010.0000b" for 32.
+
+Bank Labels
+
+Bank labels are alphanumeric identifiers, preceded with an at-sign ("@xyz"). Code labels mark the beginning of banks (offset=0), and only one bank label is allowed per bank. Bank labels can be targets of trap calls, CALL and EXIT instructions. 
+
+Offset Labels
+
+Offset labels are identifiers with an at-sign as a suffix ("xyz@"). Offset labels can be targets of xJ, xI, xE instructions. 
+
+Asterisk
+
+An asterisk placed before a bank label encodes a trap call to that address.
+Such label references will generate an opcode that will trigger a TRAP and call the handler function referenced by the label.
+
+Label References
+
+Bank and offset labels are referenced by prefixing their identifier with "<" (for backward references, i.e. the label is defined earlier in the source code than the reference to it), or with ">" (forward reference, i.e. the label is defined later than the reference to it in the source code). If a label is not unique, the reference goes to the nearest occurrence of it.
+A label reference is just a numerical value and can be used as such, too.
+
+Instruction Mnemonics
+
+Mnemonics for transfer pair instructions are two-letter lowercase words such as "ra" (take R into A). Mnemonics of the form ("Nx") for transferring a literal embedded in the code stream into a target register, must be followed by that number, reference or other value to be transferred. Example: "na 80h" transfers the number 128 into register A.
+
+Get-Put Mnemonics
+
+Get operation: Precede the lower case target register name by the upper case Get-Put location, like so: G3a (get a register from location G3).
+Put operation: Precede the upper case Get-Put location by the lower case source register name, like so: rG0 (put r register into location G3).
+
+Offset Mnemonics
+
+f means f0+. f2+ is the mnemonic for the opcode that adds 2 to F. f1- is the mnemonic for the opcode that subtracts 1 from F.
+
+
+
+---------------------------------------  Calling conventions
+
+
+During a CALL or Trap invocation, F is set to the return code bank is stored in F, and R is set to the return code offset (PC) automatically.
+If the R register is used in the subroutine, save it into C4h (following L3 in local storage, low-order/offset at lower offset).
+If the F register is used in the subroutine, save it into C5h (high-order/bank at higher offset).
+Before a RET instruction, these values must be restored to F and R, respectively.
 
 
 
