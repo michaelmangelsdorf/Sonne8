@@ -329,3 +329,13 @@ A, B (Accumulator Registers)
 These can only be Sources of Transfer instructions.
 The values in these registers are the implied arguments for ALU function instructions.
 
+
+
+
+--------------------------------------- Assembler syntax
+
+
+
+
+
+
