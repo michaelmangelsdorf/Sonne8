@@ -24,7 +24,7 @@ C4h (L4), then increments.
 
 7. There is a new scrounge pair, RR => CLIP. Each write to an accumulator register sets W (as before).
 Additionally, the previous value of W is latched into a CLIP register and can be retrieved back into
-that respective register by executing the CLIP scrounge.
+the active accumulator register (W) by executing the CLIP scrounge.
 
 This sounds much more complicated than it is. See the tiny emulator written in C for how the controller works
 after these changes, and also the new opcode matrix PDF. The hardware changes for this should be quite small.
