@@ -22,7 +22,7 @@ In the same vein, G and L ranges are straight banks (in the same memory region w
 6. The ENTER instruction decrements as before, then stores the R into C4h (L4). The LEAVE instruction loads R from
 C4h (L4), then increments as before.
 
-7. There is a new scrounge pair, RR => CLIP. Each write to an accumulator register sets W (as before).
+7. There is a new scrounge pair, FF => CLIP. Each write to an accumulator register sets W (as before).
 Additionally, the previous value of W is latched into a CLIP register and can be retrieved back into
 the active accumulator register (W) by executing the CLIP scrounge.
 
