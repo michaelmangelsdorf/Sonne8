@@ -10,7 +10,7 @@ the R register is set to the high-order return address, the F register is set to
 and the RET instruction expects these values to be there.
 
 3. The ALU has changed. ALU opcodes are now dedicated opcodes, using bits
-of GETPUT instructions. Alu results feed into an independent F register when executing an ALU opcode.
+of GETPUT instructions. Alu results feed into an independent, writable F register when executing an ALU opcode.
 Hence no more need for "locking".
 
 4. There is an additional instruction range, OFFS (like the SIG range of SIGNALS) that adds signed offsets to F.
