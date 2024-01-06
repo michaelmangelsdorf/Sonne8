@@ -5,8 +5,8 @@ The architecture I am using going forward has changed slightly, but significantl
 1. xJ, xT and xE (jump instructions) now change the PC (low order) instead of branching to banks
 (and setting the PC to zero).
 
-2. The X and Y registers are gone. F is used for X, R is used for Y. This means that during a CALL or TRAP,
-the R register is set to the high-order return address, the F register is set to the low-order return address,
+2. The X and Y registers are gone. F is used for Y, R is used for X. This means that during a CALL or TRAP,
+the F register is set to the high-order return address, the R register is set to the low-order return address,
 and the RET instruction expects these values to be there.
 
 3. The ALU has changed. ALU opcodes are now dedicated opcodes, using bits
