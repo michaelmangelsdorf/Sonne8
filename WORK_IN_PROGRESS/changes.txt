@@ -19,8 +19,8 @@ Hence no more need for "locking".
 ignoring the Global/Local mapping, so that the code segment size is the full 256 bytes when accessing code.
 In the same vein, G and L ranges are straight banks (in the same memory region without any mapping).
 
-6. The ENTER instruction decrements, then stores the R into C4h (L4). The LEAVE instruction loads R from
-C4h (L4), then increments.
+6. The ENTER instruction decrements as before, then stores the R into C4h (L4). The LEAVE instruction loads R from
+C4h (L4), then increments as before.
 
 7. There is a new scrounge pair, RR => CLIP. Each write to an accumulator register sets W (as before).
 Additionally, the previous value of W is latched into a CLIP register and can be retrieved back into
