@@ -27,7 +27,8 @@ Additionally, the previous value of W is latched into a CLIP register and can be
 the active accumulator register (W) by executing the CLIP scrounge.
 
 This sounds much more complicated than it is. See the tiny emulator written in C for how the controller works
-after these changes, and also the new opcode matrix PDF. The hardware changes for this should be quite small.
+after these changes, and also the new opcode matrix PDF.
+In this WIP folder, there's also an untested schematics PDF, which I will base the Verilog on.
 
 The next step after bootstrapping a native assembler within the firmware project will be a Verilog/FPGA version.
 
