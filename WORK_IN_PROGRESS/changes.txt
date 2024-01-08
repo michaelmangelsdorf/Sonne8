@@ -3,17 +3,18 @@ I am currently writing firmware for a software emulator for the next revision of
 The architecture I am using going forward has changed slightly, but significantly (rev. Daffodil):
 
 1. xJ, xT and xE (jump instructions) now change the PC (low order) instead of branching to banks
-(and setting the PC to zero).
+(and setting the PC to zero). xT now stands for TRUE, xE has been renamed to xF (FALSE).
 
-2. The X and Y registers are gone. F is used for Y, R is used for X. This means that during a CALL or TRAP,
-the F register is set to the high-order return address, the R register is set to the low-order return address,
+2. The X and Y registers are gone. E (Exit) is used for Y, R (Return) is used for X.
+This means that during a CALL or TRAP, the F register is set to the high-order return address,
+the R register is set to the low-order return address,
 and the RET instruction expects these values to be there.
 
 3. The ALU has changed. ALU opcodes are now dedicated opcodes, using bits
-of GETPUT instructions. Alu results feed into an independent, writable F register when executing an ALU opcode.
+of GETPUT instructions. Alu results feed into the independent, writable R register when executing an ALU opcode.
 Hence no more need for "locking".
 
-4. There is an additional instruction range, OFFS (like the SIG range of SIGNALS) that adds signed offsets to F.
+4. There is an additional instruction range, OFFS (like the SIG range of SIGNALS) that adds signed offsets to R.
 
 5. The address mapping has been sanitized: any fetch instruction just uses the PC high register prefix,
 ignoring the Global/Local mapping, so that the code segment size is the full 256 bytes when accessing code.
@@ -22,13 +23,12 @@ In the same vein, G and L ranges are straight banks (in the same memory region w
 6. The ENTER instruction decrements as before, then stores the R into C4h (L4). The LEAVE instruction loads R from
 C4h (L4), then increments as before.
 
-7. There is a new scrounge pair, FF => CLIP. Each write to an accumulator register sets W (as before).
+7. There is a new scrounge pair, EE => CLIP. Each write to an accumulator register sets W (as before).
 Additionally, the previous value of W is latched into a CLIP register and can be retrieved back into
 the active accumulator register (W) by executing the CLIP scrounge.
 
 This sounds much more complicated than it is. See the tiny emulator written in C for how the controller works
-after these changes, and also the new opcode matrix PDF.
-In this WIP folder, there's also an untested schematics PDF, which I will base the Verilog on.
+after these changes. In this WIP folder, there's also an untested schematics PDF, which I will base the Verilog on.
 
 The next step after bootstrapping a native assembler within the firmware project will be a Verilog/FPGA version.
 
@@ -62,9 +62,9 @@ Code Bank (Code access only)
 
 When fetching instructions or literals from the code stream, the (hidden) Code Bank register is used, independent of the program counter offset.
 
-Frame segment (Data access only)
+Exit segment (Data access only)
 
-If the offset is in the range 0-127, bank register F (Frame) is used.
+If the offset is in the range 0-127, bank register E (Exit) is used.
 
 Global segment (Data access only)
 
@@ -76,7 +76,7 @@ Local segment (Data access only)
 
 If the offset is in the range 192-255, bank register L (Local) is used.
 
-This 64 byte segment serves as a stack frame, which can be swapped out by the ENTER and LEAVE instruction. The first four addresses (192-195) of this segment are referred to as L0-L3 (L for local) and there are special single-cycle ALU instructions for transferring these values to and from the two accumulator registers. These locations are essentially additional accumulator registers local to the current subroutine ("Local variables").
+This 64 byte segment serves as a stack frame, which can be swapped out by the ENTER and LEAVE instruction. The first four addresses (192-195) of this segment are referred to as L0-L3 (L for local) and there are special single-cycle ALU instructions for transferring these values to and from the two accumulator registers. These locations are essentially additional accumulator registers local to the current subroutine ("Local variables"). The fifth address ("L4") in the local segment (Offset C4h) is special in that the ENTER instruction stores the R register at that location in the newly created frame, and the LEAVE instruction restores R from that location before reverting the stack frame.
 
 Pseudo-Register M
 
@@ -110,9 +110,9 @@ If the Target is 13 (OFFS), the opcode represents an ALU Offset instruction. Sou
 
 Every OFFS instruction has a mnemonic of the form: "r" + decimal value + number sign. For example: "r3+" meaning "Increment the R register by 3", and "r1-" meaning "Decrement the R register by 1".  The mnemonic "r" is shorthand for "r0+".
 
-Any Pair opcode which is not Signal or Offset is either a Transfer Pair, or a special Pair called a Scrounge.
-In Transfer Pairs, Source encodes 1 of 8 possible source registers as follows: 000=N, 001=M, 010=F (Frame), 011=G, 100=L, 101=S, 110=P, 111=R.
-In Transfer Pairs, Target encodes 1 of 13 possible target registers as follows: 0000=n.a.(SIG), 0001=M, 0010=F (Frame), 0011=G, 0100=L, 0101=S, 0110=P, 0111=R, 1000=D, 1001=J, 1010=I, 1011=E, 1100=C, 1101=n.a.(OFFS), 1110=A, 1111=B.
+Any Pair opcode which is not Signal or Offset is either a Copy Pair, or a special Pair called a Scrounge.
+In Copy Pairs, Source encodes 1 of 8 possible source registers as follows: 000=N, 001=M, 010=F (Frame), 011=G, 100=L, 101=S, 110=P, 111=R.
+In Copy Pairs, Target encodes 1 of 13 possible target registers as follows: 0000=n.a.(SIG), 0001=M, 0010=F (Frame), 0011=G, 0100=L, 0101=S, 0110=P, 0111=R, 1000=D, 1001=J, 1010=I, 1011=E, 1100=C, 1101=n.a.(OFFS), 1110=A, 1111=B.
 
 Scrounge instructions re-purpose otherwise needless Source-Target combinations such as mm or ff, or instructions that would be unpractical in hardware given timing constraints, such as nm. The opcode nm is scrounged (does not exist) and gives RET, mm is scrounged and gives LID, ff is scrounged and gives CLIP.
 
@@ -147,11 +147,11 @@ Branching
 
 Branching is done by changing the offset of the current instruction within the current Code Bank. This is done by writing the desired offset into one of three pseudo-registers.
 
-Registers J, E, I
+Registers J, F, T
 
 These are pseudo-registers, that can only occur as target registers of transfer instructions. Transferring an offset value into J (Jump) does an unconditional branch to that offset within the current code bank.
-E means Else: Transferring an offset value into E branches only if the ALU result is FALSE (zero).
-I means If: Transferring an offset value into I branches only if the ALU result is TRUE (not zero).
+F means FALSE: Transferring an offset value into F branches only if the ALU result is FALSE (zero).
+T means TRUE: Transferring an offset value into T branches only if the ALU result is TRUE (not zero).
 
 Calling and TRAP mechanism
 
@@ -159,9 +159,9 @@ The LID instruction is an implicit jump to offset 0 of the next bank (numericall
 
 Trap instructions jump to offset 0 of the bank encoded in their respective opcode. They also save the current code bank into the F register, overwriting its value. The current code offset is saved into the R register, overwriting its value, before the code offset is set to 0.
 
-The C pseudo register jumps to offset 0 of the bank number of its source when written to. The instruction also saves the current code bank into the F register, overwriting its value. The current code offset is saved into the R register, overwriting its value, before the code offset is set to 0.
+The C pseudo register jumps to offset 0 of the bank number of its source when written to. The instruction also saves the current code bank into the E register, overwriting its value. The current code offset is saved into the R register, overwriting its value, before the code offset is set to 0.
 
-The RET instruction ("Return") overwrites the current code bank by the value of the F register, and overwrites the current code offset by the value in the R register, conceptually reversing a preceding CALL or Trap instruction.
+The RET instruction ("Return") overwrites the current code bank by the value of the E register, and overwrites the current code offset by the value in the R register, conceptually reversing a preceding CALL or Trap instruction.
 
 
 
@@ -188,7 +188,7 @@ AND Bitwise AND between A and B
 IOR Bitwise inclusive OR between A and B
 EOR Bitwise exclusive OR between A and B
 ADD 8-bit Addition result of A plus B
-CYF Carry bit of addition result of A plus B, zero or one
+CAR Carry bit of addition result of A plus B, zero or one
 ALB Logical flag (TRUE=255, FALSE=0) A less than B
 AEB Logical flag (TRUE=255, FALSE=0) A equals B
 AGB Logical flag (TRUE=255, FALSE=0) A greater than B
@@ -281,10 +281,10 @@ M (Memory)
 Register M is a pseudo-register. It can be used as Source or Target of a Transfer instruction.
 It is used to transfer values from/to an implied memory cell from/into a register, as described above.
 
-F (Frame)
+E (Exit)
 
 It can be used as Source or Target of a Transfer instruction.
-Register F contains the bank number for data offsets between 0 and 127. During Trap and Call instructions, the current code bank is stored in F, and during RET instructions, the current code bank is restored from F.
+Register E contains the bank number for data offsets between 0 and 127. During Trap and Call instructions, the current code bank is stored in E, and during RET instructions, the current code bank is restored from E.
 
 G (Global)
 
@@ -309,10 +309,10 @@ Register P is a pseudo-register. It can be used as Source or Target of a Transfe
 Reading the current 8-bit value on the parallel bus is done by reading register P as source.
 Writing an output byte onto the parallel bus is done by writing to register P as target.
 
-R (Result)
+R (Return)
 
 It can be used as Source or Target of a Transfer instruction.
-This register is part of the ALU. An offset can be added to R using the Offset Pair instructions INC and DEC.
+This register is part of the ALU. An offset can be added to R using the Offset Pair instructions.
 An ALU function can be computed and stored into R, from the values in the A and B registers by executing an ALU function instruction.
 
 D (Device)
@@ -320,7 +320,7 @@ D (Device)
 It can only by the Source of a Transfer instruction.
 This register is used for device selection (SPI "Slave Select", latch/output enable pins etc).
 
-J (JUMP), I (If), E (Else)
+J (JUMP), T (TRUE), F (FALSE)
 These can only be Targets of Transfer instructions.
 The semantics of these instructions are discussed above under "Control Flow".
 
@@ -382,10 +382,10 @@ f means f0+. f2+ is the mnemonic for the opcode that adds 2 to F. f1- is the mne
 ---------------------------------------  Calling conventions
 
 
-During a CALL or Trap invocation, F is set to the return code bank is stored in F, and R is set to the return code offset (PC) automatically.
-If the R register is used in the subroutine, save it into C4h (following L3 in local storage, low-order/offset at lower offset).
-If the F register is used in the subroutine, save it into C5h (high-order/bank at higher offset).
-Before a RET instruction, these values must be restored to F and R, respectively.
+During a CALL or Trap invocation, E is set to the return code bank, and R is set to the return code offset (PC) automatically.
+The R register is also saved into C4h during ENTER (low-order at lower offset).
+If the E register is used in the subroutine, save it into C5h (high-order at higher offset).
+Before a RET instruction, these values must be restored to E and R, respectively.
 
 
 
