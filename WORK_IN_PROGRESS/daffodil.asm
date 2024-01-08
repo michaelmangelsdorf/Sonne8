@@ -46,39 +46,33 @@ ENTER
 
 aL0                       ; Dividend
 bL1                       ; Divisor
-
-na 1, aL2                 ; Shift counter
+na 1, aL2                 ; Shift counter first 1 bit to MSB
 na 0, aL3                 ; Initialise quotient to zero
 
 L1a IDA ne >ELOOP         ; Skip if divisor zero
 
-na 80h.                   ; MSB mask
+na 80h                    ; MSB mask
 MSB_SHIFT@                ; Shift divisor left so that first 1 bit is at MSB
  L1b                      ; Load divisor
  AND ni >DIVIDE           ; Skip when MSB set
  SLB rL1                  ; Shift divisor left and update
- 
- L2b
- IDB r1+ rL2              ; Increment shift counter and update
+ L2r r1+ rL2              ; Increment shift counter and update
  nj <MSB_SHIFT
 
 DIVIDE@
  L3b SLB rL3              ; Shift quotient left and update
- L1a                      ; Divisor
- L0b                      ; Dividend
- OCA r1+ ra               ; Negate divisor
- CYF                      ; Check borrow bit
+ L1a OCA r1+ ra           ; Negate divisor
+ L0b CYF                  ; Dividend check borrow bit
  ne >REP
 
  ADD ra                   ; Accept subtraction
  aL0                      ; Update dividend
- L3a IDA r1+ rL3          ; Increment quotient
+ L3r r1+ rL3              ; Increment quotient
 
 REP@
  L1a SRA rL1              ; Shift divisor right for next subtraction
- L2a IDA ne >ELOOP        ; Check if counter value zero
- IDA r1- rL2
- ni <DIVIDE
+ L2r r1- rL2              ; Decrement counter
+ ni <DIVIDE               ; Branch back if not zero
 
 ELOOP@ L3a, L0b
 
