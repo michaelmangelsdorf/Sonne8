@@ -65,8 +65,7 @@ DIVIDE@
  L0b CYF                  ; Dividend check borrow bit
  ne >REP
 
- ADD ra                   ; Accept subtraction
- aL0                      ; Update dividend
+ ADD rL0                  ; Accept subtraction, update dividend
  L3r r1+ rL3              ; Increment quotient
 
 REP@
