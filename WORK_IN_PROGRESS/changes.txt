@@ -375,7 +375,7 @@ Put operation: Precede the upper case Get-Put location by the lower case source 
 
 Offset Mnemonics
 
-f means f0+. f2+ is the mnemonic for the opcode that adds 2 to F. f1- is the mnemonic for the opcode that subtracts 1 from F.
+f2+ is the mnemonic for the opcode that adds 2 to F. f1- is the mnemonic for the opcode that subtracts 1 from F.
 
 
 
