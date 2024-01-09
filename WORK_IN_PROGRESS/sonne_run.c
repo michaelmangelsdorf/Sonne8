@@ -31,8 +31,7 @@
 
 #define LHS_N     0  /* PSEUDO REG Number */
 
-/* N is a pseudo-register. It only occurs in the source
-   slot of COPY PAIRS.
+/* N is a read-only pseudo-register.
    It stands for the byte following the current instruction
    in memory. This byte is called a code literal.
    When N occurs as the source, that byte is fetched
