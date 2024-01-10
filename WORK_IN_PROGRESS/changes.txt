@@ -5,8 +5,8 @@ The architecture I am using going forward has changed slightly, but significantl
 1. xJ, xT and xE (jump instructions) now change the PC (low order) instead of branching to banks
 (and setting the PC to zero). xT now stands for TRUE, xE has been renamed to xF (FALSE).
 
-2. The X and Y registers are gone. E (Exit) is used for Y, R (Return) is used for X.
-This means that during a CALL or TRAP, the F register is set to the high-order return address,
+2. The X and Y registers are gone. H (Half) is used for Y, R (Return) is used for X.
+This means that during a CALL or TRAP, the H register is set to the high-order return address,
 the R register is set to the low-order return address,
 and the RET instruction expects these values to be there.
 
@@ -23,7 +23,7 @@ In the same vein, G and L ranges are straight banks (in the same memory region w
 6. The ENTER instruction decrements as before, then stores the R into C4h (L4). The LEAVE instruction loads R from
 C4h (L4), then increments as before.
 
-7. There is a new scrounge pair, EE => CLIP. Each write to an accumulator register sets W (as before).
+7. There is a new scrounge pair, HH => CLIP. Each write to an accumulator register sets W (as before).
 Additionally, the previous value of W is latched into a CLIP register and can be retrieved back into
 the active accumulator register (W) by executing the CLIP scrounge.
 
@@ -62,9 +62,9 @@ Code Bank (Code access only)
 
 When fetching instructions or literals from the code stream, the (hidden) Code Bank register is used, independent of the program counter offset.
 
-Exit segment (Data access only)
+Half segment (Data access only)
 
-If the offset is in the range 0-127, bank register E (Exit) is used.
+If the offset is in the range 0-127, bank register H (Half) is used.
 
 Global segment (Data access only)
 
@@ -114,7 +114,7 @@ Any Pair opcode which is not Signal or Offset is either a Copy Pair, or a specia
 In Copy Pairs, Source encodes 1 of 8 possible source registers as follows: 000=N, 001=M, 010=F (Frame), 011=G, 100=L, 101=S, 110=P, 111=R.
 In Copy Pairs, Target encodes 1 of 13 possible target registers as follows: 0000=n.a.(SIG), 0001=M, 0010=F (Frame), 0011=G, 0100=L, 0101=S, 0110=P, 0111=R, 1000=D, 1001=J, 1010=I, 1011=E, 1100=C, 1101=n.a.(OFFS), 1110=A, 1111=B.
 
-Scrounge instructions re-purpose otherwise needless Source-Target combinations such as mm or ff, or instructions that would be unpractical in hardware given timing constraints, such as nm. The opcode nm is scrounged (does not exist) and gives RET, mm is scrounged and gives LID, ff is scrounged and gives CLIP.
+Scrounge instructions re-purpose otherwise needless Source-Target combinations such as mm or hh, or instructions that would be unpractical in hardware given timing constraints, such as nm. The opcode nm is scrounged (does not exist) and gives RET, mm is scrounged and gives LID, hh is scrounged and gives CLIP.
 
 
 
@@ -157,11 +157,11 @@ Calling and TRAP mechanism
 
 The LID instruction is an implicit jump to offset 0 of the next bank (numerically following the current bank). LID resets PC to 0 and increments the bank register by 1.
 
-Trap instructions jump to offset 0 of the bank encoded in their respective opcode. They also save the current code bank into the F register, overwriting its value. The current code offset is saved into the R register, overwriting its value, before the code offset is set to 0.
+Trap instructions jump to offset 0 of the bank encoded in their respective opcode. They also save the current code bank into the H register, overwriting its value. The current code offset is saved into the R register, overwriting its value, before the code offset is set to 0.
 
 The C pseudo register jumps to offset 0 of the bank number of its source when written to. The instruction also saves the current code bank into the E register, overwriting its value. The current code offset is saved into the R register, overwriting its value, before the code offset is set to 0.
 
-The RET instruction ("Return") overwrites the current code bank by the value of the E register, and overwrites the current code offset by the value in the R register, conceptually reversing a preceding CALL or Trap instruction.
+The RET instruction ("Return") overwrites the current code bank by the value in the H register, and overwrites the current code offset by the value in the R register, conceptually reversing a preceding CALL or Trap instruction.
 
 
 
@@ -281,10 +281,10 @@ M (Memory)
 Register M is a pseudo-register. It can be used as Source or Target of a Transfer instruction.
 It is used to transfer values from/to an implied memory cell from/into a register, as described above.
 
-E (Exit)
+H (Half)
 
 It can be used as Source or Target of a Transfer instruction.
-Register E contains the bank number for data offsets between 0 and 127. During Trap and Call instructions, the current code bank is stored in E, and during RET instructions, the current code bank is restored from E.
+Register E contains the bank number for data offsets between 0 and 127. During Trap and Call instructions, the current code bank is saved into H, and during RET instructions, the current code bank is restored from H.
 
 G (Global)
 
