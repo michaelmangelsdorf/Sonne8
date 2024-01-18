@@ -23,9 +23,9 @@ In the same vein, G and L ranges are straight banks (in the same memory region w
 6. The ENTER instruction decrements as before, then stores the R into C4h (L4). The LEAVE instruction loads R from
 C4h (L4), then increments as before.
 
-7. There is a new scrounge pair, HH => CLIP. Each write to an accumulator register sets W (as before).
+7. There are two new scrounge pairs, HH => CLIPA, and GG => CLIPB Each write to an accumulator register sets W (as before).
 Additionally, the previous value of W is latched into a CLIP register and can be retrieved back into
-the active accumulator register (W) by executing the CLIP scrounge.
+an accumulator register by executing the CLIP scrounge.
 
 This sounds much more complicated than it is. See the tiny emulator written in C for how the controller works
 after these changes. In this WIP folder, there's also an untested schematics PDF, which I will base the Verilog on.
@@ -281,7 +281,7 @@ M (Memory)
 Register M is a pseudo-register. It can be used as Source or Target of a Transfer instruction.
 It is used to transfer values from/to an implied memory cell from/into a register, as described above.
 
-H (Half)
+H (Half/High)
 
 It can be used as Source or Target of a Transfer instruction.
 Register E contains the bank number for data offsets between 0 and 127. During Trap and Call instructions, the current code bank is saved into H, and during RET instructions, the current code bank is restored from H.
@@ -309,7 +309,7 @@ Register P is a pseudo-register. It can be used as Source or Target of a Transfe
 Reading the current 8-bit value on the parallel bus is done by reading register P as source.
 Writing an output byte onto the parallel bus is done by writing to register P as target.
 
-R (Return)
+R (Result/Return)
 
 It can be used as Source or Target of a Transfer instruction.
 This register is part of the ALU. An offset can be added to R using the Offset Pair instructions.
@@ -375,7 +375,7 @@ Put operation: Precede the upper case Get-Put location by the lower case source 
 
 Offset Mnemonics
 
-f2+ is the mnemonic for the opcode that adds 2 to F. f1- is the mnemonic for the opcode that subtracts 1 from F.
+R2+ is the mnemonic for the opcode that adds 2 to F. R1- is the mnemonic for the opcode that subtracts 1 from R.
 
 
 
