@@ -48,8 +48,7 @@ module daffo_core
 
 
 /* CPU - The binary layout of these opcodes is
-   engineered and regular, see documention
-   and discrete schematics.
+   pretty regular, see documention and schematics.
 
   In short:
   Bit 7 clear: COPY, SCROUNGE, SIGNAL, DIAL
