@@ -62,7 +62,7 @@ Bank numbers are stored in dedicated bank registers. Which bank register is used
 
 Code Bank (Code access only)
 
-When fetching instructions or literals from the code stream, the (hidden) Code Bank register is used, independent of the program counter offset.
+When fetching instructions or literals from the code stream, the (hidden) PC_HIGH register is used, independent of the program counter offset (!).
 
 Half segment (Data access only)
 
@@ -90,7 +90,7 @@ Writing to the M pseudo-register (instructions of type xM) does as before, put r
 
 Instruction Fetch
 
-Instruction fetch makes use of three "hidden" registers, IW (Instruction Word), PC (Program Counter) and CB (Code Bank).
+Instruction fetch makes use of three "hidden" registers, IW (Instruction Word), PC_LOW (Program Counter offset) and PC_HIGH (Program Counter bank).
 When the CPU is reset, the instruction fetch-decode-execute cycle begins by setting these three registers to zero.
 At the beginning of each cycle, an effective address is formed by prefixing the bank byte in the code bank register (high-order) before the offset byte in the program counter (low-order).
 The memory value stored at that effective address is copied into the instruction word register for decoding.
