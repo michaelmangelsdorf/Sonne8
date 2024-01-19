@@ -406,272 +406,279 @@ case (cpu_phase)
       
     0: begin
        mwren = 0;
-      maddr = {pc_high,pc_low};
-      pc_low = pc_low + 8'd1;
-      end
+       maddr = {pc_high,pc_low};
+       pc_low = pc_low + 8'd1;
+       end
       
     1: begin
-      opcode = mdata_get;
+       opcode = mdata_get;
 
-    /* -------------- READ PHASE ---------------------- */
+       /* -------------- READ PHASE ---------------------- */
   
        case (opcode)
 
            opc_NOP: ;
         
            opc_RET: /* Scrounge NM */
-        begin
-          pc_low =  reg_R;
-         pc_high = reg_H;
-        end
+           begin
+             pc_low =  reg_R;
+             pc_high = reg_H;
+           end
            
-        opc_CNH, opc_CNG, opc_CNL, opc_CNS,
+           opc_CNH, opc_CNG, opc_CNL, opc_CNS,
            opc_CNP, opc_CNR, opc_CND, opc_CNJ,
            opc_CNT, opc_CNF, opc_CNC, opc_CNA,
            opc_CNB:
-        begin
-          maddr = {pc_high,pc_low};
-         pc_low = pc_low + 8'd1;
-        end
+           begin
+             maddr = {pc_high,pc_low};
+             pc_low = pc_low + 8'd1;
+           end
 
            opc_R0P: reg_R_offs = 0;
         
-   /**/    opc_SSI:
-        begin
-          ser_ir = ser_ir << 1;
-          ser_ir = ser_ir | sd_miso;
-        end
+           opc_SSI:
+           begin
+             ser_ir = ser_ir << 1;
+             ser_ir = ser_ir | sd_miso;
+           end
         
            opc_LID: /* Scrounge MM */
-        begin
-          pc_low = 0;
-         pc_high = pc_high + 8'd1;
-         reg_H = pc_high;
-        end
+           begin
+             pc_low = 0;
+             pc_high = pc_high + 8'd1;
+             reg_H = pc_high;
+           end
            
-        opc_CMH, opc_CMG, opc_CML, opc_CMS,
+           opc_CMH, opc_CMG, opc_CML, opc_CMS,
            opc_CMP, opc_CMR, opc_CMD, opc_CMJ,
            opc_CMT, opc_CMF, opc_CMC, opc_CMA,
            opc_CMB:
-        begin
-          maddr = xMx;
-        end
+           begin
+              maddr = xMx;
+           end
 
            opc_R1P: reg_R_offs = 1;
         
-   /**/    opc_SSO:
-        begin
-          sd_mosi = ser_or[7];
-          ser_or = ser_or << 1;       
-        end
+           opc_SSO:
+           begin
+             sd_mosi = ser_or[7];
+             ser_or = ser_or << 1;       
+           end
         
            opc_CHM:
-        begin
-          maddr = xMx;
-         mdata_put = reg_H;
-         mwren = 1;
-        end
+           begin
+             maddr = xMx;
+             mdata_put = reg_H;
+             mwren = 1;
+           end
         
            opc_REA:/* Scrounge HH */
-        begin
-         reg_A = reg_CLIP;
-         case (reg_A[7:6])
-          3: xMx = {reg_L,reg_A};
-          2: xMx = {reg_G,reg_A};
-          default: xMx = {reg_H,reg_A};
-         endcase 
-        end
+           begin
+             reg_A = reg_CLIP;
+             case (reg_A[7:6])
+               3: xMx = {reg_L,reg_A};
+               2: xMx = {reg_G,reg_A};
+               default: xMx = {reg_H,reg_A};
+             endcase 
+           end
         
            opc_CHG: reg_G = reg_H;
            opc_CHL: reg_L = reg_H; 
            opc_CHS: ser_or = reg_H;
-           opc_CHP: begin par_or = reg_H; par_hiz = 0; end
+           opc_CHP:
+           begin
+             par_or = reg_H;
+             par_hiz = 0;
+           end
            
-        opc_CHR:
-        begin
+           opc_CHR:
+           begin
              reg_R = reg_H;
-            reg_R_offs = 0;
-        end
+             reg_R_offs = 0;
+           end
 
            opc_CHD: reg_D = reg_H;
            opc_CHJ: pc_low = reg_H;
-          opc_CHT: if (reg_R + reg_R_offs != 8'b0) pc_low = reg_H;
-        opc_CHF: if (reg_R + reg_R_offs == 8'b0) pc_low = reg_H;
+           opc_CHT: if (reg_R + reg_R_offs != 8'b0) pc_low = reg_H;
+           opc_CHF: if (reg_R + reg_R_offs == 8'b0) pc_low = reg_H;
         
            opc_CHC:
-        begin
+           begin
              reg_R = pc_low;
-            reg_R_offs = 0;
-          pc_low = 0;
-         pc_high = reg_H;
-        end
+             reg_R_offs = 0;
+             pc_low = 0;
+             pc_high = reg_H;
+           end
            
-        opc_R2P: reg_R_offs = 2;
+           opc_R2P: reg_R_offs = 2;
         
            opc_CHA:
-        begin
-         reg_CLIP = reg_A;
-         reg_A = reg_H;
-         case (reg_A[7:6])
-          3: xMx = {reg_L,reg_A};
-          2: xMx = {reg_G,reg_A};
-          default: xMx = {reg_H,reg_A};
-         endcase 
-        end
+           begin
+             reg_CLIP = reg_A;
+             reg_A = reg_H;
+             case (reg_A[7:6])
+               3: xMx = {reg_L,reg_A};
+               2: xMx = {reg_G,reg_A};
+               default: xMx = {reg_H,reg_A};
+             endcase 
+           end
            
-        opc_CHB:
-        begin
-         reg_CLIP = reg_B;
-         reg_B = reg_H;
-         case (reg_B[7:6])
-          3: xMx = {reg_L,reg_B};
-          2: xMx = {reg_G,reg_B};
-          default: xMx = {reg_H,reg_B};
-         endcase 
-        end  
+           opc_CHB:
+           begin
+             reg_CLIP = reg_B;
+             reg_B = reg_H;
+             case (reg_B[7:6])
+               3: xMx = {reg_L,reg_B};
+               2: xMx = {reg_G,reg_B};
+               default: xMx = {reg_H,reg_B};
+             endcase 
+           end  
 
-   /**/    opc_SCL: sd_clk = 0;
+           opc_SCL: sd_clk = 0;
            
-        opc_CGM:
-        begin
-          maddr = xMx;
-         mdata_put = reg_G;
-         mwren = 1;
-        end
+           opc_CGM:
+           begin
+             maddr = xMx;
+             mdata_put = reg_G;
+             mwren = 1;
+           end
            
-        opc_CGH: reg_H = reg_G;
-           
-        opc_REB: /* Scrounge GG */
-        begin
-         reg_B = reg_CLIP;
-         case (reg_B[7:6])
-          3: xMx = {reg_L,reg_B};
-          2: xMx = {reg_G,reg_B};
-          default: xMx = {reg_H,reg_B};
-         endcase 
-        end
-           
-        opc_CGL: reg_L = reg_G;
+           opc_CGH: reg_H = reg_G;
+               
+           opc_REB: /* Scrounge GG */
+           begin
+             reg_B = reg_CLIP;
+             case (reg_B[7:6])
+               3: xMx = {reg_L,reg_B};
+               2: xMx = {reg_G,reg_B};
+               default: xMx = {reg_H,reg_B};
+             endcase 
+           end
+               
+           opc_CGL: reg_L = reg_G;
            opc_CGS: ser_ir = reg_G;
-           opc_CGP: begin par_or = reg_G; par_hiz = 0; end
+           opc_CGP:
+           begin
+             par_or = reg_G;
+             par_hiz = 0;
+           end
 
            opc_CGR:
-        begin
+           begin
              reg_R = reg_G;
-            reg_R_offs = 0;
-        end
+             reg_R_offs = 0;
+           end
 
            opc_CGD: reg_D = reg_G;
            opc_CGJ: pc_low = reg_G;
-          opc_CGT: if (reg_R + reg_R_offs != 8'b0) pc_low = reg_G;
-        opc_CGF: if (reg_R + reg_R_offs == 8'b0) pc_low = reg_G;
+           opc_CGT: if (reg_R + reg_R_offs != 8'b0) pc_low = reg_G;
+           opc_CGF: if (reg_R + reg_R_offs == 8'b0) pc_low = reg_G;
 
            opc_CGC:
-        begin
+           begin
              reg_R = pc_low;
-            reg_R_offs = 0;
-          pc_low = 0;
-         reg_H = pc_high;
-         pc_high = reg_G;
-        end
+             reg_R_offs = 0;
+             pc_low = 0;
+             reg_H = pc_high;
+             pc_high = reg_G;
+           end
         
            opc_R3P: reg_R_offs = 3;
            
-        opc_CGA:
-        begin
-         reg_CLIP = reg_A;
-         reg_A = reg_G;
-         case (reg_A[7:6])
-          3: xMx = {reg_L,reg_A};
-          2: xMx = {reg_G,reg_A};
-          default: xMx = {reg_H,reg_A};
-         endcase 
-        end
-           
-        opc_CGB:
-        begin
-         reg_CLIP = reg_B;
-         reg_B = reg_G;
-         case (reg_B[7:6])
-          3: xMx = {reg_L,reg_B};
-          2: xMx = {reg_G,reg_B};
-          default: xMx = {reg_H,reg_B};
-         endcase 
-        end
+           opc_CGA:
+           begin
+             reg_CLIP = reg_A;
+             reg_A = reg_G;
+             case (reg_A[7:6])
+               3: xMx = {reg_L,reg_A};
+               2: xMx = {reg_G,reg_A};
+               default: xMx = {reg_H,reg_A};
+             endcase 
+           end
+               
+           opc_CGB:
+           begin
+             reg_CLIP = reg_B;
+             reg_B = reg_G;
+             case (reg_B[7:6])
+               3: xMx = {reg_L,reg_B};
+               2: xMx = {reg_G,reg_B};
+               default: xMx = {reg_H,reg_B};
+             endcase 
+           end
 
-   /**/    opc_SCH: sd_clk = 1;
+           opc_SCH: sd_clk = 1;
         
            opc_CLM:
-        begin
-          maddr = xMx;
-         mdata_put = reg_L;
-         mwren = 1;
-        end
+           begin
+             maddr = xMx;
+             mdata_put = reg_L;
+             mwren = 1;
+           end
            
-        opc_CLH: reg_H = reg_L;
+           opc_CLH: reg_H = reg_L;
            opc_CLG: reg_G = reg_L;
            opc_CLL: ;
            opc_CLS: ser_ir = reg_L;
            opc_CLP: begin par_or = reg_L; par_hiz = 0; end
 
            opc_CLR:
-        begin
+           begin
              reg_R = reg_L;
-            reg_R_offs = 0;
-        end
+             reg_R_offs = 0;
+           end
 
            opc_CLD: reg_D = reg_L;
            opc_CLJ: pc_low = reg_L;
-          opc_CLT: if (reg_R + reg_R_offs != 8'b0) pc_low = reg_L;
-        opc_CLF: if (reg_R + reg_R_offs == 8'b0) pc_low = reg_L;
+           opc_CLT: if (reg_R + reg_R_offs != 8'b0) pc_low = reg_L;
+           opc_CLF: if (reg_R + reg_R_offs == 8'b0) pc_low = reg_L;
 
            opc_CLC:
-        begin
+           begin
              reg_R = pc_low;
-            reg_R_offs = 0;
-          pc_low = 0;
-         reg_H = pc_high;
-         pc_high = reg_L;
-        end
+             reg_R_offs = 0;
+             pc_low = 0;
+             reg_H = pc_high;
+             pc_high = reg_L;
+           end
         
            opc_R4M: reg_R_offs = (8'd4 ^ 8'hFFFF) + 8'd1;
-
            
-        opc_CLA:
-        begin
-         reg_CLIP = reg_A;
-         reg_A = reg_L;
-         case (reg_A[7:6])
-          3: xMx = {reg_L,reg_A};
-          2: xMx = {reg_G,reg_A};
-          default: xMx = {reg_H,reg_A};
-         endcase 
-        end
-           
-        opc_CLB:
-        begin
-         reg_CLIP = reg_B;
-         reg_B = reg_L;
-         case (reg_B[7:6])
-          3: xMx = {reg_L,reg_B};
-          2: xMx = {reg_G,reg_B};
-          default: xMx = {reg_H,reg_B};
-         endcase 
-        end
-
-   /**/    opc_HIZ:
+           opc_CLA:
            begin
-        par_hiz = 1;
-        seg7Byte2(reg_A); /*DBG print*/
-        seg7Byte3(reg_B);
-        end
+             reg_CLIP = reg_A;
+             reg_A = reg_L;
+             case (reg_A[7:6])
+               3: xMx = {reg_L,reg_A};
+               2: xMx = {reg_G,reg_A};
+               default: xMx = {reg_H,reg_A};
+             endcase 
+           end
+               
+           opc_CLB:
+           begin
+             reg_CLIP = reg_B;
+             reg_B = reg_L;
+             case (reg_B[7:6])
+               3: xMx = {reg_L,reg_B};
+               2: xMx = {reg_G,reg_B};
+               default: xMx = {reg_H,reg_B};
+             endcase 
+           end
+
+           opc_HIZ:
+           begin
+             par_hiz = 1;
+             seg7Byte2(reg_A); /*DBG print*/
+             seg7Byte3(reg_B);
+           end
   
            opc_CSM:
-        begin
-          maddr = xMx;
-         mdata_put = ser_or;
-         mwren = 1;
-        end
+           begin
+             maddr = xMx;
+             mdata_put = ser_or;
+             mwren = 1;
+           end
 
            opc_CSH: reg_H = ser_or;
            opc_CSG: reg_G = ser_or;
@@ -680,57 +687,57 @@ case (cpu_phase)
            opc_CSP: begin par_or = ser_or; par_hiz = 0; end
 
            opc_CSR:
-        begin
+           begin
              reg_R = ser_or;
-            reg_R_offs = 0;
-        end
+             reg_R_offs = 0;
+           end
 
            opc_CSD: reg_D = ser_or;
            opc_CSJ: pc_low = ser_or;
-          opc_CST: if (reg_R + reg_R_offs != 8'b0) pc_low = ser_or;
-        opc_CSF: if (reg_R + reg_R_offs == 8'b0) pc_low = ser_or;
+           opc_CST: if (reg_R + reg_R_offs != 8'b0) pc_low = ser_or;
+           opc_CSF: if (reg_R + reg_R_offs == 8'b0) pc_low = ser_or;
 
            opc_CSC:
-        begin
+           begin
              reg_R = pc_low;
-            reg_R_offs = 0;
-          pc_low = 0;
-         reg_H = pc_high;
-         pc_high = ser_or;
-        end
+             reg_R_offs = 0;
+             pc_low = 0;
+             reg_H = pc_high;
+             pc_high = ser_or;
+           end
 
            opc_R3M: reg_R_offs = (8'd3 ^ 8'hFFFF) + 8'd1;
 
-        opc_CSA:
-        begin
-         reg_CLIP = reg_A;
-         reg_A = ser_or;
-         case (reg_A[7:6])
-          3: xMx = {reg_L,reg_A};
-          2: xMx = {reg_G,reg_A};
-          default: xMx = {reg_H,reg_A};
-         endcase 
-        end
-           
-        opc_CSB:
-        begin
-         reg_CLIP = reg_B;
-         reg_B = ser_or;
-         case (reg_B[7:6])
-          3: xMx = {reg_L,reg_B};
-          2: xMx = {reg_G,reg_B};
-          default: xMx = {reg_H,reg_B};
-         endcase 
-        end
+           opc_CSA:
+           begin
+             reg_CLIP = reg_A;
+             reg_A = ser_or;
+             case (reg_A[7:6])
+               3: xMx = {reg_L,reg_A};
+               2: xMx = {reg_G,reg_A};
+               default: xMx = {reg_H,reg_A};
+             endcase 
+           end
+               
+           opc_CSB:
+           begin
+             reg_CLIP = reg_B;
+             reg_B = ser_or;
+             case (reg_B[7:6])
+               3: xMx = {reg_L,reg_B};
+               2: xMx = {reg_G,reg_B};
+               default: xMx = {reg_H,reg_B};
+             endcase 
+           end
 
-   /**/    opc_OLD: maddr = {reg_L,8'hC4};
+           opc_OLD: maddr = {reg_L,8'hC4};
 
            opc_CPM:
-        begin
-          maddr = xMx;
-         mdata_put = par_ir;
-         mwren = 1;
-        end
+           begin
+             maddr = xMx;
+             mdata_put = par_ir;
+             mwren = 1;
+           end
    
            opc_CPH: reg_H = par_ir;
            opc_CPG: reg_G = par_ir;
@@ -739,63 +746,63 @@ case (cpu_phase)
            opc_CPP: ;
 
            opc_CPR:
-        begin
+           begin
              reg_R = par_ir;
-            reg_R_offs = 0;
-        end
+             reg_R_offs = 0;
+           end
 
            opc_CPD: reg_D = par_ir;
            opc_CPJ: pc_low = par_ir;
-          opc_CPT: if (reg_R + reg_R_offs != 8'b0) pc_low = par_ir;
-        opc_CPF: if (reg_R + reg_R_offs == 8'b0) pc_low = par_ir;
+           opc_CPT: if (reg_R + reg_R_offs != 8'b0) pc_low = par_ir;
+           opc_CPF: if (reg_R + reg_R_offs == 8'b0) pc_low = par_ir;
 
            opc_CPC:
-        begin
+           begin
              reg_R = pc_low;
-            reg_R_offs = 0;
-          pc_low = 0;
-         reg_H = pc_high;
-         pc_high = par_ir;
-        end
+             reg_R_offs = 0;
+             pc_low = 0;
+             reg_H = pc_high;
+             pc_high = par_ir;
+           end
         
            opc_R2M: reg_R_offs = (8'd2 ^ 8'hFFFF) + 8'd1;
            
-        opc_CPA:
-        begin
-         reg_CLIP = reg_A;
-         reg_A = par_ir;
-         case (reg_A[7:6])
-          3: xMx = {reg_L,reg_A};
-          2: xMx = {reg_G,reg_A};
-          default: xMx = {reg_H,reg_A};
-         endcase 
-        end
-           
-        opc_CPB:
-        begin
-         reg_CLIP = reg_B;
-         reg_B = par_ir;
-         case (reg_B[7:6])
-          3: xMx = {reg_L,reg_B};
-          2: xMx = {reg_G,reg_B};
-          default: xMx = {reg_H,reg_B};
-         endcase 
-        end
+           opc_CPA:
+           begin
+             reg_CLIP = reg_A;
+             reg_A = par_ir;
+             case (reg_A[7:6])
+               3: xMx = {reg_L,reg_A};
+               2: xMx = {reg_G,reg_A};
+               default: xMx = {reg_H,reg_A};
+             endcase 
+           end
+               
+           opc_CPB:
+           begin
+             reg_CLIP = reg_B;
+             reg_B = par_ir;
+             case (reg_B[7:6])
+               3: xMx = {reg_L,reg_B};
+               2: xMx = {reg_G,reg_B};
+               default: xMx = {reg_H,reg_B};
+             endcase 
+           end
 
-   /**/    opc_NEW:
-        begin
-          reg_L = reg_L - 8'd1;;
-          maddr = {reg_L,8'hC4};
+           opc_NEW:
+           begin
+             reg_L = reg_L - 8'd1;;
+             maddr = {reg_L,8'hC4};
              mdata_put = reg_R + reg_R_offs;
-         mwren = 1;
-        end
+             mwren = 1;
+           end
   
            opc_CRM:
-        begin
-          maddr = xMx;
-         mdata_put = reg_R + reg_R_offs;
-         mwren = 1;
-        end
+           begin
+             maddr = xMx;
+             mdata_put = reg_R + reg_R_offs;
+             mwren = 1;
+           end
    
            opc_CRH: reg_H = reg_R + reg_R_offs;
            opc_CRG: reg_G = reg_R + reg_R_offs;
@@ -805,55 +812,54 @@ case (cpu_phase)
            opc_CRR: ;
            opc_CRD: reg_D = reg_R + reg_R_offs;
            opc_CRJ: pc_low = reg_R + reg_R_offs;
-          opc_CRT: if (reg_R + reg_R_offs != 8'b0) pc_low = reg_R + reg_R_offs;
-        opc_CRF: if (reg_R + reg_R_offs == 8'b0) pc_low = reg_R + reg_R_offs;
+           opc_CRT: if (reg_R + reg_R_offs != 8'b0) pc_low = reg_R + reg_R_offs;
+           opc_CRF: if (reg_R + reg_R_offs == 8'b0) pc_low = reg_R + reg_R_offs;
 
            opc_CRC:
-        begin
-         reg_H = pc_high;
-         pc_high = reg_R + reg_R_offs;
+           begin
+             reg_H = pc_high;
+             pc_high = reg_R + reg_R_offs;
              reg_R = pc_low;
-            reg_R_offs = 0;
-          pc_low = 0;
-        end
+             reg_R_offs = 0;
+             pc_low = 0;
+           end
 
            opc_R1M: reg_R_offs = (8'd1 ^ 8'hFFFF) + 8'd1;
 
            opc_CRA:
-        begin
-         reg_CLIP = reg_A;
-         reg_A = reg_R + reg_R_offs;
-         case (reg_A[7:6])
-          3: xMx = {reg_L,reg_A};
-          2: xMx = {reg_G,reg_A};
-          default: xMx = {reg_H,reg_A};
-         endcase
-           //if (reg_A == 0) begin pc_low = 15; seg7Byte1(reg_A == 0 ? 1:0); end /*DBG*/
-        end
+           begin
+             reg_CLIP = reg_A;
+             reg_A = reg_R + reg_R_offs;
+             case (reg_A[7:6])
+               3: xMx = {reg_L,reg_A};
+               2: xMx = {reg_G,reg_A};
+               default: xMx = {reg_H,reg_A};
+             endcase
+           end
         
            opc_CRB:
-        begin
-         reg_CLIP = reg_B;
-         reg_B = reg_R + reg_R_offs;
-         case (reg_B[7:6])
-          3: xMx = {reg_L,reg_B};
-          2: xMx = {reg_G,reg_B};
-          default: xMx = {reg_H,reg_B};
-         endcase 
-        end
+           begin
+             reg_CLIP = reg_B;
+             reg_B = reg_R + reg_R_offs;
+             case (reg_B[7:6])
+               3: xMx = {reg_L,reg_B};
+               2: xMx = {reg_G,reg_B};
+               default: xMx = {reg_H,reg_B};
+             endcase 
+           end
 
-         /*Traps, 64 opcodes from 80h-bFh*/ 
+           /*Traps, 64 opcodes from 80h-bFh*/ 
            
-        default:
-        begin
+           default:
+           begin
              reg_R = pc_low;
-            reg_R_offs = 0;
-         pc_low = 0;
-         reg_H = pc_high;
-         pc_high = opcode[5:0];       
-        end
+             reg_R_offs = 0;
+             pc_low = 0;
+             reg_H = pc_high;
+             pc_high = opcode[5:0];       
+           end
 
-        /*GETPUT*/
+           /*GETPUT*/
         
            opc_G0A, opc_G0B, opc_G0R: maddr = {reg_G, 8'h80};
            opc_G1A, opc_G1B, opc_G1R: maddr = {reg_G, 8'h81};
@@ -875,101 +881,101 @@ case (cpu_phase)
           /*ALU*/
     
            opc_IDA:
-        begin
+           begin
              reg_R = reg_A;
-            reg_R_offs = 0;
+             reg_R_offs = 0;
            end
 
            opc_IDB:
-        begin
+           begin
              reg_R = reg_B;
-            reg_R_offs = 0;
+             reg_R_offs = 0;
            end
 
            opc_OCA:
-        begin
+           begin
              reg_R = reg_A ^ 8'hFF;
-            reg_R_offs = 0;
+             reg_R_offs = 0;
            end
 
-        opc_OCB:
-        begin
+           opc_OCB:
+           begin
              reg_R = reg_B ^ 8'hFF;
-            reg_R_offs = 0;
+             reg_R_offs = 0;
            end
 
-        opc_SLA:
-        begin
+           opc_SLA:
+           begin
              reg_R = reg_A << 1;
-            reg_R_offs = 0;
+             reg_R_offs = 0;
            end
         
-        opc_SLB:
-        begin
+           opc_SLB:
+           begin
              reg_R = reg_B << 1;
-            reg_R_offs = 0;
+             reg_R_offs = 0;
            end
 
           opc_SRA:
-        begin
-             reg_R = reg_A >> 1;
+          begin
+            reg_R = reg_A >> 1;
             reg_R_offs = 0;
-           end
+          end
 
           opc_SRB:
-        begin
-             reg_R = reg_B >> 1;
+          begin
+            reg_R = reg_B >> 1;
             reg_R_offs = 0;
-           end
+          end
 
           opc_AND:
-        begin
-             reg_R = reg_A & reg_B;
+          begin
+            reg_R = reg_A & reg_B;
             reg_R_offs = 0;
-           end
+          end
 
           opc_IOR:
-        begin
-             reg_R = reg_A | reg_B;
+          begin
+            reg_R = reg_A | reg_B;
             reg_R_offs = 0;
-           end
+          end
 
           opc_EOR:
-        begin
-             reg_R = reg_A ^ reg_B;
+          begin
+            reg_R = reg_A ^ reg_B;
             reg_R_offs = 0;
-           end
+          end
 
           opc_ADD:
-        begin
-             reg_R = reg_A + reg_B;
+          begin
+            reg_R = reg_A + reg_B;
             reg_R_offs = 0;
-           end
+          end
 
-           opc_CAR:
-           begin
-             temp9bits = reg_A + reg_B;   
-         reg_R = temp9bits[8] ? 1'b1 : 1'b0;
+          opc_CAR:
+          begin
+            temp9bits = reg_A + reg_B;   
+            reg_R = temp9bits[8] ? 1'b1 : 1'b0;
             reg_R_offs = 0;
-         end
+          end
         
           opc_ALB:
-        begin
-             reg_R = (reg_A < reg_B) ? 8'd255:8'd0;
+          begin
+            reg_R = (reg_A < reg_B) ? 8'd255:8'd0;
             reg_R_offs = 0;
-           end
+          end
         
           opc_AEB:
-        begin
-             reg_R = (reg_A == reg_B) ? 8'd255:8'd0;
+          begin
+            reg_R = (reg_A == reg_B) ? 8'd255:8'd0;
             reg_R_offs = 0;
-           end
+          end
 
           opc_AGB:
-        begin
-             reg_R = (reg_A > reg_B) ? 8'd255:8'd0;
+          begin
+            reg_R = (reg_A > reg_B) ? 8'd255:8'd0;
             reg_R_offs = 0;
-           end
+          end
         
         endcase
         end /*of READ PHASE*/
@@ -985,46 +991,46 @@ case (cpu_phase)
         opc_CNP, opc_CMP: par_or = mdata_get;
         opc_CNR, opc_CMR: reg_R = mdata_get;
         opc_CND, opc_CMD: reg_D = mdata_get; 
-        opc_CNJ, opc_CMJ: begin pc_low = mdata_get; seg7Byte1(pc_low); end /*DBG print*/
+        opc_CNJ, opc_CMJ: pc_low = mdata_get;
         opc_CNT, opc_CMT: if (reg_R + reg_R_offs != 8'b0) pc_low = mdata_get;
         opc_CNF, opc_CMF: if (reg_R + reg_R_offs == 8'b0) pc_low = mdata_get;    
              
         opc_CNC, opc_CMC:
         begin
-             reg_R = pc_low + 8'd1;
-            reg_R_offs = 0;
+          reg_R = pc_low + 8'd1;
+          reg_R_offs = 0;
           pc_low = 0;
-         reg_H = pc_high;
-         pc_high = reg_R;
+          reg_H = pc_high;
+          pc_high = reg_R;
         end
         
         opc_CNA, opc_CMA:
         begin
-         reg_CLIP = reg_A;
-         reg_A = mdata_get;
-         case (reg_A[7:6])
-          3: xMx = {reg_L,reg_A};
-          2: xMx = {reg_G,reg_A};
-          default: xMx = {reg_H,reg_A};
-         endcase 
+          reg_CLIP = reg_A;
+          reg_A = mdata_get;
+          case (reg_A[7:6])
+            3: xMx = {reg_L,reg_A};
+            2: xMx = {reg_G,reg_A};
+            default: xMx = {reg_H,reg_A};
+          endcase 
         end
           
         opc_CNB, opc_CMB:
         begin
-         reg_CLIP = reg_B;
-         reg_B = mdata_get;
-         case (reg_B[7:6])
-          3: xMx = {reg_L,reg_B};
-          2: xMx = {reg_G,reg_B};
-          default: xMx = {reg_H,reg_B};
-         endcase 
-        end                                           
+          reg_CLIP = reg_B;
+          reg_B = mdata_get;
+          case (reg_B[7:6])
+            3: xMx = {reg_L,reg_B};
+            2: xMx = {reg_G,reg_B};
+            default: xMx = {reg_H,reg_B};
+          endcase 
+        end
     
-           opc_OLD:
+        opc_OLD:
         begin
           reg_L = reg_L + 8'd1;
-             reg_R = mdata_get;
-            reg_R_offs = 0;         
+          reg_R = mdata_get;
+          reg_R_offs = 0;
         end
 
          /*Traps, 64 opcodes from 80h-bFh*/ 
@@ -1033,59 +1039,59 @@ case (cpu_phase)
 
         /*GETPUT*/
         
-           opc_G0A, opc_G1A, opc_G2A, opc_G3A,
-           opc_L0A, opc_L1A, opc_L2A, opc_L3A:
+        opc_G0A, opc_G1A, opc_G2A, opc_G3A,
+        opc_L0A, opc_L1A, opc_L2A, opc_L3A:
         begin
-         reg_CLIP = reg_A;
-         reg_A = mdata_get;
-         case (reg_A[7:6])
-          3: xMx = {reg_L,reg_A};
-          2: xMx = {reg_G,reg_A};
-          default: xMx = {reg_H,reg_A};
-         endcase 
+          reg_CLIP = reg_A;
+          reg_A = mdata_get;
+          case (reg_A[7:6])
+            3: xMx = {reg_L,reg_A};
+            2: xMx = {reg_G,reg_A};
+            default: xMx = {reg_H,reg_A};
+          endcase 
         end
            
-           opc_AG0, opc_AG1, opc_AG2, opc_AG3,
-           opc_AL0, opc_AL1, opc_AL2, opc_AL3:
+        opc_AG0, opc_AG1, opc_AG2, opc_AG3,
+        opc_AL0, opc_AL1, opc_AL2, opc_AL3:
         begin
           mdata_put = reg_A;
-         mwren = 1;
+          mwren = 1;
         end
 
-           opc_G0B, opc_G1B, opc_G2B, opc_G3B,
-           opc_L0B, opc_L1B, opc_L2B, opc_L3B:
+        opc_G0B, opc_G1B, opc_G2B, opc_G3B,
+        opc_L0B, opc_L1B, opc_L2B, opc_L3B:
         begin
-         reg_CLIP = reg_B;
-         reg_B = mdata_get;
-         case (reg_B[7:6])
-          3: xMx = {reg_L,reg_B};
-          2: xMx = {reg_G,reg_B};
-          default: xMx = {reg_H,reg_B};
-         endcase 
-        end     
-        
-           opc_BG0, opc_BG1, opc_BG2, opc_BG3,
-           opc_BL0, opc_BL1, opc_BL2, opc_BL3:
-        begin
-          mdata_put = reg_B;
-         mwren = 1;
-        end     
-        
-           opc_G0R, opc_G1R, opc_G2R, opc_G3R,
-           opc_L0R, opc_L1R, opc_L2R, opc_L3R:
-        begin
-             reg_R = mdata_get;
-            reg_R_offs = 0;
-        end       
-        
-           opc_RG0, opc_RG1, opc_RG2, opc_RG3,
-           opc_RL0, opc_RL1, opc_RL2, opc_RL3:
-        begin
-          mdata_put = reg_R + reg_R_offs;
-         mwren = 1;
+          reg_CLIP = reg_B;
+          reg_B = mdata_get;
+          case (reg_B[7:6])
+            3: xMx = {reg_L,reg_B};
+            2: xMx = {reg_G,reg_B};
+            default: xMx = {reg_H,reg_B};
+          endcase 
         end
         
-         endcase
+        opc_BG0, opc_BG1, opc_BG2, opc_BG3,
+        opc_BL0, opc_BL1, opc_BL2, opc_BL3:
+        begin
+          mdata_put = reg_B;
+          mwren = 1;
+        end
+        
+        opc_G0R, opc_G1R, opc_G2R, opc_G3R,
+        opc_L0R, opc_L1R, opc_L2R, opc_L3R:
+        begin
+          reg_R = mdata_get;
+          reg_R_offs = 0;
+        end
+        
+        opc_RG0, opc_RG1, opc_RG2, opc_RG3,
+        opc_RL0, opc_RL1, opc_RL2, opc_RL3:
+        begin
+          mdata_put = reg_R + reg_R_offs;
+          mwren = 1;
+        end
+        
+        endcase
     
 endcase
 endmodule
@@ -1176,3 +1182,4 @@ LEAVE RET
 CLOSE
 
 */
+
