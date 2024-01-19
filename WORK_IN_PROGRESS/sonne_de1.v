@@ -1099,6 +1099,8 @@ endmodule
 
 /* Use my sasm.c to assemble the following source
    and populate the RAM in Quartus with the resulting .mif file.
+   (The Verilog code uses a three-letter alpha-only variation
+   of these mnemonics (CNA instead of NA, R1P instead of R1+ etc.)
 
 NA 44
 NB 7
