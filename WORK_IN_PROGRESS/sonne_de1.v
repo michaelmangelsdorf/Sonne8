@@ -350,8 +350,8 @@ endcase
 
 
 /* Device Select Register D:
-   High order nybble encodes active low device select line,
-  low order nybble encodes active high device select line.
+  Low order nybble encodes active low device select line,
+  high order nybble encodes active high device select line.
   Value one: Empty device/NOP
 */
 
@@ -359,7 +359,7 @@ reg [15:0] io_devsel_AL;
 reg [15:0] io_devsel_AH;
 always@(posedge clk)
 begin
-case (reg_D[7:4])
+case (reg_D[3:0])
 0:  io_devsel_AL = 16'b0000_0000_0000_0001; /*Not connected*/
 1:  io_devsel_AL = 16'b0000_0000_0000_0010; /*SPI bus*/
 2:  io_devsel_AL = 16'b0000_0000_0000_0100;
@@ -377,7 +377,7 @@ case (reg_D[7:4])
 14: io_devsel_AL = 16'b0100_0000_0000_0000;
 15: io_devsel_AL = 16'b1000_0000_0000_0000;
 endcase
-case (reg_D[3:0])
+case (reg_D[7:4])
 0:  io_devsel_AH = 16'b0000_0000_0000_0001; /*Not connected*/
 1:  io_devsel_AH = 16'b0000_0000_0000_0010;
 2:  io_devsel_AH = 16'b0000_0000_0000_0100;
