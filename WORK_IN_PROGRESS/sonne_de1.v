@@ -10,7 +10,7 @@
 
    Resource usage on the DE1 was:
    (Quartus II v. 21-odd)
-   Logic ALM: 598
+   Logic ALMs: 598
    Registers: 364
    Block RAM memory bits: 524.288
 */
