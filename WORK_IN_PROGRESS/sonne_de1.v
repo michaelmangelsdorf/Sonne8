@@ -395,7 +395,7 @@ case (reg_D[3:0])
 14: io_devsel_AH = 16'b0100_0000_0000_0000;
 15: io_devsel_AH = 16'b1000_0000_0000_0000;
 endcase
-   if (io_devsel_AL[1] == 1'd1) sd_cs = 1'd0;
+if (io_devsel_AL[1] == 1'd1) sd_cs = 1'd0;
 else sd_cs = 1'd1;
 end
 
@@ -662,7 +662,7 @@ case (cpu_phase)
    /**/    opc_HIZ:
            begin
         par_hiz = 1;
-        seg7Byte2(reg_A);
+        seg7Byte2(reg_A); /*DBG print*/
         seg7Byte3(reg_B);
         end
   
@@ -985,7 +985,7 @@ case (cpu_phase)
         opc_CNP, opc_CMP: par_or = mdata_get;
         opc_CNR, opc_CMR: reg_R = mdata_get;
         opc_CND, opc_CMD: reg_D = mdata_get; 
-        opc_CNJ, opc_CMJ: begin pc_low = mdata_get; seg7Byte1(pc_low); end
+        opc_CNJ, opc_CMJ: begin pc_low = mdata_get; seg7Byte1(pc_low); end /*DBG print*/
         opc_CNT, opc_CMT: if (reg_R + reg_R_offs != 8'b0) pc_low = mdata_get;
         opc_CNF, opc_CMF: if (reg_R + reg_R_offs == 8'b0) pc_low = mdata_get;    
              
@@ -1091,5 +1091,88 @@ endcase
 endmodule
 
 
+/* Use my sasm.c to assemble the following source
+   and populate the RAM in Quartus with the resulting .mif file.
 
+NA 44
+NB 7
+ *divmod8 HIZ ; HIZ instruction "hijacked" for 7-segment display output
+              ; This outputs 2 (remainder) 6 (quotient)
+stop@ NJ <stop
 
+CLOSE
+
+; ----------------------------- mul8 ----------------------------------------
+
+@mul8 ; Multiply A * B, result in A and B 
+ENTER
+
+   AL1                    ; Initialize copy multiplicand (low order)
+   BL0                    ; Save multiplier
+   NA 0 AL2               ; Clear high-order
+   NA 8 AL3               ; Initialize loop counter, 8 bits
+
+loop@
+   NB 1, L1A AND,
+   NF >skip
+   L0A, L2B ADD           ; Add multiplier if low order lsb set
+   RL2
+
+skip@
+   NB 1, L2A AND RG0      ; Check if high order lsb set
+   L1A SRA, RL1           ; Shift low order byte right
+   L2A SRA, RL2           ; Shift high order byte right
+   
+   G0A IDA, NF >done
+   NA 80h, L1B IOR RL1
+
+done@
+   L3R R1- RL3
+   NT <loop
+   L1A
+   L2B
+
+LEAVE
+RET
+CLOSE
+
+; ----------------------------- divmod8 -------------------------------------
+
+@divmod8 ; Divide A by B, division result in A, remainder in B
+ENTER
+
+AL0                       ; Dividend
+BL1                       ; Divisor
+NA 1, AL2                 ; Shift counter first 1 bit to MSB
+NA 0, AL3                 ; Initialise quotient to zero
+
+L1A IDA NF >ELOOP         ; Skip if divisor zero
+
+NA 80h                    ; MSB mask
+MSB_SHIFT@                ; Shift divisor left so that first 1 bit is at MSB
+ L1B                      ; Load divisor
+ AND NT >DIVIDE           ; Skip when MSB set
+ SLB RL1                  ; Shift divisor left and update
+ L2R R1+ RL2              ; Increment shift counter and update
+ NJ <MSB_SHIFT
+
+DIVIDE@
+ L3B SLB RL3              ; Shift quotient left and update
+ L1A OCA R1+ RA           ; Negate divisor
+ L0B CAR                  ; Dividend check borrow bit
+ NF >REP
+
+ ADD RL0                  ; Accept subtraction, update dividend
+ L3R R1+ RL3              ; Increment quotient
+
+REP@
+ L1A SRA RL1              ; Shift divisor right for next subtraction
+ L2R R1- RL2              ; Decrement counter
+ NT <DIVIDE               ; Branch back if not zero
+
+ELOOP@ L3A, L0B
+
+LEAVE RET
+CLOSE
+
+*/
