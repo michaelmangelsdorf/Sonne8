@@ -395,7 +395,7 @@ case (reg_D[3:0])
 14: io_devsel_AH = 16'b0100_0000_0000_0000;
 15: io_devsel_AH = 16'b1000_0000_0000_0000;
 endcase
-if (io_devsel_AL == 1) sd_cs = 1'd0;
+   if (io_devsel_AL[1] == 1'd1) sd_cs = 1'd0;
 else sd_cs = 1'd1;
 end
 
