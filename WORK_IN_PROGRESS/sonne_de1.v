@@ -9,11 +9,10 @@
    with output on 7-segment display.
 
    Resource usage on the DE1 was:
-   (Quartus II)
+   (Quartus II v. 21-odd)
    Logic ALM: 598
    Registers: 364
-   Block memory bits: 524.288
-   RAM blocks: 64
+   Block RAM memory bits: 524.288
 */
 
 
