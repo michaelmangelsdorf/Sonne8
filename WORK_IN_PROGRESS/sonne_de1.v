@@ -9,10 +9,10 @@
    with output on 7-segment display.
 
    Resource usage on the DE1 was:
-   (Quartus II v. 21-odd)
-   Logic ALMs: 598
+   (Quartus II)
+   Logic ALM: 598
    Registers: 364
-   Block RAM memory bits: 524.288
+   Block memory bits: 524.288
 */
 
 
@@ -48,7 +48,7 @@ module daffo_core
 
 
 /* CPU - The binary layout of these opcodes is
-   pretty regular, see documention and schematics.
+   regular, see documention and discrete schematics.
 
   In short:
   Bit 7 clear: COPY, SCROUNGE, SIGNAL, DIAL
@@ -62,198 +62,198 @@ module daffo_core
   A B R + G(lobal) L(ocal) + offset => GET
 */
 
-localparam opc_NOP = 8'b00000000; /*00*/
-localparam opc_RET = 8'b00000001; /*01*/
-localparam opc_CNH = 8'b00000010; /*02*/
-localparam opc_CNG = 8'b00000011; /*03*/
-localparam opc_CNL = 8'b00000100; /*04*/
-localparam opc_CNS = 8'b00000101; /*05*/
-localparam opc_CNP = 8'b00000110; /*06*/
-localparam opc_CNR = 8'b00000111; /*07*/
-localparam opc_CND = 8'b00001000; /*08*/
-localparam opc_CNJ = 8'b00001001; /*09*/
-localparam opc_CNT = 8'b00001010; /*0A*/
-localparam opc_CNF = 8'b00001011; /*0B*/
-localparam opc_CNC = 8'b00001100; /*0C*/
-localparam opc_R0P = 8'b00001101; /*0D*/
-localparam opc_CNA = 8'b00001110; /*0E*/
-localparam opc_CNB = 8'b00001111; /*0F*/
-localparam opc_SSI = 8'b00010000; /*10*/
-localparam opc_LID = 8'b00010001; /*11*/
-localparam opc_CMH = 8'b00010010; /*12*/
-localparam opc_CMG = 8'b00010011; /*13*/
-localparam opc_CML = 8'b00010100; /*14*/
-localparam opc_CMS = 8'b00010101; /*15*/
-localparam opc_CMP = 8'b00010110; /*16*/
-localparam opc_CMR = 8'b00010111; /*17*/
-localparam opc_CMD = 8'b00011000; /*18*/
-localparam opc_CMJ = 8'b00011001; /*19*/
-localparam opc_CMT = 8'b00011010; /*1A*/
-localparam opc_CMF = 8'b00011011; /*1B*/
-localparam opc_CMC = 8'b00011100; /*1C*/
-localparam opc_R1P = 8'b00011101; /*1D*/
-localparam opc_CMA = 8'b00011110; /*1E*/
-localparam opc_CMB = 8'b00011111; /*1F*/
-localparam opc_SSO = 8'b00100000; /*20*/
-localparam opc_CHM = 8'b00100001; /*21*/
-localparam opc_REA = 8'b00100010; /*22*/
-localparam opc_CHG = 8'b00100011; /*23*/
-localparam opc_CHL = 8'b00100100; /*24*/
-localparam opc_CHS = 8'b00100101; /*25*/
-localparam opc_CHP = 8'b00100110; /*26*/
-localparam opc_CHR = 8'b00100111; /*27*/
-localparam opc_CHD = 8'b00101000; /*28*/
-localparam opc_CHJ = 8'b00101001; /*29*/
-localparam opc_CHT = 8'b00101010; /*2A*/
-localparam opc_CHF = 8'b00101011; /*2B*/
-localparam opc_CHC = 8'b00101100; /*2C*/
-localparam opc_R2P = 8'b00101101; /*2D*/
-localparam opc_CHA = 8'b00101110; /*2E*/
-localparam opc_CHB = 8'b00101111; /*2F*/
-localparam opc_SCL = 8'b00110000; /*30*/
-localparam opc_CGM = 8'b00110001; /*31*/
-localparam opc_CGH = 8'b00110010; /*32*/
-localparam opc_REB = 8'b00110011; /*33*/
-localparam opc_CGL = 8'b00110100; /*34*/
-localparam opc_CGS = 8'b00110101; /*35*/
-localparam opc_CGP = 8'b00110110; /*36*/
-localparam opc_CGR = 8'b00110111; /*37*/
-localparam opc_CGD = 8'b00111000; /*38*/
-localparam opc_CGJ = 8'b00111001; /*39*/
-localparam opc_CGT = 8'b00111010; /*3A*/
-localparam opc_CGF = 8'b00111011; /*3B*/
-localparam opc_CGC = 8'b00111100; /*3C*/
-localparam opc_R3P = 8'b00111101; /*3D*/
-localparam opc_CGA = 8'b00111110; /*3E*/
-localparam opc_CGB = 8'b00111111; /*3F*/
-localparam opc_SCH = 8'b01000000; /*40*/
-localparam opc_CLM = 8'b01000001; /*41*/
-localparam opc_CLH = 8'b01000010; /*42*/
-localparam opc_CLG = 8'b01000011; /*43*/
-localparam opc_CLL = 8'b01000100; /*44*/
-localparam opc_CLS = 8'b01000101; /*45*/
-localparam opc_CLP = 8'b01000110; /*46*/
-localparam opc_CLR = 8'b01000111; /*47*/
-localparam opc_CLD = 8'b01001000; /*48*/
-localparam opc_CLJ = 8'b01001001; /*49*/
-localparam opc_CLT = 8'b01001010; /*4A*/
-localparam opc_CLF = 8'b01001011; /*4B*/
-localparam opc_CLC = 8'b01001100; /*4C*/
-localparam opc_R4M = 8'b01001101; /*4D*/
-localparam opc_CLA = 8'b01001110; /*4E*/
-localparam opc_CLB = 8'b01001111; /*4F*/
-localparam opc_HIZ = 8'b01010000; /*50*/
-localparam opc_CSM = 8'b01010001; /*51*/
-localparam opc_CSH = 8'b01010010; /*52*/
-localparam opc_CSG = 8'b01010011; /*53*/
-localparam opc_CSL = 8'b01010100; /*54*/
-localparam opc_CSS = 8'b01010101; /*55*/
-localparam opc_CSP = 8'b01010110; /*56*/
-localparam opc_CSR = 8'b01010111; /*57*/
-localparam opc_CSD = 8'b01011000; /*58*/
-localparam opc_CSJ = 8'b01011001; /*59*/
-localparam opc_CST = 8'b01011010; /*5A*/
-localparam opc_CSF = 8'b01011011; /*5B*/
-localparam opc_CSC = 8'b01011100; /*5C*/
-localparam opc_R3M = 8'b01011101; /*5D*/
-localparam opc_CSA = 8'b01011110; /*5E*/
-localparam opc_CSB = 8'b01011111; /*5F*/
-localparam opc_OLD = 8'b01100000; /*60*/
-localparam opc_CPM = 8'b01100001; /*61*/
-localparam opc_CPH = 8'b01100010; /*62*/
-localparam opc_CPG = 8'b01100011; /*63*/
-localparam opc_CPL = 8'b01100100; /*64*/
-localparam opc_CPS = 8'b01100101; /*65*/
-localparam opc_CPP = 8'b01100110; /*66*/
-localparam opc_CPR = 8'b01100111; /*67*/
-localparam opc_CPD = 8'b01101000; /*68*/
-localparam opc_CPJ = 8'b01101001; /*69*/
-localparam opc_CPT = 8'b01101010; /*6A*/
-localparam opc_CPF = 8'b01101011; /*6B*/
-localparam opc_CPC = 8'b01101100; /*6C*/
-localparam opc_R2M = 8'b01101101; /*6D*/
-localparam opc_CPA = 8'b01101110; /*6E*/
-localparam opc_CPB = 8'b01101111; /*6F*/
-localparam opc_NEW = 8'b01110000; /*70*/
-localparam opc_CRM = 8'b01110001; /*71*/
-localparam opc_CRH = 8'b01110010; /*72*/
-localparam opc_CRG = 8'b01110011; /*73*/
-localparam opc_CRL = 8'b01110100; /*74*/
-localparam opc_CRS = 8'b01110101; /*75*/
-localparam opc_CRP = 8'b01110110; /*76*/
-localparam opc_CRR = 8'b01110111; /*77*/
-localparam opc_CRD = 8'b01111000; /*78*/
-localparam opc_CRJ = 8'b01111001; /*79*/
-localparam opc_CRT = 8'b01111010; /*7A*/
-localparam opc_CRF = 8'b01111011; /*7B*/
-localparam opc_CRC = 8'b01111100; /*7C*/
-localparam opc_R1M = 8'b01111101; /*7D*/
-localparam opc_CRA = 8'b01111110; /*7E*/
-localparam opc_CRB = 8'b01111111; /*7F*/
-localparam opc_G0A = 8'b11000000; /*C0*/
-localparam opc_G1A = 8'b11000001; /*C1*/
-localparam opc_G2A = 8'b11000010; /*C2*/
-localparam opc_G3A = 8'b11000011; /*C3*/
-localparam opc_L0A = 8'b11000100; /*C4*/
-localparam opc_L1A = 8'b11000101; /*C5*/
-localparam opc_L2A = 8'b11000110; /*C6*/
-localparam opc_L3A = 8'b11000111; /*C7*/
-localparam opc_AG0 = 8'b11001000; /*C8*/
-localparam opc_AG1 = 8'b11001001; /*C9*/
-localparam opc_AG2 = 8'b11001010; /*CA*/
-localparam opc_AG3 = 8'b11001011; /*CB*/
-localparam opc_AL0 = 8'b11001100; /*CC*/
-localparam opc_AL1 = 8'b11001101; /*CD*/
-localparam opc_AL2 = 8'b11001110; /*CE*/
-localparam opc_AL3 = 8'b11001111; /*CF*/
-localparam opc_G0B = 8'b11010000; /*D0*/
-localparam opc_G1B = 8'b11010001; /*D1*/
-localparam opc_G2B = 8'b11010010; /*D2*/
-localparam opc_G3B = 8'b11010011; /*D3*/
-localparam opc_L0B = 8'b11010100; /*D4*/
-localparam opc_L1B = 8'b11010101; /*D5*/
-localparam opc_L2B = 8'b11010110; /*D6*/
-localparam opc_L3B = 8'b11010111; /*D7*/
-localparam opc_BG0 = 8'b11011000; /*D8*/
-localparam opc_BG1 = 8'b11011001; /*D9*/
-localparam opc_BG2 = 8'b11011010; /*DA*/
-localparam opc_BG3 = 8'b11011011; /*DB*/
-localparam opc_BL0 = 8'b11011100; /*DC*/
-localparam opc_BL1 = 8'b11011101; /*DD*/
-localparam opc_BL2 = 8'b11011110; /*DE*/
-localparam opc_BL3 = 8'b11011111; /*DF*/
-localparam opc_G0R = 8'b11100000; /*E0*/
-localparam opc_G1R = 8'b11100001; /*E1*/
-localparam opc_G2R = 8'b11100010; /*E2*/
-localparam opc_G3R = 8'b11100011; /*E3*/
-localparam opc_L0R = 8'b11100100; /*E4*/
-localparam opc_L1R = 8'b11100101; /*E5*/
-localparam opc_L2R = 8'b11100110; /*E6*/
-localparam opc_L3R = 8'b11100111; /*E7*/
-localparam opc_RG0 = 8'b11101000; /*E8*/
-localparam opc_RG1 = 8'b11101001; /*E9*/
-localparam opc_RG2 = 8'b11101010; /*EA*/
-localparam opc_RG3 = 8'b11101011; /*EB*/
-localparam opc_RL0 = 8'b11101100; /*EC*/
-localparam opc_RL1 = 8'b11101101; /*ED*/
-localparam opc_RL2 = 8'b11101110; /*EE*/
-localparam opc_RL3 = 8'b11101111; /*EF*/
-localparam opc_IDA = 8'b11110000; /*F0*/
-localparam opc_IDB = 8'b11110001; /*F1*/
-localparam opc_OCA = 8'b11110010; /*F2*/
-localparam opc_OCB = 8'b11110011; /*F3*/
-localparam opc_SLA = 8'b11110100; /*F4*/
-localparam opc_SLB = 8'b11110101; /*F5*/
-localparam opc_SRA = 8'b11110110; /*F6*/
-localparam opc_SRB = 8'b11110111; /*F7*/
-localparam opc_AND = 8'b11111000; /*F8*/
-localparam opc_IOR = 8'b11111001; /*F9*/
-localparam opc_EOR = 8'b11111010; /*FA*/
-localparam opc_ADD = 8'b11111011; /*FB*/
-localparam opc_CAR = 8'b11111100; /*FC*/
-localparam opc_ALB = 8'b11111101; /*FD*/
-localparam opc_AEB = 8'b11111110; /*FE*/
-localparam opc_AGB = 8'b11111111; /*FF*/
+localparam opc_NOP = 8'h00;
+localparam opc_RET = 8'h01;
+localparam opc_NH  = 8'h02;
+localparam opc_NG  = 8'h03;
+localparam opc_NL  = 8'h04;
+localparam opc_NS  = 8'h05;
+localparam opc_NP  = 8'h06;
+localparam opc_NR  = 8'h07;
+localparam opc_ND  = 8'h08;
+localparam opc_NJ  = 8'h09;
+localparam opc_NT  = 8'h0A;
+localparam opc_NF  = 8'h0B;
+localparam opc_NC  = 8'h0C;
+localparam opc_R0P = 8'h0D;
+localparam opc_NA  = 8'h0E;
+localparam opc_NB  = 8'h0F;
+localparam opc_ISI = 8'h10;
+localparam opc_LID = 8'h11;
+localparam opc_MH  = 8'h12;
+localparam opc_MG  = 8'h13;
+localparam opc_ML  = 8'h14;
+localparam opc_MS  = 8'h15;
+localparam opc_MP  = 8'h16;
+localparam opc_MR  = 8'h17;
+localparam opc_MD  = 8'h18;
+localparam opc_MJ  = 8'h19;
+localparam opc_MT  = 8'h1A;
+localparam opc_MF  = 8'h1B;
+localparam opc_MC  = 8'h1C;
+localparam opc_R1P = 8'h1D;
+localparam opc_MA  = 8'h1E;
+localparam opc_MB  = 8'h1F;
+localparam opc_OSO = 8'h20;
+localparam opc_HM =  8'h21;
+localparam opc_REA = 8'h22;
+localparam opc_HG  = 8'h23;
+localparam opc_HL  = 8'h24;
+localparam opc_HS  = 8'h25;
+localparam opc_HP  = 8'h26;
+localparam opc_HR  = 8'h27;
+localparam opc_HD  = 8'h28;
+localparam opc_HJ  = 8'h29;
+localparam opc_HT  = 8'h2A;
+localparam opc_HF  = 8'h2B;
+localparam opc_HC  = 8'h2C;
+localparam opc_R2P = 8'h2D;
+localparam opc_HA  = 8'h2E;
+localparam opc_HB  = 8'h2F;
+localparam opc_SCL = 8'h30;
+localparam opc_GM  = 8'h31;
+localparam opc_GH  = 8'h32;
+localparam opc_REB = 8'h33;
+localparam opc_GL  = 8'h34;
+localparam opc_GS  = 8'h35;
+localparam opc_GP  = 8'h36;
+localparam opc_GR  = 8'h37;
+localparam opc_GD  = 8'h38;
+localparam opc_GJ  = 8'h39;
+localparam opc_GT  = 8'h3A;
+localparam opc_GF  = 8'h3B;
+localparam opc_GC  = 8'h3C;
+localparam opc_R3P = 8'h3D;
+localparam opc_GA  = 8'h3E;
+localparam opc_GB  = 8'h3F;
+localparam opc_SCH = 8'h40;
+localparam opc_LM  = 8'h41;
+localparam opc_LH  = 8'h42;
+localparam opc_LG  = 8'h43;
+localparam opc_LL  = 8'h44;
+localparam opc_LS  = 8'h45;
+localparam opc_LP  = 8'h46;
+localparam opc_LR  = 8'h47;
+localparam opc_LD  = 8'h48;
+localparam opc_LJ  = 8'h49;
+localparam opc_LT  = 8'h4A;
+localparam opc_LF  = 8'h4B;
+localparam opc_LC  = 8'h4C;
+localparam opc_R4M = 8'h4D;
+localparam opc_LA  = 8'h4E;
+localparam opc_LB  = 8'h4F;
+localparam opc_HIZ = 8'h50;
+localparam opc_SM  = 8'h51;
+localparam opc_SH  = 8'h52;
+localparam opc_SG  = 8'h53;
+localparam opc_SL  = 8'h54;
+localparam opc_SS  = 8'h55;
+localparam opc_SP  = 8'h56;
+localparam opc_SR  = 8'h57;
+localparam opc_SD  = 8'h58;
+localparam opc_SJ  = 8'h59;
+localparam opc_ST  = 8'h5A;
+localparam opc_SF  = 8'h5B;
+localparam opc_SC  = 8'h5C;
+localparam opc_R3M = 8'h5D;
+localparam opc_SA  = 8'h5E;
+localparam opc_SB  = 8'h5F;
+localparam opc_LLF = 8'h60;
+localparam opc_PM  = 8'h61;
+localparam opc_PH  = 8'h62;
+localparam opc_PG  = 8'h63;
+localparam opc_PL  = 8'h64;
+localparam opc_PS  = 8'h65;
+localparam opc_PP  = 8'h66;
+localparam opc_PR  = 8'h67;
+localparam opc_PD  = 8'h68;
+localparam opc_PJ  = 8'h69;
+localparam opc_PT  = 8'h6A;
+localparam opc_PF  = 8'h6B;
+localparam opc_PC  = 8'h6C;
+localparam opc_R2M = 8'h6D;
+localparam opc_PA  = 8'h6E;
+localparam opc_PB  = 8'h6F;
+localparam opc_ELF = 8'h70;
+localparam opc_RM  = 8'h71;
+localparam opc_RH  = 8'h72;
+localparam opc_RG  = 8'h73;
+localparam opc_RL  = 8'h74;
+localparam opc_RS  = 8'h75;
+localparam opc_RP  = 8'h76;
+localparam opc_RR  = 8'h77;
+localparam opc_RD  = 8'h78;
+localparam opc_RJ  = 8'h79;
+localparam opc_RT  = 8'h7A;
+localparam opc_RF  = 8'h7B;
+localparam opc_RC  = 8'h7C;
+localparam opc_R1M = 8'h7D;
+localparam opc_RA  = 8'h7E;
+localparam opc_RB  = 8'h7F;
+localparam opc_G0A = 8'hC0;
+localparam opc_G1A = 8'hC1;
+localparam opc_G2A = 8'hC2;
+localparam opc_G3A = 8'hC3;
+localparam opc_L0A = 8'hC4;
+localparam opc_L1A = 8'hC5;
+localparam opc_L2A = 8'hC6;
+localparam opc_L3A = 8'hC7;
+localparam opc_AG0 = 8'hC8;
+localparam opc_AG1 = 8'hC9;
+localparam opc_AG2 = 8'hCA;
+localparam opc_AG3 = 8'hCB;
+localparam opc_AL0 = 8'hCC;
+localparam opc_AL1 = 8'hCD;
+localparam opc_AL2 = 8'hCE;
+localparam opc_AL3 = 8'hCF;
+localparam opc_G0B = 8'hD0;
+localparam opc_G1B = 8'hD1;
+localparam opc_G2B = 8'hD2;
+localparam opc_G3B = 8'hD3;
+localparam opc_L0B = 8'hD4;
+localparam opc_L1B = 8'hD5;
+localparam opc_L2B = 8'hD6;
+localparam opc_L3B = 8'hD7;
+localparam opc_BG0 = 8'hD8;
+localparam opc_BG1 = 8'hD9;
+localparam opc_BG2 = 8'hDA;
+localparam opc_BG3 = 8'hDB;
+localparam opc_BL0 = 8'hDC;
+localparam opc_BL1 = 8'hDD;
+localparam opc_BL2 = 8'hDE;
+localparam opc_BL3 = 8'hDF;
+localparam opc_G0R = 8'hE0;
+localparam opc_G1R = 8'hE1;
+localparam opc_G2R = 8'hE2;
+localparam opc_G3R = 8'hE3;
+localparam opc_L0R = 8'hE4;
+localparam opc_L1R = 8'hE5;
+localparam opc_L2R = 8'hE6;
+localparam opc_L3R = 8'hE7;
+localparam opc_RG0 = 8'hE8;
+localparam opc_RG1 = 8'hE9;
+localparam opc_RG2 = 8'hEA;
+localparam opc_RG3 = 8'hEB;
+localparam opc_RL0 = 8'hEC;
+localparam opc_RL1 = 8'hED;
+localparam opc_RL2 = 8'hEE;
+localparam opc_RL3 = 8'hEF;
+localparam opc_IDA = 8'hF0;
+localparam opc_IDB = 8'hF1;
+localparam opc_OCA = 8'hF2;
+localparam opc_OCB = 8'hF3;
+localparam opc_SLA = 8'hF4;
+localparam opc_SLB = 8'hF5;
+localparam opc_SRA = 8'hF6;
+localparam opc_SRB = 8'hF7;
+localparam opc_AND = 8'hF8;
+localparam opc_IOR = 8'hF9;
+localparam opc_EOR = 8'hFA;
+localparam opc_ADD = 8'hFB;
+localparam opc_CAR = 8'hFC;
+localparam opc_ALB = 8'hFD;
+localparam opc_AEB = 8'hFE;
+localparam opc_AGB = 8'hFF;
 
 
 function [6:0] hex7;
@@ -348,8 +348,8 @@ endcase
 
 
 /* Device Select Register D:
-  Low order nybble encodes active low device select line,
-  high order nybble encodes active high device select line.
+  High order nybble encodes 'active high' device select line,
+  low order nybble encodes 'active low' device select line.
   Value one: Empty device/NOP
 */
 
@@ -423,10 +423,10 @@ case (cpu_phase)
              pc_high = reg_H;
            end
            
-           opc_CNH, opc_CNG, opc_CNL, opc_CNS,
-           opc_CNP, opc_CNR, opc_CND, opc_CNJ,
-           opc_CNT, opc_CNF, opc_CNC, opc_CNA,
-           opc_CNB:
+           opc_NH, opc_NG, opc_NL, opc_NS,
+           opc_NP, opc_NR, opc_ND, opc_NJ,
+           opc_NT, opc_NF, opc_NC, opc_NA,
+           opc_NB:
            begin
              maddr = {pc_high,pc_low};
              pc_low = pc_low + 8'd1;
@@ -434,7 +434,7 @@ case (cpu_phase)
 
            opc_R0P: reg_R_offs = 0;
         
-           opc_SSI:
+           opc_ISI:
            begin
              ser_ir = ser_ir << 1;
              ser_ir = ser_ir | sd_miso;
@@ -447,20 +447,20 @@ case (cpu_phase)
              reg_H = pc_high;
            end
            
-           opc_CMH, opc_CMG, opc_CML, opc_CMS,
-           opc_CMP, opc_CMR, opc_CMD, opc_CMJ,
-           opc_CMT, opc_CMF, opc_CMC, opc_CMA,
-           opc_CMB:
+           opc_MH, opc_MG, opc_ML, opc_MS,
+           opc_MP, opc_MR, opc_MD, opc_MJ,
+           opc_MT, opc_MF, opc_MC, opc_MA,
+           opc_MB:
            begin
               maddr = xMx;
            end
 
            opc_R1P: reg_R_offs = 1;
         
-           opc_SSO:
+           opc_OSO:
            begin
              sd_mosi = ser_or[7];
-             ser_or = ser_or << 1;       
+             ser_or = ser_or << 1;
            end
         
            opc_CHM:
@@ -480,27 +480,27 @@ case (cpu_phase)
              endcase 
            end
         
-           opc_CHG: reg_G = reg_H;
-           opc_CHL: reg_L = reg_H; 
-           opc_CHS: ser_or = reg_H;
-           opc_CHP:
+           opc_HG: reg_G = reg_H;
+           opc_HL: reg_L = reg_H; 
+           opc_HS: ser_or = reg_H;
+           opc_HP:
            begin
              par_or = reg_H;
              par_hiz = 0;
            end
            
-           opc_CHR:
+           opc_HR:
            begin
              reg_R = reg_H;
              reg_R_offs = 0;
            end
 
-           opc_CHD: reg_D = reg_H;
-           opc_CHJ: pc_low = reg_H;
-           opc_CHT: if (reg_R + reg_R_offs != 8'b0) pc_low = reg_H;
-           opc_CHF: if (reg_R + reg_R_offs == 8'b0) pc_low = reg_H;
+           opc_HD: reg_D = reg_H;
+           opc_HJ: pc_low = reg_H;
+           opc_HT: if (reg_R + reg_R_offs != 8'b0) pc_low = reg_H;
+           opc_HF: if (reg_R + reg_R_offs == 8'b0) pc_low = reg_H;
         
-           opc_CHC:
+           opc_HC:
            begin
              reg_R = pc_low;
              reg_R_offs = 0;
@@ -510,7 +510,7 @@ case (cpu_phase)
            
            opc_R2P: reg_R_offs = 2;
         
-           opc_CHA:
+           opc_HA:
            begin
              reg_CLIP = reg_A;
              reg_A = reg_H;
@@ -521,7 +521,7 @@ case (cpu_phase)
              endcase 
            end
            
-           opc_CHB:
+           opc_HB:
            begin
              reg_CLIP = reg_B;
              reg_B = reg_H;
@@ -534,7 +534,7 @@ case (cpu_phase)
 
            opc_SCL: sd_clk = 0;
            
-           opc_CGM:
+           opc_GM:
            begin
              maddr = xMx;
              mdata_put = reg_G;
@@ -553,26 +553,26 @@ case (cpu_phase)
              endcase 
            end
                
-           opc_CGL: reg_L = reg_G;
-           opc_CGS: ser_ir = reg_G;
-           opc_CGP:
+           opc_GL: reg_L = reg_G;
+           opc_GS: ser_ir = reg_G;
+           opc_GP:
            begin
              par_or = reg_G;
              par_hiz = 0;
            end
 
-           opc_CGR:
+           opc_GR:
            begin
              reg_R = reg_G;
              reg_R_offs = 0;
            end
 
-           opc_CGD: reg_D = reg_G;
-           opc_CGJ: pc_low = reg_G;
-           opc_CGT: if (reg_R + reg_R_offs != 8'b0) pc_low = reg_G;
-           opc_CGF: if (reg_R + reg_R_offs == 8'b0) pc_low = reg_G;
+           opc_GD: reg_D = reg_G;
+           opc_GJ: pc_low = reg_G;
+           opc_GT: if (reg_R + reg_R_offs != 8'b0) pc_low = reg_G;
+           opc_GF: if (reg_R + reg_R_offs == 8'b0) pc_low = reg_G;
 
-           opc_CGC:
+           opc_GC:
            begin
              reg_R = pc_low;
              reg_R_offs = 0;
@@ -583,7 +583,7 @@ case (cpu_phase)
         
            opc_R3P: reg_R_offs = 3;
            
-           opc_CGA:
+           opc_GA:
            begin
              reg_CLIP = reg_A;
              reg_A = reg_G;
@@ -594,7 +594,7 @@ case (cpu_phase)
              endcase 
            end
                
-           opc_CGB:
+           opc_GB:
            begin
              reg_CLIP = reg_B;
              reg_B = reg_G;
@@ -607,31 +607,31 @@ case (cpu_phase)
 
            opc_SCH: sd_clk = 1;
         
-           opc_CLM:
+           opc_LM:
            begin
              maddr = xMx;
              mdata_put = reg_L;
              mwren = 1;
            end
            
-           opc_CLH: reg_H = reg_L;
-           opc_CLG: reg_G = reg_L;
-           opc_CLL: ;
-           opc_CLS: ser_ir = reg_L;
-           opc_CLP: begin par_or = reg_L; par_hiz = 0; end
+           opc_LH: reg_H = reg_L;
+           opc_LG: reg_G = reg_L;
+           opc_LL: ;
+           opc_LS: ser_ir = reg_L;
+           opc_LP: begin par_or = reg_L; par_hiz = 0; end
 
-           opc_CLR:
+           opc_LR:
            begin
              reg_R = reg_L;
              reg_R_offs = 0;
            end
 
-           opc_CLD: reg_D = reg_L;
-           opc_CLJ: pc_low = reg_L;
-           opc_CLT: if (reg_R + reg_R_offs != 8'b0) pc_low = reg_L;
-           opc_CLF: if (reg_R + reg_R_offs == 8'b0) pc_low = reg_L;
+           opc_LD: reg_D = reg_L;
+           opc_LJ: pc_low = reg_L;
+           opc_LT: if (reg_R + reg_R_offs != 8'b0) pc_low = reg_L;
+           opc_LF: if (reg_R + reg_R_offs == 8'b0) pc_low = reg_L;
 
-           opc_CLC:
+           opc_LC:
            begin
              reg_R = pc_low;
              reg_R_offs = 0;
@@ -642,7 +642,7 @@ case (cpu_phase)
         
            opc_R4M: reg_R_offs = (8'd4 ^ 8'hFFFF) + 8'd1;
            
-           opc_CLA:
+           opc_LA:
            begin
              reg_CLIP = reg_A;
              reg_A = reg_L;
@@ -653,7 +653,7 @@ case (cpu_phase)
              endcase 
            end
                
-           opc_CLB:
+           opc_LB:
            begin
              reg_CLIP = reg_B;
              reg_B = reg_L;
@@ -671,31 +671,31 @@ case (cpu_phase)
              seg7Byte3(reg_B);
            end
   
-           opc_CSM:
+           opc_SM:
            begin
              maddr = xMx;
              mdata_put = ser_or;
              mwren = 1;
            end
 
-           opc_CSH: reg_H = ser_or;
-           opc_CSG: reg_G = ser_or;
-           opc_CSL: reg_L = ser_or;
-           opc_CSS: ;
-           opc_CSP: begin par_or = ser_or; par_hiz = 0; end
+           opc_SH: reg_H = ser_or;
+           opc_SG: reg_G = ser_or;
+           opc_SL: reg_L = ser_or;
+           opc_SS: ;
+           opc_SP: begin par_or = ser_or; par_hiz = 0; end
 
-           opc_CSR:
+           opc_SR:
            begin
              reg_R = ser_or;
              reg_R_offs = 0;
            end
 
-           opc_CSD: reg_D = ser_or;
-           opc_CSJ: pc_low = ser_or;
-           opc_CST: if (reg_R + reg_R_offs != 8'b0) pc_low = ser_or;
-           opc_CSF: if (reg_R + reg_R_offs == 8'b0) pc_low = ser_or;
+           opc_SD: reg_D = ser_or;
+           opc_SJ: pc_low = ser_or;
+           opc_ST: if (reg_R + reg_R_offs != 8'b0) pc_low = ser_or;
+           opc_SF: if (reg_R + reg_R_offs == 8'b0) pc_low = ser_or;
 
-           opc_CSC:
+           opc_SC:
            begin
              reg_R = pc_low;
              reg_R_offs = 0;
@@ -706,7 +706,7 @@ case (cpu_phase)
 
            opc_R3M: reg_R_offs = (8'd3 ^ 8'hFFFF) + 8'd1;
 
-           opc_CSA:
+           opc_SA:
            begin
              reg_CLIP = reg_A;
              reg_A = ser_or;
@@ -717,7 +717,7 @@ case (cpu_phase)
              endcase 
            end
                
-           opc_CSB:
+           opc_SB:
            begin
              reg_CLIP = reg_B;
              reg_B = ser_or;
@@ -730,31 +730,31 @@ case (cpu_phase)
 
            opc_OLD: maddr = {reg_L,8'hC4};
 
-           opc_CPM:
+           opc_PM:
            begin
              maddr = xMx;
              mdata_put = par_ir;
              mwren = 1;
            end
    
-           opc_CPH: reg_H = par_ir;
-           opc_CPG: reg_G = par_ir;
-           opc_CPL: reg_L = par_ir;
-           opc_CPS: ser_or = par_ir;
-           opc_CPP: ;
+           opc_PH: reg_H = par_ir;
+           opc_PG: reg_G = par_ir;
+           opc_PL: reg_L = par_ir;
+           opc_PS: ser_or = par_ir;
+           opc_PP: ;
 
-           opc_CPR:
+           opc_PR:
            begin
              reg_R = par_ir;
              reg_R_offs = 0;
            end
 
-           opc_CPD: reg_D = par_ir;
-           opc_CPJ: pc_low = par_ir;
-           opc_CPT: if (reg_R + reg_R_offs != 8'b0) pc_low = par_ir;
-           opc_CPF: if (reg_R + reg_R_offs == 8'b0) pc_low = par_ir;
+           opc_PD: reg_D = par_ir;
+           opc_PJ: pc_low = par_ir;
+           opc_PT: if (reg_R + reg_R_offs != 8'b0) pc_low = par_ir;
+           opc_PF: if (reg_R + reg_R_offs == 8'b0) pc_low = par_ir;
 
-           opc_CPC:
+           opc_PC:
            begin
              reg_R = pc_low;
              reg_R_offs = 0;
@@ -765,7 +765,7 @@ case (cpu_phase)
         
            opc_R2M: reg_R_offs = (8'd2 ^ 8'hFFFF) + 8'd1;
            
-           opc_CPA:
+           opc_PA:
            begin
              reg_CLIP = reg_A;
              reg_A = par_ir;
@@ -776,7 +776,7 @@ case (cpu_phase)
              endcase 
            end
                
-           opc_CPB:
+           opc_PB:
            begin
              reg_CLIP = reg_B;
              reg_B = par_ir;
@@ -795,25 +795,25 @@ case (cpu_phase)
              mwren = 1;
            end
   
-           opc_CRM:
+           opc_RM:
            begin
              maddr = xMx;
              mdata_put = reg_R + reg_R_offs;
              mwren = 1;
            end
    
-           opc_CRH: reg_H = reg_R + reg_R_offs;
-           opc_CRG: reg_G = reg_R + reg_R_offs;
-           opc_CRL: reg_L = reg_R + reg_R_offs;
-           opc_CRS: ser_ir = reg_R + reg_R_offs;
-           opc_CRP: begin par_or = reg_R + reg_R_offs; par_hiz = 0; end
-           opc_CRR: ;
-           opc_CRD: reg_D = reg_R + reg_R_offs;
-           opc_CRJ: pc_low = reg_R + reg_R_offs;
-           opc_CRT: if (reg_R + reg_R_offs != 8'b0) pc_low = reg_R + reg_R_offs;
-           opc_CRF: if (reg_R + reg_R_offs == 8'b0) pc_low = reg_R + reg_R_offs;
+           opc_RH: reg_H = reg_R + reg_R_offs;
+           opc_RG: reg_G = reg_R + reg_R_offs;
+           opc_RL: reg_L = reg_R + reg_R_offs;
+           opc_RS: ser_ir = reg_R + reg_R_offs;
+           opc_RP: begin par_or = reg_R + reg_R_offs; par_hiz = 0; end
+           opc_RR: ;
+           opc_RD: reg_D = reg_R + reg_R_offs;
+           opc_RJ: pc_low = reg_R + reg_R_offs;
+           opc_RT: if (reg_R + reg_R_offs != 8'b0) pc_low = reg_R + reg_R_offs;
+           opc_RF: if (reg_R + reg_R_offs == 8'b0) pc_low = reg_R + reg_R_offs;
 
-           opc_CRC:
+           opc_RC:
            begin
              reg_H = pc_high;
              pc_high = reg_R + reg_R_offs;
@@ -824,7 +824,7 @@ case (cpu_phase)
 
            opc_R1M: reg_R_offs = (8'd1 ^ 8'hFFFF) + 8'd1;
 
-           opc_CRA:
+           opc_RA:
            begin
              reg_CLIP = reg_A;
              reg_A = reg_R + reg_R_offs;
@@ -835,7 +835,7 @@ case (cpu_phase)
              endcase
            end
         
-           opc_CRB:
+           opc_RB:
            begin
              reg_CLIP = reg_B;
              reg_B = reg_R + reg_R_offs;
@@ -982,18 +982,18 @@ case (cpu_phase)
     
       2: case (opcode)
                  
-        opc_CNH, opc_CMH: reg_H = mdata_get;
-        opc_CNG, opc_CMG: reg_G = mdata_get;
-        opc_CNL, opc_CML: reg_L = mdata_get;
-        opc_CNS, opc_CMS: ser_or = mdata_get;
-        opc_CNP, opc_CMP: par_or = mdata_get;
-        opc_CNR, opc_CMR: reg_R = mdata_get;
-        opc_CND, opc_CMD: reg_D = mdata_get; 
-        opc_CNJ, opc_CMJ: pc_low = mdata_get;
-        opc_CNT, opc_CMT: if (reg_R + reg_R_offs != 8'b0) pc_low = mdata_get;
-        opc_CNF, opc_CMF: if (reg_R + reg_R_offs == 8'b0) pc_low = mdata_get;    
+        opc_NH, opc_MH: reg_H = mdata_get;
+        opc_NG, opc_MG: reg_G = mdata_get;
+        opc_NL, opc_ML: reg_L = mdata_get;
+        opc_NS, opc_MS: ser_or = mdata_get;
+        opc_NP, opc_MP: par_or = mdata_get;
+        opc_NR, opc_MR: reg_R = mdata_get;
+        opc_ND, opc_MD: reg_D = mdata_get; 
+        opc_NJ, opc_MJ: pc_low = mdata_get;
+        opc_NT, opc_MT: if (reg_R + reg_R_offs != 8'b0) pc_low = mdata_get;
+        opc_NF, opc_MF: if (reg_R + reg_R_offs == 8'b0) pc_low = mdata_get;    
              
-        opc_CNC, opc_CMC:
+        opc_NC, opc_MC:
         begin
           reg_R = pc_low + 8'd1;
           reg_R_offs = 0;
@@ -1002,7 +1002,7 @@ case (cpu_phase)
           pc_high = reg_R;
         end
         
-        opc_CNA, opc_CMA:
+        opc_NA, opc_MA:
         begin
           reg_CLIP = reg_A;
           reg_A = mdata_get;
@@ -1013,7 +1013,7 @@ case (cpu_phase)
           endcase 
         end
           
-        opc_CNB, opc_CMB:
+        opc_NB, opc_MB:
         begin
           reg_CLIP = reg_B;
           reg_B = mdata_get;
@@ -1097,8 +1097,6 @@ endmodule
 
 /* Use my sasm.c to assemble the following source
    and populate the RAM in Quartus with the resulting .mif file.
-   (The Verilog code uses a three-letter alpha-only variation
-   of these mnemonics (CNA instead of NA, R1P instead of R1+ etc.)
 
 NA 44
 NB 7
@@ -1111,8 +1109,7 @@ CLOSE
 ; ----------------------------- mul8 ----------------------------------------
 
 @mul8 ; Multiply A * B, result in A and B 
-ENTER
-
+ELF
    AL1                    ; Initialize copy multiplicand (low order)
    BL0                    ; Save multiplier
    NA 0 AL2               ; Clear high-order
@@ -1138,14 +1135,13 @@ done@
    L1A
    L2B
 
-LEAVE
-RET
+LLF RET
 CLOSE
 
 ; ----------------------------- divmod8 -------------------------------------
 
 @divmod8 ; Divide A by B, division result in A, remainder in B
-ENTER
+ELF
 
 AL0                       ; Dividend
 BL1                       ; Divisor
@@ -1178,8 +1174,33 @@ REP@
 
 ELOOP@ L3A, L0B
 
-LEAVE RET
+LLF RET
 CLOSE
+
+; ----------------------------- divmod8 -------------------------------------
+
+SPI_RDBYTE@ ; Read eight bits, output SOR byte
+    SCH SCL ; Clock pulse
+    ISI OSO, SCH SCL
+    ISI OSO, SCH SCL
+    ISI OSO, SCH SCL
+    ISI OSO, SCH SCL
+    ISI OSO, SCH SCL
+    ISI OSO, SCH SCL
+    ISI OSO, SCH SCL
+    ISI OSO
+   RET
+
+SPI_WRBYTE@ ; Write eight bits, discard SIR byte
+    SCH SCL ; Clock pulse
+    OSO, SCH SCL
+    OSO, SCH SCL
+    OSO, SCH SCL
+    OSO, SCH SCL
+    OSO, SCH SCL
+    OSO, SCH SCL
+    OSO, SCH SCL
+   RET
 
 */
 
