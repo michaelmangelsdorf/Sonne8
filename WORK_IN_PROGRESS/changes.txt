@@ -4,7 +4,7 @@ the multiplication/division code and displays on the 7-segment display.*
 I am currently writing firmware for a software emulator for the next revision of this CPU.
 The architecture I am using going forward has changed slightly, but significantly (rev. Daffodil):
 
-1. xJ, xT and xE (jump instructions) now change the PC (low order) instead of branching to banks
+1. xJ, xT and xF (jump instructions) now change the PC (low order) instead of branching to banks
 (and setting the PC to zero). xT now stands for TRUE, xE has been renamed to xF (FALSE).
 
 2. The X and Y registers are gone. H (Half) is used for Y, R (Return) is used for X.
@@ -22,31 +22,38 @@ Hence no more need for "locking".
 ignoring the Global/Local mapping, so that the code segment size is the full 256 bytes when accessing code.
 In the same vein, G and L ranges are straight banks (in the same memory region without any mapping).
 
-6. The ENTER instruction decrements as before, then stores the R into C4h (L4). The LEAVE instruction loads R from
+6. The ELF instruction decrements as before, then stores the R into C4h (L4). The LLF instruction loads R from
 C4h (L4), then increments as before.
 
-7. There are two new scrounge pairs, HH => CLIPA, and GG => CLIPB Each write to an accumulator register sets W (as before).
-Additionally, the previous value of W is latched into a CLIP register and can be retrieved back into
-an accumulator register by executing the CLIP scrounge.
-
-This sounds much more complicated than it is. See the tiny emulator written in C for how the controller works
-after these changes. In this WIP folder, there's also an untested schematics PDF, which I will base the Verilog on.
-
-The next step after bootstrapping a native assembler within the firmware project will be a Verilog/FPGA version.
+7. There are two new scrounge pairs, HH => REA, and GG => REB Each write to an accumulator register sets W (as before).
+Additionally, the previous value of W is latched into a register (CLIP) and can be retrieved back into
+an accumulator register by executing the REA and REB scrounges.
 
 This folder contains a modified assembler, an emulator, and more sample code.
 Run the assembler first, then run the emulator.
 The assembler program converts an ASCII string into a number in B.
 
 
-
-
-
-
 --------------------------------------- Daffodil spec.
 
 
-
+The accumulator of the CPU consists of registers A, B and R. R has an attached offset register O, which is implicitly added to R to give its final value.
+Low and High make up the CPU's 16-bit program counter. Low is the low-order byte of the program counter, High is the high-order byte of the program counter. The program counter points to the memory address of the next instruction to execute.
+SIR means Serial Input Register. It inputs bits from the MISO line of an SPI interface.
+SOR means Serial Output Register. It outputs bits onto the MOSI line of an SPI interface.
+PIR means Parallel Input Register. It samples byte values present on a tri-state bidirectional 8-bit IO bus.
+POR means Parallel Output Register. It outputs byte values onto a tri-state bidirectional 8-bit IO bus.
+xMx is a sixteen-bit register that stores an implied memory address.
+D is the device select register. The low order nybble of it encodes 1 of 16 active-low device enable lines. The high order nybble of it encodes 1 of 16 active-high device enable lines.
+H stands for Half or the word High (not the register named High).
+G stands for the word Global.
+R stands for the words Result or Return.
+The mnemonic ELF is an acronym for Enter Local Frame.
+The mnemonic LLF is an acronym for Leave Local Frame.
+The T in mnemonics of the form xT stands for TRUE (value of R not equal to zero).
+The F in mnemonics of the form xF stands for FALSE (value of R equal to zero).
+The mnemonic ISI is an acronym for Input Shift In.
+The mnemonic OSO is an acronym for Output Shift Out.
 
 
 Memory Addressing
@@ -57,8 +64,6 @@ and a low order 8-bit number called the offset. The 8-bit offset ranges from 0-2
 Banks
 
 Bank numbers are stored in dedicated bank registers. Which bank register is used in accessing memory depends on the segment in which a given offset address is located, and also depends on whether the memory access is fetching code or data.
-
-
 
 Code Bank (Code access only)
 
@@ -85,9 +90,6 @@ Pseudo-Register M
 When writing values to the A and B accumulator registers, the last recently used accumulator register is marked as the WORKING (W) accumulator register. The value in the working accumulator register is the implied offset for memory transfers. Reading from the M pseudo-register (instructions of type Mx) combines the implied BANK register address prefix and the implied OFFSET in W to form the effective address. The memory value of that address is then copied into the target register of the instruction. For instance the instruction "ma" transfers that memory content into the A register.
 Writing to the M pseudo-register (instructions of type xM) does as before, put replaces the memory content at the effective address with the source register of the instruction. For instance "rm" stores the ALU result into the implied effective memory address.
 
-
-
-
 Instruction Fetch
 
 Instruction fetch makes use of three "hidden" registers, IW (Instruction Word), PC_LOW (Program Counter offset) and PC_HIGH (Program Counter bank).
@@ -97,11 +99,7 @@ The memory value stored at that effective address is copied into the instruction
 After decoding, the instruction is executed.
 The offset in the program counter is incremented by 1 to point to the next instruction in memory, and the cycle repeats.
 
-
-
-
 Instruction Word Format
-
 
 Pair Instructions
 
@@ -118,16 +116,12 @@ In Copy Pairs, Target encodes 1 of 13 possible target registers as follows: 0000
 
 Scrounge instructions re-purpose otherwise needless Source-Target combinations such as mm or hh, or instructions that would be unpractical in hardware given timing constraints, such as nm. The opcode nm is scrounged (does not exist) and gives RET, mm is scrounged and gives LID, hh is scrounged and gives CLIP.
 
-
-
 Trap Instructions
 
 Any opcode in which bit 7 (MSB) is 1 and bit 6 is 0 represents a Trap instruction.
 The remaining bits 0-6 directly encode the destination address for the corresponding Trap call.
 
 When a Trap instruction is encountered during program execution, it triggers a transparent subroutine call to a user-defined Trap handler routine. These calls are indistinguishable from executing hardware instructions. They allow developers to create new instructions that appear and behave just like native instructions to the processor and to effectively "extend" the instruction set.
-
-
 
 ALU Instructions
 
@@ -165,11 +159,6 @@ The C pseudo register jumps to offset 0 of the bank number of its source when wr
 
 The RET instruction ("Return") overwrites the current code bank by the value in the H register, and overwrites the current code offset by the value in the R register, conceptually reversing a preceding CALL or Trap instruction.
 
-
-
-
-
-
 Arithmetic-Logic Unit (ALU)
 
 The ALU is a conceptual part of the CPU comprised of the two accumulators (A and B), the Result register R and the Get-Put locations G0-3 and L0-3.
@@ -194,11 +183,6 @@ CAR Carry bit of addition result of A plus B, zero or one
 ALB Logical flag (TRUE=255, FALSE=0) A less than B
 AEB Logical flag (TRUE=255, FALSE=0) A equals B
 AGB Logical flag (TRUE=255, FALSE=0) A greater than B
-
-
-
-
-
 
 Communication
 
@@ -240,9 +224,9 @@ Communication Instructions
 
 The following Signal instructions operate on the communication registers:
 
-SSI (Serial Shift In): Shift in one bit from serial data input line into SIR (at LSB position)
+ISI (Input Shift In): Shift in one bit from serial data input line into SIR (at LSB position)
 
-SSO (Serial Shift Out): Shift out one bit from SOR onto serial data output line (from MSB position)
+OSO (Output Shift Out): Shift out one bit from SOR onto serial data output line (from MSB position)
 
 SCL: Set serial clock line high
 
