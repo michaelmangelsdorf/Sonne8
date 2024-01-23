@@ -42,16 +42,15 @@ SOR means Serial Output Register. It outputs bits onto the MOSI line of an SPI i
 PIR means Parallel Input Register. It samples byte values present on a tri-state bidirectional 8-bit IO bus.
 POR means Parallel Output Register. It outputs byte values onto a tri-state bidirectional 8-bit IO bus.
 xMx is a sixteen-bit register that stores an implied memory address.
-D is the device select register. The low order nybble of it encodes 1 of 16 active-low device enable lines. The high order nybble of it encodes 1 of 16 active-high device enable lines.
+E is the device enable register. The low order nybble of it encodes 1 of 16 active-low device enable lines. The high order nybble of it encodes 1 of 16 active-high device enable lines (devices #1 or null devices).
 H stands for Half or the word High (not the register named High).
 G stands for the word Global.
 R stands for the words Result or Return.
+I stands for Iteration.
 The mnemonic ELF is an acronym for Enter Local Frame.
 The mnemonic LLF is an acronym for Leave Local Frame.
 The T in mnemonics of the form xT stands for TRUE (value of R not equal to zero).
 The F in mnemonics of the form xF stands for FALSE (value of R equal to zero).
-The mnemonic ISI is an acronym for Input Shift In.
-The mnemonic OSO is an acronym for Output Shift Out.
 
 
 Memory Addressing
@@ -141,7 +140,7 @@ Branching
 
 Branching is done by changing the offset of the current instruction within the current Code Bank. This is done by writing the desired offset into one of three pseudo-registers.
 
-Registers J, F, T
+Registers J, F, T, D
 
 These are pseudo-registers, that can only occur as target registers of transfer instructions. Transferring an offset value into J (Jump) does an unconditional branch to that offset within the current code bank.
 F means FALSE: Transferring an offset value into F branches only if the ALU result is FALSE (zero).
@@ -299,12 +298,12 @@ It can be used as Source or Target of a Transfer instruction.
 This register is part of the ALU. An offset can be added to R using the Offset Pair instructions.
 An ALU function can be computed and stored into R, from the values in the A and B registers by executing an ALU function instruction.
 
-D (Device)
+E (Enable)
 
 It can only by the Source of a Transfer instruction.
 This register is used for device selection (SPI "Slave Select", latch/output enable pins etc).
 
-J (JUMP), T (TRUE), F (FALSE)
+J (JUMP), T (TRUE), F (FALSE), D (DECREMENT)
 These can only be Targets of Transfer instructions.
 The semantics of these instructions are discussed above under "Control Flow".
 
@@ -361,6 +360,10 @@ Offset Mnemonics
 
 R2+ is the mnemonic for the opcode that adds 2 to F. R1- is the mnemonic for the opcode that subtracts 1 from R.
 
+Instructions of type Nx (fetch literal value and place in register) have an alternative syntax:
+9A place 9 into A, generates NA 9
+<LABEL:J generates NJ <LABEL
+33hR and 33h:R both generate NR 33h
 
 
 ---------------------------------------  Calling conventions
@@ -368,8 +371,8 @@ R2+ is the mnemonic for the opcode that adds 2 to F. R1- is the mnemonic for the
 
 During a CALL or Trap invocation, E is set to the return code bank, and R is set to the return code offset (PC) automatically.
 The R register is also saved into C4h during ENTER (low-order at lower offset).
-If the E register is used in the subroutine, save it into C5h (high-order at higher offset).
-Before a RET instruction, these values must be restored to E and R, respectively.
+If the H register is used in the subroutine, save it into C5h (high-order at higher offset).
+Before a RET instruction, these values must be restored to H and R, respectively.
 
 
 
