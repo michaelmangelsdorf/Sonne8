@@ -1,41 +1,39 @@
-*Update Jan 24: I've checked in a working Verilog version for the Terasic DE1Soc board. It runs
-the multiplication/division code and displays on the 7-segment display.*
-
-I am currently writing firmware for a software emulator for the next revision of this CPU.
-The architecture I am using going forward has changed slightly, but significantly (rev. Daffodil):
+There is now a Verilog version of the CPU.
+The implementation uses a revised model of the CPU, this folder has untested schematics, based on which
+it should be fairly easy to produce a working replica of what the Verilog/Assembler/Simulator does.
 
 1. xJ, xT and xF (jump instructions) now change the PC (low order) instead of branching to banks
-(and setting the PC to zero). xT now stands for TRUE, xE has been renamed to xF (FALSE).
+(and setting the PC to zero). xT stands for TRUE (non-zero), xE has been renamed to xF, FALSE (zero).
 
 2. The X and Y registers are gone. H (Half) is used for Y, R (Return) is used for X.
 This means that during a CALL or TRAP, the H register is set to the high-order return address,
-the R register is set to the low-order return address,
-and the RET instruction expects these values to be there.
+the R register is set to the low-order return address, and the RET instruction expects these values to be there.
 
-3. The ALU has changed. ALU opcodes are now dedicated opcodes, using bits
-of GETPUT instructions. Alu results feed into the independent, writable R register when executing an ALU opcode.
+3. Enter is now called ELF (Enter local frame). It decrements as before, but then stores R into C4h (L4).
+Leave is now called LLF (Leave local frame). It loads R from C4h (L4), then increments as before.
+
+4. The ALU has changed. ALU opcodes are now dedicated opcodes, using bits of GET-PUT instructions.
+Alu results feed into an independent, writable R register when executing an ALU opcode.
 Hence no more need for "locking".
 
-4. There is an additional instruction range, OFFS (like the SIG range of SIGNALS) that adds signed offsets to R.
+5. R (ALU result) now has an associated O (Offset) register. A range of instructions (R1+ etc) set O
+to small values, and when R is retrieved, O is transparently added to it (increment/decrement).
 
-5. The address mapping has been sanitized: any fetch instruction just uses the PC high register prefix,
-ignoring the Global/Local mapping, so that the code segment size is the full 256 bytes when accessing code.
-In the same vein, G and L ranges are straight banks (in the same memory region without any mapping).
+7. The "Signal" category is gone, the instruction word layout has been simplified.
 
-6. The ELF instruction decrements as before, then stores the R into C4h (L4). The LLF instruction loads R from
-C4h (L4), then increments as before.
+8. When setting A or B, the working accumulator register is flagged as before. The original value before
+the setting operation is retained in a register. Instructions REA and REB reuse this value and put it
+back in A or B, respectively.
 
-7. There are two new scrounge pairs, HH => REA, and GG => REB Each write to an accumulator register sets W (as before).
-Additionally, the previous value of W is latched into a register (CLIP) and can be retrieved back into
-an accumulator register by executing the REA and REB scrounges.
+9. There is an I (Iteration) register with an associated jump instruction D (Decrement). When writing to
+D, I is decremented, and the jump is taken if I is not zero.
 
-This folder contains a modified assembler, an emulator, and more sample code.
-Run the assembler first, then run the emulator.
-The assembler program converts an ASCII string into a number in B.
+This folder contains a modified assembler (sasm.c), a simulator (sonne-vm.c), and sample code (demo.asm).
+Run the assembler first, then run the simulator. The assembler outputs a .MIF file that can be executed
+using the Verilog code in Cyclone V FPGA (Terasic DE1Soc board).
 
 
---------------------------------------- Daffodil spec.
-
+---------------------------------------  Schneelein spec.
 
 The accumulator of the CPU consists of registers A, B and R. R has an attached offset register O, which is implicitly added to R to give its final value.
 Low and High make up the CPU's 16-bit program counter. Low is the low-order byte of the program counter, High is the high-order byte of the program counter. The program counter points to the memory address of the next instruction to execute.
