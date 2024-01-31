@@ -1,5 +1,5 @@
 
-The design has changed considerably, without changing hardware complexity too much. The attached KiCad schematics haven't been tested, but should be faithful to the new design.
+The design has changed considerably, without changing hardware complexity too much. The attached KiCad schematics haven't been tested, but should be faithful to the new design, with few changes required for producing a working board.
 The Verilog has been tested on a Terasic DE1Soc board.
 
 
