@@ -10,13 +10,12 @@ This is a CPU design for an 8-bit microcontroller. Addresses are formed by conca
 
 If the MSB of the offset byte is zero, then during fetch operations, the C (Code) register provides the page byte. When in data context, the D register provides the page byte. If the MSB of the offset byte is one, then in either case, page 255 (Global page) is used.
 
-Special instructions called GET-PUT involve another page byte stored in the L (Local) register. These instructions allow
-register values A, B, R and W to be copied to and from a four-byte GET-PUT region in both the global and local page. Incrementing and decrementing the L register can be used to implement subroutine stack frames (each of one page).
+Special instructions called GET-PUT involve another page byte stored in the L (Local) register. These instructions allow register values A, B, R and W to be copied to and from a four-byte GET-PUT region in both the global and local page. Incrementing and decrementing the L register can be used to implement subroutine stack frames (each of one page).
 
 
 Accumulator Registers
 
-	There are three accumulator registers, A, B and R. R receives the result of all ALU instructions, and has an attached offset register to it. A and B have a cache register attached to them, which holds the previous value when a new value is assigned. The previous value can be copied back into the respective register.
+	There are three accumulator registers, A, B and R. A and B or the ALU input operands. R receives the result of all ALU instructions, and has an attached bias register to it. A and B each have a cache register attached to them, which holds their previous value when a new value is assigned. The previous value can be copied back into the respective register.
 
 
 Address Registers
