@@ -107,10 +107,9 @@ AGB Logical flag (TRUE=255, FALSE=0) A greater than B
 
 Review of Source and Target Registers
 
-N (Number Literal)
+N (Number Literal as Nx, sets iteration register as xN)
 
-Register N is a pseudo-register. It can only by the Source of a Transfer instruction.
-Copies then skips the following opcode into the target register. NM is scrounged, RET is executed instead.
+Register N is a pseudo-register. When used as a source register, it copies then skips the following opcode into the target register. NM is scrounged, RET is executed instead. When used as a target register, the source register value is copied into the iteration register.
 
 M (Memory)
 
