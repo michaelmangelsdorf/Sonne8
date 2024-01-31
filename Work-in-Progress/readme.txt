@@ -2,15 +2,16 @@
 The design has changed considerably, without changing hardware complexity too much. The attached KiCad schematics haven't been tested, but should be faithful to the new design, with few changes required for producing a working board.
 The Verilog has been tested on a Terasic DE1Soc board.
 
-
 Sonne Microcontroller rev. Myth
 
 
-This is a CPU design for an 8-bit microcontroller. Addresses are formed by concatenating an 8-bit "page" address prefix and the low-order 7 bits of an "offset" byte. The most significant bit (MSB) of the offset byte is used to select the register that holds the page byte. The resulting memory layout consists of 256 pages of 128 bytes each, thus 32 kilobytes of memory.
+This is a CPU design for an 8-bit microcontroller. Addresses are formed by concatenating an 8-bit "page" address prefix and the low-order 7 bits of an address "offset" byte. The resulting memory layout consists of 256 pages of 128 bytes each, thus 32 kilobytes of memory.
 
-If the MSB of the offset byte is zero, then during fetch operations, the C (Code) register provides the page byte. When in data context, the D register provides the page byte. If the MSB of the offset byte is one, then in either case, page 255 (Global page) is used.
+The most significant bit (MSB) of an address offset byte is called its paging bit, and is used to select the source of the page index it implies.
 
-Special instructions called GET-PUT involve another page byte stored in the L (Local) register. These instructions allow register values A, B, R and W to be copied to and from a four-byte GET-PUT region in both the global and local page. Incrementing and decrementing the L register can be used to implement subroutine stack frames (each of one page).
+Page 255 is called the Global page. Special instructions called GET-PUT involve another page index stored in the L (Local) register. These instructions allow register values A, B, R and W to be copied to and from a four-byte GET-PUT region in both the global and local page. Incrementing and decrementing the L register can be used to implement subroutine stack frames (each of one page).
+
+If the paging bit of an address offset byte is 0, then during fetch operations, the C (Code) register provides the page index. When in data context, the D register provides the page index. If the paging bit of an address offset byte is 1, then during fetch operations, the Global page (fixed index) is used, and in data context the Local page index stored in L is used.
 
 
 Accumulator Registers
@@ -283,5 +284,3 @@ Instructions of type Nx (fetch literal value and place in register) have an alte
 9A place 9 into A, generates NA 9
 <LABEL:J generates NJ <LABEL
 33hR and 33h:R both generate NR 33h
-
-
