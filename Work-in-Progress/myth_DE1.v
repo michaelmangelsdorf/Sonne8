@@ -1120,11 +1120,6 @@ endmodule
 stop@ <stop:J   ; This outputs 07 05 (remainder, quotient of 5*14+7=77)
 CLOSE
 
-
-77A, 14B *divmod8 RDY  ;= 57h
-endless@ NJ <endless
-CLOSE
-
 @divmod8 ; Divide A by B, division result in A, remainder in B
 NEW wG0
 
