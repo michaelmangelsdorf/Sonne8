@@ -156,7 +156,7 @@ C (CALL)
 Like trap, but with a source register.
 
 W (Working register)
-An address register.
+A general purpose register which is also an address register.
 
 A, B (Accumulator Registers)
 These can only be Sources of Transfer instructions.
@@ -212,7 +212,7 @@ SCL: Set serial clock line high
 
 SCH: Set serial clock line low
 
-RDY: Put parallel bus into tristate mode (writing to SOR deactivates tristate mode, reading from SIR is equivalent to RDY).
+RDY: Put POR into tristate mode (writing to SOR deactivates tristate mode, reading from SIR is equivalent to RDY).
 
 
 Serial IO and implementing SPI
