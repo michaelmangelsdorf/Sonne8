@@ -51,21 +51,21 @@ MSB_SHIFT@                ; Shift divisor left so that first 1 bit is at MSB
  L1B                      ; Load divisor
  AND NT >DIVIDE           ; Skip when MSB set
  SLB RL1                  ; Shift divisor left and update
- L2R P1 RL2              ; Increment shift counter and update
+ L2R P1 RL2               ; Increment shift counter and update
  NJ <MSB_SHIFT
 
 DIVIDE@
  L3B SLB RL3              ; Shift quotient left and update
- L1A OCA P1 RA           ; Negate divisor
+ L1A OCA P1 RA            ; Negate divisor
  L0B CAR                  ; Dividend check borrow bit
  NF >REP
 
  ADD RL0                  ; Accept subtraction, update dividend
- L3R P1 RL3              ; Increment quotient
+ L3R P1 RL3               ; Increment quotient
 
 REP@
  L1A SRA RL1              ; Shift divisor right for next subtraction
- L2R M1 RL2              ; Decrement counter
+ L2R M1 RL2               ; Decrement counter
  NT <DIVIDE               ; Branch back if not zero
 
 ELOOP@ L3A, L0B
