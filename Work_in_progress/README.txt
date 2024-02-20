@@ -1,7 +1,7 @@
 
 
 The design has changed considerably, without changing hardware complexity too much. The attached KiCad schematics haven't been tested, but should be faithful to the new design, with few changes required for producing a working board.
-The Verilog has been tested on a Terasic DE1Soc board.
+The Verilog runs fine on a Terasic DE1Soc board at 50 MHz.
 
 Sonne Microcontroller rev. Myth
 
@@ -10,19 +10,19 @@ This is a CPU design for an 8-bit microcontroller. Addresses are formed by conca
 For byte offsets below 128:
 During fetch operations, the C (Code) register provides the page index. When in data context, the D register provides the page index.
 For byte offsets above 127:
-During fetch operations, the page index is implied to be 255. When in data context, the L register provides the page index.
+During instruction or literal fetch operations, the page index is in the G register (GLOBAL).
+When in data context (not fetching), the L register provides the page index.
 
-Page 255 is called the Global page. Special instructions called GET-PUT involve another page index stored in the L (Local) register. These instructions allow register values A, B, R and W to be copied to and from a four-byte GET-PUT region in both the global and local page. Incrementing and decrementing the L register can be used to implement subroutine stack frames (each of one page).
+Special instructions called GET-PUT involve the G (GLOBAL) and L (Local) registers. These instructions allow register values A, B, R and I to be copied to and from a four-byte GET-PUT region in both the global and local page. Incrementing and decrementing the L register can be used to implement subroutine stack frames (each of one page).
 
 
 Accumulator Registers
 
-	There are three accumulator registers, A, B and R. A and B or the ALU input operands. R receives the result of all ALU instructions, and has an attached bias register to it. A, B and R each have a cache register attached to them, which holds their previous value when a new value is assigned. The previous value can be copied back into the respective register.
-
+	There are three accumulator registers, A, B and R. A and B or the ALU input operands. R receives the result of all ALU instructions. R can also be incremented/decremented by small numbers.
 
 Address Registers
 
-	Accumulator registers A and B, and the working register W are address registers. Whenever one of these three is written to, it becomes the active one. The active address register provides the implied address offset for every memory load/store operation.
+	Accumulator registers A and B are address registers. Whenever one of these three is written to, it becomes the active one. The active address register provides the implied address offset for every memory load/store operation.
 
 
 Register M
@@ -109,7 +109,7 @@ AGB Logical flag (TRUE=255, FALSE=0) A greater than B
 
 Review of Source and Target Registers
 
-N (Number Literal as Nx, sets iteration register as xN)
+N (Number Literal as Nx)
 
 Register N is a pseudo-register. When used as a source register, it copies then skips the following opcode into the target register. NM is scrounged, RET is executed instead. When used as a target register, the source register value is copied into the iteration register.
 
@@ -118,14 +118,21 @@ M (Memory)
 Register M is a pseudo-register. It can be used as Source or Target of a Transfer instruction.
 It is used to transfer values from/to an implied memory cell from/into a register.
 
+I (Iteration register)
+
+The iteration register can be accessed using Get-Put operations, and is used in the xX jump instruction: This instruction decrements I and branches, if I is not zero.
+
 D (Data page index)
 
 It can be used as Source or Target of a Transfer instruction. During Trap and Call instructions, the current code page index is saved into D, and during RET instructions, the current code page index is restored from D.
 
+G (Global page index)
+
+Register G contains the page index for byte indices above 127 during instruction or literal fetch.
+
 L (Local page index)
 
-It can be used as Source or Target of a Transfer instruction.
-Register L contains the page index for GET-PUT instructions. The NEW instruction decrements L by 1. The OLD instruction increments L by 1.
+Register L contains the page index for GET-PUT instructions, and also for byte indices above 127 during data access. The NEW instruction decrements L by 1. The OLD instruction increments L by 1.
 
 S (Serial)
 
@@ -156,8 +163,8 @@ The semantics of these instructions are discussed above under "Control Flow".
 C (CALL)
 Like trap, but with a source register. DC and WC are scrounged (not available).
 
-W (Working register)
-A general purpose register which is also an address register. During call or trap instructions, the address offset of the next instruction to execute upon return is saved into W. During RET, the return offset is restored from W.
+O (Origin register)
+During call or trap instructions, the address offset of the next instruction to execute upon return is saved into O. During RET, the return offset is restored from O.
 
 A, B, R (Accumulator Registers)
 The ALU functions IDA (=A) and IDB (=B) as well as corresponding GET-PUT instructions can be used to read A and B.
