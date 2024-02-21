@@ -164,7 +164,7 @@ C (CALL)
 Like trap, but with a source register. DC and WC are scrounged (not available).
 
 O (Origin register)
-During call or trap instructions, the address offset of the next instruction to execute upon return is saved into O. During RET, the return offset is restored from O.
+During call or trap instructions, the address offset of the next instruction to execute upon return is saved into O. During RET, the return offset is restored from O. After a successful branch instruction, the O register receives the origin byte index of where the jump originated.
 
 A, B, R (Accumulator Registers)
 The ALU functions IDA (=A) and IDB (=B) as well as corresponding GET-PUT instructions can be used to read A and B.
