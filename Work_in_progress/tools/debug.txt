@@ -1,0 +1,93 @@
+
+Assembly output (pass 2)
+
+Suppressing output of embedded export symbols!
+
+Frame.Offset     Object Code        Lid Line#  Source text
+
+                                        0001  
+00.00:  8E 4D 8F 0E 22 81 05          7 0002  77A, 14B *divmod8, NOP RDY CLOSE
+                                        0003  
+                                        0004  
+                                        0005  @mul8 ; Multiply A * B, result in A and B 
+01.00:  06                           44 0006  NEW
+                                        0007  
+01.01:  5C                           44 0008     aL1                    ; Initialize copy multiplicand (low order)
+01.02:  4D                           44 0009     bL0                    ; Save multiplier
+01.03:  8E 00 6C                     44 0010     0A aL2                 ; Clear high-order
+01.06:  85 08                        44 0011     8I                     ; Initialize loop counter, 8 bits
+                                        0012  
+                                        0013  loop@
+01.08:  8F 01 54 18                  44 0014     1B L1a AND
+01.0C:  8C 12                        44 0015     NF >skip
+01.0E:  44 65 1B 6E                  44 0016     L0a L2b ADD, rL2       ; Add multiplier if low order lsb set
+                                        0017  
+                                        0018  skip@
+01.12:  8F 01 64 18 4A               44 0019     1B, L2a AND rG0        ; Check if high order lsb set
+01.17:  54 16 5E                     44 0020     L1a SRA, rL1           ; Shift low order byte right
+01.1A:  64 16 6E                     44 0021     L2a SRA, rL2           ; Shift high order byte right
+                                        0022     
+01.1D:  40 10 8C 26                  44 0023     G0a IDA, NF >done
+01.21:  8E 80 55 19 5E               44 0024     80h:A, L1b IOR rL1
+                                        0025  
+                                        0026  done@
+01.26:  8A 08                        44 0027     NW <loop               ; Decrement loop counter
+01.28:  54                           44 0028     L1a
+01.29:  65                           44 0029     L2b
+                                        0030  
+01.2A:  07 00                        44 0031  OLD RET
+                                        0032  CLOSE
+                                        0033  
+                                        0034  
+                                        0035  @divmod8 ; Divide A by B, division result in A, remainder in B
+02.00:  06                           53 0036  NEW
+                                        0037  
+02.01:  4C                           53 0038  aL0                       ; Dividend
+02.02:  5D                           53 0039  bL1                       ; Divisor
+02.03:  8E 01 6C                     53 0040  1A, aL2                   ; Shift counter first 1 bit to MSB
+02.06:  8E 00 7C                     53 0041  0A, aL3                   ; Initialise quotient to zero
+                                        0042  
+02.09:  56 8C 31                     53 0043  L1r NF >ELOOP             ; Skip if divisor zero
+                                        0044  
+02.0C:  8E 80                        53 0045  80h:A                     ; MSB mask
+                                        0046  MSB_SHIFT@                ; Shift divisor left so that first 1 bit is at MSB
+02.0E:  55                           53 0047   L1b                      ; Load divisor
+02.0F:  18 8B 19                     53 0048   AND NT >DIVIDE           ; Skip when MSB set
+02.12:  15 5E                        53 0049   SLB rL1                  ; Shift divisor left and update
+02.14:  66 09 6E                     53 0050   L2r P1 rL2               ; Increment shift counter and update
+02.17:  89 0E                        53 0051   NJ <MSB_SHIFT
+                                        0052  
+                                        0053  DIVIDE@
+02.19:  75 15 7E                     53 0054   L3b SLB rL3              ; Shift quotient left and update
+02.1C:  54 12 09 CE                  53 0055   L1a OCA P1 RA            ; Negate divisor
+02.20:  45 1C                        53 0056   L0b CAR                  ; Dividend check borrow bit
+02.22:  8C 29                        53 0057   NF >REP
+                                        0058  
+02.24:  1B 4E                        53 0059   ADD rL0                  ; Accept subtraction, update dividend
+02.26:  76 09 7E                     53 0060   L3r P1 rL3               ; Increment quotient
+                                        0061   
+                                        0062  REP@
+02.29:  54 16 5E                     53 0063   L1a SRA rL1              ; Shift divisor right for next subtraction
+02.2C:  66 0F 6E                     53 0064   L2r M1 rL2               ; Decrement counter
+02.2F:  8B 19                        53 0065   NT <DIVIDE               ; Branch back if not zero
+                                        0066  
+02.31:  74 45                        53 0067  ELOOP@ L3a, L0b
+                                        0068  
+02.33:  07 00                        53 0069  OLD RET
+                                        0070  CLOSE
+                                        0071  
+                                        0072  
+                                        0073  
+                                        0074  
+                                        0075  
+                                        0076  
+                                        0077  
+                                        0078  
+                                        0079  
+                                        0080  
+                                        0081  
+                                        0082  
+                                        0083  
+                                        0084  
+                                        0085  
+                                        0086  
