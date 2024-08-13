@@ -420,7 +420,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "sonne-controller.kicad_pro",
+    "filename": "myth.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -562,7 +562,7 @@
       "workbook_filename": ""
     },
     "page_layout_descr_file": "",
-    "plot_directory": "/Users/michael/Downloads/",
+    "plot_directory": "/Volumes/Obcn8/Allefnoi/csjob/Github/Myth/Work_in_progress/tools/Schematics/",
     "spice_adjust_passive_values": false,
     "spice_current_sheet_as_root": false,
     "spice_external_command": "spice \"%I\"",

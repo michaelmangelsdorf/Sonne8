@@ -2,8 +2,6 @@
 #include <u.h>
 #include <libc.h>
 
-enum myth_io_event {SELECT, POSEDGE, NEGEDGE, BUSY, READY, DONE};
-
 struct myth_vm
 {
         uchar pagebyte[256][128]; /*32K*/
@@ -11,9 +9,6 @@ struct myth_vm
         uchar localbyte[256][64]; /*16K*/
 
         uchar xMx;  /*Implied memory address offset*/
-
-        /*Callback function for IO events*/
-        void (*iocb)(struct myth_vm*, enum myth_io_event);
 
         uchar e;    /*Device ENABLE register */
 
@@ -23,7 +18,6 @@ struct myth_vm
         uchar sir;  /*Serial input register, modelled after HC595*/
         uchar sor;  /*Serial output register, modelled after HC165*/
 
-        uchar busy; /*POR inverted tristate flag (0:tristate)*/
         uchar pir;  /*Parallel input register*/
         uchar por;  /*Parallel output register*/
 
@@ -112,16 +106,14 @@ void myth_register_iocb(struct myth_vm *vm,
 #define AEB 14 /*255 if A=B else 0*/
 #define AGB 15 /*255 if A>B else 0*/
 
-#define RET 0 /*Return from CALL*/
+#define NOP 0 /*Return from CALL*/
 #define SSI 1 /*Serial Shift In*/
 #define SSO 2 /*Serial Shift Out*/
 #define SCL 3 /*Set serial Clock Low*/
 #define SCH 4 /*Set serial Clock High*/
-#define RDY 5 /*Ready/Tristate*/
+#define RET 5 /**/
 #define NEW 6 /*Create stack frame*/
 #define OLD 7 /*Resume stack frame*/
-
-
 
 
 void
@@ -138,7 +130,6 @@ myth_reset(struct myth_vm *vm)
         vm->sir = 0;
         vm->sor = 0;
 
-        vm->busy = 0;
         vm->pir = 0;
         vm->por = 0;
 }
@@ -251,16 +242,8 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
                 case xR: vm->r = srcval; break;
                 case xI: vm->i = srcval; break;
                 case xS: vm->sor = srcval; break;
-                case xP:
-                        vm->por = srcval;
-                        vm->busy = 1;
-                        if(vm->iocb) (*(vm->iocb))(vm, BUSY);
-                        break;
-
-                case xE:
-                        vm->e = srcval;
-                        if(vm->iocb) (*(vm->iocb))(vm, SELECT);
-                        break;
+                case xP: vm->por = srcval; break;
+                case xE: vm->e = srcval; break;
 
                 case xJ: /*pseudo reg*/
                         vm->j += (signed char) srcval;
@@ -389,50 +372,37 @@ void
 myth_exec_sys(struct myth_vm *vm, uchar opcode)
 {
         switch(opcode & 7){ /*Zero except low order 3 bits*/
-                case RET:
-                        vm->c = vm->d;
-                        vm->j = vm->o;
+                
+                case NOP:
                         break;
+
                 case SSI:
                         /*Clocks in MISO line bit into LSB*/
                         vm->sir = ((vm->sir)<<1) + vm->miso;
                         break;
+                
                 case SSO:
                         vm->mosi = (vm->sor)&0x80 ? 1:0;
                         vm->sor <<= 1; /*Clocks out MSB first*/
                         break;
+                
                 case SCL:
-                        if(vm->sclk){
-                                if(vm->iocb) (*(vm->iocb))(vm, NEGEDGE);
-                                vm->sclk = 0;
-                        }
+                        vm->sclk = 0;
                         break;
+                
                 case SCH:
-                        if(!vm->sclk){
-                                if(vm->iocb) (*(vm->iocb))(vm, POSEDGE);
-                                vm->sclk = 1;
-                        }
+                        vm->sclk = 1;
                         break;
-                case RDY:
-                        if(vm->busy){
-                                if(vm->iocb) (*(vm->iocb))(vm, READY);
-                                vm->busy = 0;
-                        }
+                
+                case RET:
+                        vm->c = vm->d;
+                        vm->j = vm->o;
                         break;
 
                 case NEW: (vm->l)--; break;
                 case OLD: (vm->l)++; break;
         }
 }
-
-
-void /*Register callback function for IO notifications*/
-myth_register_iocb(struct myth_vm *vm,
-        void (*iocb_func)(struct myth_vm*, enum myth_io_event))
-{
-        vm->iocb = iocb_func;
-}
-
 
 
 
