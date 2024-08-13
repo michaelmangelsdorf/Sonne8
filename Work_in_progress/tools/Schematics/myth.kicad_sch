@@ -7,10 +7,10 @@
 	(title_block
 		(title "Sonne-8 Micro-Controller")
 		(date "2024-08-13")
-		(rev "Myth")
+		(rev "Myth Cut")
 		(company "Contact: mim@ok-schalter.de")
 		(comment 1 "Author: Michael Mangelsdorf")
-		(comment 2 "Project homepage: https://github.com/Dosflange/Sonne")
+		(comment 2 "Project homepage: https://github.com/Dosflange/Myth")
 	)
 	(lib_symbols
 		(symbol "4xxx:4002"
@@ -33885,6 +33885,17 @@
 		)
 		(uuid "013dbc0a-bf2b-48aa-bdee-823004ddd9a8")
 	)
+	(text "NULL device"
+		(exclude_from_sim no)
+		(at 313.568 665.1714 0)
+		(effects
+			(font
+				(size 1.2954 1.2954)
+			)
+			(justify left bottom)
+		)
+		(uuid "05eb20b2-cd22-424e-8133-eca447359f2c")
+	)
 	(text "Device Enable"
 		(exclude_from_sim no)
 		(at 152.7556 733.552 0)
@@ -33951,9 +33962,9 @@
 		)
 		(uuid "19170ee6-f4a9-4dca-b1b5-12c2eb58eb84")
 	)
-	(text "All NOP, but\nreserved for\ninstruction set\nextension except NM"
+	(text "Currently NOP,\nreserved for\ninstruction set\nextension"
 		(exclude_from_sim no)
-		(at 221.9927 236.4316 0)
+		(at 216.1811 235.5258 0)
 		(effects
 			(font
 				(size 2 2)
@@ -34513,6 +34524,17 @@
 			(justify left bottom)
 		)
 		(uuid "8c472194-e543-4c60-a9e2-01e7945233ff")
+	)
+	(text "NULL device"
+		(exclude_from_sim no)
+		(at 266.8398 664.8491 0)
+		(effects
+			(font
+				(size 1.2954 1.2954)
+			)
+			(justify left bottom)
+		)
+		(uuid "8f00f9b0-36f8-4ac4-ace3-44c846a1431b")
 	)
 	(text "IF GETPUT:\nIB3 set = GLOBAL\nIB3 clear = LOCAL"
 		(exclude_from_sim no)
@@ -37517,7 +37539,7 @@
 		)
 		(uuid "360fed5b-dd7a-4c36-81f2-cfc913ee4e40")
 	)
-	(label "DH1"
+	(label "PAR_CP"
 		(at 265.5861 668.8871 0)
 		(fields_autoplaced yes)
 		(effects
@@ -38451,6 +38473,17 @@
 			(justify left bottom)
 		)
 		(uuid "47be24ee-e15b-4cee-b84b-350111ac1499")
+	)
+	(label "~{PAR_OE}"
+		(at 368.6461 740.792 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "47c04496-0192-45d5-9cfa-f038021719ba")
 	)
 	(label "IO1"
 		(at 121.7422 54.5846 180)
@@ -40025,6 +40058,17 @@
 		)
 		(uuid "692913e3-126f-477a-bd48-1e0bff5385c2")
 	)
+	(label "PAR_CP"
+		(at 425.7961 686.182 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "694687c0-e1ee-4318-94ef-1ff796d2e3c9")
+	)
 	(label "DB7"
 		(at 49.657 360.9848 180)
 		(fields_autoplaced yes)
@@ -40904,17 +40948,6 @@
 			(justify left bottom)
 		)
 		(uuid "7d68910b-8137-4caa-ac1f-51ae54aafb41")
-	)
-	(label "DONE"
-		(at 223.3747 279.1714 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "7dde97ac-d18e-4574-8e85-7a061f22f71f")
 	)
 	(label "~{GETI}"
 		(at 576.199 717.1182 180)
@@ -43677,17 +43710,6 @@
 		)
 		(uuid "bd63bebd-6845-49c6-be93-de71f10bd6f3")
 	)
-	(label "DH1"
-		(at 425.7961 686.182 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "bd9dbb3a-99ec-4e13-877a-ca590f9d8c0b")
-	)
 	(label "~{CLEAR}"
 		(at 821.1312 221.488 180)
 		(fields_autoplaced yes)
@@ -44666,17 +44688,6 @@
 			(justify right bottom)
 		)
 		(uuid "d212fb8a-3083-4f00-ae41-9bac63bcd265")
-	)
-	(label "~{DL1}"
-		(at 368.6461 740.792 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "d215c9db-7ed8-481a-b487-a32f89d0f16a")
 	)
 	(label "R2"
 		(at 680.0596 421.2844 180)
@@ -45866,7 +45877,7 @@
 		)
 		(uuid "ed815504-d966-49d1-b4d8-640f934043fa")
 	)
-	(label "~{DL1}"
+	(label "~{PAR_OE}"
 		(at 312.039 669.0831 0)
 		(fields_autoplaced yes)
 		(effects

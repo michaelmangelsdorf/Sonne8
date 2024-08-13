@@ -13,6 +13,9 @@
     Build using:
     9c myth.c
     9l myth.o
+    
+    Run:
+    ./a.out
 */
 
 #include <u.h>
