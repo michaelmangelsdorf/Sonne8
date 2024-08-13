@@ -50,9 +50,6 @@ void myth_exec_sys(struct myth_vm *vm, uchar opcode);
 void myth_call(struct myth_vm *vm, uchar dstpage);
 void myth_ret(struct myth_vm *vm);
 
-void myth_register_iocb(struct myth_vm *vm,
-        void (*iocb)(struct myth_vm*, enum myth_io_event));
-
 
 /*  The 'REGx' notation means: REG into (something)
     i.e. REG is a source
@@ -119,11 +116,14 @@ void myth_register_iocb(struct myth_vm *vm,
 void
 myth_reset(struct myth_vm *vm)
 {
-        vm->c = 0;
-        vm->j = 0;
+        memset(vm->pagebyte, 0, 256*128);
+        memset(vm->globalbyte, 0, 256*64);
+        memset(vm->localbyte, 0, 256*64);
 
-        vm->xMx =0;
+        vm->xMx = 0;
 
+        vm->e = 0;
+        
         vm->sclk = 0;
         vm->miso = 0;
         vm->mosi = 0;
@@ -132,6 +132,18 @@ myth_reset(struct myth_vm *vm)
 
         vm->pir = 0;
         vm->por = 0;
+
+        vm->j = 0;
+        vm->o = 0;
+        vm->c = 0;
+        vm->d = 0;
+        vm->g = 0;
+        vm->l = 0;
+
+        vm->a = 0;
+        vm->b = 0;
+        vm->r = 0;
+        vm->i = 0;
 }
 
 
@@ -171,29 +183,43 @@ myth_fetch(struct myth_vm *vm) /*Fetch next byte in CODE stream, increment PC*/
 
 
 void
-myth_step(struct myth_vm *vm)
+myth_cycle(struct myth_vm *vm)
 {
 
         uchar opcode = myth_fetch(vm);
 
-        /*SCROUNGING (remap certain PAIR combinations)*/
+        /* SCROUNGING
+           Remap MM, RR, DD etc, and impracticable opcodes such as NM.
+           Currently NOP, reserved for instruction set extension.
+           Do not assume that these remain no-operation opcodes. */
 
         #define scrounge_NM 0x80 + xM>>3 + Nx
-        if(opcode == scrounge_NM) return; /*remap NM to NOP*/
-
         #define scrounge_MM 0x80 + xM>>3 + Mx
-        if(opcode == scrounge_MM)
-                if (vm->iocb) (*(vm->iocb))(vm, DONE);
+        #define scrounge_DD 0x80 + xD>>3 + Dx
+        #define scrounge_OO 0x80 + xO>>3 + Ox
+        #define scrounge_RR 0x80 + xR>>3 + Rx
+        #define scrounge_II 0x80 + xI>>3 + Ix
 
-        /*Decode priority encoded opcode*/
-        /*Execute decoded instruction*/
+        switch (opcode){
 
-        if(opcode&0x80) myth_exec_pair(vm, opcode);
-        else if(opcode&0x40) myth_exec_gput(vm, opcode);
-        else if(opcode&0x20) myth_exec_trap(vm, opcode);
-        else if(opcode&0x10) myth_exec_alu(vm, opcode);
-        else if(opcode&0x08) myth_exec_adj(vm, opcode);
-        else myth_exec_sys(vm, opcode);
+                case scrounge_NM: break;
+                case scrounge_MM: break;
+                case scrounge_DD: break;
+                case scrounge_OO: break;
+                case scrounge_RR: break;
+                case scrounge_II: break;
+
+                default:
+                /*Decode priority encoded opcode*/
+                /*Execute decoded instruction*/
+
+                if (opcode&0x80) myth_exec_pair(vm, opcode);
+                else if (opcode&0x40) myth_exec_gput(vm, opcode);
+                else if (opcode&0x20) myth_exec_trap(vm, opcode);
+                else if (opcode&0x10) myth_exec_alu(vm, opcode);
+                else if (opcode&0x08) myth_exec_adj(vm, opcode);
+                else myth_exec_sys(vm, opcode);
+        }
 }
 
 
