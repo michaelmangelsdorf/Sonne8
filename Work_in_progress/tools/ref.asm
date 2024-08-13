@@ -70,9 +70,8 @@ OLD RET
 CLOSE
 
 
-
-
-
+;L3-as-divisor
+;B-get-divisor SLB B-put-divisor
 
 
 

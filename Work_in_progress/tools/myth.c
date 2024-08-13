@@ -31,8 +31,9 @@ load(struct myth_vm *vm)
                 read(fdesc, vm, sizeof(struct myth_vm));
         else{
                 print("Created missing input file '%s'\n", fname);
-                create(fname,OREAD,0666);
+                create(fname,OREAD,0);
         }
+        close(fdesc);
 }
 
 void
@@ -43,6 +44,7 @@ save(struct myth_vm *vm)
                 write(fdesc, vm, sizeof(struct myth_vm));
         else
                 print("File error on output file '%s'\n", fname);
+        close(fdesc);
 }
 
 
