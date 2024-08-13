@@ -1,5 +1,5 @@
 
-77A, 14B *divmod8, NOP RDY CLOSE
+;77A, 14B *divmod8, NOP RDY CLOSE
 
 
 @mul8 ; Multiply A * B, result in A and B 
@@ -8,7 +8,7 @@ NEW
    aL1                    ; Initialize copy multiplicand (low order)
    bL0                    ; Save multiplier
    0A aL2                 ; Clear high-order
-   8V                     ; Initialize loop counter, 8 bits
+   8I                     ; Initialize loop counter, 8 bits
 
 loop@
    1B L1a AND

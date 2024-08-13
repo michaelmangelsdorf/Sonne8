@@ -73,7 +73,7 @@ void gen_opcodes()
     };
 
     char *sys[] = {
-     "RET", "SSI", "SSO", "SCL", "SCH", "RDY", "NEW", "OLD",
+     "NOP", "SSI", "SSO", "SCL", "SCH", "RET", "NEW", "OLD",
      "P4", "P1", "P2", "P3", "M4", "M3", "M2", "M1"
     };
 
@@ -111,7 +111,7 @@ void gen_opcodes()
             for (int gl=0; gl<2; gl++)
                 {
                     numstr[0] = 48 + offs; // ASCII 0 + the number
-                    unsigned index = 64 + regn + 4*gl + 8*gp + 16*offs;
+                    unsigned index = 64 + regn + 4*gp + 8*gl + 16*offs;
                     if (gp==0) { // GET
                         strcpy( mnemo_decoder[index], gl==0 ? "G" : "L");
                         strcat( mnemo_decoder[index], numstr);
@@ -141,8 +141,8 @@ void gen_opcodes()
            for (int i=0; i<16; i++)
            {
              /*scrounge*/
-           if (j==LHS_N && i==RHS_M) strcpy( mnemo_decoder[j*16+i + 128], "NOP");
-           else if (j==LHS_M && i==RHS_M) strcpy( mnemo_decoder[j*16+i + 128], "DONE");
+           if (j==LHS_N && i==RHS_M) strcpy( mnemo_decoder[j*16+i + 128], "DONE");
+           else if (j==LHS_M && i==RHS_M) strcpy( mnemo_decoder[j*16+i + 128], "---");
            else {     
                 /* Transfers */
                 strcpy( mnemo_decoder[j*16+i + 128], lhs[j] );
