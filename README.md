@@ -6,5 +6,6 @@ The PCB is shown below.
 
 ![CPU board](https://github.com/Dosflange/Myth/blob/main/Controller-Board_abu.jpg)
 
-The work in the "Schematics" folder is based on the KiCad file used to produce the working prototype PCB,
-but the design has changed quite a lot, so the schematics although true to the current model will revision.
+The work in the "Schematics" folder is based on the KiCad file used for PCB production.
+
+The design has changed substantially though, and the schematics - although true to the current model - will need revision!
