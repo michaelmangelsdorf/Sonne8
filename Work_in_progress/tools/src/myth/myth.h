@@ -4,11 +4,7 @@
 
 struct myth_vm
 {
-        uchar pagebyte[256][128]; /*32K*/
-        uchar globalbyte[256][64]; /*16K*/
-        uchar localbyte[256][64]; /*16K*/
-
-        uchar xMx;  /*Implied memory address offset*/
+        uchar pagebyte[256][256];
 
         uchar e;    /*Device ENABLE register */
 
@@ -22,17 +18,16 @@ struct myth_vm
         uchar por;  /*Parallel output register*/
 
         uchar j;    /*JUMP register (program counter)*/
-        uchar o;    /*ORIGIN register (pending program counter)*/
-        uchar c;    /*CALL register (current code page index)*/
-        uchar d;    /*DATA register (pending code page index)*/
+        uchar o;    /*ORIGIN*/
 
-        uchar g;    /*GLOBAL segment index*/
-        uchar l;    /*LOCAL segment index*/
+        uchar c;    /*CODE page register*/
+        uchar d;    /*DATA page register*/
+        uchar l;    /*LOCAL page register*/
 
-        uchar a;    /*A accumulator register*/
-        uchar b;    /*B accumulator register*/
-        uchar r;    /*RESULT accumulator register*/
-        uchar i;    /*INNER register (loop counter)*/
+        uchar a;    /*ANY*/
+        uchar b;    /*BROADCAST*/
+        uchar r;    /*RESULT*/
+        uchar i;    /*INNER*/
 };
 
 void myth_reset(struct myth_vm *vm);
@@ -56,11 +51,11 @@ void myth_ret(struct myth_vm *vm);
 */
 
 #define Nx 0 /*from code literal (NUMBER)*/
-#define Mx 1 /*from MEMORY*/
-#define Dx 2 /*from DATA page index*/
-#define Ox 3 /*from ORIGIN offset*/
-#define Rx 4 /*from RESULT accumulator*/
-#define Ix 5 /*from VALUE register*/
+#define DMx 1 /*from MEMORY via DATA page index*/
+#define LMx 2 /*from MEMORY via LOCAL page index*/
+#define Dx 3 /*from DATA page register*/
+#define Rx 4 /*from RESULT register*/
+#define Ix 5 /*from INNER register*/
 #define Sx 6 /*from SERIAL input*/
 #define Px 7 /*from PARALLEL input*/
 
@@ -69,61 +64,57 @@ void myth_ret(struct myth_vm *vm);
     i.e. REG is a destination
 */
 
-#define xG 0  /*to GLOBAL segment index*/
-#define xM 1  /*to MEMORY*/
-#define xD 2  /*to DATA page index*/
-#define xO 3  /*to ORIGIN offset*/
-#define xR 4  /*to RESULT accumulator*/
-#define xI 5  /*to VALUE register*/
-#define xS 6  /*to SERIAL output*/
-#define xP 7  /*to PARALLEL output*/
-#define xE 8  /*to ENABLE register*/
-#define xJ 9  /*to JUMP page index*/
-#define xW 10 /*to WHILE page index*/
-#define xT 11 /*to TRUE page index*/
-#define xF 12 /*to FALSE page index*/
-#define xC 13 /*to CALL page index*/
-#define xA 14 /*to A accumulator*/
-#define xB 15 /*to B accumulator*/
+#define xO 0 /*to ORIGIN register*/
+#define xDM 1 /*to MEMORY via DATA page index*/
+#define xLM 2 /*to MEMORY via LOCAL page index*/
+#define xD 3 /*to DATA page register*/
+#define xR 4 /*to RESULT register*/
+#define xI 5 /*to INNER register*/
+#define xS 6 /*to SERIAL output*/
+#define xP 7 /*to PARALLEL output*/
+#define xA 8 /*to A register*/
+#define xB 9 /*to BROADCAST register*/
+#define xE 10 /*to ENABLE register*/
+#define xJ 11 /*to JUMP page index*/
+#define xW 12 /*to WHILE page index*/
+#define xT 13 /*to TRUE page index*/
+#define xF 14 /*to FALSE page index*/
+#define xC 15 /*to CALL page index*/
 
-#define IDA 0 /*Identity A*/
-#define IDB 1 /*Identity B*/
-#define OCA 2 /*Ones' complement of A*/
-#define OCB 3 /*Ones' complement of B*/
-#define SLA 4 /*Shift left A*/
-#define SLB 5 /*Shift left B*/
-#define SRA 6 /*Shift right A*/
-#define SRB 7 /*Shift right B*/
-#define AND 8 /*A AND B*/
-#define IOR 9 /*A OR B*/
-#define EOR 10 /*A XOR B*/
-#define ADD 11 /*A + B*/
-#define CAR 12 /*Carry of A + B (0 or 1)*/
-#define ALB 13 /*255 if A<B else 0*/
-#define AEB 14 /*255 if A=B else 0*/
-#define AGB 15 /*255 if A>B else 0*/
+#define IDR 0 /*Identity R*/
+#define IDO 1 /*Identity O*/
+#define OCR 2 /*Ones' complement of R*/
+#define OCO 3 /*Ones' complement of O*/
+#define SLR 4 /*Shift left R*/
+#define SLO 5 /*Shift left O*/
+#define SRR 6 /*Shift right R*/
+#define SRO 7 /*Shift right O*/
+#define AND 8 /*R AND O*/
+#define IOR 9 /*R OR O*/
+#define EOR 10 /*R XOR O*/
+#define ADD 11 /*R + O*/
+#define CAR 12 /*Carry of R + O (0 or 1)*/
+#define RLO 13 /*255 if R<O else 0*/
+#define REO 14 /*255 if R=O else 0*/
+#define RGO 15 /*255 if R>O else 0*/
 
-#define NOP 0 /*Return from CALL*/
+#define NOP 0 /*No Operation*/
 #define SSI 1 /*Serial Shift In*/
 #define SSO 2 /*Serial Shift Out*/
 #define SCL 3 /*Set serial Clock Low*/
 #define SCH 4 /*Set serial Clock High*/
-#define RET 5 /**/
-#define NEW 6 /*Create stack frame*/
-#define OLD 7 /*Resume stack frame*/
+#define RET 5 /*Return from CALL*/
+#define BRA 6 /*Wide BRANCH*/
+#define ORG 7 /*Wide PULL*/
 
 
 void
 myth_reset(struct myth_vm *vm)
 {
-        memset(vm->pagebyte, 0, 256*128);
-        memset(vm->globalbyte, 0, 256*64);
-        memset(vm->localbyte, 0, 256*64);
-
-        vm->xMx = 0;
+        memset(vm->pagebyte, 0, 256*256);
 
         vm->e = 0;
-        
+
         vm->sclk = 0;
         vm->miso = 0;
         vm->mosi = 0;
@@ -135,9 +126,9 @@ myth_reset(struct myth_vm *vm)
 
         vm->j = 0;
         vm->o = 0;
+
         vm->c = 0;
         vm->d = 0;
-        vm->g = 0;
         vm->l = 0;
 
         vm->a = 0;
@@ -150,28 +141,8 @@ myth_reset(struct myth_vm *vm)
 uchar*
 myth_cmemptr(struct myth_vm *vm) /*Return effective CODE memory pointer*/
 {
-        if(vm->j < 0x80)
-                return &(vm->pagebyte[ vm->c][ vm->j]);
-
-        else if (vm->j < 0xC0)
-                return &(vm->globalbyte[ vm->g][ vm->j - 0x80]);
-        else
-                return &(vm->localbyte[ vm->l][ vm->j - 0xC0]);
+        return &(vm->pagebyte[ vm->c][ vm->j]);
 }
-
-
-uchar*
-myth_dmemptr(struct myth_vm *vm) /*Return effective DATA memory pointer*/
-{
-        if(vm->xMx < 0x80)
-                return &(vm->pagebyte[ vm->d][ vm->xMx]);
-        
-        else if(vm->xMx < 0xC0)
-                return &(vm->globalbyte[ vm->g][ vm->xMx - 0x80]);
-        else
-                return &(vm->localbyte[ vm->l][ vm->xMx - 0xC0]);
-}
-
 
 uchar
 myth_fetch(struct myth_vm *vm) /*Fetch next byte in CODE stream, increment PC*/
@@ -193,21 +164,25 @@ myth_cycle(struct myth_vm *vm)
            Currently NOP, reserved for instruction set extension.
            Do not assume that these remain no-operation opcodes. */
 
+/*
         #define scrounge_NM 0x80 + xM>>3 + Nx
         #define scrounge_MM 0x80 + xM>>3 + Mx
         #define scrounge_DD 0x80 + xD>>3 + Dx
         #define scrounge_OO 0x80 + xO>>3 + Ox
         #define scrounge_RR 0x80 + xR>>3 + Rx
         #define scrounge_II 0x80 + xI>>3 + Ix
+*/
 
         switch (opcode){
 
+/*
                 case scrounge_NM: break;
                 case scrounge_MM: break;
                 case scrounge_DD: break;
                 case scrounge_OO: break;
                 case scrounge_RR: break;
                 case scrounge_II: break;
+*/
 
                 default:
                 /*Decode priority encoded opcode*/
@@ -240,9 +215,9 @@ myth_exec_pair_srcval(struct myth_vm *vm, uchar opcode)
         uchar srcreg = opcode & 7; /*Zero except low order 3 bits*/
         switch(srcreg){
                 case Nx: return myth_fetch(vm); /*pseudo reg*/
-                case Mx: return *myth_dmemptr(vm); /*pseudo reg*/
+                case DMx: return vm->pagebyte[ vm->d][ vm->o]; /*pseudo reg*/
+                case LMx: return vm->pagebyte[ vm->l][ vm->o]; /*pseudo reg*/
                 case Dx: return vm->d;
-                case Ox: return vm->o;
                 case Rx: return vm->r;
                 case Ix: return vm->i;
                 case Sx: return vm->sir;
@@ -261,42 +236,35 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
         uchar srcval = myth_exec_pair_srcval(vm, opcode);
         uchar dstreg = (opcode >> 3) & 15; /* Zero except bits 3-6 at LSB*/
         switch(dstreg){
-                case xG: vm->g = srcval; break;
-                case xM: *myth_dmemptr(vm) = srcval; break; /*pseudo reg*/
-                case xD: vm->d = srcval; break;
                 case xO: vm->o = srcval; break;
+                case xDM: /*pseudo reg*/
+                        vm->pagebyte[ vm->d][ vm->o] = srcval;
+                        break;
+                case xLM: /*pseudo reg*/
+                        vm->pagebyte[ vm->l][ vm->o] = srcval;
+                        break;
+                case xD: vm->d = srcval; break;
                 case xR: vm->r = srcval; break;
                 case xI: vm->i = srcval; break;
                 case xS: vm->sor = srcval; break;
                 case xP: vm->por = srcval; break;
+                case xA: vm->a = srcval; break;
+                case xB: vm->b =srcval; break;
                 case xE: vm->e = srcval; break;
-
                 case xJ: /*pseudo reg*/
                         vm->j += (signed char) srcval;
                         break;
-
                 case xW: /*pseudo reg*/
                         if (vm->i) vm->j += (signed char) srcval;
                         (vm->i)--; /*Post decrement always*/
                         break; 
-
                 case xT: /*pseudo reg*/
                         if (vm->r) vm->j += (signed char) srcval;
                         break;
-
                 case xF: /*pseudo reg*/
                         if (!vm->r) vm->j = (signed char) srcval;
                         break;
-
                 case xC: myth_call(vm, srcval); break; /*pseudo reg*/
-                case xA:
-                        vm->a = srcval;
-                        vm->xMx = srcval;
-                        break;
-                case xB:
-                        vm->b = srcval;
-                        vm->xMx = srcval;
-                        break;
         }
 }
 
@@ -305,32 +273,28 @@ void
 myth_exec_gput(struct myth_vm *vm, uchar opcode) /*Execute GETPUT instruction*/
 {
         /* OPCODE
-            BITS 0-1 encode registers ABRV
+            BITS 0-1 encode registers RODA
             BIT 2 encodes GET/PUT mode
-            BIT 3 encodes GLOBAL/LOCAL segment
-            BITS 4-5 encode address offset
+            BITS 3-5 encode address offset
         */
 
         uchar *mptr;
-        uchar offs = (opcode >> 4) & 3; /*Zero except bits 4-5 at LSB*/
+        uchar offs = (opcode >> 3) & 7; /*Zero except bits 3-5 at LSB*/
         
-        if(opcode & 8) mptr = &(vm->localbyte[vm->l][0xFC + offs]);
-        else
-                mptr = &(vm->globalbyte[vm->g][0xFC + offs]);
-        
+        mptr = &(vm->pagebyte[vm->l][0xFC + offs]);
         if(opcode & 4)
                 switch(opcode & 3){ /*Zero except low order 2 bits*/
-                        case 0: *mptr = vm->a;
-                        case 1: *mptr = vm->b;
-                        case 2: *mptr = vm->r;
-                        case 3: *mptr = vm->i;
+                        case 0: *mptr = vm->r;
+                        case 1: *mptr = vm->o;
+                        case 2: *mptr = vm->d;
+                        case 3: *mptr = vm->a;
                 }
         else
                 switch(opcode & 3){ /*Zero except low order 2 bits*/
-                        case 0: vm->a = *mptr;
-                        case 1: vm->b = *mptr;
-                        case 2: vm->r = *mptr;
-                        case 3: vm->i = *mptr;
+                        case 0: vm->r = *mptr;
+                        case 1: vm->o = *mptr;
+                        case 2: vm->d = *mptr;
+                        case 3: vm->a = *mptr;
                 }
 }
 
@@ -339,15 +303,6 @@ void
 myth_exec_trap(struct myth_vm *vm, uchar opcode)
 {
         uchar dstpage = opcode & 31; /*Zero except low order 5 bits*/
-        
-        /* Split TRAP address rage evenly between RAM and ROM
-           0-15: pages 112-127 (ROM - MSB clear)
-           16-31: pages 240-255 (RAM - MSB set)
-        */
-
-        if (dstpage<16) dstpage += 112;
-        else dstpage += 240;
-
         myth_call(vm, dstpage);
 }
 
@@ -356,24 +311,24 @@ void
 myth_exec_alu(struct myth_vm *vm, uchar opcode)
 {
         switch(opcode & 15){/* Zero except low order 4 bits*/
-                case IDA: vm->r = vm->a; break;
-                case IDB: vm->r = vm->b; break;
-                case OCA: vm->r = ~vm->a; break;
-                case OCB: vm->r = ~vm->b; break;
-                case SLA: vm->r = vm->a << 1; break;
-                case SLB: vm->r = vm->b << 1; break;
-                case SRA: vm->r = vm->a >> 1; break;
-                case SRB: vm->r = vm->b >> 1; break;
-                case AND: vm->r = vm->a & vm->b; break;
-                case IOR: vm->r = vm->a | vm->b; break;
-                case EOR: vm->r = vm->a ^ vm->b; break;
-                case ADD: vm->r = vm->a + vm->b; break;
+                case IDR: vm->r = vm->r; break;
+                case IDO: vm->r = vm->o; break;
+                case OCR: vm->r = ~vm->r; break;
+                case OCO: vm->r = ~vm->o; break;
+                case SLR: vm->r = vm->r << 1; break;
+                case SLO: vm->r = vm->o << 1; break;
+                case SRR: vm->r = vm->r >> 1; break;
+                case SRO: vm->r = vm->o >> 1; break;
+                case AND: vm->r = vm->r & vm->o; break;
+                case IOR: vm->r = vm->r | vm->o; break;
+                case EOR: vm->r = vm->r ^ vm->o; break;
+                case ADD: vm->r = vm->r + vm->o; break;
                 case CAR:
-                        vm->r = (int) vm->a + (int) vm->b > 255 ? 1 : 0;
+                        vm->r = (int) vm->r + (int) vm->o > 255 ? 1 : 0;
                         break;
-                case ALB: vm->r = (vm->a < vm->b) ? 255 : 0; break;
-                case AEB: vm->r = (vm->a == vm->b) ? 255 : 0; break;
-                case AGB: vm->r = (vm->a > vm->b) ? 255 : 0; break;
+                case RLO: vm->r = (vm->r < vm->o) ? 255 : 0; break;
+                case REO: vm->r = (vm->r == vm->o) ? 255 : 0; break;
+                case RGO: vm->r = (vm->r > vm->o) ? 255 : 0; break;
         }
 }
 
@@ -401,32 +356,26 @@ myth_exec_sys(struct myth_vm *vm, uchar opcode)
                 
                 case NOP:
                         break;
-
                 case SSI:
                         /*Clocks in MISO line bit into LSB*/
                         vm->sir = ((vm->sir)<<1) + vm->miso;
                         break;
-                
                 case SSO:
                         vm->mosi = (vm->sor)&0x80 ? 1:0;
                         vm->sor <<= 1; /*Clocks out MSB first*/
                         break;
-                
                 case SCL:
                         vm->sclk = 0;
                         break;
-                
                 case SCH:
                         vm->sclk = 1;
                         break;
-                
                 case RET:
                         vm->c = vm->d;
                         vm->j = vm->o;
                         break;
-
-                case NEW: (vm->l)--; break;
-                case OLD: (vm->l)++; break;
+                case BRA:  break;
+                case ORG:  break;
         }
 }
 
