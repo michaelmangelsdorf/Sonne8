@@ -17,19 +17,19 @@ The two KiCad boards work fine!, I've had them manufactured by JLCPCB. The proje
 
 The CPU board looks like this (this is an older version, notice the wire patch):
 
-![CPU board](https://github.com/Dosflange/Sonne-THT-74HC/blob/main/board_and_screws.jpg)
+![CPU board](https://github.com/Dosflange/Myth/blob/main/Prototype/board_and_screws.jpg)
 
 These plastic spacers go between the CPU board and the IO board. The distance/length of the spacer part (without the protruding thread) is 2 cm.
 
-![CPU board](https://github.com/Dosflange/Sonne-THT-74HC/blob/main/board_screws.jpg)
+![CPU board](https://github.com/Dosflange/Myth/blob/main/Prototype/board_screws.jpg)
 
 Both modules go together like so:
 
-![CPU board](https://github.com/Dosflange/Sonne-THT-74HC/blob/main/board_sandwich.jpg)
+![CPU board](https://github.com/Dosflange/Myth/blob/main/Prototype/board_sandwich.jpg)
 
 The assembled development kit i.e. hardware portion of this project:
 
-![CPU board](https://github.com/Dosflange/Sonne-THT-74HC/blob/main/board_ready.jpg)
+![CPU board](https://github.com/Dosflange/Myth/blob/main/Prototype/board_ready.jpg)
 
 The entire lower right quarter of the IO board doesn't really need to be populated, but you can of course. The large chip socket on the right
 is just a place-holder that connects straight through to the identical EEPROM socket just below it on the CPU board.
