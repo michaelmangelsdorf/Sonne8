@@ -28796,16 +28796,6 @@
 	)
 	(wire
 		(pts
-			(xy 921.7837 679.7257) (xy 924.3237 679.7257)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d2de5a28-1ade-414e-9800-d0fb9e6dc09b")
-	)
-	(wire
-		(pts
 			(xy 969.4592 141.7148) (xy 952.4412 141.7148)
 		)
 		(stroke
@@ -34195,7 +34185,7 @@
 		)
 		(uuid "320d8969-f3a0-4335-a747-ed7a2c944aa6")
 	)
-	(label "BRA"
+	(label "FAR"
 		(at 375.6921 223.5482 180)
 		(fields_autoplaced yes)
 		(effects
@@ -34613,7 +34603,7 @@
 		)
 		(uuid "3a9ef0f1-8020-40b7-81b8-8cb8cffe5181")
 	)
-	(label "~{BRA}"
+	(label "~{FAR}"
 		(at 744.0059 333.3548 180)
 		(fields_autoplaced yes)
 		(effects
@@ -37077,7 +37067,7 @@
 		)
 		(uuid "711a8afe-a862-48bb-8856-efd26843bb3c")
 	)
-	(label "RETBRA"
+	(label "RETFAR"
 		(at 921.7837 684.8057 0)
 		(fields_autoplaced yes)
 		(effects
@@ -37583,7 +37573,7 @@
 		)
 		(uuid "80246d8b-dc46-488f-bac4-09ab20dd44d1")
 	)
-	(label "RETBRA"
+	(label "RETFAR"
 		(at 394.0556 221.0082 0)
 		(fields_autoplaced yes)
 		(effects
@@ -38463,7 +38453,7 @@
 		)
 		(uuid "937928d4-4dfb-4f2f-91d0-697ec54ac283")
 	)
-	(label "BRA"
+	(label "FAR"
 		(at 759.2459 333.3548 0)
 		(fields_autoplaced yes)
 		(effects
@@ -39663,7 +39653,7 @@
 		(uuid "ac96eb7e-4565-4700-ba45-10cb58bf82ff")
 	)
 	(label "PUTD"
-		(at 924.3119 679.7257 0)
+		(at 921.7837 679.7257 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -40366,7 +40356,7 @@
 		)
 		(uuid "be0ccfc4-d1ac-45dd-b9bf-d29d897cc02e")
 	)
-	(label "RETBRA"
+	(label "RETFAR"
 		(at 558.7035 328.2623 180)
 		(fields_autoplaced yes)
 		(effects
@@ -43050,7 +43040,7 @@
 		)
 		(uuid "fd97359f-b5d1-4491-8c66-0af5dbfcff8e")
 	)
-	(label "~{BRA}"
+	(label "~{FAR}"
 		(at 216.6174 390.1948 0)
 		(fields_autoplaced yes)
 		(effects

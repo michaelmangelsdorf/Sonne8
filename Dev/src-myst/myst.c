@@ -11,8 +11,8 @@
     https://github.com/9fans/plan9port
 
     Build using:
-    9c myth.c
-    9l myth.o
+    9c myst.c
+    9l myst.o
     
     Run:
     ./a.out
@@ -34,6 +34,7 @@ load(struct myth_vm *vm)
                 read(fdesc, vm, sizeof(struct myth_vm));
         else{
                 print("Created missing input file '%s'\n", fname);
+                print("(VM state reset)\n");
                 create(fname, 0, 0666);
         }
         close(fdesc);
