@@ -1,0 +1,16 @@
+
+
+\# Create a PDF from this file:
+\#  pdfmom myth.mom > myth.pdf
+
+
+.TITLE "Myth micro-controller manual"
+.AUTHOR "Michael Mangelsdorf"
+.PRINTSTYLE TYPESET
+.START
+
+.PP
+One thingy
+
+
+
