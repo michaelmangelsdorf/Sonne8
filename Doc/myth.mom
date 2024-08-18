@@ -10,7 +10,13 @@
 .START
 
 .PP
-One thingy
-
+This document explains the design of a toy
+8-bit micro-controller and its
+programming environment.
+The homepage for this project is:
+.QUOTE
+.CODE
+https://github.com/Dosflange/Myth
+.QUOTE OFF
 
 
