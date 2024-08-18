@@ -6,7 +6,7 @@
 	(paper "A0")
 	(title_block
 		(title "Sonne-8 Micro-Controller")
-		(date "2024-08-17")
+		(date "2024-08-18")
 		(rev "Myth Kelvin")
 		(company "Contact: mim@ok-schalter.de")
 		(comment 1 "Author: Michael Mangelsdorf")
@@ -34361,7 +34361,7 @@
 		(uuid "365804e1-ebfc-4727-ae43-412488f08d08")
 	)
 	(label "xE"
-		(at 364.9218 307.0098 0)
+		(at 364.9218 301.9298 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -36538,14 +36538,14 @@
 		)
 		(uuid "638dc787-535b-4d67-a9c6-693a7783bf8a")
 	)
-	(label "xD"
-		(at 719.535 218.2954 0)
+	(label "~{xG}"
+		(at 704.295 218.2954 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "63d29278-7d85-4693-ad36-f4fbd9febf5c")
 	)
@@ -37231,14 +37231,14 @@
 		)
 		(uuid "7425717f-89a9-4580-b429-1728474d3310")
 	)
-	(label "~{xD}"
-		(at 704.295 218.2954 180)
+	(label "xG"
+		(at 719.535 218.2954 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "74f35dd7-e25e-4d70-bfdd-4ce5b4621e96")
 	)
@@ -38639,8 +38639,8 @@
 		)
 		(uuid "95c2b754-c5aa-449e-ac14-865c2428614d")
 	)
-	(label "~{xD}"
-		(at 364.2868 271.4498 0)
+	(label "xD"
+		(at 364.9218 307.0098 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -40839,8 +40839,8 @@
 		)
 		(uuid "c85aa99d-f36c-4f96-947c-4143d54441f6")
 	)
-	(label "xG"
-		(at 364.9218 301.9298 0)
+	(label "~{xG}"
+		(at 364.2868 271.4498 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
