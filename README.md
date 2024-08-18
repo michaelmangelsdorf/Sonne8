@@ -11,5 +11,3 @@ new ideas.
 
 The design has changed substantially though, and the schematics in that folder - although true to the current model - probably contain
 bugs and will need revision before I build a new board.
-
-I'm still working on this project, focussing on writing documentation (folder "Doc"), a native assembler, and other supporting tools ("Dev" folder).
