@@ -1,4 +1,9 @@
 
+
+/* Emulation routines for Myth micro-controller rev. Lox
+   Author: mim@ok-schalter.de (Michael)
+    */
+
 #include <u.h>
 #include <libc.h>
 
@@ -26,7 +31,6 @@ struct myth_vm
         uchar l;    /*LOCAL page register*/
 
         uchar g;    /*GLOBAL*/
-        uchar b;    /*BROADCAST*/
         uchar i;    /*INNER*/
 };
 
@@ -52,7 +56,7 @@ void myth_ret(struct myth_vm *vm);
 #define Nx 0 /*from code literal (NUMBER)*/
 #define DMx 1 /*from MEMORY via DATA page index*/
 #define LMx 2 /*from MEMORY via LOCAL page index*/
-#define Gx 3 /*from DATA page register*/
+#define Gx 3 /*from GLOBAL register*/
 #define Rx 4 /*from RESULT register*/
 #define Ix 5 /*from INNER register*/
 #define Sx 6 /*from SERIAL input*/
@@ -72,8 +76,8 @@ void myth_ret(struct myth_vm *vm);
 #define xP 7 /*to PARALLEL output*/
 
 #define xE 8 /*to ENABLE register*/
-#define xB 9 /*to BROADCAST register*/
-#define xD 10 /*to DATA register*/
+#define xA 9 /*to A register*/
+#define xD 10 /*to DATA page register*/
 #define xJ 11 /*to JUMP page index*/
 #define xW 12 /*to WHILE page index*/
 #define xT 13 /*to TRUE page index*/
@@ -132,7 +136,6 @@ myth_reset(struct myth_vm *vm)
         vm->l = 0;
 
         vm->g = 0;
-        vm->b = 0;
         vm->i = 0;
 }
 
@@ -220,7 +223,7 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
                 case xP: vm->por = srcval; break;
 
                 case xE: vm->e = srcval; break;
-                case xB: vm->b = srcval; break;
+                case xA: vm->g = srcval + vm->i; break;
                 case xD: vm->d = srcval; break;
                 case xJ: /*pseudo reg*/
                         vm->j += (signed char) srcval;
