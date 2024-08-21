@@ -71,7 +71,6 @@ The controller can directly address up to 256 pages of 256 bytes each (64K bytes
 A 16-bit effective memory address consists of an 8-bit page index (high-order byte),
 and an 8-bit offset (low-order byte).
 .LP
-There are 4 memory transfer instructions and 2 implied memory read operations.
 There are three page index registers, C (CODE), D (DATA),
 and L (LOCAL).
 There are two address offset registers, J (JUMP - Program Counter),
@@ -80,7 +79,7 @@ and O (ORIGIN).
 .NH 1
 Bus communication
 .LP
-This micro-controller has integrated circuitry for handing serial and
+This micro-controller has integrated circuitry for handling serial and
 parallel communication. This is facilitated by dedicated hardware-registers
 and instructions.
 .NH 2
@@ -162,7 +161,7 @@ in the E register, as described above.
 .NH 3
 PIR (Parallel Input Register)
 .QP
-A read-only 8-bit parallel input register, modelled after a 74HC273 chip.
+A read-only 8-bit parallel input register, modelled after a 74HC574 chip.
 Latching the current 8-bit value of
 the parallel bus into the register is done by selecting SH1 in E.
 The latched data byte can then be read from P.
@@ -378,6 +377,14 @@ The current instruction offset (register J)
 is saved into the O register,
 overwriting its value.
 .RE
+.NH 2
+Register pair G and I
+.LP
+The general-purpose register G can be used in conjunction with the iterator register I.
+Writing a value into B (BASE) stores the sum of the G register and the I register
+into G. This is useful in a hardware-while loop, where I is set to the iteration count,
+which can be added to a memory address by using the B receptacle without incurring the
+overhead of incrementing the address using the ALU result register.
 .bp
 .NH 1
 Operation Codes and Decoding
