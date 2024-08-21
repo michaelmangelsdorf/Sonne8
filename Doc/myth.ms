@@ -376,15 +376,15 @@ its value.
 The current instruction offset (register J)
 is saved into the O register,
 overwriting its value.
-.RE
 .NH 2
 Register pair G and I
 .LP
 The general-purpose register G can be used in conjunction with the iterator register I.
-Writing a value into B (BASE) stores the sum of the G register and the I register
+Writing a value into B (BASE) stores the sum of that value and the I register
 into G. This is useful in a hardware-while loop, where I is set to the iteration count,
 which can be added to a memory address by using the B receptacle without incurring the
 overhead of incrementing the address using the ALU result register.
+.RE
 .bp
 .NH 1
 Operation Codes and Decoding
