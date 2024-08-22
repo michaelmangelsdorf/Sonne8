@@ -380,10 +380,10 @@ overwriting its value.
 Register pair G and I
 .LP
 The general-purpose register G can be used in conjunction with the iterator register I.
-Writing a value into B (BASE) stores the sum of that value and the I register
+Writing a value into GI stores the sum of that value and the I register
 into G. This is useful in a hardware-while loop, where I is set to the iteration count,
-which can be added to a memory address by using the B receptacle without incurring the
-overhead of incrementing the address using the ALU result register.
+which can be added to a memory address by using the A receptacle without incurring the
+overhead of decrementing the address using the ALU result register.
 .RE
 .bp
 .NH 1
@@ -507,8 +507,8 @@ receptor.
 .SH 4
 Registers and Receptors
 .LP
-Nx xO xGx xRx xIx xMLx xMDx xSx xPx
-xE xB xD  xJ  xW  xT  xF  xC
+Nx xO xGx xRx xIx xLMx xDMx xSx xPx
+xE xGI xD xJ  xW  xT  xF  xC
 
 
 .RE

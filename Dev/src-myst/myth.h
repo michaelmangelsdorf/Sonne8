@@ -54,8 +54,8 @@ void myth_ret(struct myth_vm *vm);
 */
 
 #define Nx 0 /*from code literal (NUMBER)*/
-#define DMx 1 /*from MEMORY via DATA page index*/
-#define LMx 2 /*from MEMORY via LOCAL page index*/
+#define MDx 1 /*from MEMORY via DATA page index*/
+#define MLx 2 /*from MEMORY via LOCAL page index*/
 #define Gx 3 /*from GLOBAL register*/
 #define Rx 4 /*from RESULT register*/
 #define Ix 5 /*from INNER register*/
@@ -67,22 +67,22 @@ void myth_ret(struct myth_vm *vm);
 */
 
 #define xO 0 /*to ORIGIN register*/
-#define xDM 1 /*to MEMORY via DATA page index*/
-#define xLM 2 /*to MEMORY via LOCAL page index*/
-#define xG 3 /*to GLOBAL page register*/
+#define xMD 1 /*to MEMORY via DATA page index*/
+#define xML 2 /*to MEMORY via LOCAL page index*/
+#define xG 3 /*to GLOBAL register*/
 #define xR 4 /*to RESULT register*/
 #define xI 5 /*to INNER register*/
 #define xS 6 /*to SERIAL output*/
 #define xP 7 /*to PARALLEL output*/
 
 #define xE 8 /*to ENABLE register*/
-#define xA 9 /*to A register*/
+#define xGI 9 /*to GLOBAL register (add I)*/
 #define xD 10 /*to DATA page register*/
-#define xJ 11 /*to JUMP page index*/
-#define xW 12 /*to WHILE page index*/
-#define xT 13 /*to TRUE page index*/
-#define xF 14 /*to FALSE page index*/
-#define xC 15 /*to CALL page index*/
+#define xJ 11 /*write JUMP page index*/
+#define xW 12 /*write WHILE page index*/
+#define xT 13 /*write TRUE page index*/
+#define xF 14 /*write FALSE page index*/
+#define xC 15 /*write CALL page index*/
 
 #define IDR 0 /*Identity R*/
 #define IDO 1 /*Identity O*/
@@ -183,8 +183,8 @@ myth_exec_pair_srcval(struct myth_vm *vm, uchar srcreg)
 {
         switch(srcreg){
                 case Nx: return myth_fetch(vm); /*pseudo reg*/
-                case DMx: return vm->pagebyte[ vm->d][ vm->o]; /*pseudo reg*/
-                case LMx: return vm->pagebyte[ vm->l][ vm->o]; /*pseudo reg*/
+                case MDx: return vm->pagebyte[ vm->d][ vm->o]; /*pseudo reg*/
+                case MLx: return vm->pagebyte[ vm->l][ vm->o]; /*pseudo reg*/
                 case Gx: return vm->g;
                 case Rx: return vm->r;
                 case Ix: return vm->i;
@@ -203,17 +203,17 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
                 /* SCROUNGING
                    Remap ("scrounge") memory-to-memory opcodes to NOP. */
 
-                if ((srcreg==Nx || srcreg==DMx || srcreg==LMx)
-                        && (dstreg==xDM || dstreg==xLM))
+                if ((srcreg==Nx || srcreg==MDx || srcreg==MLx)
+                        && (dstreg==xMD || dstreg==xML))
                                 return;
 
         uchar srcval = myth_exec_pair_srcval(vm, srcreg);
         switch(dstreg){
                 case xO: vm->o = srcval; break;
-                case xDM: /*pseudo reg*/
+                case xMD: /*pseudo reg*/
                         vm->pagebyte[ vm->d][ vm->o] = srcval;
                         break;
-                case xLM: /*pseudo reg*/
+                case xML: /*pseudo reg*/
                         vm->pagebyte[ vm->l][ vm->o] = srcval;
                         break;
                 case xG: vm->g = srcval; break;
@@ -223,7 +223,7 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
                 case xP: vm->por = srcval; break;
 
                 case xE: vm->e = srcval; break;
-                case xA: vm->g = srcval + vm->i; break;
+                case xGI: vm->g = srcval + vm->i; break;
                 case xD: vm->d = srcval; break;
                 case xJ: /*pseudo reg*/
                         vm->j += (signed char) srcval;
