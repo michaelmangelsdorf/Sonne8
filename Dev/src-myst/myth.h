@@ -79,9 +79,9 @@ void myth_ret(struct myth_vm *vm);
 #define xGI 9 /*to GLOBAL register (add I)*/
 #define xD 10 /*to DATA page register*/
 #define xJ 11 /*write JUMP page index*/
-#define xW 12 /*write WHILE page index*/
-#define xT 13 /*write TRUE page index*/
-#define xF 14 /*write FALSE page index*/
+#define xJW 12 /*write WHILE page index*/
+#define xJT 13 /*write TRUE page index*/
+#define xJF 14 /*write FALSE page index*/
 #define xC 15 /*write CALL page index*/
 
 #define IDR 0 /*Identity R*/
@@ -228,14 +228,14 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
                 case xJ: /*pseudo reg*/
                         vm->j += (signed char) srcval;
                         break;
-                case xW: /*pseudo reg*/
+                case xJW: /*pseudo reg*/
                         if (vm->i) vm->j += (signed char) srcval;
                         (vm->i)--; /*Post decrement always*/
                         break; 
-                case xT: /*pseudo reg*/
+                case xJT: /*pseudo reg*/
                         if (vm->r) vm->j += (signed char) srcval;
                         break;
-                case xF: /*pseudo reg*/
+                case xJF: /*pseudo reg*/
                         if (!vm->r) vm->j = (signed char) srcval;
                         break;
                 case xC: myth_call(vm, srcval); break; /*pseudo reg*/
