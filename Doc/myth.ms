@@ -345,17 +345,17 @@ In this architecture, calls and traps go to page heads (offset zero). Other bran
 .NH 2
 Relative in-page Branching
 .NH 3
-Registers J, W, F, T
+Destinations J, JW, JF, JT
 .LP
 These are pseudo-registers, that can only occur as target registers of transfer instructions.
 .LP
 Transferring an offset value into J (Jump) does an unconditional branch to that offset within the current code page.
 .LP
-F means FALSE: Transferring an offset value into F branches only if R is FALSE (zero).
+F stands for FALSE: Transferring an offset value into JF branches only if R is FALSE (zero).
 .LP
-T means TRUE: Transferring an offset value into T branches only if R is TRUE (not zero).
+T stands for TRUE: Transferring an offset value into JT branches only if R is TRUE (not zero).
 .LP
-I means iterate: Transferring an offset value into I decrements the loop counter register, and then branches, if that register is zero.
+W means iterate: Transferring an offset value into JW decrements the loop counter register I, and then branches, if that register is zero.
 .PDFPIC jumps-decode.pdf
 .bp
 .NH 2

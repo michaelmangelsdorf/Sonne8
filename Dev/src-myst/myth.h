@@ -78,10 +78,10 @@ void myth_ret(struct myth_vm *vm);
 #define xE 8 /*to ENABLE register*/
 #define xGI 9 /*to GLOBAL register (add I)*/
 #define xD 10 /*to DATA page register*/
-#define xJ 11 /*write JUMP page index*/
-#define xJW 12 /*write WHILE page index*/
-#define xJT 13 /*write TRUE page index*/
-#define xJF 14 /*write FALSE page index*/
+#define xJ 11 /*write JUMP program counter*/
+#define xJW 12 /*write JUMP WHILE I not zero, decrement I*/
+#define xJT 13 /*write JUMP if R not zero*/
+#define xJF 14 /*write JUMP if R zero*/
 #define xC 15 /*write CALL page index*/
 
 #define IDR 0 /*Identity R*/
