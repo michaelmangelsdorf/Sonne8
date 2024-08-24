@@ -1,6 +1,6 @@
 
-/* Emulation routines for Myth micro-controller rev. Lox
-   Author: mim@ok-schalter.de (Michael)
+/* Emulation routines for Sonne 8 micro-controller Rev. Myth/LOX
+   Author: mim@ok-schalter.de (Michael/Dosflange@github)
     */
 
 #include <u.h>
@@ -8,6 +8,7 @@
 
 struct myth_vm
 {
+        uchar verstr[8]; /*Version String*/
         uchar pagebyte[256][256];
 
         uchar e;    /*Device ENABLE register */
@@ -113,6 +114,7 @@ void myth_ret(struct myth_vm *vm);
 void
 myth_reset(struct myth_vm *vm)
 {
+        strcpy((char*)vm->verstr, (char*)"LOX/SS0");
         memset(vm->pagebyte, 0, 256*256);
 
         vm->e = 0; /* Deselect any device */
