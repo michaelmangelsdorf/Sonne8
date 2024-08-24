@@ -11,3 +11,6 @@ new ideas.
 
 The design has changed substantially though, and the schematics in that folder - although true to the current model - probably contain
 bugs and will need revision before I build a new board.
+
+Probably the quickest way to understand what exactly the CPU does is by reading the C emulator
+[header file](https://github.com/Dosflange/Myth/blob/main/Dev/src-myst/myth.h).
