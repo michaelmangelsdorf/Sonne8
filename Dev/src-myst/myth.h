@@ -1,5 +1,4 @@
 
-
 /* Emulation routines for Myth micro-controller rev. Lox
    Author: mim@ok-schalter.de (Michael)
     */
@@ -37,19 +36,18 @@ struct myth_vm
 void myth_reset(struct myth_vm *vm);
 uchar myth_fetch(struct myth_vm *vm);
 void myth_step(struct myth_vm *vm);
-
 void myth_exec_pair(struct myth_vm *vm, uchar opcode);
 void myth_exec_gput(struct myth_vm *vm, uchar opcode);
 void myth_exec_trap(struct myth_vm *vm, uchar opcode);
 void myth_exec_alu(struct myth_vm *vm, uchar opcode);
 void myth_exec_adj(struct myth_vm *vm, uchar opcode);
 void myth_exec_sys(struct myth_vm *vm, uchar opcode);
-
 void myth_call(struct myth_vm *vm, uchar dstpage);
 void myth_ret(struct myth_vm *vm);
 
 
-/*  The 'REGx' notation means: REG into (something)
+/*  Arex:
+    The 'REGx' notation means: REG into (something)
     i.e. REG is a source
 */
 
@@ -62,7 +60,8 @@ void myth_ret(struct myth_vm *vm);
 #define Sx 6 /*from SERIAL input*/
 #define Px 7 /*from PARALLEL input*/
 
-/*  The 'xREG' notation means: (something) into REG
+/*  Elex:
+    The 'xREG' notation means: (something) into REG
     i.e. REG is a destination
 */
 
@@ -106,9 +105,9 @@ void myth_ret(struct myth_vm *vm);
 #define SSO 2 /*Serial Shift Out*/
 #define SCL 3 /*Set serial Clock Low*/
 #define SCH 4 /*Set serial Clock High*/
-#define RET 5 /*Return from CALL*/
-#define FAR 6 /*Wide BRANCH*/
-#define ORG 7 /*Wide PULL*/
+#define RET 5 /*Wide Return*/
+#define FAR 6 /*Wide Branch*/
+#define ORG 7 /*Get wide PC*/
 
 
 void
@@ -116,7 +115,7 @@ myth_reset(struct myth_vm *vm)
 {
         memset(vm->pagebyte, 0, 256*256);
 
-        vm->e = 0;
+        vm->e = 0; /* Deselect any device */
 
         vm->sclk = 0;
         vm->miso = 0;
@@ -131,11 +130,11 @@ myth_reset(struct myth_vm *vm)
         vm->o = 0;
         vm->r = 0;
 
-        vm->c = 0;
+        vm->c = 0; /* Clear page registers */
         vm->d = 0;
         vm->l = 0;
 
-        vm->g = 0;
+        vm->g = 0; /* Clear accumulator registers */
         vm->i = 0;
 }
 
@@ -197,18 +196,33 @@ myth_exec_pair_srcval(struct myth_vm *vm, uchar srcreg)
 void
 myth_exec_pair(struct myth_vm *vm, uchar opcode)
 {
-                uchar srcreg = (opcode >> 4) & 7; /*Zero except bits 4-6 at LSB*/
-                uchar dstreg = opcode & 15; /* Zero except bits 0-3 at LSB*/
+                uchar src = (opcode >> 4) & 7; /*Zero except bits 4-6 at LSB*/
+                uchar dst = opcode & 15; /* Zero except bits 0-3 at LSB*/
 
                 /* SCROUNGING
-                   Remap ("scrounge") memory-to-memory opcodes to NOP. */
+                   Remap ("scrounge") opcodes to other instructions
+                   NML  => INO
+                   NMD  => DEO
+                   MLML => NOP (reserved)
+                   MLML => NOP (reserved)
+                   MDML => NOP (reserved)
+                   MDMD => NOP (reserved)
+                   GG   => NOP (reserved)
+                   RR   => NOP (reserved)
+                   II   => NOP (reserved)
+                    */
 
-                if ((srcreg==Nx || srcreg==MDx || srcreg==MLx)
-                        && (dstreg==xMD || dstreg==xML))
-                                return;
+                if(src==Nx)
+                        switch(dst){
+                                case xML: vm->o = vm->o + 1; return; /*INO*/
+                                case xMD: vm->o = vm->o - 1; return; /*DEO*/
+                        }
 
-        uchar srcval = myth_exec_pair_srcval(vm, srcreg);
-        switch(dstreg){
+                if( (src==MDx || src==MLx) && (dst==xMD || dst==xML) )
+                        return; /*NOP (reserved)*/
+
+        uchar srcval = myth_exec_pair_srcval(vm, src);
+        switch(dst){
                 case xO: vm->o = srcval; break;
                 case xMD: /*pseudo reg*/
                         vm->pagebyte[ vm->d][ vm->o] = srcval;
@@ -330,22 +344,18 @@ myth_exec_sys(struct myth_vm *vm, uchar opcode)
 {
         switch(opcode & 7){ /*Zero except low order 3 bits*/
                 
-                case NOP:
-                        break;
+                case NOP: break;
                 case SSI:
                         /*Clocks in MISO line bit into LSB*/
                         vm->sir = ((vm->sir)<<1) + vm->miso;
                         break;
                 case SSO:
+                        /*Clocks out MSB first*/
                         vm->mosi = (vm->sor)&0x80 ? 1:0;
-                        vm->sor <<= 1; /*Clocks out MSB first*/
+                        vm->sor <<= 1;
                         break;
-                case SCL:
-                        vm->sclk = 0;
-                        break;
-                case SCH:
-                        vm->sclk = 1;
-                        break;
+                case SCL: vm->sclk = 0; break;
+                case SCH: vm->sclk = 1; break;
                 
                 case RET: vm->l += 1; /*FALL THROUGH*/
                 case FAR:
