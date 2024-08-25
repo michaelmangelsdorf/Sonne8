@@ -31501,7 +31501,7 @@
 		)
 		(uuid "7ec2e5f2-63dc-4fef-b01c-562caf56e5ee")
 	)
-	(text "                   NML  => INO\n                   NMD  => DEO\n                   MLML => NOP (reserved)\n                   MLML => NOP (reserved)\n                   MDML => NOP (reserved)\n                   MDMD => NOP (reserved)\n                   GG   => NOP (reserved)\n                   RR   => NOP (reserved)\n                   II   => NOP (reserved)"
+	(text "                   NL => INO\n                   NM => DEO\n                   LL => NOP (reserved)\n                   LM => NOP (reserved)\n                   ML => NOP (reserved)\n                   MM => NOP (reserved)\n                   GG => NOP (reserved)\n                   RR => NOP (reserved)\n                   II => NOP (reserved)"
 		(exclude_from_sim no)
 		(at 188.028 312.557 0)
 		(effects
@@ -31533,7 +31533,7 @@
 		)
 		(uuid "83066e0b-5871-4697-bf42-e483ee69e04f")
 	)
-	(text "To do:\nFix logic above\nto map NML to INO,\nand NMD to DEO"
+	(text "To do:\nFix logic above\nto map NL to INO,\nand NM to DEO"
 		(exclude_from_sim no)
 		(at 190.62 300.8412 0)
 		(effects
@@ -32073,7 +32073,7 @@
 		)
 		(uuid "e7534518-54c2-4e65-802d-3821cf6adef9")
 	)
-	(text "Remap (\"scrounge\") GG, RR, II etc,\nand impracticable opcodes such as N-MD"
+	(text "Remap (\"scrounge\") GG, RR, II etc,\nand impracticable opcodes such as NM"
 		(exclude_from_sim no)
 		(at 219.7394 228.2457 0)
 		(effects
@@ -32227,7 +32227,7 @@
 		)
 		(uuid "019d64ab-d1b1-41ce-8704-f518db17fadc")
 	)
-	(label "~{MDx}"
+	(label "~{Mx}"
 		(at 705.7307 273.4183 180)
 		(fields_autoplaced yes)
 		(effects
@@ -32458,7 +32458,7 @@
 		)
 		(uuid "0529b836-c4e8-494d-9a15-afe66bc04703")
 	)
-	(label "~{xMD}"
+	(label "~{xM}"
 		(at 1123.5198 503.8164 0)
 		(fields_autoplaced yes)
 		(effects
@@ -33316,7 +33316,7 @@
 		)
 		(uuid "198642f2-8db4-475b-ac24-9da65c994a3a")
 	)
-	(label "xJT"
+	(label "xT"
 		(at 63.9318 196.3674 180)
 		(fields_autoplaced yes)
 		(effects
@@ -33371,7 +33371,7 @@
 		)
 		(uuid "1ad22eea-22b9-4759-babc-4e0d5c14a985")
 	)
-	(label "xJW"
+	(label "xW"
 		(at 745.0077 134.3281 180)
 		(fields_autoplaced yes)
 		(effects
@@ -34064,7 +34064,7 @@
 		)
 		(uuid "2a699281-8be7-4a2b-b3ae-dbc60bc40620")
 	)
-	(label "xGI"
+	(label "xA"
 		(at 364.9218 304.4698 0)
 		(fields_autoplaced yes)
 		(effects
@@ -34515,7 +34515,7 @@
 		)
 		(uuid "3383463f-7cd4-488f-9b2c-cee6aa5569eb")
 	)
-	(label "xJW_pre"
+	(label "xW_pre"
 		(at 63.9318 191.2874 180)
 		(fields_autoplaced yes)
 		(effects
@@ -34911,7 +34911,7 @@
 		)
 		(uuid "3b09d93e-d10d-4356-b008-2d00dc963a27")
 	)
-	(label "~{xML}"
+	(label "~{xL}"
 		(at 364.2868 268.9098 0)
 		(fields_autoplaced yes)
 		(effects
@@ -34922,7 +34922,7 @@
 		)
 		(uuid "3b19a97f-624a-48d9-8072-15bdeede0fff")
 	)
-	(label "MDx_pre"
+	(label "Mx_pre"
 		(at 137.3886 380.1872 0)
 		(fields_autoplaced yes)
 		(effects
@@ -34933,7 +34933,7 @@
 		)
 		(uuid "3b2b2092-96e0-4ebd-a542-c9fb11c025cc")
 	)
-	(label "MLx"
+	(label "Lx"
 		(at 759.5384 199.9363 0)
 		(fields_autoplaced yes)
 		(effects
@@ -34977,7 +34977,7 @@
 		)
 		(uuid "3bc24d10-b3eb-4abe-836d-a8521ccc4341")
 	)
-	(label "~{xML}"
+	(label "~{xL}"
 		(at 1123.5198 506.3564 0)
 		(fields_autoplaced yes)
 		(effects
@@ -35131,7 +35131,7 @@
 		)
 		(uuid "3f1aee58-03d5-45e6-b7c7-d17272582385")
 	)
-	(label "xMD_pre"
+	(label "xM_pre"
 		(at 957.9938 695.1442 180)
 		(fields_autoplaced yes)
 		(effects
@@ -36506,7 +36506,7 @@
 		)
 		(uuid "59bcfc71-d4f1-40b9-8dce-afaae847ef6c")
 	)
-	(label "MLx_pre"
+	(label "Lx_pre"
 		(at 137.3886 382.7272 0)
 		(fields_autoplaced yes)
 		(effects
@@ -36638,7 +36638,7 @@
 		)
 		(uuid "5d6e638f-380b-461d-9362-1b7f05cddb87")
 	)
-	(label "MDx_pre"
+	(label "Mx_pre"
 		(at 957.9938 690.0642 180)
 		(fields_autoplaced yes)
 		(effects
@@ -37023,7 +37023,7 @@
 		)
 		(uuid "66bcab59-6e99-4232-9119-d68351d468cd")
 	)
-	(label "xGI"
+	(label "xA"
 		(at 594.1685 186.1343 180)
 		(fields_autoplaced yes)
 		(effects
@@ -37914,7 +37914,7 @@
 		)
 		(uuid "7d68910b-8137-4caa-ac1f-51ae54aafb41")
 	)
-	(label "~{xJW}"
+	(label "~{xW}"
 		(at 760.2477 134.3281 0)
 		(fields_autoplaced yes)
 		(effects
@@ -37991,7 +37991,7 @@
 		)
 		(uuid "8003f2d5-af41-4035-8512-2134d0c80be3")
 	)
-	(label "MLx_pre"
+	(label "Lx_pre"
 		(at 703.1814 523.1929 180)
 		(fields_autoplaced yes)
 		(effects
@@ -38024,7 +38024,7 @@
 		)
 		(uuid "80455ef0-ad92-4e62-a0f8-f5fc2c036eeb")
 	)
-	(label "xGI"
+	(label "xA"
 		(at 562.7742 167.7322 180)
 		(fields_autoplaced yes)
 		(effects
@@ -38431,7 +38431,7 @@
 		)
 		(uuid "8857c6d9-c1be-4605-9d86-e3a27aba067a")
 	)
-	(label "xJW_pre"
+	(label "xW_pre"
 		(at 131.6482 269.5702 0)
 		(fields_autoplaced yes)
 		(effects
@@ -38695,7 +38695,7 @@
 		)
 		(uuid "8d1f3136-47a6-4620-a01d-a7c061c19eac")
 	)
-	(label "xJT"
+	(label "xT"
 		(at 364.9218 314.6298 0)
 		(fields_autoplaced yes)
 		(effects
@@ -38838,7 +38838,7 @@
 		)
 		(uuid "9059207a-d040-403a-bffb-9aad58cca287")
 	)
-	(label "MDx"
+	(label "Mx"
 		(at 720.9707 273.4183 0)
 		(fields_autoplaced yes)
 		(effects
@@ -38992,7 +38992,7 @@
 		)
 		(uuid "93be6052-cc96-4a6d-8c14-5eae2767f790")
 	)
-	(label "xML_pre"
+	(label "xL_pre"
 		(at 175.1584 279.1714 180)
 		(fields_autoplaced yes)
 		(effects
@@ -39410,7 +39410,7 @@
 		)
 		(uuid "9b4d6993-cbf3-457d-a51a-1a0b7bb22da9")
 	)
-	(label "~{MDx}"
+	(label "~{Mx}"
 		(at 362.3818 376.2248 0)
 		(fields_autoplaced yes)
 		(effects
@@ -39432,7 +39432,7 @@
 		)
 		(uuid "9bac5a37-2a55-41dd-96ea-ec02b69e3ef4")
 	)
-	(label "xJF"
+	(label "xF"
 		(at 364.9218 317.1698 0)
 		(fields_autoplaced yes)
 		(effects
@@ -39542,7 +39542,7 @@
 		)
 		(uuid "9fa58e42-4d1f-4e7f-a5a2-6fc9857446e3")
 	)
-	(label "~{xMD}"
+	(label "~{xM}"
 		(at 364.2868 266.3698 0)
 		(fields_autoplaced yes)
 		(effects
@@ -39641,7 +39641,7 @@
 		)
 		(uuid "a2a0f5cc-b5aa-4e3e-8d85-23bdc2f59aec")
 	)
-	(label "xML_pre"
+	(label "xL_pre"
 		(at 131.1148 316.5348 0)
 		(fields_autoplaced yes)
 		(effects
@@ -39729,7 +39729,7 @@
 		)
 		(uuid "a37de488-747b-4e32-b7ff-2904a424653d")
 	)
-	(label "~{MLx}"
+	(label "~{Lx}"
 		(at 744.2984 199.9363 180)
 		(fields_autoplaced yes)
 		(effects
@@ -39927,7 +39927,7 @@
 		)
 		(uuid "a7d1cd6d-7623-42af-a741-7f672e803fb3")
 	)
-	(label "MLx"
+	(label "Lx"
 		(at 1109.2883 604.7814 0)
 		(fields_autoplaced yes)
 		(effects
@@ -40477,7 +40477,7 @@
 		)
 		(uuid "b404ec95-5e1e-4ce3-b7ba-3040dc2bddaa")
 	)
-	(label "xMD_pre"
+	(label "xM_pre"
 		(at 131.1148 313.9948 0)
 		(fields_autoplaced yes)
 		(effects
@@ -40554,7 +40554,7 @@
 		)
 		(uuid "b5c2c10d-e882-4621-912f-0aa3c082e54a")
 	)
-	(label "MDx_pre"
+	(label "Mx_pre"
 		(at 174.9866 261.5757 180)
 		(fields_autoplaced yes)
 		(effects
@@ -40708,7 +40708,7 @@
 		)
 		(uuid "b8eb5c02-d344-4431-a592-0e7ad9f9a78f")
 	)
-	(label "MDx"
+	(label "Mx"
 		(at 1109.2883 602.2414 0)
 		(fields_autoplaced yes)
 		(effects
@@ -40741,7 +40741,7 @@
 		)
 		(uuid "b91a24dc-d722-4e5f-bd18-0b9a9bf97150")
 	)
-	(label "~{xJW}"
+	(label "~{xW}"
 		(at 631.5591 667.5672 180)
 		(fields_autoplaced yes)
 		(effects
@@ -41599,7 +41599,7 @@
 		)
 		(uuid "cd7ed4d3-1489-42ed-ab0e-583ce3877f9e")
 	)
-	(label "xMD_pre"
+	(label "xM_pre"
 		(at 175.1584 284.2514 180)
 		(fields_autoplaced yes)
 		(effects
@@ -41830,7 +41830,7 @@
 		)
 		(uuid "d2157104-d3cf-4977-abb1-2734c10d7274")
 	)
-	(label "xGI"
+	(label "xA"
 		(at 562.9238 225.3634 180)
 		(fields_autoplaced yes)
 		(effects
@@ -41896,7 +41896,7 @@
 		)
 		(uuid "d3353ffb-6efa-49af-a796-6aacb0629b01")
 	)
-	(label "xJW"
+	(label "xW"
 		(at 364.9218 312.0898 0)
 		(fields_autoplaced yes)
 		(effects
@@ -42105,7 +42105,7 @@
 		)
 		(uuid "d66a629b-7921-40c5-b5c5-74d151b1a76f")
 	)
-	(label "xJF"
+	(label "xF"
 		(at 63.9318 198.9074 180)
 		(fields_autoplaced yes)
 		(effects
@@ -42446,7 +42446,7 @@
 		)
 		(uuid "ddfb3fd1-509f-4fa1-abed-d51707c37ea4")
 	)
-	(label "MLx_pre"
+	(label "Lx_pre"
 		(at 174.9866 256.4957 180)
 		(fields_autoplaced yes)
 		(effects
@@ -43029,7 +43029,7 @@
 		)
 		(uuid "eca8c1f1-6751-4304-8a65-b05952048507")
 	)
-	(label "~{MLx}"
+	(label "~{Lx}"
 		(at 362.3818 378.7648 0)
 		(fields_autoplaced yes)
 		(effects
@@ -43051,7 +43051,7 @@
 		)
 		(uuid "ed388a03-c982-49df-9c4f-fc6cf83f6ba1")
 	)
-	(label "xML_pre"
+	(label "xL_pre"
 		(at 703.1814 528.2729 180)
 		(fields_autoplaced yes)
 		(effects
