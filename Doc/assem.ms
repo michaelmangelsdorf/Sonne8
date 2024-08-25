@@ -38,16 +38,6 @@ Bank and offset labels are referenced by prefixing their identifier with "<" (fo
 .NH 2
 GETPUT
 .LP
-GETPUT instructions are written similar to x[LO]x memory transfers,
-replacing O by the required offset (0-7), and prefixing or suffixing
-by either R, O, D or G.
-.LP
-Examples: r[L0] ("PUT r into local var 0"), [L4]o ("GET o from local var 4")
-.NH 2
-Shortcut Notations
-.LP
-Instructions of type Nx (fetch literal value and place in register) have an alternative syntax:
-9A place 9 into A, generates NA 9
-<LABEL:J generates NJ <LABEL
-33hR and 33h:R both generate NR 33h
+Examples: r0 ("PUT r into local var 0"), 4o ("GET o from local var 4")
+
 .RE

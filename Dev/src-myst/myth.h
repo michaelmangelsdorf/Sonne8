@@ -8,7 +8,7 @@
 
 struct myth_vm
 {
-        uchar verstr[8]; /*Version String*/
+        uchar verstr[8]; /*VM Version String (example: LOX/SS0)*/
         uchar pagebyte[256][256];
 
         uchar e;    /*Device ENABLE register */
@@ -47,28 +47,26 @@ void myth_call(struct myth_vm *vm, uchar dstpage);
 void myth_ret(struct myth_vm *vm);
 
 
-/*  Arex:
-    The 'REGx' notation means: REG into (something)
+/*  The 'REGx' notation means: REG into (something)
     i.e. REG is a source
 */
 
 #define Nx 0 /*from code literal (NUMBER)*/
-#define MDx 1 /*from MEMORY via DATA page index*/
-#define MLx 2 /*from MEMORY via LOCAL page index*/
+#define Mx 1 /*from MEMORY via DATA page index*/
+#define Lx 2 /*from MEMORY via LOCAL page index*/
 #define Gx 3 /*from GLOBAL register*/
 #define Rx 4 /*from RESULT register*/
 #define Ix 5 /*from INNER register*/
 #define Sx 6 /*from SERIAL input*/
 #define Px 7 /*from PARALLEL input*/
 
-/*  Elex:
-    The 'xREG' notation means: (something) into REG
+/*  The 'xREG' notation means: (something) into REG
     i.e. REG is a destination
 */
 
 #define xO 0 /*to ORIGIN register*/
-#define xMD 1 /*to MEMORY via DATA page index*/
-#define xML 2 /*to MEMORY via LOCAL page index*/
+#define xM 1 /*to MEMORY via DATA page index*/
+#define xL 2 /*to MEMORY via LOCAL page index*/
 #define xG 3 /*to GLOBAL register*/
 #define xR 4 /*to RESULT register*/
 #define xI 5 /*to INNER register*/
@@ -76,12 +74,12 @@ void myth_ret(struct myth_vm *vm);
 #define xP 7 /*to PARALLEL output*/
 
 #define xE 8 /*to ENABLE register*/
-#define xGI 9 /*to GLOBAL register (add I)*/
+#define xA 9 /*to GLOBAL register (ADD I)*/
 #define xD 10 /*to DATA page register*/
 #define xJ 11 /*write JUMP program counter*/
-#define xJW 12 /*write JUMP WHILE I not zero, decrement I*/
-#define xJT 13 /*write JUMP if R not zero*/
-#define xJF 14 /*write JUMP if R zero*/
+#define xW 12 /*write JUMP WHILE I not zero, decrement I*/
+#define xT 13 /*write JUMP if R not zero*/
+#define xF 14 /*write JUMP if R zero*/
 #define xC 15 /*write CALL page index*/
 
 #define IDR 0 /*Identity R*/
@@ -184,8 +182,8 @@ myth_exec_pair_srcval(struct myth_vm *vm, uchar srcreg)
 {
         switch(srcreg){
                 case Nx: return myth_fetch(vm); /*pseudo reg*/
-                case MDx: return vm->pagebyte[ vm->d][ vm->o]; /*pseudo reg*/
-                case MLx: return vm->pagebyte[ vm->l][ vm->o]; /*pseudo reg*/
+                case Mx: return vm->pagebyte[ vm->d][ vm->o]; /*pseudo reg*/
+                case Lx: return vm->pagebyte[ vm->l][ vm->o]; /*pseudo reg*/
                 case Gx: return vm->g;
                 case Rx: return vm->r;
                 case Ix: return vm->i;
@@ -216,20 +214,20 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
 
                 if(src==Nx)
                         switch(dst){
-                                case xML: vm->o = vm->o + 1; return; /*INO*/
-                                case xMD: vm->o = vm->o - 1; return; /*DEO*/
+                                case xL: vm->o = vm->o + 1; return; /*INO*/
+                                case xM: vm->o = vm->o - 1; return; /*DEO*/
                         }
 
-                if( (src==MDx || src==MLx) && (dst==xMD || dst==xML) )
+                if( (src==Mx || src==Lx) && (dst==xM || dst==xL) )
                         return; /*NOP (reserved)*/
 
         uchar srcval = myth_exec_pair_srcval(vm, src);
         switch(dst){
                 case xO: vm->o = srcval; break;
-                case xMD: /*pseudo reg*/
+                case xM: /*pseudo reg*/
                         vm->pagebyte[ vm->d][ vm->o] = srcval;
                         break;
-                case xML: /*pseudo reg*/
+                case xL: /*pseudo reg*/
                         vm->pagebyte[ vm->l][ vm->o] = srcval;
                         break;
                 case xG: vm->g = srcval; break;
@@ -239,19 +237,19 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
                 case xP: vm->por = srcval; break;
 
                 case xE: vm->e = srcval; break;
-                case xGI: vm->g = srcval + vm->i; break;
+                case xA: vm->g = srcval + vm->i; break;
                 case xD: vm->d = srcval; break;
                 case xJ: /*pseudo reg*/
                         vm->j += (signed char) srcval;
                         break;
-                case xJW: /*pseudo reg*/
+                case xW: /*pseudo reg*/
                         if (vm->i) vm->j += (signed char) srcval;
                         (vm->i)--; /*Post decrement always*/
                         break; 
-                case xJT: /*pseudo reg*/
+                case xT: /*pseudo reg*/
                         if (vm->r) vm->j += (signed char) srcval;
                         break;
-                case xJF: /*pseudo reg*/
+                case xF: /*pseudo reg*/
                         if (!vm->r) vm->j = (signed char) srcval;
                         break;
                 case xC: myth_call(vm, srcval); break; /*pseudo reg*/
@@ -263,26 +261,26 @@ void
 myth_exec_gput(struct myth_vm *vm, uchar opcode) /*Execute GETPUT instruction*/
 {
         /* OPCODE
-            BITS 0-1 encode registers RODG
-            BIT 2 encodes GET/PUT mode
-            BITS 3-5 encode address offset
+            BITS 0-2 encode byte address offset in local page (from F8)
+            BIT 3 encodes GET/PUT mode
+            BITS 4-5 encode register index (RODG)
         */
 
-        #define BIT2 4
+        #define BIT3 8
 
         uchar *mptr;
-        uchar offs = (opcode >> 3) & 7; /*Zero except bits 3-5 at LSB*/
+        uchar offs = opcode & 7; /*Zero except low order 3 bits*/
         
-        mptr = &(vm->pagebyte[vm->l][0xFC + offs]);
-        if(opcode & BIT2)
-                switch(opcode & 3){ /*Zero except low order 2 bits*/
+        mptr = &(vm->pagebyte[vm->l][0xF8 + offs]);
+        if(opcode & BIT3)
+                switch((opcode>>4) & 3){ /*Zero except bits 4-5 at LSB*/
                         case 0: *mptr = vm->r;
                         case 1: *mptr = vm->o;
                         case 2: *mptr = vm->d;
                         case 3: *mptr = vm->g;
                 }
         else
-                switch(opcode & 3){ /*Zero except low order 2 bits*/
+                switch((opcode>>4) & 3){ /*Zero except bits 4-5 at LSB*/
                         case 0: vm->r = *mptr;
                         case 1: vm->o = *mptr;
                         case 2: vm->d = *mptr;

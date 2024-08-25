@@ -27,8 +27,8 @@ active-low
 .R
 select signals (SL0-15).
 .LP
-Select signal S0 is reserved to select a NULL device ("nothing").
-SL1 corresponds to the internal POR register output enable signal (PAR_OE).
+Select signal SL0 is reserved to select a NULL device ("nothing").
+SL1 corresponds to the internal POR register output enable signal (SL1_PAROE).
 SL2-15 can be used freely for application hardware.
 .LP
 The
@@ -42,8 +42,8 @@ active-high
 .R
 select signals (SH0-15).
 .LP
-Select signal S0 is reserved to select a NULL device ("nothing").
-SH1 corresponds to the internal PIR register copy select signal (PAR_CP).
+Select signal SH0 is reserved to select a NULL device ("nothing").
+SH1 corresponds to the internal PIR register copy select signal (SH1_PARCP).
 SH2-15 can be used freely for application hardware.
 .PDFPIC figures/ereg.pdf
 .RE

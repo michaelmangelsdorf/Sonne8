@@ -1,22 +1,26 @@
 .NH 1
 Control Flow
 .LP
-In this architecture, calls and traps go to page heads (offset zero). Other branches (jumps) go to offsets within a page.
+In this architecture, calls and traps go to page heads (byte offset zero).
+Other branches (jumps) are always relative offsets within the current page.
 .RS
 .NH 2
 Relative in-page Branching
 .NH 3
-Destinations J, JW, JF, JT
+Destinations J, W, F, T
 .LP
 These are pseudo-registers, that can only occur as target registers of transfer instructions.
 .LP
-Transferring an offset value into J (Jump) does an unconditional branch to that offset within the current code page.
+Writing a value into J (Jump) adds this value to J (Program Counter) as a signed number.
+This also applies for the F, T and W instructions described below.
 .LP
-F stands for FALSE: Transferring an offset value into JF branches only if R is FALSE (zero).
+F stands for FALSE: Writing into F branches only if R is FALSE (zero).
 .LP
-T stands for TRUE: Transferring an offset value into JT branches only if R is TRUE (not zero).
+T stands for TRUE: Writing into T branches only if R is TRUE (not zero).
 .LP
-W means iterate: Transferring an offset value into JW decrements the loop counter register I, and then branches, if that register is zero.
+W stands for WHILE: Transferring an offset value into W branches
+if the loop counter register I is not zero.
+After checking (post-decrement), the I register is decremented by 1 in either case.
 .PDFPIC figures/jumps-decode.pdf
 .bp
 .NH 2

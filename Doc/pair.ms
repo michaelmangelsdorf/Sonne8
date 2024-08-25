@@ -48,12 +48,12 @@ the letter can occur as both source and destination.
 .TS
 tab(@); lb l lb l .
 Nx   @ Number literal in code stream @ xE  @ Enable register @
-xO   @ Origin register @ xGI @ Add I to G@
+xO   @ Origin register @ xA @ Add I to G@
 xGx  @ G register  @ xD  @ Data page index @
 xRx  @ R register  @ xJ  @ Jump (set PC) @
-xIx  @ I register  @ xJW @ Jump while I@
-xMLx @ Local memory byte @ xJT @ Jump if R nz@
-xMDx @ Data memory byte  @ xJF @ Jump if R z@
+xIx  @ I register  @ xW @ Jump while I@
+xLx @ Local memory byte @ xT @ Jump if R nz@
+xMx @ Data memory byte  @ xF @ Jump if R z@
 xSx  @ Serial byte  @ xC  @@
 xPx  @ Parallel byte  @@@
 .TE  @   @@@
@@ -104,6 +104,10 @@ GG =>  @ NOP @ (reserved)
 RR =>  @ NOP@ (reserved)
 II =>  @ NOP@ (reserved)
 .TE
+.LP
+The following table shows a complete opcode matrix.
+
+.PDFPIC figures/opcode_matrix.pdf
 \#
 \#
 \#
