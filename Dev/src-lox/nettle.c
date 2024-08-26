@@ -439,6 +439,7 @@ char* fnamesrc="lox.asm";
 void
 main()
 {
+      print("Symtab struct size: %d bytes\n", sizeof(strlits));
         struct myth_vm vm;
         load(&vm, fname);
         //myth_cycle(&vm);
