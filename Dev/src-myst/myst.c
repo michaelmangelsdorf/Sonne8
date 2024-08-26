@@ -19,37 +19,11 @@
 #include <u.h>
 #include <libc.h>
 #include "myth.h"
+#include "myst.h"
 
 char* fname="corestate.myst";
 int fdesc;
 int i;
-
-
-void
-load(struct myth_vm *vm)
-{
-        fdesc=open(fname, OREAD);
-        if(fdesc != -1)
-                read(fdesc, vm, sizeof(struct myth_vm));
-        else{
-                print("Created missing corestate file '%s'\n", fname);
-                myth_reset(vm);
-                create(fname, 0, 0666);
-        }
-        close(fdesc);
-}
-
-void
-save(struct myth_vm *vm)
-{
-        fdesc=open(fname, OWRITE);
-        if(fdesc != -1)
-                write(fdesc, vm, sizeof(struct myth_vm));
-        else
-                print("File error on output file '%s'\n", fname);
-        close(fdesc);
-}
-
 
 /*Load machine state, advance by one cycle, save*/
 
@@ -57,10 +31,10 @@ void
 main()
 {
         struct myth_vm vm;
-        load(&vm);
+        load(&vm, fname);
         //myth_reset(&vm);
         myth_cycle(&vm);
-        save(&vm);
+        save(&vm, fname);
         //print("myth\n");
         exits("");
 }
