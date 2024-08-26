@@ -16,8 +16,8 @@
 
 #include <u.h>
 #include <libc.h>
-#include "myth.h"
-#include "myst.h"
+#include "../src-myst/myth.h"
+#include "../src-myst/myst.h"
 
 /* Struct for looking up opcodes for string literals
    such as numbers and mnemonics */
@@ -431,7 +431,7 @@ struct { uchar val; char *str; } strlits[] = {
 {0xFD, "pt"}, {0xFE, "pf"}, {0xFF, "pc"}, 
 };
 
-char* fname="corestate.myst";
+char* fname="../corestate.myst";
 char* fnamesrc="lox.asm";
 
 
@@ -440,8 +440,8 @@ void
 main()
 {
         struct myth_vm vm;
-        load(&vm);
+        load(&vm, fname);
         //myth_cycle(&vm);
-        save(&vm);
+        save(&vm, fname);
         exits("");
 }
