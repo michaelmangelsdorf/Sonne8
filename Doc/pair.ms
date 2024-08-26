@@ -104,10 +104,6 @@ GG =>  @ NOP @ (reserved)
 RR =>  @ NOP@ (reserved)
 II =>  @ NOP@ (reserved)
 .TE
-.LP
-The following table shows a complete opcode matrix.
-
-.PDFPIC figures/opcode_matrix.pdf
 \#
 \#
 \#

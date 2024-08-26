@@ -6,7 +6,7 @@
 	(paper "A0")
 	(title_block
 		(title "Sonne-8 Micro-Controller")
-		(date "2024-08-25")
+		(date "2024-08-26")
 		(rev "Myth")
 		(company "Contact: mim@ok-schalter.de")
 		(comment 1 "Author: Michael Mangelsdorf")
@@ -20222,7 +20222,7 @@
 		(uuid "21d8d195-27ca-49ef-b044-f3de579bd258")
 	)
 	(no_connect
-		(at 472.4824 406.8887)
+		(at 446.0236 418.1813)
 		(uuid "26af607b-7668-4321-8221-7a16ff2bbfba")
 	)
 	(no_connect
@@ -25207,7 +25207,7 @@
 	)
 	(wire
 		(pts
-			(xy 447.0824 380.2187) (xy 447.0824 394.1887)
+			(xy 420.6236 391.5113) (xy 420.6236 405.4813)
 		)
 		(stroke
 			(width 0)
@@ -26417,7 +26417,7 @@
 	)
 	(wire
 		(pts
-			(xy 472.4824 354.8187) (xy 472.4824 380.2187)
+			(xy 446.0236 366.1113) (xy 446.0236 391.5113)
 		)
 		(stroke
 			(width 0)
@@ -28337,7 +28337,7 @@
 	)
 	(wire
 		(pts
-			(xy 472.4824 380.2187) (xy 447.0824 380.2187)
+			(xy 446.0236 391.5113) (xy 420.6236 391.5113)
 		)
 		(stroke
 			(width 0)
@@ -31754,9 +31754,9 @@
 		)
 		(uuid "b39a940e-17b1-4bc4-bf36-ab9d030f1b75")
 	)
-	(text "(Relative addressing)"
+	(text "(Relative addressing\n OPTIONAL!\n Feed RELx  into U48/49 ==>\n instead of DBx)\n"
 		(exclude_from_sim no)
-		(at 451.5615 328.3983 0)
+		(at 417.4367 338.4544 0)
 		(effects
 			(font
 				(size 3 3)
@@ -31822,7 +31822,7 @@
 	)
 	(text "ADDER"
 		(exclude_from_sim no)
-		(at 444.6948 338.1055 0)
+		(at 418.236 349.3981 0)
 		(effects
 			(font
 				(size 2 2)
@@ -32293,7 +32293,7 @@
 		)
 		(uuid "028086aa-e5af-43b0-9f15-0c8e29cf5773")
 	)
-	(label "REL0"
+	(label "DB0"
 		(at 497.3579 343.7277 180)
 		(fields_autoplaced yes)
 		(effects
@@ -32811,7 +32811,7 @@
 		(uuid "0e7e9e12-4db7-4a35-9912-d5e4667fba21")
 	)
 	(label "DB4"
-		(at 447.0824 411.9687 180)
+		(at 420.6236 423.2613 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -32866,7 +32866,7 @@
 		(uuid "0f7a4b21-c905-470e-b924-27d9067e81aa")
 	)
 	(label "REL6"
-		(at 472.4824 399.2687 0)
+		(at 446.0236 410.5613 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -33063,7 +33063,7 @@
 		)
 		(uuid "149d10c2-5328-41fb-b04e-9bca29481650")
 	)
-	(label "REL2"
+	(label "DB2"
 		(at 497.3579 358.9677 180)
 		(fields_autoplaced yes)
 		(effects
@@ -33603,7 +33603,7 @@
 		(uuid "1e4121a8-838d-461e-bd87-c7b273513df5")
 	)
 	(label "REL1"
-		(at 472.4824 344.6587 0)
+		(at 446.0236 355.9513 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -33614,7 +33614,7 @@
 		(uuid "1e5493ec-e59e-4872-8381-61390cd08889")
 	)
 	(label "DB0"
-		(at 447.0824 359.8987 180)
+		(at 420.6236 371.1913 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -33625,7 +33625,7 @@
 		(uuid "1e5e9d2e-6342-4c54-bd7f-1e965fee7431")
 	)
 	(label "DB5"
-		(at 447.0824 414.5087 180)
+		(at 420.6236 425.8013 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -35407,7 +35407,7 @@
 		(uuid "44a8a96b-3053-4222-9241-aa484f5ebe13")
 	)
 	(label "REL7"
-		(at 472.4824 401.8087 0)
+		(at 446.0236 413.1013 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -35715,7 +35715,7 @@
 		(uuid "4b471778-f61d-4b9d-a507-3d4f82ec4b7c")
 	)
 	(label "GND"
-		(at 447.0824 342.1187 180)
+		(at 420.6236 353.4113 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -35847,7 +35847,7 @@
 		(uuid "4d586e28-762a-4c04-b7fc-b0390beed44e")
 	)
 	(label "J1"
-		(at 447.0824 349.7387 180)
+		(at 420.6236 361.0313 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -36001,7 +36001,7 @@
 		(uuid "4fc3183f-297c-42b7-b3bd-25a9ea18c844")
 	)
 	(label "GND"
-		(at 459.7824 427.2087 180)
+		(at 433.3236 438.5013 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -36551,7 +36551,7 @@
 		(uuid "5b12b14b-6efb-48cc-9814-98ad9ed3e454")
 	)
 	(label "J0"
-		(at 447.0824 347.1987 180)
+		(at 420.6236 358.4913 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -36683,7 +36683,7 @@
 		(uuid "5dffd1d6-faf9-418e-b9a0-84fb6b6b4454")
 	)
 	(label "DB3"
-		(at 447.0824 367.5187 180)
+		(at 420.6236 378.8113 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -36903,7 +36903,7 @@
 		(uuid "63389ca1-1e7d-4022-9c3e-153266594bd6")
 	)
 	(label "+5V"
-		(at 459.7824 334.4987 0)
+		(at 433.3236 345.7913 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -37090,7 +37090,7 @@
 		(uuid "67d15fa5-04d1-4f66-a307-6ceee5b7e5bd")
 	)
 	(label "J2"
-		(at 447.0824 352.2787 180)
+		(at 420.6236 363.5713 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -37529,7 +37529,7 @@
 		)
 		(uuid "718c7087-c09c-4548-9876-52285bc8479e")
 	)
-	(label "REL4"
+	(label "DB4"
 		(at 497.5075 401.3589 180)
 		(fields_autoplaced yes)
 		(effects
@@ -37607,7 +37607,7 @@
 		(uuid "72c45902-7379-4324-bcf7-d64fafb35627")
 	)
 	(label "DB2"
-		(at 447.0824 364.9787 180)
+		(at 420.6236 376.2713 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -38542,7 +38542,7 @@
 		(uuid "89df2d40-ba2d-407d-b80e-550885281405")
 	)
 	(label "DB1"
-		(at 447.0824 362.4387 180)
+		(at 420.6236 373.7313 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -38707,7 +38707,7 @@
 		(uuid "8d7e2f7e-7af4-4b3b-9ab1-b52669b0a51a")
 	)
 	(label "J5"
-		(at 447.0824 401.8087 180)
+		(at 420.6236 413.1013 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -38762,7 +38762,7 @@
 		(uuid "8efe65be-fd9e-4cb3-9021-21af27e14e7e")
 	)
 	(label "J7"
-		(at 447.0824 406.8887 180)
+		(at 420.6236 418.1813 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -38772,7 +38772,7 @@
 		)
 		(uuid "8f211f15-2184-49f9-b17b-fc7564b4ed48")
 	)
-	(label "REL3"
+	(label "DB3"
 		(at 497.3579 366.5877 180)
 		(fields_autoplaced yes)
 		(effects
@@ -39004,7 +39004,7 @@
 		(uuid "93c9efb1-6a10-43f5-8e7d-4a7f69edc711")
 	)
 	(label "REL3"
-		(at 472.4824 349.7387 0)
+		(at 446.0236 361.0313 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -39015,7 +39015,7 @@
 		(uuid "93d6903a-7fa1-41f0-8f51-5a2b5ca8dddd")
 	)
 	(label "REL0"
-		(at 472.4824 342.1187 0)
+		(at 446.0236 353.4113 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -39070,7 +39070,7 @@
 		(uuid "94d24676-7ae3-483c-8bd6-88d31adf00b4")
 	)
 	(label "J3"
-		(at 447.0824 354.8187 180)
+		(at 420.6236 366.1113 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -39301,7 +39301,7 @@
 		(uuid "9879e882-e703-4773-ad21-5338befdb120")
 	)
 	(label "J4"
-		(at 447.0824 399.2687 180)
+		(at 420.6236 410.5613 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -39785,7 +39785,7 @@
 		(uuid "a5146e30-3b57-4618-91d2-2bbf108afb1c")
 	)
 	(label "REL4"
-		(at 472.4824 394.1887 0)
+		(at 446.0236 405.4813 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -39840,7 +39840,7 @@
 		(uuid "a630619d-e522-412b-af09-0b19fee26ce4")
 	)
 	(label "+5V"
-		(at 459.7824 386.5687 0)
+		(at 433.3236 397.8613 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -40147,7 +40147,7 @@
 		)
 		(uuid "abe3c03e-744a-4406-8e50-6a10745f0c43")
 	)
-	(label "REL1"
+	(label "DB1"
 		(at 497.3579 351.3477 180)
 		(fields_autoplaced yes)
 		(effects
@@ -40764,7 +40764,7 @@
 		(uuid "ba116096-3ccc-4cc8-a185-5325439e4e24")
 	)
 	(label "DB7"
-		(at 447.0824 419.5887 180)
+		(at 420.6236 430.8813 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -41017,7 +41017,7 @@
 		(uuid "bf5e066a-ce91-4879-ba75-19fcfee64620")
 	)
 	(label "REL5"
-		(at 472.4824 396.7287 0)
+		(at 446.0236 408.0213 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -41335,7 +41335,7 @@
 		)
 		(uuid "c6bba6d7-3631-448e-9df8-b5a9e3238ade")
 	)
-	(label "REL5"
+	(label "DB5"
 		(at 497.5075 408.9789 180)
 		(fields_autoplaced yes)
 		(effects
@@ -41391,7 +41391,7 @@
 		(uuid "c7cd39db-931a-4d86-96b8-57e6b39f58f9")
 	)
 	(label "REL2"
-		(at 472.4824 347.1987 0)
+		(at 446.0236 358.4913 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -41413,7 +41413,7 @@
 		(uuid "c8278643-76eb-4ebd-a086-ab82ab384350")
 	)
 	(label "GND"
-		(at 459.7824 375.1387 180)
+		(at 433.3236 386.4313 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -41445,7 +41445,7 @@
 		)
 		(uuid "c918ee94-a9a5-4418-ad61-3513bcf93d07")
 	)
-	(label "REL6"
+	(label "DB6"
 		(at 497.5075 416.5989 180)
 		(fields_autoplaced yes)
 		(effects
@@ -41963,7 +41963,7 @@
 		(uuid "d4643775-516d-4df1-9380-e9d5f31d1197")
 	)
 	(label "DB6"
-		(at 447.0824 417.0487 180)
+		(at 420.6236 428.3413 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -42050,7 +42050,7 @@
 		)
 		(uuid "d5c86a84-6c8b-48b5-b583-2fe7052421ab")
 	)
-	(label "REL7"
+	(label "DB7"
 		(at 497.5075 424.2189 180)
 		(fields_autoplaced yes)
 		(effects
@@ -42216,7 +42216,7 @@
 		(uuid "d7ff9db3-165e-42fb-8f14-b21e24a2fa07")
 	)
 	(label "+5V"
-		(at 459.7824 386.5687 0)
+		(at 433.3236 397.8613 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -43349,7 +43349,7 @@
 		(uuid "f532d50e-fa16-4b0b-a226-93e512dc00de")
 	)
 	(label "J6"
-		(at 447.0824 404.3487 180)
+		(at 420.6236 415.6413 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -55524,7 +55524,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74LS283")
-		(at 459.7824 354.8187 0)
+		(at 433.3236 366.1113 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -55533,7 +55533,7 @@
 		(fields_autoplaced yes)
 		(uuid "1bea98a3-f774-411b-bf5f-1692c2f5ed58")
 		(property "Reference" "U44"
-			(at 461.8018 335.6122 0)
+			(at 435.343 346.9048 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -55542,7 +55542,7 @@
 			)
 		)
 		(property "Value" "74HC283"
-			(at 461.8018 338.3873 0)
+			(at 435.343 349.6799 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -55551,7 +55551,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-16_W7.62mm_Socket_LongPads"
-			(at 459.7824 354.8187 0)
+			(at 433.3236 366.1113 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -55560,7 +55560,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74LS283"
-			(at 459.7824 354.8187 0)
+			(at 433.3236 366.1113 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -55569,7 +55569,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 459.7824 354.8187 0)
+			(at 433.3236 366.1113 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -62860,7 +62860,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74LS283")
-		(at 459.7824 406.8887 0)
+		(at 433.3236 418.1813 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -62869,7 +62869,7 @@
 		(fields_autoplaced yes)
 		(uuid "9315be22-26c1-4bc0-87e0-fde62c5d172a")
 		(property "Reference" "U45"
-			(at 461.8018 387.6822 0)
+			(at 435.343 398.9748 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -62878,7 +62878,7 @@
 			)
 		)
 		(property "Value" "74HC283"
-			(at 461.8018 390.4573 0)
+			(at 435.343 401.7499 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -62887,7 +62887,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-16_W7.62mm_Socket_LongPads"
-			(at 459.7824 406.8887 0)
+			(at 433.3236 418.1813 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -62896,7 +62896,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74LS283"
-			(at 459.7824 406.8887 0)
+			(at 433.3236 418.1813 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -62905,7 +62905,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 459.7824 406.8887 0)
+			(at 433.3236 418.1813 0)
 			(effects
 				(font
 					(size 1.27 1.27)

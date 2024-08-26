@@ -1,11 +1,9 @@
 /*
-    Single-stepper for the Myth micro-controller core.
-    It expects (or creates) the file "machine_state" in the working directory.
+    Single-stepper (MyST) for the Myth micro-controller core.
+    It expects (or creates) the file "corestate.myst" in the working directory.
     It runs one instruction cycle and updates the state file.
 
-    The home for this project is:
-    https://github.com/Dosflange/Myth
-    Author: mim@ok-schalter.de (Michael)
+    Author: mim@ok-schalter.de (Michael/Dosflange@github)
 
     Requires a Plan 9 build environment:
     https://github.com/9fans/plan9port
@@ -26,6 +24,7 @@ char* fname="corestate.myst";
 int fdesc;
 int i;
 
+
 void
 load(struct myth_vm *vm)
 {
@@ -33,7 +32,7 @@ load(struct myth_vm *vm)
         if(fdesc != -1)
                 read(fdesc, vm, sizeof(struct myth_vm));
         else{
-                print("Created missing input file '%s'\n", fname);
+                print("Created missing corestate file '%s'\n", fname);
                 myth_reset(vm);
                 create(fname, 0, 0666);
         }

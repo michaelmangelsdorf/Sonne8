@@ -39,5 +39,10 @@ Bank and offset labels are referenced by prefixing their identifier with "<" (fo
 GETPUT
 .LP
 Examples: r0 ("PUT r into local var 0"), 4o ("GET o from local var 4")
-
+.SH 4
+Opcode Matrix
+.LP
+The following table shows a complete opcode matrix
+of all assembler mnemonics.
+.PDFPIC figures/opcode_matrix.pdf
 .RE

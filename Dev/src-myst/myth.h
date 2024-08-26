@@ -240,17 +240,17 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
                 case xA: vm->g = srcval + vm->i; break;
                 case xD: vm->d = srcval; break;
                 case xJ: /*pseudo reg*/
-                        vm->j += (signed char) srcval;
+                        vm->j = srcval;
                         break;
                 case xW: /*pseudo reg*/
-                        if (vm->i) vm->j += (signed char) srcval;
-                        (vm->i)--; /*Post decrement always*/
+                        if (vm->i) vm->j = srcval;
+                        (vm->i)--; /*Post decrement, either case!*/
                         break; 
                 case xT: /*pseudo reg*/
-                        if (vm->r) vm->j += (signed char) srcval;
+                        if (vm->r) vm->j = srcval;
                         break;
                 case xF: /*pseudo reg*/
-                        if (!vm->r) vm->j = (signed char) srcval;
+                        if (!vm->r) vm->j = srcval;
                         break;
                 case xC: myth_call(vm, srcval); break; /*pseudo reg*/
         }

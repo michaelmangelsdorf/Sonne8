@@ -2,7 +2,7 @@
 Control Flow
 .LP
 In this architecture, calls and traps go to page heads (byte offset zero).
-Other branches (jumps) are always relative offsets within the current page.
+Other branches (jumps) are always to absolute byte offsets within the current page.
 .RS
 .NH 2
 Relative in-page Branching
@@ -11,7 +11,7 @@ Destinations J, W, F, T
 .LP
 These are pseudo-registers, that can only occur as target registers of transfer instructions.
 .LP
-Writing a value into J (Jump) adds this value to J (Program Counter) as a signed number.
+Writing a value into J (Jump) sets J (Program Counter low order) to that value.
 This also applies for the F, T and W instructions described below.
 .LP
 F stands for FALSE: Writing into F branches only if R is FALSE (zero).
