@@ -1,0 +1,25 @@
+
+     LSB 0000 0001 0010 0011 0100 0101 0110 0111 1000 1001 1010 1011 1100 1101 1110 1111 
+
+         0    1    2    3    4    5    6    7    8    9    A    B    C    D    E    F    
+MSB      ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
+0000 0_  NOP  SSI  SSO  SCL  SCH  RET  FAR  ORG  P4   P1   P2   P3   M4   M3   M2   M1   
+
+0001 1_  IDR  IDO  OCR  OCO  SLR  SLO  SRR  SRO  AND  IOR  EOR  ADD  CAR  RLO  REO  RGO  
+
+0010 2_  *0   *1   *2   *3   *4   *5   *6   *7   *8   *9   *10  *11  *12  *13  *14  *15  
+0011 3_  *16  *17  *18  *19  *20  *21  *22  *23  *24  *25  *26  *27  *28  *29  *30  *31  
+
+0100 4_  0r   1r   2r   3r   4r   5r   6r   7r   r0   r1   r2   r3   r4   r5   r6   r7   
+0101 5_  0o   1o   2o   3o   4o   5o   6o   7o   o0   o1   o2   o3   o4   o5   o6   o7   
+0110 6_  0d   1d   2d   3d   4d   5d   6d   7d   d0   d1   d2   d3   d4   d5   d6   d7   
+0111 7_  0g   1g   2g   3g   4g   5g   6g   7g   g0   g1   g2   g3   g4   g5   g6   g7   
+
+1000 8_  no   DEO  INO  ng   nr   ni   ns   np   ne   na   nd   nj   nw   nt   nf   nc   
+1001 9_  mo   ---  ---  mg   mr   mi   ms   mp   me   ma   md   mj   mw   mt   mf   mc   
+1010 A_  lo   ---  ---  lg   lr   li   ls   lp   le   la   ld   lj   lw   lt   lf   lc   
+1011 B_  go   gm   gl   ---  gr   gi   gs   gp   ge   ga   gd   gj   gw   gt   gf   gc   
+1100 C_  ro   rm   rl   rg   ---  ri   rs   rp   re   ra   rd   rj   rw   rt   rf   rc   
+1101 D_  io   im   il   ig   ir   ---  is   ip   ie   ia   id   ij   iw   it   if   ic   
+1110 E_  so   sm   sl   sg   sr   si   ss   sp   se   sa   sd   sj   sw   st   sf   sc   
+1111 F_  po   pm   pl   pg   pr   pi   ps   pp   pe   pa   pd   pj   pw   pt   pf   pc   
