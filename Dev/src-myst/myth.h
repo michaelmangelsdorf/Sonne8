@@ -199,15 +199,15 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
 
                 /* SCROUNGING
                    Remap ("scrounge") opcodes to other instructions
-                   NML  => INO
-                   NMD  => DEO
-                   MLML => NOP (reserved)
-                   MLML => NOP (reserved)
-                   MDML => NOP (reserved)
-                   MDMD => NOP (reserved)
-                   GG   => NOP (reserved)
-                   RR   => NOP (reserved)
-                   II   => NOP (reserved)
+                   NL => INO
+                   NM => DEO
+                   LL => NOP (reserved)
+                   LM => NOP (reserved)
+                   ML => NOP (reserved)
+                   MM => NOP (reserved)
+                   GG => NOP (reserved)
+                   RR => NOP (reserved)
+                   II => NOP (reserved)
                     */
 
                 if(src==Nx)

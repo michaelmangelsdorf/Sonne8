@@ -6,6 +6,7 @@ ls myst.c
 ls myst.o
 9l myst.o
 mv a.out ../myst
+rm myst.o
 git add myst.c
 git add myth.h
 
@@ -17,7 +18,17 @@ ls nettle.c
 ls nettle.o
 9l nettle.o
 mv a.out ../nettle
-git add nettle.c
 rm nettle.o
+git add nettle.c
+
+cd ..
+cd src-lox
+ls lox.c
+9c lox.c
+ls lox.o
+9l lox.o
+mv a.out ../lox
+rm lox.o
+git add lox.c
 
 cd ..

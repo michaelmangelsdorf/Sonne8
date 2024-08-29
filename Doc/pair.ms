@@ -94,12 +94,12 @@ should not be relied upon as they are reserved for
 instruction set extensions.
 .TS
 tab(@); r lb l .
-NML => @ INO @ Increment register O
-NMD => @ DEO @ Decrement register O
-MLML => @ NOP @ (reserved)
-MLML => @ NOP @ (reserved)
-MDML => @ NOP @ (reserved)
-MDMD => @ NOP@ (reserved)
+NL => @ INO @ Increment register O
+NM => @ DEO @ Decrement register O
+LL => @ NOP @ (reserved)
+LM => @ NOP @ (reserved)
+ML => @ NOP @ (reserved)
+MM => @ NOP @ (reserved)
 GG =>  @ NOP @ (reserved)
 RR =>  @ NOP@ (reserved)
 II =>  @ NOP@ (reserved)
