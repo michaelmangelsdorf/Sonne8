@@ -384,7 +384,6 @@ myth_exec_gput(struct myth_vm *vm, uchar opcode) /*Execute GETPUT instruction*/
                 }
 }
 
-
 void
 myth_exec_trap(struct myth_vm *vm, uchar opcode)
 {
@@ -454,8 +453,12 @@ myth_exec_sys(struct myth_vm *vm, uchar opcode)
                 case SCL: vm->sclk = 0; break;
                 case SCH: vm->sclk = 1; break;
                 
-                case RET: vm->l += 1; /*FALL THROUGH*/
+                case RET: 
+                        print( "RET ");
+                        vm->l += 1; /*FALL THROUGH*/
                 case FAR:
+                        print( "FAR @%.02X_%.02X@ to @%.02X_%.02X@\n",
+                        vm->c, vm->j, vm->d, vm->o);
                         vm->c = vm->d;
                         vm->j = vm->o;
                         break;
