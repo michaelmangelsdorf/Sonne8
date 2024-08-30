@@ -32,3 +32,15 @@ rm lox.o
 git add lox.c
 
 cd ..
+cd src-regs
+ls regs.c
+9c regs.c
+ls regs.o
+9l regs.o
+mv a.out ../regs
+rm regs.o
+git add regs.c
+
+
+cd ..
+git add build.sh

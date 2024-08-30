@@ -21,11 +21,10 @@
 #include "../src-myst/myst.h"
 
 char* fname="corestate.myst";
-int fdesc;
 int i;
 
 void
-insertok(int *offs)
+insertOrExitAt(int *offs)
 {
         switch( *offs){
             case 0xFE:
@@ -49,9 +48,9 @@ main(int argc, char *argv[])
         load(&vm, fname);
 
 
-        /* Clear LOX arg buffer
+        /* Clear LOX arg buffer, output text buffer and return code
         */
-        for( i=0x80; i<0xFE; i++)
+        for( i=0x00; i<0xFF; i++)
                 vm.pagebyte[0x7F][i] = 0;
 
         /* Collect CLI parameters, concatenate at 0x7F80
@@ -61,10 +60,10 @@ main(int argc, char *argv[])
                 if( i==0) continue;
                 chpos = 0;
                 while( (ch=argv[i][chpos++]) != 0){
-                        insertok( &offs);
+                        insertOrExitAt( &offs);
                         vm.pagebyte[0x7F][offs] = ch;
                 }
-                insertok( &offs);
+                insertOrExitAt( &offs);
                 vm.pagebyte[0x7F][offs] = ' ';
         }
         vm.pagebyte[0x7F][offs] = 0; /* Replace final space */
@@ -77,18 +76,18 @@ main(int argc, char *argv[])
                 exitcode = vm.pagebyte[0x7F][0xFF];
                 if( exitcode != 0) break;
         }
-        print("%d %.02X: ", cyc, exitcode);
+        if( cyc==10000) print("elapsed");
+        else print("%d", cyc);
+        print("/%.02Xh:", exitcode);
 
         /* Output 0x7F00 to 0x7F7F as zero terminated text
         */
         for( i=0x00; i<0x7F; i++)
                 print("%c", vm.pagebyte[0x7F][i]);
-        
+
         print("\n");
         save(&vm, fname);
         exits("");
 }
-
-
 
 
