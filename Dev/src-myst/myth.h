@@ -272,17 +272,17 @@ myth_exec_gput(struct myth_vm *vm, uchar opcode) /*Execute GETPUT instruction*/
         mptr = &(vm->pagebyte[vm->l][0xF8 + offs]);
         if(opcode & BIT3)
                 switch((opcode>>4) & 3){ /*Zero except bits 4-5 at LSB*/
-                        case 0: *mptr = vm->r;
-                        case 1: *mptr = vm->o;
-                        case 2: *mptr = vm->d;
-                        case 3: *mptr = vm->g;
+                        case 0: *mptr = vm->r; break;
+                        case 1: *mptr = vm->o; break;
+                        case 2: *mptr = vm->d; break;
+                        case 3: *mptr = vm->g; break;
                 }
         else
                 switch((opcode>>4) & 3){ /*Zero except bits 4-5 at LSB*/
-                        case 0: vm->r = *mptr;
-                        case 1: vm->o = *mptr;
-                        case 2: vm->d = *mptr;
-                        case 3: vm->g = *mptr;
+                        case 0: vm->r = *mptr; break;
+                        case 1: vm->o = *mptr; break;
+                        case 2: vm->d = *mptr; break;
+                        case 3: vm->g = *mptr; break;
                 }
 }
 

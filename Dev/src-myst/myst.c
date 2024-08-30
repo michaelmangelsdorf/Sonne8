@@ -18,7 +18,7 @@
 
 #include <u.h>
 #include <libc.h>
-#include "myth.h"
+#include "myth-verbose.h"
 #include "myst.h"
 
 char* fname="corestate.myst";

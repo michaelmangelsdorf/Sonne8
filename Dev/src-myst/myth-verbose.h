@@ -6,6 +6,91 @@
 #include <u.h>
 #include <libc.h>
 
+/* Struct for looking up opcodes for string literals
+   such as numbers and mnemonics */
+struct { uchar val; char *str; } opcode[] = {
+{0x00, "NOP"},
+{0x01, "SSI"}, {0x02, "SSO"}, {0x03, "SCL"}, {0x04, "SCH"}, 
+{0x05, "RET"}, {0x06, "FAR"}, {0x07, "ORG"}, {0x08, "P4"}, 
+{0x09, "P1"}, {0x0A, "P2"}, {0x0B, "P3"}, {0x0C, "N4"}, 
+{0x0D, "N3"}, {0x0E, "N2"}, {0x0F, "N1"}, {0x10, "IDR"}, 
+{0x11, "IDO"}, {0x12, "OCR"}, {0x13, "OCO"}, {0x14, "SLR"}, 
+{0x15, "SLO"}, {0x16, "SRR"}, {0x17, "SRO"}, {0x18, "AND"}, 
+{0x19, "IOR"}, {0x1A, "EOR"}, {0x1B, "ADD"}, {0x1C, "CAR"}, 
+{0x1D, "RLO"}, {0x1E, "REO"}, {0x1F, "RGO"}, {0x20, "*0"}, 
+{0x21, "*1"}, {0x22, "*2"}, {0x23, "*3"}, {0x24, "*4"}, 
+{0x25, "*5"}, {0x26, "*6"}, {0x27, "*7"}, {0x28, "*8"}, 
+{0x29, "*9"}, {0x2A, "*10"}, {0x2B, "*11"}, {0x2C, "*12"}, 
+{0x2D, "*13"}, {0x2E, "*14"}, {0x2F, "*15"}, {0x30, "*16"}, 
+{0x31, "*17"}, {0x32, "*18"}, {0x33, "*19"}, {0x34, "*20"}, 
+{0x35, "*21"}, {0x36, "*22"}, {0x37, "*23"}, {0x38, "*24"}, 
+{0x39, "*25"}, {0x3A, "*26"}, {0x3B, "*27"}, {0x3C, "*28"}, 
+{0x3D, "*29"}, {0x3E, "*30"}, {0x3F, "*31"}, {0x40, "0r"}, 
+{0x41, "1r"}, {0x42, "2r"}, {0x43, "3r"}, {0x44, "4r"}, 
+{0x45, "5r"}, {0x46, "6r"}, {0x47, "7r"}, {0x48, "r0"}, 
+{0x49, "r1"}, {0x4A, "r2"}, {0x4B, "r3"}, {0x4C, "r4"}, 
+{0x4D, "r5"}, {0x4E, "r6"}, {0x4F, "r7"}, {0x50, "0o"}, 
+{0x51, "1o"}, {0x52, "2o"}, {0x53, "3o"}, {0x54, "4o"}, 
+{0x55, "5o"}, {0x56, "6o"}, {0x57, "7o"}, {0x58, "o0"}, 
+{0x59, "o1"}, {0x5A, "o2"}, {0x5B, "o3"}, {0x5C, "o4"}, 
+{0x5D, "o5"}, {0x5E, "o6"}, {0x5F, "o7"}, {0x60, "0d"}, 
+{0x61, "1d"}, {0x62, "2d"}, {0x63, "3d"}, {0x64, "4d"}, 
+{0x65, "5d"}, {0x66, "6d"}, {0x67, "7d"}, {0x68, "d0"}, 
+{0x69, "d1"}, {0x6A, "d2"}, {0x6B, "d3"}, {0x6C, "d4"}, 
+{0x6D, "d5"}, {0x6E, "d6"}, {0x6F, "d7"}, {0x70, "0g"}, 
+{0x71, "1g"}, {0x72, "2g"}, {0x73, "3g"}, {0x74, "4g"}, 
+{0x75, "5g"}, {0x76, "6g"}, {0x77, "7g"}, {0x78, "g0"}, 
+{0x79, "g1"}, {0x7A, "g2"}, {0x7B, "g3"}, {0x7C, "g4"}, 
+{0x7D, "g5"}, {0x7E, "g6"}, {0x7F, "g7"}, {0x80, "no"}, 
+{0x81, "DEO"}, {0x82, "INO"}, {0x83, "ng"}, {0x84, "nr"}, 
+{0x85, "ni"}, {0x86, "ns"}, {0x87, "np"}, {0x88, "ne"}, 
+{0x89, "na"}, {0x8A, "nd"}, {0x8B, "nj"}, {0x8C, "nw"}, 
+{0x8D, "nt"}, {0x8E, "nf"}, {0x8F, "nc"}, {0x90, "mo"}, 
+{0x91, "---"}, {0x92, "---"}, {0x93, "mg"}, {0x94, "mr"}, 
+{0x95, "mi"}, {0x96, "ms"}, {0x97, "mp"}, {0x98, "me"}, 
+{0x99, "ma"}, {0x9A, "md"}, {0x9B, "mj"}, {0x9C, "mw"}, 
+{0x9D, "mt"}, {0x9E, "mf"}, {0x9F, "mc"}, {0xA0, "lo"}, 
+{0xA1, "---"}, {0xA2, "---"}, {0xA3, "lg"}, {0xA4, "lr"}, 
+{0xA5, "li"}, {0xA6, "ls"}, {0xA7, "lp"}, {0xA8, "le"}, 
+{0xA9, "la"}, {0xAA, "ld"}, {0xAB, "lj"}, {0xAC, "lw"}, 
+{0xAD, "lt"}, {0xAE, "lf"}, {0xAF, "lc"}, {0xB0, "go"}, 
+{0xB1, "gm"}, {0xB2, "gl"}, {0xB3, "---"}, {0xB4, "gr"}, 
+{0xB5, "gi"}, {0xB6, "gs"}, {0xB7, "gp"}, {0xB8, "ge"}, 
+{0xB9, "ga"}, {0xBA, "gd"}, {0xBB, "gj"}, {0xBC, "gw"}, 
+{0xBD, "gt"}, {0xBE, "gf"}, {0xBF, "gc"}, {0xC0, "ro"}, 
+{0xC1, "rm"}, {0xC2, "rl"}, {0xC3, "rg"}, {0xC4, "---"}, 
+{0xC5, "ri"}, {0xC6, "rs"}, {0xC7, "rp"}, {0xC8, "re"}, 
+{0xC9, "ra"}, {0xCA, "rd"}, {0xCB, "rj"}, {0xCC, "rw"}, 
+{0xCD, "rt"}, {0xCE, "rf"}, {0xCF, "rc"}, {0xD0, "io"}, 
+{0xD1, "im"}, {0xD2, "il"}, {0xD3, "ig"}, {0xD4, "ir"}, 
+{0xD5, "---"}, {0xD6, "is"}, {0xD7, "ip"}, {0xD8, "ie"}, 
+{0xD9, "ia"}, {0xDA, "id"}, {0xDB, "ij"}, {0xDC, "iw"}, 
+{0xDD, "it"}, {0xDE, "if"}, {0xDF, "ic"}, {0xE0, "so"}, 
+{0xE1, "sm"}, {0xE2, "sl"}, {0xE3, "sg"}, {0xE4, "sr"}, 
+{0xE5, "si"}, {0xE6, "ss"}, {0xE7, "sp"}, {0xE8, "se"}, 
+{0xE9, "sa"}, {0xEA, "sd"}, {0xEB, "sj"}, {0xEC, "sw"}, 
+{0xED, "st"}, {0xEE, "sf"}, {0xEF, "sc"}, {0xF0, "po"}, 
+{0xF1, "pm"}, {0xF2, "pl"}, {0xF3, "pg"}, {0xF4, "pr"}, 
+{0xF5, "pi"}, {0xF6, "ps"}, {0xF7, "pp"}, {0xF8, "pe"}, 
+{0xF9, "pa"}, {0xFA, "pd"}, {0xFB, "pj"}, {0xFC, "pw"}, 
+{0xFD, "pt"}, {0xFE, "pf"}, {0xFF, "pc"}, 
+ {0x00,"HALT"}
+};
+
+char *
+opcToMnemonic( uchar opc)
+{
+        int i=0;
+        for(;;){
+                if( opcode[i].val == opc)
+                        return opcode[i].str;
+                else
+                if( !strcmp( opcode[i++].str, "HALT"))
+                        break;
+        }
+        return NULL;
+}
+
 struct myth_vm
 {
         uchar pagebyte[256][256];
@@ -34,7 +119,7 @@ struct myth_vm
 };
 
 void myth_reset(struct myth_vm *vm);
-uchar myth_fetch(struct myth_vm *vm);
+uchar myth_fetch(struct myth_vm *vm, int);
 void myth_step(struct myth_vm *vm);
 void myth_exec_pair(struct myth_vm *vm, uchar opcode);
 void myth_exec_gput(struct myth_vm *vm, uchar opcode);
@@ -111,6 +196,8 @@ void myth_ret(struct myth_vm *vm);
 void
 myth_reset(struct myth_vm *vm)
 {
+        print( "Reset\n");
+
         memset(vm->pagebyte, 0, 256*256);
 
         vm->e = 0; /* Deselect any device */
@@ -138,9 +225,15 @@ myth_reset(struct myth_vm *vm)
 
 
 uchar
-myth_fetch(struct myth_vm *vm) /*Fetch next byte in CODE stream, increment PC*/
+myth_fetch(struct myth_vm *vm, int mode) /*Fetch next byte in CODE stream, increment PC*/
 {
         uchar val = vm->pagebyte[ vm->c][ vm->j];
+        if ( mode)
+                print( "Fetch instruction @%.02X_%.02X@ is %s(%.02Xh)\n",
+                        vm->c, vm->j, opcToMnemonic(val), val );
+        else 
+                print( "Fetch literal @%.02X_%.02X@ is %.02Xh(%d)(%b)\n",
+                        vm->c, vm->j, val, val, val );
         (vm->j)++;
         return val;
 }
@@ -150,7 +243,7 @@ void
 myth_cycle(struct myth_vm *vm)
 {
 
-        uchar opcode = myth_fetch(vm);
+        uchar opcode = myth_fetch(vm, 1);
 
                 /*Decode priority encoded opcode*/
                 /*Execute decoded instruction*/
@@ -167,6 +260,9 @@ myth_cycle(struct myth_vm *vm)
 void
 myth_call(struct myth_vm *vm, uchar dstpage)
 {
+        print( " @%.02X_%.02X@ to @%.02X_%.02X@\n",
+         vm->c, vm->j, dstpage);
+
         vm->o = vm->j;
         vm->j = 0;
         vm->d = vm->c;
@@ -179,7 +275,7 @@ uchar
 myth_exec_pair_srcval(struct myth_vm *vm, uchar srcreg)
 {
         switch(srcreg){
-                case Nx: return myth_fetch(vm); /*pseudo reg*/
+                case Nx: return myth_fetch(vm, 0); /*pseudo reg*/
                 case Mx: return vm->pagebyte[ vm->d][ vm->o]; /*pseudo reg*/
                 case Lx: return vm->pagebyte[ vm->l][ vm->o]; /*pseudo reg*/
                 case Gx: return vm->g;
@@ -250,7 +346,9 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
                 case xF: /*pseudo reg*/
                         if (!vm->r) vm->j = srcval;
                         break;
-                case xC: myth_call(vm, srcval); break; /*pseudo reg*/
+                case xC:
+                        print( "Page CALL");
+                        myth_call(vm, srcval); break; /*pseudo reg*/
         }
 }
 
@@ -270,19 +368,19 @@ myth_exec_gput(struct myth_vm *vm, uchar opcode) /*Execute GETPUT instruction*/
         uchar offs = opcode & 7; /*Zero except low order 3 bits*/
         
         mptr = &(vm->pagebyte[vm->l][0xF8 + offs]);
-        if(opcode & BIT3)
-                switch((opcode>>4) & 3){ /*Zero except bits 4-5 at LSB*/
-                        case 0: *mptr = vm->r;
-                        case 1: *mptr = vm->o;
-                        case 2: *mptr = vm->d;
-                        case 3: *mptr = vm->g;
+        if( opcode & BIT3)
+                switch( (opcode>>4) & 3){ /*Zero except bits 4-5 at LSB*/
+                        case 0: *mptr = vm->r; break;
+                        case 1: *mptr = vm->o; break;
+                        case 2: *mptr = vm->d; break;
+                        case 3: *mptr = vm->g; break;
                 }
         else
-                switch((opcode>>4) & 3){ /*Zero except bits 4-5 at LSB*/
-                        case 0: vm->r = *mptr;
-                        case 1: vm->o = *mptr;
-                        case 2: vm->d = *mptr;
-                        case 3: vm->g = *mptr;
+                switch( (opcode>>4) & 3){ /*Zero except bits 4-5 at LSB*/
+                        case 0: vm->r = *mptr; break;
+                        case 1: vm->o = *mptr; break;
+                        case 2: vm->d = *mptr; break;
+                        case 3: vm->g = *mptr; break;
                 }
 }
 
@@ -291,6 +389,7 @@ void
 myth_exec_trap(struct myth_vm *vm, uchar opcode)
 {
         uchar dstpage = opcode & 31; /*Zero except low order 5 bits*/
+        print( "TRAP");
         myth_call(vm, dstpage);
 }
 

@@ -9,6 +9,7 @@ mv a.out ../myst
 rm myst.o
 git add myst.c
 git add myth.h
+git add myth-verbose.h
 
 cd ..
 cd src-nettle
