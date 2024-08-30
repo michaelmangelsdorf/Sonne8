@@ -53,7 +53,7 @@ main( int argc, char *argv[])
         print( "Locals @l%.02X: ", vm.l);
         for( i=0; i<8; i++){
                 n = vm.pagebyte[vm.l][0xF8+i];
-                print("L%d:%X(%d)(%b) ", i, n, n, n);
+                print( "L%d:%X(%d)(%b) ", i, n, n, n);
         }
 
         print( "\n");

@@ -2,6 +2,11 @@
     LOX machine emulator for the Myth micro-controller core.
     It expects (or creates) the file "corestate.myst" in the working directory.
 
+    Runs up to 10k machine cycles.
+    0x7F00-0x7F7F will be displayed as text on return.
+    0x7F80-0x7FFE receives arguments as concatened, spaced text.
+    0x7FFF is a quit flag - if >0, exit and print output, and reset VM to c=0, j=0;
+
     Author: mim@ok-schalter.de (Michael/Dosflange@github)
 
     Requires a Plan 9 build environment:
@@ -50,7 +55,7 @@ main(int argc, char *argv[])
 
         /* Clear LOX arg buffer, output text buffer and return code
         */
-        for( i=0x00; i<0xFF; i++)
+        for( i=0x00; i<0x100; i++)
                 vm.pagebyte[0x7F][i] = 0;
 
         /* Collect CLI parameters, concatenate at 0x7F80
@@ -71,18 +76,22 @@ main(int argc, char *argv[])
         /* Cycle until 0x7FFF not equal to zero (return code)
            Max. 10.000 cycles
         */
-        for( cyc=0; cyc<10000; cyc++){
+        for( cyc=1; cyc<10000; cyc++){
                 myth_cycle( &vm);
                 exitcode = vm.pagebyte[0x7F][0xFF];
                 if( exitcode != 0) break;
         }
-        if( cyc==10000) print("elapsed");
-        else print("%d", cyc);
+        if( cyc==10000) print("elapsed (re-run to continue) ");
+        else{
+                print("%d", cyc);
+                vm.c = 0;
+                vm.j = 0;
+        }
         print("/%.02Xh:", exitcode);
 
         /* Output 0x7F00 to 0x7F7F as zero terminated text
         */
-        for( i=0x00; i<0x7F; i++)
+        for( i=0x00; i<0x80; i++)
                 print("%c", vm.pagebyte[0x7F][i]);
 
         print("\n");
