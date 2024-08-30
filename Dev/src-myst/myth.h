@@ -171,13 +171,18 @@ myth_cycle(struct myth_vm *vm)
                 else myth_exec_sys(vm, opcode);
 }
 
+void
+myth_pull(struct myth_vm *vm)
+{
+        vm->o = vm->j;
+        vm->d = vm->c;   
+}
 
 void
 myth_call(struct myth_vm *vm, uchar dstpage)
 {
-        vm->o = vm->j;
+        myth_pull(); 
         vm->j = 0;
-        vm->d = vm->c;
         vm->c = dstpage;
         vm->l -= 1;
 }
@@ -369,10 +374,7 @@ myth_exec_sys(struct myth_vm *vm, uchar opcode)
                         vm->j = vm->o;
                         break;
                 
-                case ORG:
-                        vm->o = vm->j;
-                        vm->d = vm->c;
-                        break;
+                case ORG: myth_pull(); break;
         }
 }
 
