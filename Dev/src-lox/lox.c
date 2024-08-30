@@ -7,6 +7,8 @@
     0x7F80-0x7FFE receives arguments as concatened, spaced text.
     0x7FFF is a quit flag - if >0, exit and print output, and reset VM to c=0, j=0;
 
+    Edit nettle, then run nettle, lox and regs in succession.
+
     Author: mim@ok-schalter.de (Michael/Dosflange@github)
 
     Requires a Plan 9 build environment:
@@ -86,6 +88,7 @@ main(int argc, char *argv[])
                 print("%d", cyc);
                 vm.c = 0;
                 vm.j = 0;
+                vm.l++; /* Fix L */
         }
         print("/%.02Xh:", exitcode);
 

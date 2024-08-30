@@ -3,6 +3,8 @@
     Dump LOX registers for debugging.
     It expects (or creates) the file "corestate.myst" in the working directory.
 
+    Edit nettle, then run nettle, lox and regs in succession.
+
     Author: mim@ok-schalter.de (Michael/Dosflange@github)
 
     Requires a Plan 9 build environment:
@@ -61,3 +63,4 @@ main( int argc, char *argv[])
 }
 
 
+ 
