@@ -107,6 +107,14 @@ void myth_ret(struct myth_vm *vm);
 #define FAR 6 /*Wide Branch*/
 #define ORG 7 /*Get wide PC*/
 
+#define P4 0
+#define P1 1
+#define P2 2
+#define P3 3
+#define N4 4
+#define N3 5
+#define N2 6
+#define N1 7
 
 void
 myth_reset(struct myth_vm *vm)
@@ -325,14 +333,14 @@ void /*Adjust R by sign-extended offset*/
 myth_exec_adj(struct myth_vm *vm, uchar opcode)
 {
         switch(opcode & 7){ /*Zero except low order 3 bits*/
-                case 0: vm->r += 4; break;
-                case 1: vm->r += 1; break;
-                case 2: vm->r += 2; break;
-                case 3: vm->r += 3; break;
-                case 4: vm->r -= 4; break;
-                case 5: vm->r -= 3; break;
-                case 6: vm->r -= 2; break;
-                case 7: vm->r -= 1; break;
+                case P4: vm->r += 4; break;
+                case P1: vm->r += 1; break;
+                case P2: vm->r += 2; break;
+                case P3: vm->r += 3; break;
+                case N4: vm->r -= 4; break;
+                case N3: vm->r -= 3; break;
+                case N2: vm->r -= 2; break;
+                case N1: vm->r -= 1; break;
         }
 }
 
