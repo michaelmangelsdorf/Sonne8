@@ -157,7 +157,6 @@ myth_fetch(struct myth_vm *vm) /*Fetch next byte in CODE stream, increment PC*/
 void
 myth_cycle(struct myth_vm *vm)
 {
-
         uchar opcode = myth_fetch(vm);
 
                 /*Decode priority encoded opcode*/
@@ -181,7 +180,7 @@ myth_sip(struct myth_vm *vm) /*Save instruction pointer*/
 void
 myth_call(struct myth_vm *vm, uchar dstpage)
 {
-        myth_pull(); 
+        myth_sip(vm); 
         vm->pc = 0;
         vm->c = dstpage;
         vm->l -= 1;
@@ -203,7 +202,6 @@ myth_exec_pair_srcval(struct myth_vm *vm, uchar srcreg)
         }
 }
 
-
 void
 myth_exec_pair(struct myth_vm *vm, uchar opcode)
 {
@@ -212,8 +210,8 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
 
                 /* SCROUNGING
                    Remap ("scrounge") opcodes to other instructions
-                   NL => INO
-                   NM => DEO
+                   NL => O1A
+                   NM => O1S
                    LL => NOP (reserved)
                    LM => NOP (reserved)
                    ML => NOP (reserved)
@@ -374,7 +372,7 @@ myth_exec_sys(struct myth_vm *vm, uchar opcode)
                         vm->pc = vm->o;
                         break;
                 
-                case SIP: myth_sip(); break;
+                case SIP: myth_sip(vm); break;
         }
 }
 
