@@ -11,9 +11,9 @@
 struct { uchar val; char *str; } opcode[] = {
 {0x00, "NOP"},
 {0x01, "SSI"}, {0x02, "SSO"}, {0x03, "SCL"}, {0x04, "SCH"}, 
-{0x05, "RET"}, {0x06, "FAR"}, {0x07, "ORG"}, {0x08, "P4"}, 
-{0x09, "P1"}, {0x0A, "P2"}, {0x0B, "P3"}, {0x0C, "N4"}, 
-{0x0D, "N3"}, {0x0E, "N2"}, {0x0F, "N1"}, {0x10, "IDR"}, 
+{0x05, "RET"}, {0x06, "FAR"}, {0x07, "SIP"}, {0x08, "R4+"}, 
+{0x09, "R1+"}, {0x0A, "R2+"}, {0x0B, "R3+"}, {0x0C, "R4-"}, 
+{0x0D, "R3-"}, {0x0E, "R2-"}, {0x0F, "R1-"}, {0x10, "IDR"}, 
 {0x11, "IDO"}, {0x12, "OCR"}, {0x13, "OCO"}, {0x14, "SLR"}, 
 {0x15, "SLO"}, {0x16, "SRR"}, {0x17, "SRO"}, {0x18, "AND"}, 
 {0x19, "IOR"}, {0x1A, "EOR"}, {0x1B, "ADD"}, {0x1C, "CAR"}, 
@@ -42,7 +42,7 @@ struct { uchar val; char *str; } opcode[] = {
 {0x75, "5g"}, {0x76, "6g"}, {0x77, "7g"}, {0x78, "g0"}, 
 {0x79, "g1"}, {0x7A, "g2"}, {0x7B, "g3"}, {0x7C, "g4"}, 
 {0x7D, "g5"}, {0x7E, "g6"}, {0x7F, "g7"}, {0x80, "no"}, 
-{0x81, "DEO"}, {0x82, "INO"}, {0x83, "ng"}, {0x84, "nr"}, 
+{0x81, "O1+"}, {0x82, "O1-"}, {0x83, "ng"}, {0x84, "nr"}, 
 {0x85, "ni"}, {0x86, "ns"}, {0x87, "np"}, {0x88, "ne"}, 
 {0x89, "na"}, {0x8A, "nd"}, {0x8B, "nj"}, {0x8C, "nw"}, 
 {0x8D, "nt"}, {0x8E, "nf"}, {0x8F, "nc"}, {0x90, "mo"}, 
@@ -426,7 +426,7 @@ myth_exec_alu(struct myth_vm *vm, uchar opcode)
                 case EOR: vm->r = vm->r ^ vm->o; break;
                 case ADD: vm->r = vm->r + vm->o; break;
                 case CAR:
-                        vm->r = (int) vm->r + (int) vm->o > 255 ? 1 : 0;
+                        vm->r = (uint) vm->r + (uint) vm->o > 255 ? 1 : 0;
                         break;
                 case RLO: vm->r = (vm->r < vm->o) ? 255 : 0; break;
                 case REO: vm->r = (vm->r == vm->o) ? 255 : 0; break;

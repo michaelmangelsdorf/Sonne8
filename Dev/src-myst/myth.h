@@ -107,14 +107,14 @@ void myth_ret(struct myth_vm *vm);
 #define FAR 6 /*Wide Branch*/
 #define SIP 7 /*Get wide PC*/
 
-#define R4A 0 /*Add 4 to R*/
-#define R1A 1
-#define R2A 2
-#define R3A 3
-#define R4S 4 /*Subtract 4 from R*/
-#define R3S 5
-#define R2S 6
-#define R1S 7
+#define R4P 0 /*Add 4 to R*/
+#define R1P 1
+#define R2P 2
+#define R3P 3
+#define R4M 4 /*Subtract 4 from R*/
+#define R3M 5
+#define R2M 6
+#define R1M 7
 
 void
 myth_reset(struct myth_vm *vm)
@@ -210,8 +210,8 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
 
                 /* SCROUNGING
                    Remap ("scrounge") opcodes to other instructions
-                   NL => O1A
-                   NM => O1S
+                   NL => O1P
+                   NM => O1M
                    LL => NOP (reserved)
                    LM => NOP (reserved)
                    ML => NOP (reserved)
@@ -223,8 +223,8 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
 
                 if(src==Nx)
                         switch(dst){
-                                case xL: vm->o = vm->o + 1; return; /*O1A*/
-                                case xM: vm->o = vm->o - 1; return; /*O1S*/
+                                case xL: vm->o = vm->o + 1; return; /*O1P*/
+                                case xM: vm->o = vm->o - 1; return; /*O1M*/
                         }
 
                 if( (src==Mx || src==Lx) && (dst==xM || dst==xL) )
@@ -323,7 +323,7 @@ myth_exec_alu(struct myth_vm *vm, uchar opcode)
                 case EOR: vm->r = vm->r ^ vm->o; break;
                 case ADD: vm->r = vm->r + vm->o; break;
                 case CAR:
-                        vm->r = (int) vm->r + (int) vm->o > 255 ? 1 : 0;
+                        vm->r = (uint) vm->r + (uint) vm->o > 255 ? 1 : 0;
                         break;
                 case RLO: vm->r = (vm->r < vm->o) ? 255 : 0; break;
                 case REO: vm->r = (vm->r == vm->o) ? 255 : 0; break;
@@ -336,14 +336,14 @@ void /*Adjust R by sign-extended offset*/
 myth_exec_adj(struct myth_vm *vm, uchar opcode)
 {
         switch(opcode & 7){ /*Zero except low order 3 bits*/
-                case R4A: vm->r += 4; break;
-                case R1A: vm->r += 1; break;
-                case R2A: vm->r += 2; break;
-                case R3A: vm->r += 3; break;
-                case R4S: vm->r -= 4; break;
-                case R3S: vm->r -= 3; break;
-                case R2S: vm->r -= 2; break;
-                case R1S: vm->r -= 1; break;
+                case R4P: vm->r += 4; break;
+                case R1P: vm->r += 1; break;
+                case R2P: vm->r += 2; break;
+                case R3P: vm->r += 3; break;
+                case R4M: vm->r -= 4; break;
+                case R3M: vm->r -= 3; break;
+                case R2M: vm->r -= 2; break;
+                case R1M: vm->r -= 1; break;
         }
 }
 
