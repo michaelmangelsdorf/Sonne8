@@ -106,7 +106,7 @@ struct myth_vm
         uchar pir;  /*Parallel input register*/
         uchar por;  /*Parallel output register*/
 
-        uchar j;    /*JUMP register (program counter)*/
+        uchar pc;    /*JUMP register (program counter)*/
         uchar o;    /*ORIGIN*/
         uchar r;    /*RESULT*/
 
@@ -190,7 +190,17 @@ void myth_ret(struct myth_vm *vm);
 #define SCH 4 /*Set serial Clock High*/
 #define RET 5 /*Wide Return*/
 #define FAR 6 /*Wide Branch*/
-#define ORG 7 /*Get wide PC*/
+#define SIP 7 /*Get wide PC*/
+
+#define R4A 0
+#define R1A 1
+#define R2A 2
+#define R3A 3
+#define R4S 4
+#define R3S 5
+#define R2S 6
+#define R1S 7
+
 
 
 void
@@ -211,7 +221,7 @@ myth_reset(struct myth_vm *vm)
         vm->pir = 0;
         vm->por = 0;
 
-        vm->j = 0;
+        vm->pc = 0;
         vm->o = 0;
         vm->r = 0;
 
@@ -227,14 +237,14 @@ myth_reset(struct myth_vm *vm)
 uchar
 myth_fetch(struct myth_vm *vm, int mode) /*Fetch next byte in CODE stream, increment PC*/
 {
-        uchar val = vm->pagebyte[ vm->c][ vm->j];
+        uchar val = vm->pagebyte[ vm->c][ vm->pc];
         if ( mode)
                 print( "Fetch instruction @%.02X_%.02X@ is %s(%.02Xh)\n",
-                        vm->c, vm->j, opcToMnemonic(val), val );
+                        vm->c, vm->pc, opcToMnemonic(val), val );
         else 
                 print( "Fetch literal @%.02X_%.02X@ is %.02Xh(%d)(%b)\n",
-                        vm->c, vm->j, val, val, val );
-        (vm->j)++;
+                        vm->c, vm->pc, val, val, val );
+        (vm->pc)++;
         return val;
 }
 
@@ -258,14 +268,20 @@ myth_cycle(struct myth_vm *vm)
 
 
 void
+myth_sip(struct myth_vm *vm) /* Save Instruction Pointer */
+{
+        vm->o = vm->pc;
+        vm->d = vm->c;
+}
+
+void
 myth_call(struct myth_vm *vm, uchar dstpage)
 {
         print( " @%.02X_%.02X@ to @%.02X_%.02X@\n",
-         vm->c, vm->j, dstpage);
+         vm->c, vm->pc, dstpage);
 
-        vm->o = vm->j;
-        vm->j = 0;
-        vm->d = vm->c;
+        myth_sip(vm);
+        vm->pc = 0;
         vm->c = dstpage;
         vm->l -= 1;
 }
@@ -295,8 +311,8 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
 
                 /* SCROUNGING
                    Remap ("scrounge") opcodes to other instructions
-                   NL => INO
-                   NM => DEO
+                   NL => O1A
+                   NM => O1S
                    LL => NOP (reserved)
                    LM => NOP (reserved)
                    ML => NOP (reserved)
@@ -308,8 +324,8 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
 
                 if(src==Nx)
                         switch(dst){
-                                case xL: vm->o = vm->o + 1; return; /*INO*/
-                                case xM: vm->o = vm->o - 1; return; /*DEO*/
+                                case xL: vm->o = vm->o + 1; return; /*O1A*/
+                                case xM: vm->o = vm->o - 1; return; /*O1S*/
                         }
 
                 if( (src==Mx || src==Lx) && (dst==xM || dst==xL) )
@@ -334,17 +350,17 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
                 case xA: vm->g = srcval + vm->i; break;
                 case xD: vm->d = srcval; break;
                 case xJ: /*pseudo reg*/
-                        vm->j = srcval;
+                        vm->pc = srcval;
                         break;
                 case xW: /*pseudo reg*/
-                        if (vm->i) vm->j = srcval;
+                        if (vm->i) vm->pc = srcval;
                         (vm->i)--; /*Post decrement, either case!*/
                         break; 
                 case xT: /*pseudo reg*/
-                        if (vm->r) vm->j = srcval;
+                        if (vm->r) vm->pc = srcval;
                         break;
                 case xF: /*pseudo reg*/
-                        if (!vm->r) vm->j = srcval;
+                        if (!vm->r) vm->pc = srcval;
                         break;
                 case xC:
                         print( "Page CALL");
@@ -423,14 +439,14 @@ void /*Adjust R by sign-extended offset*/
 myth_exec_adj(struct myth_vm *vm, uchar opcode)
 {
         switch(opcode & 7){ /*Zero except low order 3 bits*/
-                case 0: vm->r += 4; break;
-                case 1: vm->r += 1; break;
-                case 2: vm->r += 2; break;
-                case 3: vm->r += 3; break;
-                case 4: vm->r -= 4; break;
-                case 5: vm->r -= 3; break;
-                case 6: vm->r -= 2; break;
-                case 7: vm->r -= 1; break;
+                case R4A: vm->r += 4; break;
+                case R1A: vm->r += 1; break;
+                case R2A: vm->r += 2; break;
+                case R3A: vm->r += 3; break;
+                case R4S: vm->r -= 4; break;
+                case R3S: vm->r -= 3; break;
+                case R2S: vm->r -= 2; break;
+                case R1S: vm->r -= 1; break;
         }
 }
 
@@ -458,15 +474,12 @@ myth_exec_sys(struct myth_vm *vm, uchar opcode)
                         vm->l += 1; /*FALL THROUGH*/
                 case FAR:
                         print( "FAR @%.02X_%.02X@ to @%.02X_%.02X@\n",
-                        vm->c, vm->j, vm->d, vm->o);
+                        vm->c, vm->pc, vm->d, vm->o);
                         vm->c = vm->d;
-                        vm->j = vm->o;
+                        vm->pc = vm->o;
                         break;
                 
-                case ORG:
-                        vm->o = vm->j;
-                        vm->d = vm->c;
-                        break;
+                case SIP: myth_sip(vm); break;
         }
 }
 
