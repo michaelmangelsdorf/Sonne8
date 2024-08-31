@@ -37,7 +37,7 @@ main( int argc, char *argv[])
 
         print( "r:%.02Xh(%d)(%b) ", vm.r, vm.r, vm.r);
         print( "o:%.02Xh(%d)(%b) ", vm.o, vm.o, vm.o);
-        print( "j:%.02Xh(%d)(%b) ", vm.j, vm.j, vm.j);
+        print( "pc:%.02Xh(%d)(%b) ", vm.pc, vm.pc, vm.pc);
         print( "c:%.02Xh(%d)(%b) ", vm.c, vm.c, vm.c);
         print( "d:%.02Xh(%d)(%b) ", vm.d, vm.d, vm.d);
         print( "g:%.02Xh(%d)(%b) ", vm.g, vm.g, vm.g);

@@ -87,7 +87,7 @@ main(int argc, char *argv[])
         else{
                 print("%d", cyc);
                 vm.c = 0;
-                vm.j = 0;
+                vm.pc = 0;
                 vm.l++; /* Fix L */
         }
         print("/%.02Xh:", exitcode);
