@@ -21,7 +21,7 @@ struct myth_vm
         uchar pir;  /*Parallel input register*/
         uchar por;  /*Parallel output register*/
 
-        uchar pc;   /*PROGRAM Counter)*/
+        uchar pc;   /*PROGRAM Counter*/
         uchar o;    /*ORIGIN*/
         uchar r;    /*RESULT*/
 
