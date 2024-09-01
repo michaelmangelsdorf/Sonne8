@@ -78,19 +78,19 @@ main(int argc, char *argv[])
         /* Cycle until 0x7FFF not equal to zero (return code)
            Max. 10.000 cycles
         */
-        for( cyc=1; cyc<100000; cyc++){
+        for( cyc=1; cyc<999*1000; cyc++){
                 myth_cycle( &vm);
                 exitcode = vm.pagebyte[0x7F][0xFF];
                 if( exitcode != 0) break;
         }
-        if( cyc==10000) print("!ELAPSED (re-run to continue) ");
+        if( cyc==999*1000) print("!ELAPSED 99k instructions (re-run to continue) ");
         else{
-                print("%d", cyc);
+                print("requested end: %d cycles, ", cyc);
                 vm.c = 0;
                 vm.pc = 0;
                 vm.l++; /* Fix L */
         }
-        print("/%.02Xh:", exitcode);
+        print("return code %.02Xh:", exitcode);
 
         /* Output 0x7F00 to 0x7F7F as zero terminated text
         */
