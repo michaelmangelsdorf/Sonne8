@@ -242,9 +242,9 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
 
                 case xE: vm->e = srcval; break;
                 case xA:
-                        temp = vm->g + srcval;
-                        vm->g = (uchar) (temp & 0xFF);
-                        if ( temp>255) vm->d += 1; 
+                        temp = vm->o + srcval;
+                        vm->o = (uchar) (temp & 0xFF);
+                        if ( temp>255) vm->d += 1;
                         break;
                 case xD: vm->d = srcval; break;
                 case xJ: /*pseudo reg*/
@@ -325,7 +325,7 @@ myth_exec_alu(struct myth_vm *vm, uchar opcode)
                         vm->r = (uint) vm->r + (uint) vm->o > 255 ? 1 : 0;
                         break;
                 case RLO: vm->r = (vm->r < vm->o) ? 255 : 0; break;
-                case REO: vm->r = (vm->r == vm->o) ? 255 : 0; break;
+                case REO: vm->r = (vm->r == vm->o) ? 255 : 0;
                 case RGO: vm->r = (vm->r > vm->o) ? 255 : 0; break;
         }
 }

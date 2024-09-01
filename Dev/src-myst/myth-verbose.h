@@ -42,7 +42,7 @@ struct { uchar val; char *str; } opcode[] = {
 {0x75, "5g"}, {0x76, "6g"}, {0x77, "7g"}, {0x78, "g0"}, 
 {0x79, "g1"}, {0x7A, "g2"}, {0x7B, "g3"}, {0x7C, "g4"}, 
 {0x7D, "g5"}, {0x7E, "g6"}, {0x7F, "g7"}, {0x80, "no"}, 
-{0x81, "O1+"}, {0x82, "O1-"}, {0x83, "ng"}, {0x84, "nr"}, 
+{0x81, "---"}, {0x82, "---"}, {0x83, "ng"}, {0x84, "nr"}, 
 {0x85, "ni"}, {0x86, "ns"}, {0x87, "np"}, {0x88, "ne"}, 
 {0x89, "na"}, {0x8A, "nd"}, {0x8B, "nj"}, {0x8C, "nw"}, 
 {0x8D, "nt"}, {0x8E, "nf"}, {0x8F, "nc"}, {0x90, "mo"}, 
@@ -343,8 +343,8 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
 
                 case xE: vm->e = srcval; break;
                 case xA:
-                        temp = vm->g + srcval;
-                        vm->g = (uchar) (temp & 0xFF);
+                        temp = vm->o + srcval;
+                        vm->o = (uchar) (temp & 0xFF);
                         if ( temp>255) vm->d += 1; 
                         break;
                 case xD: vm->d = srcval; break;
@@ -383,17 +383,17 @@ myth_exec_gput(struct myth_vm *vm, uchar opcode) /*Execute GETPUT instruction*/
         uchar offs = opcode & 7; /*Zero except low order 3 bits*/
         
         mptr = &(vm->pagebyte[vm->l][0xF8 + offs]);
-        if( opcode & BIT3)
-                switch( (opcode>>4) & 3){ /*Zero except bits 4-5 at LSB*/
+        if(opcode & BIT3)
+                switch((opcode>>4) & 3){ /*Zero except bits 4-5 at LSB*/
                         case 0: *mptr = vm->r; break;
-                        case 1: *mptr = vm->o; break;
+                        case 1: *mptr = vm->o; print( "Putting o"); break;
                         case 2: *mptr = vm->d; break;
                         case 3: *mptr = vm->g; break;
                 }
         else
-                switch( (opcode>>4) & 3){ /*Zero except bits 4-5 at LSB*/
+                switch((opcode>>4) & 3){ /*Zero except bits 4-5 at LSB*/
                         case 0: vm->r = *mptr; break;
-                        case 1: vm->o = *mptr; break;
+                        case 1: vm->o = *mptr; print( "Getting o"); break;
                         case 2: vm->d = *mptr; break;
                         case 3: vm->g = *mptr; break;
                 }
