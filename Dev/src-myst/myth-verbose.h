@@ -158,7 +158,7 @@ void myth_ret(struct myth_vm *vm);
 #define xP 7 /*to PARALLEL output*/
 
 #define xE 8 /*to ENABLE register*/
-#define xA 9 /*to GLOBAL register (ADD I)*/
+#define xA 9 /*to O and D (ADD byte to 16-bit register pair)*/
 #define xD 10 /*to DATA page register*/
 #define xJ 11 /*write JUMP program counter*/
 #define xW 12 /*write JUMP WHILE I not zero, decrement I*/
@@ -306,32 +306,27 @@ myth_exec_pair_srcval(struct myth_vm *vm, uchar srcreg)
 void
 myth_exec_pair(struct myth_vm *vm, uchar opcode)
 {
-                uchar src = (opcode >> 4) & 7; /*Zero except bits 4-6 at LSB*/
-                uchar dst = opcode & 15; /* Zero except bits 0-3 at LSB*/
+        uchar src = (opcode >> 4) & 7; /*Zero except bits 4-6 at LSB*/
+        uchar dst = opcode & 15; /* Zero except bits 0-3 at LSB*/
 
-                /* SCROUNGING
-                   Remap ("scrounge") opcodes to other instructions
-                   NL => O1A
-                   NM => O1S
-                   LL => NOP (reserved)
-                   LM => NOP (reserved)
-                   ML => NOP (reserved)
-                   MM => NOP (reserved)
-                   GG => NOP (reserved)
-                   RR => NOP (reserved)
-                   II => NOP (reserved)
-                    */
+        /* SCROUNGING
+                Remap ("scrounge") opcodes to other instructions
+                NL => NOP (reserved)
+                NM => NOP (reserved)
+                LL => NOP (reserved)
+                LM => NOP (reserved)
+                ML => NOP (reserved)
+                MM => NOP (reserved)
+                GG => NOP (reserved)
+                RR => NOP (reserved)
+                II => NOP (reserved)
+                */
 
-                if(src==Nx)
-                        switch(dst){
-                                case xL: vm->o = vm->o + 1; return; /*O1A*/
-                                case xM: vm->o = vm->o - 1; return; /*O1S*/
-                        }
-
-                if( (src==Mx || src==Lx) && (dst==xM || dst==xL) )
-                        return; /*NOP (reserved)*/
+        if( (src==Mx || src==Lx || src==Nx) && (dst==xM || dst==xL) )
+                return; /*NOP (reserved)*/
 
         uchar srcval = myth_exec_pair_srcval(vm, src);
+        int temp;
         switch(dst){
                 case xO: vm->o = srcval; break;
                 case xM: /*pseudo reg*/
@@ -347,7 +342,11 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
                 case xP: vm->por = srcval; break;
 
                 case xE: vm->e = srcval; break;
-                case xA: vm->g = srcval + vm->i; break;
+                case xA:
+                        temp = vm->g + srcval;
+                        vm->g = (uchar) (temp & 0xFF);
+                        if ( temp>255) vm->d += 1; 
+                        break;
                 case xD: vm->d = srcval; break;
                 case xJ: /*pseudo reg*/
                         vm->pc = srcval;
