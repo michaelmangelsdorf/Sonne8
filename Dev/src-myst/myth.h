@@ -81,7 +81,7 @@ void myth_ret(struct myth_vm *vm);
 #define xF 14 /*write JUMP if R zero*/
 #define xC 15 /*write CALL page index*/
 
-#define IDR 0 /*Identity R*/
+#define CLR 0 /*Clear (value 0)*/
 #define IDO 1 /*Identity O*/
 #define OCR 2 /*Ones' complement of R*/
 #define OCO 3 /*Ones' complement of O*/
@@ -309,7 +309,7 @@ void
 myth_exec_alu(struct myth_vm *vm, uchar opcode)
 {
         switch(opcode & 15){/* Zero except low order 4 bits*/
-                case IDR: vm->r = vm->r; break;
+                case CLR: vm->r = 0; break;
                 case IDO: vm->r = vm->o; break;
                 case OCR: vm->r = ~vm->r; break;
                 case OCO: vm->r = ~vm->o; break;

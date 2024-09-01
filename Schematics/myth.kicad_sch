@@ -31456,9 +31456,9 @@
 		)
 		(uuid "61ff9068-e3ea-4144-ab1f-986d6198063a")
 	)
-	(text "0 IDR (\"Identity R\" / R:=R)\n1 IDO (\"Identity O\" / R:=Old)\n2 OCR (\"Ones Complement R\" / R:=~R)\n3 OCO (\"Ones Complement O\" / R:=~O)\n4 SLR (\"Shift left New\" / R:=R<<1)\n5 SLO (\"Shift left Old\" / R:=O<<1)\n6 SRR (\"Shift right R\" / R:=R>>1)\n7 SRO (\"Shift right O\" / R:=O>>1)"
+	(text "0 CLR (\"Clear\" / R:=0)\n1 IDO (\"Identity O\" / R:=Old)\n2 OCR (\"Ones Complement R\" / R:=~R)\n3 OCO (\"Ones Complement O\" / R:=~O)\n4 SLR (\"Shift left New\" / R:=R<<1)\n5 SLO (\"Shift left Old\" / R:=O<<1)\n6 SRR (\"Shift right R\" / R:=R>>1)\n7 SRO (\"Shift right O\" / R:=O>>1)"
 		(exclude_from_sim no)
-		(at 712.2724 142.3604 0)
+		(at 730.0706 170.6535 0)
 		(effects
 			(font
 				(size 2 2)
@@ -31907,6 +31907,17 @@
 		)
 		(uuid "bacd8a59-8524-43bb-b7d7-4add523729f3")
 	)
+	(text "BLUR3 LUT\nROM layout:\n\n16 maps\n@256x256"
+		(exclude_from_sim no)
+		(at 731.5105 137.5351 0)
+		(effects
+			(font
+				(size 2 2)
+			)
+			(justify left bottom)
+		)
+		(uuid "be5d7a51-bac0-41eb-b70b-9c30245cc505")
+	)
 	(text "~{RES} request"
 		(exclude_from_sim no)
 		(at 93.9038 88.5444 0)
@@ -32129,7 +32140,7 @@
 	)
 	(text " 8 AND (R:=R&O)\n 9 IOR (R:=R|O)\n10 EOR (R:=R^O)\n11 ADD (Add\" / R:=R+O, bits 0-7)\n12 CAR (\"Carry Bit\" / R:= Carry, 9th bit of R+O) 00h or 01h\n13 RLO (\"Flag: R less than O\" / R:= (R<O)? 0xFF:0\n14 REO (\"Flag: R equals O\" / R:= (R==O)? 0xFF:0\n15 RGO (\"Flag: R greater than O\" / R:= (R>O)? 0xFF:0\n"
 		(exclude_from_sim no)
-		(at 710.9262 170.3512 0)
+		(at 728.7244 198.6443 0)
 		(effects
 			(font
 				(size 2 2)

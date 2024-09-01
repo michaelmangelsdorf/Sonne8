@@ -13,7 +13,7 @@ struct { uchar val; char *str; } opcode[] = {
 {0x01, "SSI"}, {0x02, "SSO"}, {0x03, "SCL"}, {0x04, "SCH"}, 
 {0x05, "RET"}, {0x06, "FAR"}, {0x07, "SIP"}, {0x08, "R4+"}, 
 {0x09, "R1+"}, {0x0A, "R2+"}, {0x0B, "R3+"}, {0x0C, "R4-"}, 
-{0x0D, "R3-"}, {0x0E, "R2-"}, {0x0F, "R1-"}, {0x10, "IDR"}, 
+{0x0D, "R3-"}, {0x0E, "R2-"}, {0x0F, "R1-"}, {0x10, "CLR"}, 
 {0x11, "IDO"}, {0x12, "OCR"}, {0x13, "OCO"}, {0x14, "SLR"}, 
 {0x15, "SLO"}, {0x16, "SRR"}, {0x17, "SRO"}, {0x18, "AND"}, 
 {0x19, "IOR"}, {0x1A, "EOR"}, {0x1B, "ADD"}, {0x1C, "CAR"}, 
@@ -166,7 +166,7 @@ void myth_ret(struct myth_vm *vm);
 #define xF 14 /*write JUMP if R zero*/
 #define xC 15 /*write CALL page index*/
 
-#define IDR 0 /*Identity R*/
+#define CLR 0 /*Clear (value 0)*/
 #define IDO 1 /*Identity O*/
 #define OCR 2 /*Ones' complement of R*/
 #define OCO 3 /*Ones' complement of O*/
@@ -412,7 +412,7 @@ void
 myth_exec_alu(struct myth_vm *vm, uchar opcode)
 {
         switch(opcode & 15){/* Zero except low order 4 bits*/
-                case IDR: vm->r = vm->r; break;
+                case CLR: vm->r = 0; break;
                 case IDO: vm->r = vm->o; break;
                 case OCR: vm->r = ~vm->r; break;
                 case OCO: vm->r = ~vm->o; break;
