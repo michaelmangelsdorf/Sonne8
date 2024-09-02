@@ -1,4 +1,7 @@
 
+#ifndef __MYTH_H__
+#define __MYTH_H__ 1
+
 /* Emulation routines for Sonne 8 micro-controller Rev. Myth/LOX
    Author: mim@ok-schalter.de (Michael/Dosflange@github)
     */
@@ -9,6 +12,8 @@
 struct myth_vm
 {
         uchar pagebyte[256][256];
+
+        uchar scrounge; /* Set by scrounge instruction stub */
 
         uchar e;    /*Device ENABLE register */
 
@@ -121,6 +126,8 @@ myth_reset(struct myth_vm *vm)
 {
         memset(vm->pagebyte, 0, 256*256);
 
+        vm->scrounge = 0; /* Set application specific opcode */
+
         vm->e = 0; /* Deselect any device */
 
         vm->sclk = 0;
@@ -157,6 +164,7 @@ myth_fetch(struct myth_vm *vm) /*Fetch next byte in CODE stream, increment PC*/
 void
 myth_cycle(struct myth_vm *vm)
 {
+        vm->scrounge = 0;
         uchar opcode = myth_fetch(vm);
 
                 /*Decode priority encoded opcode*/
@@ -210,6 +218,8 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
 
         /* SCROUNGING
                 Remap ("scrounge") opcodes to other instructions
+                These are application specific opcodes - don't assume
+                that they are generally NOPs!
                 NL => NOP (reserved)
                 NM => NOP (reserved)
                 LL => NOP (reserved)
@@ -221,8 +231,10 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
                 II => NOP (reserved)
                 */
 
-        if( (src==Mx || src==Lx || Nx) && (dst==xM || dst==xL) )
-                        return; /*NOP (reserved)*/
+        if( (src==Mx || src==Lx || src==Nx) && (dst==xM || dst==xL) ) {
+                vm->scrounge = opcode;
+                return;
+        }
 
         uchar srcval = myth_exec_pair_srcval(vm, src);
         int temp;
@@ -375,4 +387,4 @@ myth_exec_sys(struct myth_vm *vm, uchar opcode)
         }
 }
 
-
+#endif

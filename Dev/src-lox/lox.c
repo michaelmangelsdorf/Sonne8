@@ -3,9 +3,15 @@
     It expects (or creates) the file "corestate.myst" in the working directory.
 
     Runs up to 10k machine cycles.
-    0x7F00-0x7F7F will be displayed as text on return.
-    0x7F80-0x7FFE receives arguments as concatened, spaced text.
-    0x7FFF is a quit flag - if >0, exit and print output, and reset VM to c=0, j=0;
+    
+     0x7F00-0x7F7F will be displayed as text on return.
+    0x7F80-0x7FEF receives arguments as concatened, spaced text.
+    0x7FF0- (Reserved)    
+    0x7FF9 / 0x7FFA VOCAB top pointer (page/offset)
+    0x7FFB / 0x7FFC  First point (page/offset)
+    0x7FFD / 0x7FFE  Second point (page/offset) 
+    0x7FFF  Return code. If >0, exit and print output,
+            and reset VM to c=0, j=0;
 
     Edit nettle, then run nettle, lox and regs in succession.
 
@@ -26,6 +32,7 @@
 #include <libc.h>
 #include "../src-myst/myth.h"
 #include "../src-myst/myst.h"
+#include "lox.h"
 
 char* fname="corestate.myst";
 int i;
@@ -33,20 +40,17 @@ int i;
 void
 insertOrExitAt(int *offs)
 {
-        switch( *offs){
-            case 0xFE:
-            case 0xFF: {
-                    print("truncated argline error");
-                    exits("truncated args");
-            }
-            default: *offs = *offs + 1;
+        if( *offs >= 0xF0){
+                print("truncated argline error");
+                exits("truncated args");
         }
+        else *offs = *offs + 1;
 }
 
 void
 main(int argc, char *argv[])
 {
-        int cyc, exitcode;
+        int cyc;
         int offs, chpos;
         char ch;
 
@@ -80,17 +84,19 @@ main(int argc, char *argv[])
         */
         for( cyc=1; cyc<999*1000; cyc++){
                 myth_cycle( &vm);
-                exitcode = vm.pagebyte[0x7F][0xFF];
-                if( exitcode != 0) break;
+                if ( vm.scrounge == END) break;
         }
-        if( cyc==999*1000) print("!ELAPSED 99k instructions (re-run to continue) ");
+        if( cyc==999*1000) {
+                 print( "Error:\n");
+                 print( "99k cycles elapsed without output request (re-run to continue)\n!\n");
+                 exits( "Elapsed");
+        }
         else{
-                print("requested end: %d cycles, ", cyc);
+                print("requested end after %d cycles: ", cyc);
                 vm.c = 0;
                 vm.pc = 0;
                 vm.l++; /* Fix L */
         }
-        print("return code %.02Xh:", exitcode);
 
         /* Output 0x7F00 to 0x7F7F as zero terminated text
         */
