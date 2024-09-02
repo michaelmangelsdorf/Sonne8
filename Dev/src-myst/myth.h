@@ -9,7 +9,7 @@
 #include <u.h>
 #include <libc.h>
 
-struct myth_vm
+struct myth_vm /*Complete machine state including all memory*/
 {
         uchar pagebyte[256][256];
 
@@ -51,8 +51,8 @@ void myth_call(struct myth_vm *vm, uchar dstpage);
 void myth_ret(struct myth_vm *vm);
 
 
-/*  The 'REGx' notation means: REG into (something)
-    i.e. REG is a source
+/* The 'REGx' notation means: REG into (something)
+   i.e. REG is a source
 */
 
 #define Nx 0 /*from code literal (NUMBER)*/
@@ -64,8 +64,8 @@ void myth_ret(struct myth_vm *vm);
 #define Sx 6 /*from SERIAL input*/
 #define Px 7 /*from PARALLEL input*/
 
-/*  The 'xREG' notation means: (something) into REG
-    i.e. REG is a destination
+/* The 'xREG' notation means: (something) into REG
+   i.e. REG is a destination
 */
 
 #define xO 0 /*to ORIGIN register*/
@@ -122,13 +122,13 @@ void myth_ret(struct myth_vm *vm);
 #define M1 7
 
 void
-myth_reset(struct myth_vm *vm)
+myth_reset(struct myth_vm *vm) /*Initialise machine state*/
 {
         memset(vm->pagebyte, 0, 256*256);
 
-        vm->scrounge = 0; /* Set application specific opcode */
+        vm->scrounge = 0; /*Set application specific opcode*/
 
-        vm->e = 0; /* Deselect any device */
+        vm->e = 0; /*Deselect any device*/
 
         vm->sclk = 0;
         vm->miso = 0;
@@ -162,7 +162,7 @@ myth_fetch(struct myth_vm *vm) /*Fetch next byte in CODE stream, increment PC*/
 
 
 void
-myth_cycle(struct myth_vm *vm)
+myth_cycle(struct myth_vm *vm) /* Single-step 1 instruction cycle */
 {
         vm->scrounge = 0;
         uchar opcode = myth_fetch(vm);
@@ -179,7 +179,7 @@ myth_cycle(struct myth_vm *vm)
 }
 
 void
-myth_sip(struct myth_vm *vm) /*Save instruction pointer*/
+myth_sip(struct myth_vm *vm) /* Utility: Save instruction pointer*/
 {
         vm->o = vm->pc;
         vm->d = vm->c;   
@@ -256,7 +256,7 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
                 case xA:
                         temp = vm->o + srcval;
                         vm->o = (uchar) (temp & 0xFF);
-                        if ( temp>255) vm->d += 1;
+                        if (temp>255) vm->d += 1;
                         break;
                 case xD: vm->d = srcval; break;
                 case xJ: /*pseudo reg*/
@@ -343,7 +343,7 @@ myth_exec_alu(struct myth_vm *vm, uchar opcode)
 }
 
 
-void /*Adjust R by sign-extended offset*/
+void /*Add sign-extended number to R*/
 myth_exec_fix(struct myth_vm *vm, uchar opcode)
 {
         switch(opcode & 7){ /*Zero except low order 3 bits*/
