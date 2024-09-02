@@ -40,7 +40,7 @@ void myth_exec_pair(struct myth_vm *vm, uchar opcode);
 void myth_exec_gput(struct myth_vm *vm, uchar opcode);
 void myth_exec_trap(struct myth_vm *vm, uchar opcode);
 void myth_exec_alu(struct myth_vm *vm, uchar opcode);
-void myth_exec_adj(struct myth_vm *vm, uchar opcode);
+void myth_exec_fix(struct myth_vm *vm, uchar opcode);
 void myth_exec_sys(struct myth_vm *vm, uchar opcode);
 void myth_call(struct myth_vm *vm, uchar dstpage);
 void myth_ret(struct myth_vm *vm);
@@ -107,14 +107,14 @@ void myth_ret(struct myth_vm *vm);
 #define FAR 6 /*Wide Branch*/
 #define SIP 7 /*Get wide PC*/
 
-#define R4P 0 /*Add 4 to R*/
-#define R1P 1
-#define R2P 2
-#define R3P 3
-#define R4M 4 /*Subtract 4 from R*/
-#define R3M 5
-#define R2M 6
-#define R1M 7
+#define P4 0 /*R PLUS 4*/
+#define P1 1
+#define P2 2
+#define P3 3
+#define M4 4 /*R MINUS 4*/
+#define M3 5
+#define M2 6
+#define M1 7
 
 void
 myth_reset(struct myth_vm *vm)
@@ -166,7 +166,7 @@ myth_cycle(struct myth_vm *vm)
                 else if (opcode&0x40) myth_exec_gput(vm, opcode);
                 else if (opcode&0x20) myth_exec_trap(vm, opcode);
                 else if (opcode&0x10) myth_exec_alu(vm, opcode);
-                else if (opcode&0x08) myth_exec_adj(vm, opcode);
+                else if (opcode&0x08) myth_exec_fix(vm, opcode);
                 else myth_exec_sys(vm, opcode);
 }
 
@@ -332,17 +332,17 @@ myth_exec_alu(struct myth_vm *vm, uchar opcode)
 
 
 void /*Adjust R by sign-extended offset*/
-myth_exec_adj(struct myth_vm *vm, uchar opcode)
+myth_exec_fix(struct myth_vm *vm, uchar opcode)
 {
         switch(opcode & 7){ /*Zero except low order 3 bits*/
-                case R4P: vm->r += 4; break;
-                case R1P: vm->r += 1; break;
-                case R2P: vm->r += 2; break;
-                case R3P: vm->r += 3; break;
-                case R4M: vm->r -= 4; break;
-                case R3M: vm->r -= 3; break;
-                case R2M: vm->r -= 2; break;
-                case R1M: vm->r -= 1; break;
+                case P4: vm->r += 4; break;
+                case P1: vm->r += 1; break;
+                case P2: vm->r += 2; break;
+                case P3: vm->r += 3; break;
+                case M4: vm->r -= 4; break;
+                case M3: vm->r -= 3; break;
+                case M2: vm->r -= 2; break;
+                case M1: vm->r -= 1; break;
         }
 }
 

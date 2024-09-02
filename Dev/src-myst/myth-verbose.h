@@ -11,9 +11,9 @@
 struct { uchar val; char *str; } opcode[] = {
 {0x00, "NOP"},
 {0x01, "SSI"}, {0x02, "SSO"}, {0x03, "SCL"}, {0x04, "SCH"}, 
-{0x05, "RET"}, {0x06, "FAR"}, {0x07, "SIP"}, {0x08, "R4+"}, 
-{0x09, "R1+"}, {0x0A, "R2+"}, {0x0B, "R3+"}, {0x0C, "R4-"}, 
-{0x0D, "R3-"}, {0x0E, "R2-"}, {0x0F, "R1-"}, {0x10, "CLR"}, 
+{0x05, "RET"}, {0x06, "FAR"}, {0x07, "SIP"}, {0x08, "RP4"}, 
+{0x09, "RP1"}, {0x0A, "RP2"}, {0x0B, "RP3"}, {0x0C, "RM4"}, 
+{0x0D, "RM3"}, {0x0E, "RM2"}, {0x0F, "RM1"}, {0x10, "CLR"}, 
 {0x11, "IDO"}, {0x12, "OCR"}, {0x13, "OCO"}, {0x14, "SLR"}, 
 {0x15, "SLO"}, {0x16, "SRR"}, {0x17, "SRO"}, {0x18, "AND"}, 
 {0x19, "IOR"}, {0x1A, "EOR"}, {0x1B, "ADD"}, {0x1C, "CAR"}, 
@@ -125,7 +125,7 @@ void myth_exec_pair(struct myth_vm *vm, uchar opcode);
 void myth_exec_gput(struct myth_vm *vm, uchar opcode);
 void myth_exec_trap(struct myth_vm *vm, uchar opcode);
 void myth_exec_alu(struct myth_vm *vm, uchar opcode);
-void myth_exec_adj(struct myth_vm *vm, uchar opcode);
+void myth_exec_fix(struct myth_vm *vm, uchar opcode);
 void myth_exec_sys(struct myth_vm *vm, uchar opcode);
 void myth_call(struct myth_vm *vm, uchar dstpage);
 void myth_ret(struct myth_vm *vm);
@@ -192,14 +192,14 @@ void myth_ret(struct myth_vm *vm);
 #define FAR 6 /*Wide Branch*/
 #define SIP 7 /*Get wide PC*/
 
-#define R4A 0
-#define R1A 1
-#define R2A 2
-#define R3A 3
-#define R4S 4
-#define R3S 5
-#define R2S 6
-#define R1S 7
+#define P4 0
+#define P1 1
+#define P2 2
+#define P3 3
+#define M4 4
+#define M3 5
+#define M2 6
+#define M1 7
 
 
 
@@ -262,7 +262,7 @@ myth_cycle(struct myth_vm *vm)
                 else if (opcode&0x40) myth_exec_gput(vm, opcode);
                 else if (opcode&0x20) myth_exec_trap(vm, opcode);
                 else if (opcode&0x10) myth_exec_alu(vm, opcode);
-                else if (opcode&0x08) myth_exec_adj(vm, opcode);
+                else if (opcode&0x08) myth_exec_fix(vm, opcode);
                 else myth_exec_sys(vm, opcode);
 }
 
@@ -435,17 +435,17 @@ myth_exec_alu(struct myth_vm *vm, uchar opcode)
 
 
 void /*Adjust R by sign-extended offset*/
-myth_exec_adj(struct myth_vm *vm, uchar opcode)
+myth_exec_fix(struct myth_vm *vm, uchar opcode)
 {
         switch(opcode & 7){ /*Zero except low order 3 bits*/
-                case R4A: vm->r += 4; break;
-                case R1A: vm->r += 1; break;
-                case R2A: vm->r += 2; break;
-                case R3A: vm->r += 3; break;
-                case R4S: vm->r -= 4; break;
-                case R3S: vm->r -= 3; break;
-                case R2S: vm->r -= 2; break;
-                case R1S: vm->r -= 1; break;
+                case P4: vm->r += 4; break;
+                case P1: vm->r += 1; break;
+                case P2: vm->r += 2; break;
+                case P3: vm->r += 3; break;
+                case M4: vm->r -= 4; break;
+                case M3: vm->r -= 3; break;
+                case M2: vm->r -= 2; break;
+                case M1: vm->r -= 1; break;
         }
 }
 
