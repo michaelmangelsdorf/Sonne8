@@ -2,7 +2,7 @@
     LOX machine emulator for the Myth micro-controller core.
     It expects (or creates) the file "corestate.myst" in the working directory.
 
-    Runs up to 10k machine cycles.
+    Runs a batch of machine cycles.
     
      0x7F00-0x7F7F will be displayed as text on return.
     0x7F80-0x7FEF receives arguments as concatened, spaced text.
