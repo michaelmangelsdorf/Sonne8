@@ -3,15 +3,17 @@
     It expects (or creates) the file "corestate.myst" in the working directory.
 
     Runs a batch of machine cycles.
+
+    The firmware image communicates with LOX using the
+    following buffers and variables:
     
-     0x7F00-0x7F7F will be displayed as text on return.
-    0x7F80-0x7FEF receives arguments as concatened, spaced text.
-    0x7FF0- (Reserved)    
-    0x7FF9 / 0x7FFA VOCAB top pointer (page/offset)
-    0x7FFB / 0x7FFC  First point (page/offset)
-    0x7FFD / 0x7FFE  Second point (page/offset) 
-    0x7FFF  Return code. If >0, exit and print output,
-            and reset VM to c=0, j=0;
+    0x7F00-0x7F7F will be displayed as text on return.
+    0x7F80-0x7FEF receives command line arguments (space-separated).
+    0x7FF0 - (Reserved)    
+    0x7FF9 / 0x7FFA Pointer to dictionary structure (page/offset)
+    0x7FFB / 0x7FFC  Pointer 1 (page/offset)
+    0x7FFD / 0x7FFE  Pointer 2 (page/offset) 
+    0x7FFF (Reserved)
 
     Edit nettle, then run nettle, lox and regs in succession.
 
@@ -88,7 +90,7 @@ main(int argc, char *argv[])
         }
         if( cyc==999*1000) {
                  print( "Error:\n");
-                 print( "99k cycles elapsed without output request (re-run to continue)\n!\n");
+                 print( "999k cycles elapsed without output request (re-run to continue)\n!\n");
                  exits( "Elapsed");
         }
         else{
