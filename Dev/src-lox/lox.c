@@ -93,7 +93,7 @@ main(int argc, char *argv[])
                  exits( "Elapsed");
         }
         else{
-                print("requested end after %d cycles: ", cyc);
+                print("END after %d cycles: ", cyc);
                 vm.c = 0;
                 vm.pc = 0;
                 vm.l++; /* Fix L */
