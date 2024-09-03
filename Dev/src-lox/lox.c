@@ -11,8 +11,8 @@
     0x7F80-0x7FEF receives command line arguments (null-separated).
     0x7FF0 - (Reserved)    
     0x7FF9 / 0x7FFA Pointer to dictionary structure (page/offset)
-    0x7FFB / 0x7FFC  Pointer 1 (page/offset)
-    0x7FFD / 0x7FFE  Pointer 2 (page/offset) 
+    0x7FFB / 0x7FFC  SRC pointer (page/offset)
+    0x7FFD / 0x7FFE  DST pointer (page/offset) 
     0x7FFF (Reserved)
 
     Edit nettle, then run nettle, lox and regs in succession.
