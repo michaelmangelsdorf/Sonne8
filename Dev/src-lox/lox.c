@@ -8,7 +8,7 @@
     following buffers and variables:
     
     0x7F00-0x7F7F will be displayed as text on return.
-    0x7F80-0x7FEF receives command line arguments (space-separated).
+    0x7F80-0x7FEF receives command line arguments (null-separated).
     0x7FF0 - (Reserved)    
     0x7FF9 / 0x7FFA Pointer to dictionary structure (page/offset)
     0x7FFB / 0x7FFC  Pointer 1 (page/offset)
@@ -73,13 +73,12 @@ main(int argc, char *argv[])
                 if( i==0) continue;
                 chpos = 0;
                 while( (ch=argv[i][chpos++]) != 0){
-                        insertOrExitAt( &offs);
                         vm.pagebyte[0x7F][offs] = ch;
+                        insertOrExitAt( &offs);
                 }
                 insertOrExitAt( &offs);
-                vm.pagebyte[0x7F][offs] = ' ';
+                vm.pagebyte[0x7F][offs] = 0;
         }
-        vm.pagebyte[0x7F][offs] = 0; /* Replace final space */
 
         /* Cycle until 0x7FFF not equal to zero (return code)
            Max. 10.000 cycles
