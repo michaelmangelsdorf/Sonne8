@@ -9,11 +9,8 @@
     
     0x7F00-0x7F7F will be displayed as text on return.
     0x7F80-0x7FEF receives command line arguments (null-separated).
-    0x7FF0 - (Reserved)    
-    0x7FF9 / 0x7FFA Pointer to dictionary structure (page/offset)
-    0x7FFB / 0x7FFC  SRC pointer (page/offset)
-    0x7FFD / 0x7FFE  DST pointer (page/offset) 
-    0x7FFF (Reserved)
+    0x7FF0 - 
+    0x7FFF (See lox.h #defines)
 
     Edit nettle, then run nettle, lox and regs in succession.
 
@@ -63,7 +60,7 @@ main(int argc, char *argv[])
 
         /* Clear LOX arg buffer, output text buffer and return code
         */
-        for( i=0x00; i<0x100; i++)
+        for( i=0x00; i<0xF0; i++)
                 vm.pagebyte[0x7F][i] = 0;
 
         /* Collect CLI parameters, concatenate at 0x7F80
