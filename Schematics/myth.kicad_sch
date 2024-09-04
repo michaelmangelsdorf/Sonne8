@@ -19048,6 +19048,12 @@
 		(uuid "1182735d-ff04-4c6e-a099-da3d0db1fd7a")
 	)
 	(junction
+		(at 624.3905 718.8053)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "1241aa11-c667-4909-89e0-250763366db6")
+	)
+	(junction
 		(at 1129.7463 780.522)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -19118,12 +19124,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "2571bfaa-798c-4a41-9ca3-26afd06bbc99")
-	)
-	(junction
-		(at 617.6828 713.3659)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "25744ab4-de67-412e-be19-9a668b9c92e6")
 	)
 	(junction
 		(at 834.0863 35.6863)
@@ -19316,6 +19316,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "3ee4be58-58a3-47e1-a8b9-986ef825afee")
+	)
+	(junction
+		(at 907.1633 457.6138)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "401533d9-1f5e-4458-8853-823984ea6b03")
 	)
 	(junction
 		(at 243.3016 350.8248)
@@ -19672,6 +19678,12 @@
 		(uuid "776baa64-6bbf-4bda-b0b5-2786f6bbd7e7")
 	)
 	(junction
+		(at 624.3905 718.815)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "785d1bac-71ba-4b68-9f12-f5f2c4a06c39")
+	)
+	(junction
 		(at 1029.1061 680.182)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -19736,12 +19748,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "8a427111-6480-4b0c-b097-d8b6a0ee1819")
-	)
-	(junction
-		(at 617.6828 713.3588)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "90eb9443-245c-4708-b6d6-3b77c4eda597")
 	)
 	(junction
 		(at 1001.7535 654.782)
@@ -20196,11 +20202,15 @@
 		(uuid "062bca4b-bbc5-4165-b4b7-e7cf024cc00e")
 	)
 	(no_connect
+		(at 947.3693 797.2701)
+		(uuid "07559a74-0b51-4d13-b42f-5d0c3d209623")
+	)
+	(no_connect
 		(at 137.3886 387.8072)
 		(uuid "0769a0e8-7659-4fbf-9a73-195b19848109")
 	)
 	(no_connect
-		(at 969.9641 802.9639)
+		(at 970.5923 796.2583)
 		(uuid "0910d522-4995-4619-b80e-d8c24aead319")
 	)
 	(no_connect
@@ -20226,6 +20236,10 @@
 	(no_connect
 		(at 137.3886 385.2672)
 		(uuid "21d8d195-27ca-49ef-b044-f3de579bd258")
+	)
+	(no_connect
+		(at 980.8385 811.1152)
+		(uuid "28bb9cc7-74fc-439f-b4d2-69d138ee93f9")
 	)
 	(no_connect
 		(at 127.8259 94.6793)
@@ -20274,6 +20288,10 @@
 	(no_connect
 		(at 921.16 812.1721)
 		(uuid "54c947b5-5794-4343-a696-02ee18399eb2")
+	)
+	(no_connect
+		(at 940.8361 781.9959)
+		(uuid "5e371526-81df-4317-9228-2753648ec63f")
 	)
 	(no_connect
 		(at 137.3886 390.3472)
@@ -20384,20 +20402,12 @@
 		(uuid "c24ed847-ebfe-4bef-a854-3fbfd7a2178c")
 	)
 	(no_connect
-		(at 945.227 776.3962)
-		(uuid "ca29f59f-94d3-4fb2-93fc-12bc331b754e")
-	)
-	(no_connect
 		(at 623.5864 394.2928)
 		(uuid "cdce2be4-88ef-44ed-b591-e6404a14a2cf")
 	)
 	(no_connect
 		(at 117.1194 695.706)
 		(uuid "d035bb7a-e806-42f2-ba95-a390d279aef1")
-	)
-	(no_connect
-		(at 998.5833 807.3529)
-		(uuid "d077d900-7c97-4c0c-9e5c-322e4790e6ba")
 	)
 	(no_connect
 		(at 127.7648 111.2292)
@@ -20471,6 +20481,16 @@
 	)
 	(wire
 		(pts
+			(xy 629.4705 718.815) (xy 629.4705 718.8124)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0027f1f0-01bb-4389-9ed3-0630dec7fce5")
+	)
+	(wire
+		(pts
 			(xy 263.6752 65.0096) (xy 299.1336 65.0096)
 		)
 		(stroke
@@ -20511,7 +20531,7 @@
 	)
 	(wire
 		(pts
-			(xy 658.7092 658.4775) (xy 692.9637 658.4775)
+			(xy 665.4169 663.924) (xy 699.6714 663.924)
 		)
 		(stroke
 			(width 0)
@@ -20641,7 +20661,7 @@
 	)
 	(wire
 		(pts
-			(xy 654.9872 705.7459) (xy 654.9872 671.1775)
+			(xy 661.6949 711.1924) (xy 661.6949 676.624)
 		)
 		(stroke
 			(width 0)
@@ -20671,13 +20691,23 @@
 	)
 	(wire
 		(pts
-			(xy 648.7489 633.83) (xy 661.1285 633.83)
+			(xy 655.4566 639.2765) (xy 667.8362 639.2765)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "04632765-3fb8-42d0-bb8f-8100527fcef6")
+	)
+	(wire
+		(pts
+			(xy 624.3905 718.8053) (xy 620.8078 718.8053)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "049aded1-a981-4c59-8206-e19d40b9278c")
 	)
 	(wire
 		(pts
@@ -20758,16 +20788,6 @@
 			(type default)
 		)
 		(uuid "06dbda36-e9bc-4c31-87d9-ee751ec3c8e3")
-	)
-	(wire
-		(pts
-			(xy 614.1001 713.3588) (xy 617.6828 713.3588)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "06edc1d6-da25-4c4d-a3bd-98c677a3a79f")
 	)
 	(wire
 		(pts
@@ -21071,16 +21091,6 @@
 	)
 	(wire
 		(pts
-			(xy 617.6828 713.3659) (xy 622.7628 713.3659)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0d2b927b-64d1-4002-bd98-5069afd745f0")
-	)
-	(wire
-		(pts
 			(xy 1031.7379 296.7074) (xy 1031.7379 296.7086)
 		)
 		(stroke
@@ -21381,7 +21391,7 @@
 	)
 	(wire
 		(pts
-			(xy 667.7777 716.4689) (xy 667.7777 676.2575)
+			(xy 674.4854 721.9154) (xy 674.4854 681.704)
 		)
 		(stroke
 			(width 0)
@@ -21561,7 +21571,7 @@
 	)
 	(wire
 		(pts
-			(xy 656.2899 649.07) (xy 656.2899 661.0175)
+			(xy 662.9976 654.5165) (xy 662.9976 666.464)
 		)
 		(stroke
 			(width 0)
@@ -21598,6 +21608,16 @@
 			(type default)
 		)
 		(uuid "1597436d-648b-4fed-b503-27c4ab5586a6")
+	)
+	(wire
+		(pts
+			(xy 683.067 695.3483) (xy 684.1817 695.3483)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "15b2b027-47c6-4c34-a204-e9b768e8713a")
 	)
 	(wire
 		(pts
@@ -21641,7 +21661,7 @@
 	)
 	(wire
 		(pts
-			(xy 654.9872 671.1775) (xy 692.9637 671.1775)
+			(xy 661.6949 676.624) (xy 699.6714 676.624)
 		)
 		(stroke
 			(width 0)
@@ -21811,7 +21831,7 @@
 	)
 	(wire
 		(pts
-			(xy 661.1285 633.83) (xy 661.1285 655.9375)
+			(xy 667.8362 639.2765) (xy 667.8362 661.384)
 		)
 		(stroke
 			(width 0)
@@ -21891,7 +21911,7 @@
 	)
 	(wire
 		(pts
-			(xy 652.3818 698.1259) (xy 652.3818 668.6375)
+			(xy 659.0895 703.5724) (xy 659.0895 674.084)
 		)
 		(stroke
 			(width 0)
@@ -22061,7 +22081,7 @@
 	)
 	(wire
 		(pts
-			(xy 692.9637 653.3975) (xy 663.3617 653.3975)
+			(xy 699.6714 658.844) (xy 670.0694 658.844)
 		)
 		(stroke
 			(width 0)
@@ -22081,7 +22101,7 @@
 	)
 	(wire
 		(pts
-			(xy 648.1628 663.5575) (xy 692.9637 663.5575)
+			(xy 654.8705 669.004) (xy 699.6714 669.004)
 		)
 		(stroke
 			(width 0)
@@ -22471,6 +22491,16 @@
 	)
 	(wire
 		(pts
+			(xy 699.4217 684.244) (xy 699.6714 684.244)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2b221b07-52ba-4940-a4f1-0814452d20a7")
+	)
+	(wire
+		(pts
 			(xy 251.5468 343.2048) (xy 318.5668 343.2048)
 		)
 		(stroke
@@ -22691,7 +22721,7 @@
 	)
 	(wire
 		(pts
-			(xy 648.7489 649.07) (xy 656.2899 649.07)
+			(xy 655.4566 654.5165) (xy 662.9976 654.5165)
 		)
 		(stroke
 			(width 0)
@@ -22841,7 +22871,7 @@
 	)
 	(wire
 		(pts
-			(xy 648.7489 641.45) (xy 658.7092 641.45)
+			(xy 655.4566 646.8965) (xy 665.4169 646.8965)
 		)
 		(stroke
 			(width 0)
@@ -23001,16 +23031,6 @@
 	)
 	(wire
 		(pts
-			(xy 617.6828 713.3588) (xy 617.6828 713.3659)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3676f9b8-1a10-419a-82cd-f5401f38ec10")
-	)
-	(wire
-		(pts
 			(xy 872.7977 647.162) (xy 934.3927 647.162)
 		)
 		(stroke
@@ -23128,16 +23148,6 @@
 			(type default)
 		)
 		(uuid "3a1a39fc-8030-4c93-9d9c-d79ba6824099")
-	)
-	(wire
-		(pts
-			(xy 983.3433 804.8129) (xy 983.3433 809.8929)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3a2c795b-5adb-429b-846c-deb056451cc2")
 	)
 	(wire
 		(pts
@@ -23411,13 +23421,13 @@
 	)
 	(wire
 		(pts
-			(xy 692.9637 678.7975) (xy 692.9637 729.0771)
+			(xy 624.3905 718.815) (xy 624.3905 734.1524)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "417783d2-adc7-457e-b5e0-5edf4e345563")
+		(uuid "414dc17b-8ca5-4dbb-befc-454246198292")
 	)
 	(wire
 		(pts
@@ -23431,7 +23441,7 @@
 	)
 	(wire
 		(pts
-			(xy 652.3818 668.6375) (xy 692.9637 668.6375)
+			(xy 659.0895 674.084) (xy 699.6714 674.084)
 		)
 		(stroke
 			(width 0)
@@ -23488,6 +23498,16 @@
 			(type default)
 		)
 		(uuid "42ab43d6-836d-4383-bcf3-b7695e1db137")
+	)
+	(wire
+		(pts
+			(xy 659.2454 724.4554) (xy 659.2454 734.1524)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "42c67582-2ca0-4e16-82e7-57aad1c59d57")
 	)
 	(wire
 		(pts
@@ -23701,7 +23721,7 @@
 	)
 	(wire
 		(pts
-			(xy 656.2899 661.0175) (xy 692.9637 661.0175)
+			(xy 662.9976 666.464) (xy 699.6714 666.464)
 		)
 		(stroke
 			(width 0)
@@ -23908,6 +23928,16 @@
 			(type default)
 		)
 		(uuid "4ad21246-751d-43b0-ac42-5e61fc0adc1a")
+	)
+	(wire
+		(pts
+			(xy 624.3905 662.1365) (xy 624.3905 718.8053)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4b99317c-4b68-4243-80bf-add0eb584daf")
 	)
 	(wire
 		(pts
@@ -24198,6 +24228,16 @@
 			(type default)
 		)
 		(uuid "5357ead0-bcc3-4a91-83bd-43f4bd6ac9b9")
+	)
+	(wire
+		(pts
+			(xy 699.4217 692.8083) (xy 699.4217 684.244)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "53788a24-6b84-4367-9719-f1d677d210da")
 	)
 	(wire
 		(pts
@@ -24751,7 +24791,7 @@
 	)
 	(wire
 		(pts
-			(xy 648.1628 682.8859) (xy 648.1628 663.5575)
+			(xy 654.8705 688.3324) (xy 654.8705 669.004)
 		)
 		(stroke
 			(width 0)
@@ -25128,6 +25168,16 @@
 			(type default)
 		)
 		(uuid "6afb76d0-b1a3-4946-9cdf-8021df3e93f4")
+	)
+	(wire
+		(pts
+			(xy 901.9905 417.0084) (xy 901.9905 457.6138)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6b9c93fc-2992-41ef-9fdc-5f273d41b48a")
 	)
 	(wire
 		(pts
@@ -25641,16 +25691,6 @@
 	)
 	(wire
 		(pts
-			(xy 617.6828 729.4717) (xy 652.5377 729.4717)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "76bbf348-6fd4-4ed6-b4a7-393976df1864")
-	)
-	(wire
-		(pts
 			(xy 447.6639 560.8479) (xy 450.2039 560.8479)
 		)
 		(stroke
@@ -25691,7 +25731,7 @@
 	)
 	(wire
 		(pts
-			(xy 649.9625 666.0975) (xy 692.9637 666.0975)
+			(xy 656.6702 671.544) (xy 699.6714 671.544)
 		)
 		(stroke
 			(width 0)
@@ -26191,6 +26231,16 @@
 	)
 	(wire
 		(pts
+			(xy 901.9905 457.6138) (xy 907.1633 457.6138)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "823dfa35-93e8-4e29-8e4b-1779e07dcc25")
+	)
+	(wire
+		(pts
 			(xy 905.2063 48.3863) (xy 920.4463 48.3863)
 		)
 		(stroke
@@ -26301,7 +26351,7 @@
 	)
 	(wire
 		(pts
-			(xy 661.1285 655.9375) (xy 692.9637 655.9375)
+			(xy 667.8362 661.384) (xy 699.6714 661.384)
 		)
 		(stroke
 			(width 0)
@@ -27061,7 +27111,7 @@
 	)
 	(wire
 		(pts
-			(xy 954.7241 800.4239) (xy 954.7241 805.5039)
+			(xy 955.3523 793.7183) (xy 955.3523 798.7983)
 		)
 		(stroke
 			(width 0)
@@ -27301,6 +27351,16 @@
 	)
 	(wire
 		(pts
+			(xy 624.3905 718.815) (xy 629.4705 718.815)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9de7b12a-5a37-4684-9500-e6568acc903f")
+	)
+	(wire
+		(pts
 			(xy 93.7768 267.0302) (xy 93.7768 315.2648)
 		)
 		(stroke
@@ -27341,7 +27401,7 @@
 	)
 	(wire
 		(pts
-			(xy 649.9625 690.5059) (xy 649.9625 666.0975)
+			(xy 656.6702 695.9524) (xy 656.6702 671.544)
 		)
 		(stroke
 			(width 0)
@@ -27461,7 +27521,7 @@
 	)
 	(wire
 		(pts
-			(xy 658.7092 641.45) (xy 658.7092 658.4775)
+			(xy 665.4169 646.8965) (xy 665.4169 663.924)
 		)
 		(stroke
 			(width 0)
@@ -27771,6 +27831,16 @@
 	)
 	(wire
 		(pts
+			(xy 624.3905 718.8053) (xy 624.3905 718.815)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a787a4e4-e284-41ae-abe6-0a26c53bde30")
+	)
+	(wire
+		(pts
 			(xy 981.165 228.6898) (xy 1044.9098 228.6898)
 		)
 		(stroke
@@ -27881,7 +27951,7 @@
 	)
 	(wire
 		(pts
-			(xy 648.7489 626.21) (xy 663.3617 626.21)
+			(xy 655.4566 631.6565) (xy 670.0694 631.6565)
 		)
 		(stroke
 			(width 0)
@@ -28381,16 +28451,6 @@
 	)
 	(wire
 		(pts
-			(xy 652.5377 719.0089) (xy 652.5377 729.4717)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bb432f35-613a-450a-aa18-76fc828b9560")
-	)
-	(wire
-		(pts
 			(xy 265.5085 381.8198) (xy 246.2332 381.8198)
 		)
 		(stroke
@@ -28481,7 +28541,7 @@
 	)
 	(wire
 		(pts
-			(xy 648.1628 705.7459) (xy 654.9872 705.7459)
+			(xy 654.8705 711.1924) (xy 661.6949 711.1924)
 		)
 		(stroke
 			(width 0)
@@ -28748,6 +28808,16 @@
 			(type default)
 		)
 		(uuid "c407e427-069d-48f3-9d3f-5fef851d1f54")
+	)
+	(wire
+		(pts
+			(xy 683.067 705.7533) (xy 683.067 695.3483)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c47bf7c6-fad1-4b05-807c-eb7be12ffb84")
 	)
 	(wire
 		(pts
@@ -29091,7 +29161,7 @@
 	)
 	(wire
 		(pts
-			(xy 648.1628 698.1259) (xy 652.3818 698.1259)
+			(xy 654.8705 703.5724) (xy 659.0895 703.5724)
 		)
 		(stroke
 			(width 0)
@@ -29341,6 +29411,16 @@
 	)
 	(wire
 		(pts
+			(xy 965.5985 808.5752) (xy 965.5985 813.6552)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d311b5c3-10bf-4312-a092-0e2a3bcc8161")
+	)
+	(wire
+		(pts
 			(xy 1112.236 712.567) (xy 1103.727 712.567)
 		)
 		(stroke
@@ -29461,7 +29541,7 @@
 	)
 	(wire
 		(pts
-			(xy 663.3617 626.21) (xy 663.3617 653.3975)
+			(xy 670.0694 631.6565) (xy 670.0694 658.844)
 		)
 		(stroke
 			(width 0)
@@ -29841,7 +29921,7 @@
 	)
 	(wire
 		(pts
-			(xy 907.1633 457.4525) (xy 907.1633 459.9925)
+			(xy 907.1633 457.4525) (xy 907.1633 457.6138)
 		)
 		(stroke
 			(width 0)
@@ -30001,16 +30081,6 @@
 	)
 	(wire
 		(pts
-			(xy 617.6828 656.69) (xy 617.6828 713.3588)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e1481c97-81a8-4448-a3b6-32412526382b")
-	)
-	(wire
-		(pts
 			(xy 165.4048 355.9048) (xy 165.4048 496.4938)
 		)
 		(stroke
@@ -30151,7 +30221,7 @@
 	)
 	(wire
 		(pts
-			(xy 623.3489 656.69) (xy 617.6828 656.69)
+			(xy 630.0566 662.1365) (xy 624.3905 662.1365)
 		)
 		(stroke
 			(width 0)
@@ -30281,7 +30351,7 @@
 	)
 	(wire
 		(pts
-			(xy 667.7777 676.2575) (xy 692.9637 676.2575)
+			(xy 674.4854 681.704) (xy 699.6714 681.704)
 		)
 		(stroke
 			(width 0)
@@ -30328,16 +30398,6 @@
 			(type default)
 		)
 		(uuid "e8a7eef6-149e-4a80-9869-67336b262eab")
-	)
-	(wire
-		(pts
-			(xy 617.6828 729.4717) (xy 617.6828 713.3659)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e8b5a318-13ac-4f50-af45-3c3d249e4e42")
 	)
 	(wire
 		(pts
@@ -30441,6 +30501,16 @@
 	)
 	(wire
 		(pts
+			(xy 907.1633 457.6138) (xy 907.1633 459.9925)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ec22b3a2-a083-4f03-8aa9-28ffde3f29fa")
+	)
+	(wire
+		(pts
 			(xy 664.6937 35.6863) (xy 660.7313 35.6863)
 		)
 		(stroke
@@ -30521,7 +30591,7 @@
 	)
 	(wire
 		(pts
-			(xy 648.1628 690.5059) (xy 649.9625 690.5059)
+			(xy 654.8705 695.9524) (xy 656.6702 695.9524)
 		)
 		(stroke
 			(width 0)
@@ -30921,16 +30991,6 @@
 	)
 	(wire
 		(pts
-			(xy 692.4739 729.0771) (xy 692.9637 729.0771)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f9c696e2-a14a-4298-9255-01ad07144e9e")
-	)
-	(wire
-		(pts
 			(xy 75.057 355.9048) (xy 88.8238 355.9048)
 		)
 		(stroke
@@ -31121,6 +31181,16 @@
 	)
 	(wire
 		(pts
+			(xy 659.2454 734.1524) (xy 624.3905 734.1524)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fcbb69aa-9576-4a25-a149-ca71bcd7ccdf")
+	)
+	(wire
+		(pts
 			(xy 949.3177 356.3252) (xy 956.9377 356.3252)
 		)
 		(stroke
@@ -31292,7 +31362,7 @@
 	)
 	(text "(GLOBAL)\n"
 		(exclude_from_sim no)
-		(at 693.5834 628.6031 0)
+		(at 700.2911 634.0496 0)
 		(effects
 			(font
 				(size 5 5)
@@ -31457,7 +31527,7 @@
 	)
 	(text "G"
 		(exclude_from_sim no)
-		(at 680.1263 638.8255 0)
+		(at 686.834 644.272 0)
 		(effects
 			(font
 				(size 15 15)
@@ -31718,7 +31788,7 @@
 		)
 		(uuid "5f256218-1bf5-45d5-910d-07fa48cb8b58")
 	)
-	(text "                Instruction byte:\nall0: OPC_SYS       00000 xxx    See table @ SYS decoder\nelse: OPC_FIX       00001 xxx    b2:extended sign bit b1-0 LSB\n      OPC_ALU       0001x xxx    See table @ ALU\n      OPC_TRAP      001xx xxx    b4:MSB b3-0:LSB (remaining bits set 1)\n      OPC_GETPUT    01xxx xxx    b0-2 OFFS b3:GP B4-5:REG(RODG)\n      OPC_PAIR      1xxxx xxx    DEST SRC"
+	(text "                Instruction byte:\nall0: OPC_SYS       00000 xxx    See table @ SYS decoder\nelse: OPC_FIX       00001 xxx    b2:extended sign bit b1-0 LSB\n      OPC_ALU       0001x xxx    See table @ ALU\n      OPC_TRAP      001xx xxx    b4:MSB b3-0:LSB (remaining bits set 1)\n      OPC_ROID      01xxx xxx    b0-2 OFFS b3:GET/PUT B4-5:REG(ROID)\n      OPC_PAIR      1xxxx xxx    DEST SRC"
 		(exclude_from_sim no)
 		(at 176.1929 574.7686 0)
 		(effects
@@ -31763,7 +31833,7 @@
 		)
 		(uuid "65cc0a0e-0d7d-46d9-be28-c9c09aaa9c32")
 	)
-	(text "R/O/I/G"
+	(text "G/I/R/O"
 		(exclude_from_sim no)
 		(at 84.0854 511.9029 0)
 		(effects
@@ -31842,7 +31912,7 @@
 	)
 	(text "Inverters"
 		(exclude_from_sim no)
-		(at 717.309 233.6518 0)
+		(at 706.8085 235.3878 0)
 		(effects
 			(font
 				(size 5 5)
@@ -31873,7 +31943,7 @@
 		)
 		(uuid "7ec2e5f2-63dc-4fef-b01c-562caf56e5ee")
 	)
-	(text "                   NL => NOP (reserved)\n                   NM => NOP (reserved)\n                   LL => NOP (reserved)\n                   LM => NOP (reserved)\n                   ML => NOP (reserved)\n                   MM => NOP (reserved)\n                   GG => NOP (reserved)\n                   RR => NOP (reserved)\n                   II => NOP (reserved)"
+	(text "                   NL => NOP (reserved)\n                   NM => NOP (reserved)\n                   LL => NOP (reserved)\n                   LM => NOP (reserved)\n                   ML => NOP (reserved)\n                   MM => NOP (reserved)\n                   GG => NOP (reserved)\n                   RR => NOP (reserved)\n                   DD => NOP (reserved)"
 		(exclude_from_sim no)
 		(at 194.3077 303.7819 0)
 		(effects
@@ -32589,7 +32659,7 @@
 		(uuid "019d64ab-d1b1-41ce-8704-f518db17fadc")
 	)
 	(label "~{Mx}"
-		(at 689.0476 276.6177 180)
+		(at 690.8941 287.0047 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -32765,7 +32835,7 @@
 		(uuid "0428f318-1c31-4292-b4bc-7a38b47ba443")
 	)
 	(label "C7"
-		(at 622.7628 708.2859 180)
+		(at 629.4705 713.7324 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -32853,7 +32923,7 @@
 		(uuid "0541e442-722c-4cfa-9a32-46f139b819c7")
 	)
 	(label "GETPUT"
-		(at 729.325 286.2138 180)
+		(at 729.0596 282.9383 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -33007,7 +33077,7 @@
 		(uuid "09ab0b5c-3dee-42c8-b9e5-de0673874ccd")
 	)
 	(label "DB5"
-		(at 622.7628 690.5059 180)
+		(at 629.4705 695.9524 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -33062,7 +33132,7 @@
 		(uuid "0ae54287-bf80-4846-b7bf-304706221152")
 	)
 	(label "~{Nx}"
-		(at 688.8952 264.6797 180)
+		(at 690.7417 275.0667 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -33183,7 +33253,7 @@
 		(uuid "0f72ff82-86dd-4254-9ea7-39a1ce565369")
 	)
 	(label "~{GETG}"
-		(at 689.3058 306.3885 180)
+		(at 730.3334 217.3548 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -33215,17 +33285,6 @@
 		)
 		(uuid "101d0c9f-ab92-4a71-84a8-82339f52e005")
 	)
-	(label "~{PUTG}"
-		(at 727.5646 219.0969 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "10850e18-4d07-4250-af5e-c0f6ce86adb4")
-	)
 	(label "IO2"
 		(at 388.3386 773.0496 0)
 		(fields_autoplaced yes)
@@ -33238,7 +33297,7 @@
 		(uuid "113ffcdf-4c54-4e37-81dc-f91efa934ba7")
 	)
 	(label "GND"
-		(at 636.0489 666.85 180)
+		(at 642.7566 672.2965 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -33315,7 +33374,7 @@
 		(uuid "14277002-8542-43c8-bd6f-db39faf1371e")
 	)
 	(label "Gx"
-		(at 677.2339 726.5371 180)
+		(at 684.1817 690.2683 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -33788,6 +33847,17 @@
 		(uuid "1d10c0cf-2139-461d-9e2f-f1e2fce33438")
 	)
 	(label "GND"
+		(at 925.5961 781.9959 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "1d26c1e6-116d-454f-9c2b-fa03b6c412d6")
+	)
+	(label "GND"
 		(at 998.183 112.4848 180)
 		(fields_autoplaced yes)
 		(effects
@@ -33876,7 +33946,7 @@
 		(uuid "1e4121a8-838d-461e-bd87-c7b273513df5")
 	)
 	(label "GND"
-		(at 635.4628 723.5259 180)
+		(at 642.1705 728.9724 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -33885,6 +33955,17 @@
 			(justify right bottom)
 		)
 		(uuid "1e58d70b-8591-4f60-b51e-d0776d43b4e2")
+	)
+	(label "GND"
+		(at 965.5985 808.5752 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "1e61c811-1506-4be5-84e4-85c4a24a37bb")
 	)
 	(label "DB0"
 		(at 117.1194 672.846 0)
@@ -33963,6 +34044,17 @@
 		)
 		(uuid "2056f16f-2d4a-4f35-8a56-49ab69eeef16")
 	)
+	(label "PUTG"
+		(at 745.663 188.6189 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "20668941-18b0-4cbf-80a1-e5dd045367ed")
+	)
 	(label "DB0"
 		(at 855.0958 287.0316 180)
 		(fields_autoplaced yes)
@@ -33986,7 +34078,7 @@
 		(uuid "2102c637-9f11-48f1-aae6-b4139dc22be2")
 	)
 	(label "~{GETG}"
-		(at 115.4329 518.1203 0)
+		(at 115.4329 510.5003 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -34095,7 +34187,7 @@
 		)
 		(uuid "23aed7fa-1904-4377-9138-4331dd9ead14")
 	)
-	(label "~{opc_GETPUT}"
+	(label "~{opc_GIRO}"
 		(at 254.1778 504.1138 0)
 		(fields_autoplaced yes)
 		(effects
@@ -34250,7 +34342,7 @@
 		(uuid "2885cd51-0a2d-4778-b947-36ade7ccd0f4")
 	)
 	(label "C4"
-		(at 622.7628 685.4259 180)
+		(at 629.4705 690.8724 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -34305,7 +34397,7 @@
 		(uuid "29f65a6a-bccf-42be-be5f-11df28c3b7ac")
 	)
 	(label "~{MDacc}"
-		(at 931.7174 492.8768 0)
+		(at 901.9905 417.0084 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -34437,7 +34529,7 @@
 		(uuid "2d78496f-308e-49c0-ba5d-e9d285a31281")
 	)
 	(label "RET"
-		(at 743.2442 302.7746 0)
+		(at 742.8446 339.2418 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -34459,7 +34551,7 @@
 		(uuid "2de0ec87-a36e-4819-aeb0-af8cb80e9ba9")
 	)
 	(label "~{xP}"
-		(at 728.9957 252.8331 180)
+		(at 727.0227 307.5256 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -34679,7 +34771,7 @@
 		(uuid "3198b8ca-7d11-4e0c-89a4-c173f9fcf724")
 	)
 	(label "xG"
-		(at 652.5377 713.9289 180)
+		(at 659.2454 719.3754 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -34810,17 +34902,6 @@
 		)
 		(uuid "338f731f-83bf-4767-942c-41035f045ab9")
 	)
-	(label "GND"
-		(at 929.987 776.3962 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "33e26e55-a58f-4d21-803b-198f3b9a4616")
-	)
 	(label "~{SCL}"
 		(at 686.3623 204.9854 180)
 		(fields_autoplaced yes)
@@ -34877,7 +34958,7 @@
 		(uuid "3583285c-dbba-4098-a0cc-8372b15cb847")
 	)
 	(label "DB1"
-		(at 623.3489 633.83 180)
+		(at 630.0566 639.2765 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -35064,7 +35145,7 @@
 		(uuid "37f67055-8ed6-46fd-8670-6b9916c44ce3")
 	)
 	(label "Nx"
-		(at 704.1352 264.6797 0)
+		(at 705.9817 275.0667 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -35163,7 +35244,7 @@
 		(uuid "3a9ef0f1-8020-40b7-81b8-8cb8cffe5181")
 	)
 	(label "~{FAR}"
-		(at 727.3228 336.5542 180)
+		(at 690.7914 338.2174 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -35218,7 +35299,7 @@
 		(uuid "3b2b2092-96e0-4ebd-a542-c9fb11c025cc")
 	)
 	(label "Lx"
-		(at 742.8553 203.1357 0)
+		(at 705.6578 246.6568 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -35295,7 +35376,7 @@
 		(uuid "3bfc7f94-ec20-4d54-afb0-ec626bfb4a41")
 	)
 	(label "GETG"
-		(at 704.5458 306.3885 0)
+		(at 745.5734 217.3548 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -35405,7 +35486,7 @@
 		(uuid "3f1aee58-03d5-45e6-b7c7-d17272582385")
 	)
 	(label "xM_pre"
-		(at 916.4774 495.4168 180)
+		(at 886.7505 419.5484 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -35702,7 +35783,7 @@
 		(uuid "4626802e-2271-4654-bf11-ef7953c7ca85")
 	)
 	(label "~{GETPUT}"
-		(at 744.565 286.2138 0)
+		(at 744.2996 282.9383 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -35713,7 +35794,7 @@
 		(uuid "46794613-6536-4d5c-bf7d-c370826651d2")
 	)
 	(label "~{GETO}"
-		(at 727.97 186.4677 180)
+		(at 730.2037 203.3832 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -35877,17 +35958,6 @@
 		)
 		(uuid "49bd4bca-0aa3-4aec-93e9-41d0ae545f64")
 	)
-	(label "GND"
-		(at 983.3433 804.8129 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "49bfab83-6003-42ca-9940-3ae2af4f7e9b")
-	)
 	(label "DB5"
 		(at 117.1194 685.546 0)
 		(fields_autoplaced yes)
@@ -35933,7 +36003,7 @@
 		(uuid "4a514b38-f0b4-4787-bbda-b134b96c171c")
 	)
 	(label "DB2"
-		(at 623.3489 641.45 180)
+		(at 630.0566 646.8965 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -35943,7 +36013,7 @@
 		)
 		(uuid "4a8eb66b-bb19-4bd5-8dad-a2e89e6fde30")
 	)
-	(label "~{opc_GETPUT}"
+	(label "~{opc_GIRO}"
 		(at 67.1729 520.6603 180)
 		(fields_autoplaced yes)
 		(effects
@@ -36021,7 +36091,7 @@
 		(uuid "4c8a1498-5fcd-4904-ad2c-d91d9c75e627")
 	)
 	(label "~{JUMP}"
-		(at 729.4026 270.218 180)
+		(at 727.4296 324.9105 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -36076,13 +36146,13 @@
 		(uuid "4ce120b8-c100-4eef-a9d4-380bf0c9ffc8")
 	)
 	(label "PUTG"
-		(at 661.9939 729.0771 180)
+		(at 698.307 708.2933 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "4d2c129c-69f3-4940-847c-3df7dab1f57c")
 	)
@@ -36131,7 +36201,7 @@
 		(uuid "4de018aa-33f9-4679-9406-fafd70ff0142")
 	)
 	(label "xO"
-		(at 704.7016 291.4422 0)
+		(at 706.163 305.0104 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -36428,7 +36498,7 @@
 		(uuid "5386dd27-c8ad-465c-9d06-1dbe7b9ebdce")
 	)
 	(label "~{GETO}"
-		(at 115.4329 513.0403 0)
+		(at 115.4329 518.1203 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -36659,7 +36729,7 @@
 		(uuid "58287006-8f88-4fc1-9337-8675c0927d62")
 	)
 	(label "DB6"
-		(at 718.3637 668.6375 0)
+		(at 725.0714 674.084 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -36692,7 +36762,7 @@
 		(uuid "594594ee-9de8-45bc-b621-a9251877b0c2")
 	)
 	(label "C6"
-		(at 622.7628 700.6659 180)
+		(at 629.4705 706.1124 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -36714,7 +36784,7 @@
 		(uuid "59e2f9f9-cb5c-4ac5-83f6-80f3314b136d")
 	)
 	(label "~{PUTO}"
-		(at 115.4329 523.2003 0)
+		(at 115.4329 528.2803 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -36791,7 +36861,7 @@
 		(uuid "5bf88657-fc48-4169-b301-adcc8dd1e313")
 	)
 	(label "+5V"
-		(at 635.4628 675.2659 0)
+		(at 642.1705 680.7124 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -36857,7 +36927,7 @@
 		(uuid "5d6e638f-380b-461d-9362-1b7f05cddb87")
 	)
 	(label "Mx_pre"
-		(at 916.4774 490.3368 180)
+		(at 886.7505 414.4684 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -36989,7 +37059,7 @@
 		(uuid "60493c98-6d40-411b-8b14-b687eb6df6b8")
 	)
 	(label "~{GETI}"
-		(at 690.2311 334.0933 180)
+		(at 729.2165 267.8832 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -37450,6 +37520,17 @@
 		)
 		(uuid "6cf9a8e5-b98f-46a0-b743-5c1f0e14b45b")
 	)
+	(label "GND"
+		(at 932.1293 797.2701 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "6d436970-8842-410b-b282-97d0332b63e1")
+	)
 	(label "~{cpi}"
 		(at 557.3853 160.7539 180)
 		(fields_autoplaced yes)
@@ -37495,7 +37576,7 @@
 		(uuid "6dc8d321-bbfc-4dba-a26e-84a79cac7b72")
 	)
 	(label "DB6"
-		(at 622.7628 698.1259 180)
+		(at 629.4705 703.5724 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -37517,7 +37598,7 @@
 		(uuid "6e0fdc1e-6517-4fee-a402-975421b986b6")
 	)
 	(label "DB4"
-		(at 718.3637 663.5575 0)
+		(at 725.0714 669.004 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -37537,17 +37618,6 @@
 			(justify left bottom)
 		)
 		(uuid "6f4c7092-cff0-4c56-9a01-2ac255fdef36")
-	)
-	(label "PUTG"
-		(at 742.8046 219.0969 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "6f75090e-577b-4e7f-8d5b-253e93ff1edd")
 	)
 	(label "I5"
 		(at 623.8228 210.5273 180)
@@ -37704,7 +37774,7 @@
 		(uuid "726ced6b-683d-4a62-aa76-a84f27cee708")
 	)
 	(label "~{GETI}"
-		(at 115.4329 515.5803 0)
+		(at 115.4329 513.0403 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -38012,7 +38082,7 @@
 		(uuid "7b92e397-0588-4039-b1fa-b0b92203b95f")
 	)
 	(label "~{opc_FIX}"
-		(at 688.9073 250.0939 180)
+		(at 690.7538 260.4809 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -38056,7 +38126,7 @@
 		(uuid "7d90f27d-eed3-466d-9f2a-9418600173c5")
 	)
 	(label "GETI"
-		(at 705.4711 334.0933 0)
+		(at 744.4565 267.8832 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -38155,7 +38225,7 @@
 		(uuid "80882adf-7d94-48ba-b796-4eec79d01375")
 	)
 	(label "SUBR"
-		(at 598.8601 715.8988 180)
+		(at 605.5678 721.3453 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -38309,7 +38379,7 @@
 		(uuid "858cd9cf-6374-4960-be6f-aad8a13029ea")
 	)
 	(label "DB4"
-		(at 622.7628 682.8859 180)
+		(at 629.4705 688.3324 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -38319,25 +38389,14 @@
 		)
 		(uuid "85903ec9-bee9-46fd-8472-f79a4f4e1177")
 	)
-	(label "~{xD}"
-		(at 703.3199 236.3388 0)
+	(label "RETFAR"
+		(at 698.307 703.2133 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
-		)
-		(uuid "85b01645-47f8-4171-9006-ce22eab9dcd2")
-	)
-	(label "RETFAR"
-		(at 661.9939 734.1571 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
 		)
 		(uuid "85b2c537-279c-46b8-a000-63737420c034")
 	)
@@ -38573,7 +38632,7 @@
 		(uuid "88d9be16-62a3-41e4-838e-22041b8741cf")
 	)
 	(label "C5"
-		(at 622.7628 693.0459 180)
+		(at 629.4705 698.4924 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -38606,7 +38665,7 @@
 		(uuid "89746d9b-b4fa-4f02-ac72-102c81f8a39e")
 	)
 	(label "~{TRAP}"
-		(at 727.0368 319.3927 180)
+		(at 690.5054 321.0559 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -38749,7 +38808,7 @@
 		(uuid "8c5725b5-8af7-489d-b447-ef1ce9a9b323")
 	)
 	(label "~{PUTR}"
-		(at 115.4329 520.6603 0)
+		(at 115.4329 525.7403 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -38782,7 +38841,7 @@
 		(uuid "8d066ac7-50b9-4388-b99d-f4427f64e4ee")
 	)
 	(label "DB2"
-		(at 718.3637 658.4775 0)
+		(at 725.0714 663.924 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -38814,8 +38873,8 @@
 		)
 		(uuid "8e0e382f-7b33-4f89-92d2-e2b40bfad1e3")
 	)
-	(label "~{xD}"
-		(at 802.694 501.2254 180)
+	(label "xD"
+		(at 802.694 447.9024 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -38837,7 +38896,7 @@
 		(uuid "8ed5db1f-d6da-446a-8496-37d2fb56cd78")
 	)
 	(label "GND"
-		(at 623.3489 659.23 180)
+		(at 630.0566 664.6765 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -38936,7 +38995,7 @@
 		(uuid "9059207a-d040-403a-bffb-9aad58cca287")
 	)
 	(label "Mx"
-		(at 704.2876 276.6177 0)
+		(at 706.1341 287.0047 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -38958,7 +39017,7 @@
 		(uuid "91a6b22d-ff09-4b02-9f0e-773b0d9b0014")
 	)
 	(label "+5V"
-		(at 636.0489 618.59 0)
+		(at 642.7566 624.0365 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -39090,7 +39149,7 @@
 		(uuid "937928d4-4dfb-4f2f-91d0-697ec54ac283")
 	)
 	(label "FAR"
-		(at 742.5628 336.5542 0)
+		(at 706.0314 338.2174 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -39123,7 +39182,7 @@
 		(uuid "947303fc-dec5-494a-9c11-fe66746d7f99")
 	)
 	(label "xP"
-		(at 744.2357 252.8331 0)
+		(at 742.2627 307.5256 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -39398,7 +39457,7 @@
 		(uuid "984acfd6-f733-4d0c-919d-5039df367806")
 	)
 	(label "TRAP"
-		(at 742.2768 319.3927 0)
+		(at 705.7454 321.0559 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -39508,7 +39567,7 @@
 		(uuid "9b315454-a4a0-4952-bdbe-d4a8e96c16f9")
 	)
 	(label "DB5"
-		(at 718.3637 666.0975 0)
+		(at 725.0714 671.544 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -39750,7 +39809,7 @@
 		(uuid "a18a69c2-18dc-42d6-86c2-bdb64d7e4301")
 	)
 	(label "~{xO}"
-		(at 689.4616 291.4422 180)
+		(at 690.923 305.0104 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -39848,17 +39907,6 @@
 		)
 		(uuid "a2fd89f7-8775-49f0-a3ba-2d463840da40")
 	)
-	(label "~{MDacc}"
-		(at 907.1633 457.4525 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "a3277f23-1001-4714-8f48-3ac6795159fa")
-	)
 	(label "I0"
 		(at 475.8894 318.1074 180)
 		(fields_autoplaced yes)
@@ -39871,7 +39919,7 @@
 		(uuid "a37de488-747b-4e32-b7ff-2904a424653d")
 	)
 	(label "~{Lx}"
-		(at 727.6153 203.1357 180)
+		(at 690.4178 246.6568 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -39924,17 +39972,6 @@
 			(justify right bottom)
 		)
 		(uuid "a55ae10d-7fc8-44ea-b04e-63af593448a6")
-	)
-	(label "xD"
-		(at 688.0799 236.3388 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "a58fff0c-24f5-44bc-a52e-e1d881219631")
 	)
 	(label "O1"
 		(at 996.7953 343.5299 180)
@@ -40025,7 +40062,7 @@
 		(uuid "a74450b3-07a7-4c37-a83b-cf772b2034d4")
 	)
 	(label "DB7"
-		(at 622.7628 705.7459 180)
+		(at 629.4705 711.1924 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -40058,7 +40095,7 @@
 		(uuid "a7fd865d-e90e-4dae-b0ba-d2c7419db375")
 	)
 	(label "SIP"
-		(at 598.8601 710.8188 180)
+		(at 605.5678 716.2653 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -40091,7 +40128,7 @@
 		(uuid "a891f2e0-5dd6-4730-9b24-e32e0c911b20")
 	)
 	(label "~{PUTI}"
-		(at 691.3835 319.3235 180)
+		(at 730.3689 253.1134 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -40366,7 +40403,7 @@
 		(uuid "af2b8847-23e4-4b01-9bb0-7c0454b0f292")
 	)
 	(label "DB3"
-		(at 623.3489 649.07 180)
+		(at 630.0566 654.5165 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -40410,7 +40447,7 @@
 		(uuid "af793438-3c62-40b9-8421-2fe3e2972718")
 	)
 	(label "JUMP"
-		(at 744.6426 270.218 0)
+		(at 742.6696 324.9105 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -40883,7 +40920,7 @@
 		(uuid "bcefeefd-7d70-4df4-9ee4-0d1f4d590955")
 	)
 	(label "~{RET}"
-		(at 728.0042 302.7746 180)
+		(at 727.6046 339.2418 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -41125,7 +41162,7 @@
 		(uuid "c2079b33-906e-4c67-b0b6-7e228acc166b")
 	)
 	(label "~{PUTI}"
-		(at 115.4329 525.7403 0)
+		(at 115.4329 523.2003 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -41136,7 +41173,7 @@
 		(uuid "c21bfc62-1a0d-4208-874e-f52deeac3e17")
 	)
 	(label "~{PUTG}"
-		(at 115.4329 528.2803 0)
+		(at 115.4329 520.6603 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -41256,6 +41293,17 @@
 		)
 		(uuid "c47bff22-397a-4fc6-a8e1-ad489ed27eaa")
 	)
+	(label "~{PUTG}"
+		(at 730.423 188.6189 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "c50a666f-f1a4-4c4e-a8e9-eb624b9e7b8d")
+	)
 	(label "IO3"
 		(at 388.3386 775.5896 0)
 		(fields_autoplaced yes)
@@ -41312,7 +41360,7 @@
 		(uuid "c64ecbfd-1047-45bc-a1c4-05ddc9a99d4b")
 	)
 	(label "DB0"
-		(at 718.3637 653.3975 0)
+		(at 725.0714 658.844 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -41576,7 +41624,7 @@
 		(uuid "ccdd56b3-002e-4191-88e3-11f9e6f8819c")
 	)
 	(label "DB1"
-		(at 718.3637 655.9375 0)
+		(at 725.0714 661.384 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -41708,7 +41756,7 @@
 		(uuid "ceb12634-32ca-4cbf-9ff5-5e8b53ab18ad")
 	)
 	(label "GND"
-		(at 954.7241 800.4239 180)
+		(at 955.3523 793.7183 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -41895,7 +41943,7 @@
 		(uuid "d3693ccc-9715-4d99-831e-a7851aa71b31")
 	)
 	(label "C3"
-		(at 623.3489 651.61 180)
+		(at 630.0566 657.0565 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -41917,7 +41965,7 @@
 		(uuid "d3e1ef4a-13ed-46e9-881b-8099f7bebc2c")
 	)
 	(label "GETO"
-		(at 743.21 186.4677 0)
+		(at 745.4437 203.3832 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -42016,7 +42064,7 @@
 		(uuid "d5d60fec-a3a5-4b6e-9bdd-9daf4ae63947")
 	)
 	(label "opc_FIX"
-		(at 704.1473 250.0939 0)
+		(at 705.9938 260.4809 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -42247,7 +42295,7 @@
 		(uuid "dc0df782-a446-4364-8dc7-0190637b5f77")
 	)
 	(label "GND"
-		(at 622.7628 715.9059 180)
+		(at 629.4705 721.3524 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -42445,7 +42493,7 @@
 		(uuid "dfa2c928-7d9a-4cd3-90db-112716296421")
 	)
 	(label "DB3"
-		(at 718.3637 661.0175 0)
+		(at 725.0714 666.464 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -42742,7 +42790,7 @@
 		(uuid "e6a2ffd1-c307-455f-81f6-1b1f488907d2")
 	)
 	(label "DB0"
-		(at 623.3489 626.21 180)
+		(at 630.0566 631.6565 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -42819,7 +42867,7 @@
 		(uuid "e8bf6404-e237-44c5-8667-60ef894bf4bd")
 	)
 	(label "C1"
-		(at 623.3489 636.37 180)
+		(at 630.0566 641.8165 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -42907,7 +42955,7 @@
 		(uuid "ec420858-7c91-4a79-88dc-093bea0965a8")
 	)
 	(label "PUTI"
-		(at 706.6235 319.3235 0)
+		(at 745.6089 253.1134 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -42940,7 +42988,7 @@
 		(uuid "eca8f193-26dd-434f-97ae-22a2bb4b7b13")
 	)
 	(label "GETG"
-		(at 652.5377 716.4689 180)
+		(at 605.5678 718.8053 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -42984,7 +43032,7 @@
 		(uuid "ee3eeaef-ad9b-445b-a649-19c3c71ab339")
 	)
 	(label "DB7"
-		(at 718.3637 671.1775 0)
+		(at 725.0714 676.624 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -43215,7 +43263,7 @@
 		(uuid "f413d088-6fb9-4a8a-88fd-666ff68b7fdf")
 	)
 	(label "+5V"
-		(at 705.6637 645.7775 0)
+		(at 712.3714 651.224 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -43281,7 +43329,7 @@
 		(uuid "f645e155-3b6a-4d15-aa52-b8b506af1ceb")
 	)
 	(label "~{GETR}"
-		(at 115.4329 510.5003 0)
+		(at 115.4329 515.5803 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -43446,7 +43494,7 @@
 		(uuid "f86371b0-fc4e-4095-81f6-29d448e4a673")
 	)
 	(label "C0"
-		(at 623.3489 628.75 180)
+		(at 630.0566 634.1965 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -43688,7 +43736,7 @@
 		(uuid "fe24ee49-c340-4341-9aa9-df6f6c8f03ab")
 	)
 	(label "C2"
-		(at 623.3489 643.99 180)
+		(at 630.0566 649.4365 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -44066,7 +44114,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74HC04")
-		(at 734.6568 319.3927 0)
+		(at 698.1254 321.0559 0)
 		(unit 6)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -44074,7 +44122,7 @@
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-000060d7d1fd")
 		(property "Reference" "U65"
-			(at 734.6568 311.3409 0)
+			(at 698.1254 313.0041 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -44082,7 +44130,7 @@
 			)
 		)
 		(property "Value" "74AHC04"
-			(at 734.6568 313.6523 0)
+			(at 698.1254 315.3155 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -44090,7 +44138,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 734.6568 319.3927 0)
+			(at 698.1254 321.0559 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -44099,7 +44147,7 @@
 			)
 		)
 		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74HC_HCT04.pdf"
-			(at 734.6568 319.3927 0)
+			(at 698.1254 321.0559 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -44108,7 +44156,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 734.6568 319.3927 0)
+			(at 698.1254 321.0559 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -44377,7 +44425,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74HC04")
-		(at 734.9428 336.5542 0)
+		(at 698.4114 338.2174 0)
 		(unit 3)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -44385,7 +44433,7 @@
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-0000612c50e6")
 		(property "Reference" "U40"
-			(at 734.9428 328.5024 0)
+			(at 698.4114 330.1656 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -44393,7 +44441,7 @@
 			)
 		)
 		(property "Value" "74AHC04"
-			(at 734.9428 330.8138 0)
+			(at 698.4114 332.477 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -44401,7 +44449,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 734.9428 336.5542 0)
+			(at 698.4114 338.2174 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -44410,7 +44458,7 @@
 			)
 		)
 		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74HC_HCT04.pdf"
-			(at 734.9428 336.5542 0)
+			(at 698.4114 338.2174 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -44419,7 +44467,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 734.9428 336.5542 0)
+			(at 698.4114 338.2174 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -49380,7 +49428,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74HC04")
-		(at 735.59 186.4677 0)
+		(at 737.8237 203.3832 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -49388,7 +49436,7 @@
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-00006226a2ca")
 		(property "Reference" "U51"
-			(at 735.59 178.4159 0)
+			(at 737.8237 195.3314 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -49396,7 +49444,7 @@
 			)
 		)
 		(property "Value" "74AHC04"
-			(at 735.59 180.7273 0)
+			(at 737.8237 197.6428 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -49404,7 +49452,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 735.59 186.4677 0)
+			(at 737.8237 203.3832 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -49413,7 +49461,7 @@
 			)
 		)
 		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74HC_HCT04.pdf"
-			(at 735.59 186.4677 0)
+			(at 737.8237 203.3832 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -49422,7 +49470,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 735.59 186.4677 0)
+			(at 737.8237 203.3832 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -50408,7 +50456,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74LS02")
-		(at 990.9633 807.3529 0)
+		(at 962.9723 796.2583 0)
 		(unit 3)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -50416,7 +50464,7 @@
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-00006262652b")
 		(property "Reference" "U1"
-			(at 990.9633 799.0979 0)
+			(at 962.9723 788.0033 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -50424,7 +50472,7 @@
 			)
 		)
 		(property "Value" "74AHC02"
-			(at 990.9633 801.4093 0)
+			(at 962.9723 790.3147 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -50432,7 +50480,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 990.9633 807.3529 0)
+			(at 962.9723 796.2583 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -50441,7 +50489,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74ls02"
-			(at 990.9633 807.3529 0)
+			(at 962.9723 796.2583 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -50450,7 +50498,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 990.9633 807.3529 0)
+			(at 962.9723 796.2583 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -51568,7 +51616,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74HC04")
-		(at 736.945 286.2138 0)
+		(at 736.6796 282.9383 0)
 		(unit 6)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -51576,7 +51624,7 @@
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-0000629148a5")
 		(property "Reference" "U40"
-			(at 736.945 278.162 0)
+			(at 736.6796 274.8865 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -51584,7 +51632,7 @@
 			)
 		)
 		(property "Value" "74AHC04"
-			(at 736.945 280.4734 0)
+			(at 736.6796 277.1979 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -51592,7 +51640,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 736.945 286.2138 0)
+			(at 736.6796 282.9383 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -51601,7 +51649,7 @@
 			)
 		)
 		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74HC_HCT04.pdf"
-			(at 736.945 286.2138 0)
+			(at 736.6796 282.9383 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -51610,7 +51658,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 736.945 286.2138 0)
+			(at 736.6796 282.9383 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -52469,7 +52517,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74HC04")
-		(at 735.6242 302.7746 0)
+		(at 735.2246 339.2418 0)
 		(unit 4)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -52477,7 +52525,7 @@
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-000062f8ea07")
 		(property "Reference" "U51"
-			(at 735.6242 294.7228 0)
+			(at 735.2246 331.19 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -52485,7 +52533,7 @@
 			)
 		)
 		(property "Value" "74AHC04"
-			(at 735.6242 297.0342 0)
+			(at 735.2246 333.5014 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -52493,7 +52541,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 735.6242 302.7746 0)
+			(at 735.2246 339.2418 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -52502,7 +52550,7 @@
 			)
 		)
 		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74HC_HCT04.pdf"
-			(at 735.6242 302.7746 0)
+			(at 735.2246 339.2418 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -52511,7 +52559,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 735.6242 302.7746 0)
+			(at 735.2246 339.2418 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -52572,7 +52620,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74HC04")
-		(at 696.6676 276.6177 0)
+		(at 698.5141 287.0047 0)
 		(unit 5)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -52580,7 +52628,7 @@
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-000062f9108c")
 		(property "Reference" "U51"
-			(at 696.6676 268.5659 0)
+			(at 698.5141 278.9529 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -52589,7 +52637,7 @@
 			)
 		)
 		(property "Value" "74AHC04"
-			(at 696.6676 270.8773 0)
+			(at 698.5141 281.2643 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -52597,7 +52645,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 696.6676 276.6177 0)
+			(at 698.5141 287.0047 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -52606,7 +52654,7 @@
 			)
 		)
 		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74HC_HCT04.pdf"
-			(at 696.6676 276.6177 0)
+			(at 698.5141 287.0047 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -52615,7 +52663,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 696.6676 276.6177 0)
+			(at 698.5141 287.0047 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -53097,7 +53145,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74HC04")
-		(at 735.1846 219.0969 0)
+		(at 939.7493 797.2701 0)
 		(unit 4)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -53105,7 +53153,7 @@
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-00006b8ddbaa")
 		(property "Reference" "U65"
-			(at 735.1846 211.0451 0)
+			(at 939.7493 789.2183 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -53113,7 +53161,7 @@
 			)
 		)
 		(property "Value" "74AHC04"
-			(at 735.1846 213.3565 0)
+			(at 939.7493 791.5297 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -53121,7 +53169,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 735.1846 219.0969 0)
+			(at 939.7493 797.2701 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -53130,7 +53178,7 @@
 			)
 		)
 		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74HC_HCT04.pdf"
-			(at 735.1846 219.0969 0)
+			(at 939.7493 797.2701 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -53139,7 +53187,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 735.1846 219.0969 0)
+			(at 939.7493 797.2701 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -53200,7 +53248,7 @@
 	)
 	(symbol
 		(lib_id "4xxx:4075")
-		(at 660.1577 716.4689 0)
+		(at 613.1878 718.8053 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -53208,7 +53256,7 @@
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-0000866a0b64")
 		(property "Reference" "U31"
-			(at 660.1577 708.2139 0)
+			(at 613.1878 710.5503 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -53216,7 +53264,7 @@
 			)
 		)
 		(property "Value" "4075"
-			(at 660.1577 710.5253 0)
+			(at 613.1878 712.8617 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -53224,7 +53272,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 660.1577 716.4689 0)
+			(at 613.1878 718.8053 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -53233,7 +53281,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4071bms-72bms-75bms.pdf"
-			(at 660.1577 716.4689 0)
+			(at 613.1878 718.8053 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -53242,7 +53290,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 660.1577 716.4689 0)
+			(at 613.1878 718.8053 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -53509,7 +53557,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74AHC04")
-		(at 696.9258 306.3885 0)
+		(at 737.9534 217.3548 0)
 		(unit 6)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -53518,7 +53566,7 @@
 		(fields_autoplaced yes)
 		(uuid "004ad422-6107-4b43-a21d-9bd27cc2f680")
 		(property "Reference" "U5"
-			(at 696.9258 298.9985 0)
+			(at 737.9534 209.9648 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -53526,7 +53574,7 @@
 			)
 		)
 		(property "Value" "74AHC04"
-			(at 696.9258 301.0465 0)
+			(at 737.9534 212.0128 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -53534,7 +53582,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 696.9258 306.3885 0)
+			(at 737.9534 217.3548 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -53543,7 +53591,7 @@
 			)
 		)
 		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74AHC_AHCT04.pdf"
-			(at 696.9258 306.3885 0)
+			(at 737.9534 217.3548 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -53552,7 +53600,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 696.9258 306.3885 0)
+			(at 737.9534 217.3548 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -54360,7 +54408,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74LS157")
-		(at 635.4628 698.1259 0)
+		(at 642.1705 703.5724 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -54368,7 +54416,7 @@
 		(dnp no)
 		(uuid "09a7cecc-48b3-4e49-b62a-68789e3f8b35")
 		(property "Reference" "U69"
-			(at 635.4628 670.6685 0)
+			(at 642.1705 676.115 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -54376,7 +54424,7 @@
 			)
 		)
 		(property "Value" "74HC157"
-			(at 635.4628 672.9799 0)
+			(at 642.1705 678.4264 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -54384,7 +54432,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-16_W7.62mm_Socket_LongPads"
-			(at 635.4628 698.1259 0)
+			(at 642.1705 703.5724 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -54393,7 +54441,7 @@
 			)
 		)
 		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74AHC_AHCT04.pdf"
-			(at 635.4628 698.1259 0)
+			(at 642.1705 703.5724 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -54402,7 +54450,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 635.4628 698.1259 0)
+			(at 642.1705 703.5724 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -54593,7 +54641,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74HC02")
-		(at 684.8539 729.0771 0)
+		(at 691.8017 692.8083 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -54602,7 +54650,7 @@
 		(fields_autoplaced yes)
 		(uuid "0ac196ed-61b2-4646-b87a-d5bc7bd187f8")
 		(property "Reference" "U47"
-			(at 684.8539 721.1228 0)
+			(at 691.8017 684.854 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -54610,7 +54658,7 @@
 			)
 		)
 		(property "Value" "74HC02"
-			(at 684.8539 723.547 0)
+			(at 691.8017 687.2782 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -54618,7 +54666,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 684.8539 729.0771 0)
+			(at 691.8017 692.8083 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -54627,7 +54675,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74hc02"
-			(at 684.8539 729.0771 0)
+			(at 691.8017 692.8083 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -54636,7 +54684,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 684.8539 729.0771 0)
+			(at 691.8017 692.8083 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -56077,7 +56125,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74HC04")
-		(at 697.8511 334.0933 0)
+		(at 736.8365 267.8832 0)
 		(unit 6)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -56086,7 +56134,7 @@
 		(fields_autoplaced yes)
 		(uuid "21b8bfa7-633d-4ec5-8eb9-247094352302")
 		(property "Reference" "U73"
-			(at 697.8511 326.1388 0)
+			(at 736.8365 259.9287 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -56094,7 +56142,7 @@
 			)
 		)
 		(property "Value" "74HC04"
-			(at 697.8511 328.5631 0)
+			(at 736.8365 262.353 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -56102,7 +56150,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 697.8511 334.0933 0)
+			(at 736.8365 267.8832 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -56111,7 +56159,7 @@
 			)
 		)
 		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74HC_HCT04.pdf"
-			(at 697.8511 334.0933 0)
+			(at 736.8365 267.8832 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -56120,7 +56168,7 @@
 			)
 		)
 		(property "Description" "Hex Inverter"
-			(at 697.8511 334.0933 0)
+			(at 736.8365 267.8832 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -57467,7 +57515,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74AHC04")
-		(at 735.2353 203.1357 0)
+		(at 698.0378 246.6568 0)
 		(unit 3)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -57476,7 +57524,7 @@
 		(fields_autoplaced yes)
 		(uuid "3d8d9db6-f83e-492c-bdee-7bf626d21823")
 		(property "Reference" "U5"
-			(at 735.2353 195.7457 0)
+			(at 698.0378 239.2668 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -57484,7 +57532,7 @@
 			)
 		)
 		(property "Value" "74AHC04"
-			(at 735.2353 197.7937 0)
+			(at 698.0378 241.3148 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -57492,7 +57540,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 735.2353 203.1357 0)
+			(at 698.0378 246.6568 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -57501,7 +57549,7 @@
 			)
 		)
 		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74AHC_AHCT04.pdf"
-			(at 735.2353 203.1357 0)
+			(at 698.0378 246.6568 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -57510,7 +57558,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 735.2353 203.1357 0)
+			(at 698.0378 246.6568 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -58988,7 +59036,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74HC04")
-		(at 737.0226 270.218 0)
+		(at 735.0496 324.9105 0)
 		(unit 4)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -58996,7 +59044,7 @@
 		(dnp no)
 		(uuid "4edc82f6-76ea-485f-92a4-67ed3c831cda")
 		(property "Reference" "U22"
-			(at 737.0226 262.1662 0)
+			(at 735.0496 316.8587 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -59004,7 +59052,7 @@
 			)
 		)
 		(property "Value" "74AHC04"
-			(at 737.0226 264.4776 0)
+			(at 735.0496 319.1701 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -59012,7 +59060,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 737.0226 270.218 0)
+			(at 735.0496 324.9105 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -59021,7 +59069,7 @@
 			)
 		)
 		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74HC_HCT04.pdf"
-			(at 737.0226 270.218 0)
+			(at 735.0496 324.9105 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -59030,7 +59078,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 737.0226 270.218 0)
+			(at 735.0496 324.9105 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -60045,7 +60093,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74AHC04")
-		(at 696.5273 250.0939 0)
+		(at 698.3738 260.4809 0)
 		(unit 5)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -60054,7 +60102,7 @@
 		(fields_autoplaced yes)
 		(uuid "5bc0cf44-95bb-46ad-8efb-02e3f9a4e52b")
 		(property "Reference" "U5"
-			(at 696.5273 242.7039 0)
+			(at 698.3738 253.0909 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -60062,7 +60110,7 @@
 			)
 		)
 		(property "Value" "74AHC04"
-			(at 696.5273 244.7519 0)
+			(at 698.3738 255.1389 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -60070,7 +60118,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 696.5273 250.0939 0)
+			(at 698.3738 260.4809 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -60079,7 +60127,7 @@
 			)
 		)
 		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74AHC_AHCT04.pdf"
-			(at 696.5273 250.0939 0)
+			(at 698.3738 260.4809 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -60088,7 +60136,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 696.5273 250.0939 0)
+			(at 698.3738 260.4809 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -60331,7 +60379,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 705.6637 686.4175 0)
+		(at 712.3714 691.864 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -60339,7 +60387,7 @@
 		(dnp no)
 		(uuid "6279fee0-2977-481f-8bc0-8ac205bb0797")
 		(property "Reference" "#PWR026"
-			(at 705.6637 692.7675 0)
+			(at 712.3714 698.214 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -60348,7 +60396,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 705.7907 690.8117 0)
+			(at 712.4984 696.2582 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -60356,7 +60404,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 705.6637 686.4175 0)
+			(at 712.3714 691.864 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -60365,7 +60413,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 705.6637 686.4175 0)
+			(at 712.3714 691.864 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -60374,7 +60422,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 705.6637 686.4175 0)
+			(at 712.3714 691.864 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -61966,7 +62014,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74LS32")
-		(at 962.5516 779.8024 0)
+		(at 666.8654 721.9154 0)
 		(unit 3)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -61975,7 +62023,7 @@
 		(fields_autoplaced yes)
 		(uuid "7e85466f-9ac4-4af4-8db6-af1b0af4dd96")
 		(property "Reference" "U61"
-			(at 962.5516 771.8479 0)
+			(at 666.8654 713.9609 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -61983,7 +62031,7 @@
 			)
 		)
 		(property "Value" "74LS32"
-			(at 962.5516 774.2722 0)
+			(at 666.8654 716.3852 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -61991,7 +62039,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 962.5516 779.8024 0)
+			(at 666.8654 721.9154 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -62000,7 +62048,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74LS32"
-			(at 962.5516 779.8024 0)
+			(at 666.8654 721.9154 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -62009,7 +62057,7 @@
 			)
 		)
 		(property "Description" "Quad 2-input OR"
-			(at 962.5516 779.8024 0)
+			(at 666.8654 721.9154 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -62136,7 +62184,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74HC04")
-		(at 696.5152 264.6797 0)
+		(at 698.3617 275.0667 0)
 		(unit 3)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -62144,7 +62192,7 @@
 		(dnp no)
 		(uuid "85456a9b-a935-461f-84d8-a27346323e9f")
 		(property "Reference" "U51"
-			(at 696.5152 256.6279 0)
+			(at 698.3617 267.0149 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -62152,7 +62200,7 @@
 			)
 		)
 		(property "Value" "74AHC04"
-			(at 696.5152 258.9393 0)
+			(at 698.3617 269.3263 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -62160,7 +62208,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 696.5152 264.6797 0)
+			(at 698.3617 275.0667 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -62169,7 +62217,7 @@
 			)
 		)
 		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74HC_HCT04.pdf"
-			(at 696.5152 264.6797 0)
+			(at 698.3617 275.0667 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -62178,7 +62226,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 696.5152 264.6797 0)
+			(at 698.3617 275.0667 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -62239,7 +62287,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74LS32")
-		(at 962.3441 802.9639 0)
+		(at 690.687 705.7533 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -62248,7 +62296,7 @@
 		(fields_autoplaced yes)
 		(uuid "86c7385e-a901-42c9-aa64-b1fb2d422471")
 		(property "Reference" "U19"
-			(at 962.3441 795.0094 0)
+			(at 690.687 713.7078 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -62256,7 +62304,7 @@
 			)
 		)
 		(property "Value" "74LS32"
-			(at 962.3441 797.4337 0)
+			(at 690.687 711.2835 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -62264,7 +62312,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 962.3441 802.9639 0)
+			(at 690.687 705.7533 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -62273,7 +62321,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74LS32"
-			(at 962.3441 802.9639 0)
+			(at 690.687 705.7533 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -62282,7 +62330,7 @@
 			)
 		)
 		(property "Description" "Quad 2-input OR"
-			(at 962.3441 802.9639 0)
+			(at 690.687 705.7533 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -62343,7 +62391,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74AHC04")
-		(at 697.0816 291.4422 0)
+		(at 698.543 305.0104 0)
 		(unit 2)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -62352,7 +62400,7 @@
 		(fields_autoplaced yes)
 		(uuid "87d09ab0-0e32-4ce5-97a6-25d7a59f5ca4")
 		(property "Reference" "U5"
-			(at 697.0816 283.4877 0)
+			(at 698.543 297.0559 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -62360,7 +62408,7 @@
 			)
 		)
 		(property "Value" "74AHC04"
-			(at 697.0816 285.912 0)
+			(at 698.543 299.4802 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -62368,7 +62416,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 697.0816 291.4422 0)
+			(at 698.543 305.0104 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -62377,7 +62425,7 @@
 			)
 		)
 		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74AHC_AHCT04.pdf"
-			(at 697.0816 291.4422 0)
+			(at 698.543 305.0104 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -62386,7 +62434,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 697.0816 291.4422 0)
+			(at 698.543 305.0104 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -63884,7 +63932,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74LS32")
-		(at 669.6139 731.6171 0)
+		(at 1012.0859 793.7714 0)
 		(unit 2)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -63893,7 +63941,7 @@
 		(fields_autoplaced yes)
 		(uuid "a24fd099-272e-43ee-ba47-19f7948c01c6")
 		(property "Reference" "U61"
-			(at 669.6139 723.6626 0)
+			(at 1012.0859 785.8169 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -63901,7 +63949,7 @@
 			)
 		)
 		(property "Value" "74LS32"
-			(at 669.6139 726.0869 0)
+			(at 1012.0859 788.2412 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -63909,7 +63957,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 669.6139 731.6171 0)
+			(at 1012.0859 793.7714 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -63918,7 +63966,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74LS32"
-			(at 669.6139 731.6171 0)
+			(at 1012.0859 793.7714 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -63927,7 +63975,7 @@
 			)
 		)
 		(property "Description" "Quad 2-input OR"
-			(at 669.6139 731.6171 0)
+			(at 1012.0859 793.7714 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -65409,7 +65457,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74HC04")
-		(at 937.607 776.3962 0)
+		(at 738.043 188.6189 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -65418,7 +65466,7 @@
 		(fields_autoplaced yes)
 		(uuid "b1706c84-a7e2-45bb-afb7-1dd79400179a")
 		(property "Reference" "U73"
-			(at 937.607 768.4417 0)
+			(at 738.043 180.6644 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -65426,7 +65474,7 @@
 			)
 		)
 		(property "Value" "74HC04"
-			(at 937.607 770.866 0)
+			(at 738.043 183.0887 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -65434,7 +65482,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 937.607 776.3962 0)
+			(at 738.043 188.6189 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -65443,7 +65491,7 @@
 			)
 		)
 		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74HC_HCT04.pdf"
-			(at 937.607 776.3962 0)
+			(at 738.043 188.6189 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -65452,7 +65500,7 @@
 			)
 		)
 		(property "Description" "Hex Inverter"
-			(at 937.607 776.3962 0)
+			(at 738.043 188.6189 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -65791,7 +65839,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74HC04")
-		(at 736.6157 252.8331 0)
+		(at 734.6427 307.5256 0)
 		(unit 2)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -65799,7 +65847,7 @@
 		(dnp no)
 		(uuid "b80b63a4-c268-4da3-984b-71501660f524")
 		(property "Reference" "U65"
-			(at 736.6157 244.7813 0)
+			(at 734.6427 299.4738 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -65807,7 +65855,7 @@
 			)
 		)
 		(property "Value" "74AHC04"
-			(at 736.6157 247.0927 0)
+			(at 734.6427 301.7852 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -65815,7 +65863,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 736.6157 252.8331 0)
+			(at 734.6427 307.5256 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -65824,7 +65872,7 @@
 			)
 		)
 		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74HC_HCT04.pdf"
-			(at 736.6157 252.8331 0)
+			(at 734.6427 307.5256 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -65833,7 +65881,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 736.6157 252.8331 0)
+			(at 734.6427 307.5256 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -66100,7 +66148,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74HC00")
-		(at 1012.0859 793.7714 0)
+		(at 973.2185 811.1152 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -66109,7 +66157,7 @@
 		(fields_autoplaced yes)
 		(uuid "bc671ee8-3fbf-4981-b7f6-f9adbbb51f0c")
 		(property "Reference" "U7"
-			(at 1012.0776 785.8169 0)
+			(at 973.2102 803.1607 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -66117,7 +66165,7 @@
 			)
 		)
 		(property "Value" "74HC00"
-			(at 1012.0776 788.2412 0)
+			(at 973.2102 805.585 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -66125,7 +66173,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 1012.0859 793.7714 0)
+			(at 973.2185 811.1152 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -66134,7 +66182,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74hc00"
-			(at 1012.0859 793.7714 0)
+			(at 973.2185 811.1152 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -66143,7 +66191,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 1012.0859 793.7714 0)
+			(at 973.2185 811.1152 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -66775,16 +66823,15 @@
 	)
 	(symbol
 		(lib_id "74xx:74HC04")
-		(at 699.0035 319.3235 0)
+		(at 737.9889 253.1134 0)
 		(unit 5)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "c0f8eee5-7f33-44b2-9ca4-796695cbfb12")
 		(property "Reference" "U73"
-			(at 699.0035 311.369 0)
+			(at 737.9889 245.1589 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -66792,7 +66839,7 @@
 			)
 		)
 		(property "Value" "74HC04"
-			(at 699.0035 313.7933 0)
+			(at 737.9889 247.5832 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -66800,7 +66847,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 699.0035 319.3235 0)
+			(at 737.9889 253.1134 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -66809,7 +66856,7 @@
 			)
 		)
 		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74HC_HCT04.pdf"
-			(at 699.0035 319.3235 0)
+			(at 737.9889 253.1134 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -66818,7 +66865,7 @@
 			)
 		)
 		(property "Description" "Hex Inverter"
-			(at 699.0035 319.3235 0)
+			(at 737.9889 253.1134 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -66879,7 +66926,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74LS32")
-		(at 606.4801 713.3588 0)
+		(at 962.5516 779.8024 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -66887,7 +66934,7 @@
 		(dnp no)
 		(uuid "c2d56cf9-c843-4a40-83dd-19feeab037c4")
 		(property "Reference" "U17"
-			(at 606.4801 705.1038 0)
+			(at 962.5516 771.5474 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -66895,7 +66942,7 @@
 			)
 		)
 		(property "Value" "74HC32"
-			(at 606.4801 707.4152 0)
+			(at 962.5516 773.8588 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -66903,7 +66950,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 606.4801 713.3588 0)
+			(at 962.5516 779.8024 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -66912,7 +66959,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74LS32"
-			(at 606.4801 713.3588 0)
+			(at 962.5516 779.8024 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -66921,7 +66968,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 606.4801 713.3588 0)
+			(at 962.5516 779.8024 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -67671,7 +67718,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74HC04")
-		(at 695.6999 236.3388 0)
+		(at 933.2161 781.9959 0)
 		(unit 2)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -67680,7 +67727,7 @@
 		(fields_autoplaced yes)
 		(uuid "cf0a1900-a190-4c9a-bdfe-9c5b13458799")
 		(property "Reference" "U73"
-			(at 695.6999 228.3843 0)
+			(at 933.2161 774.0414 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -67688,7 +67735,7 @@
 			)
 		)
 		(property "Value" "74HC04"
-			(at 695.6999 230.8086 0)
+			(at 933.2161 776.4657 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -67696,7 +67743,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 695.6999 236.3388 0)
+			(at 933.2161 781.9959 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -67705,7 +67752,7 @@
 			)
 		)
 		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74HC_HCT04.pdf"
-			(at 695.6999 236.3388 0)
+			(at 933.2161 781.9959 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -67714,7 +67761,7 @@
 			)
 		)
 		(property "Description" "Hex Inverter"
-			(at 695.6999 236.3388 0)
+			(at 933.2161 781.9959 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -68411,7 +68458,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74HC02")
-		(at 924.0974 492.8768 0)
+		(at 894.3705 417.0084 0)
 		(unit 2)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -68420,7 +68467,7 @@
 		(fields_autoplaced yes)
 		(uuid "d725e0d9-e27f-42b2-af52-26b25438cbe3")
 		(property "Reference" "U47"
-			(at 924.0974 484.9225 0)
+			(at 894.3705 409.0541 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -68428,7 +68475,7 @@
 			)
 		)
 		(property "Value" "74HC02"
-			(at 924.0974 487.3467 0)
+			(at 894.3705 411.4783 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -68436,7 +68483,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 924.0974 492.8768 0)
+			(at 894.3705 417.0084 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -68445,7 +68492,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74hc02"
-			(at 924.0974 492.8768 0)
+			(at 894.3705 417.0084 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -68454,7 +68501,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 924.0974 492.8768 0)
+			(at 894.3705 417.0084 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -69183,7 +69230,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74LS157")
-		(at 636.0489 641.45 0)
+		(at 642.7566 646.8965 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -69191,7 +69238,7 @@
 		(dnp no)
 		(uuid "dc89b84c-5f01-4a95-b910-06e02ebf4897")
 		(property "Reference" "U70"
-			(at 636.0489 613.9926 0)
+			(at 642.7566 619.4391 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -69199,7 +69246,7 @@
 			)
 		)
 		(property "Value" "74HC157"
-			(at 636.0489 616.304 0)
+			(at 642.7566 621.7505 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -69207,7 +69254,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-16_W7.62mm_Socket_LongPads"
-			(at 636.0489 641.45 0)
+			(at 642.7566 646.8965 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -69216,7 +69263,7 @@
 			)
 		)
 		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74AHC_AHCT04.pdf"
-			(at 636.0489 641.45 0)
+			(at 642.7566 646.8965 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -69225,7 +69272,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 636.0489 641.45 0)
+			(at 642.7566 646.8965 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -70190,7 +70237,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74LS574")
-		(at 705.6637 666.0975 0)
+		(at 712.3714 671.544 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -70198,7 +70245,7 @@
 		(dnp no)
 		(uuid "eab57f79-76e5-49ff-84d1-3c53519a254d")
 		(property "Reference" "U52"
-			(at 705.6637 641.1801 0)
+			(at 712.3714 646.6266 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -70206,7 +70253,7 @@
 			)
 		)
 		(property "Value" "74AHC574"
-			(at 705.6637 643.4915 0)
+			(at 712.3714 648.938 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -70214,7 +70261,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
-			(at 705.6637 666.0975 0)
+			(at 712.3714 671.544 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -70223,7 +70270,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74LS574"
-			(at 705.6637 666.0975 0)
+			(at 712.3714 671.544 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -70232,7 +70279,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 705.6637 666.0975 0)
+			(at 712.3714 671.544 0)
 			(effects
 				(font
 					(size 1.27 1.27)

@@ -42,7 +42,7 @@ void myth_reset(struct myth_vm *vm);
 uchar myth_fetch(struct myth_vm *vm);
 void myth_step(struct myth_vm *vm);
 void myth_exec_pair(struct myth_vm *vm, uchar opcode);
-void myth_exec_gput(struct myth_vm *vm, uchar opcode);
+void myth_exec_roid(struct myth_vm *vm, uchar opcode);
 void myth_exec_trap(struct myth_vm *vm, uchar opcode);
 void myth_exec_alu(struct myth_vm *vm, uchar opcode);
 void myth_exec_fix(struct myth_vm *vm, uchar opcode);
@@ -171,7 +171,7 @@ myth_cycle(struct myth_vm *vm) /* Single-step 1 instruction cycle */
                 /*Execute decoded instruction*/
 
                 if (opcode&0x80) myth_exec_pair(vm, opcode);
-                else if (opcode&0x40) myth_exec_gput(vm, opcode);
+                else if (opcode&0x40) myth_exec_roid(vm, opcode);
                 else if (opcode&0x20) myth_exec_trap(vm, opcode);
                 else if (opcode&0x10) myth_exec_alu(vm, opcode);
                 else if (opcode&0x08) myth_exec_fix(vm, opcode);
@@ -228,7 +228,7 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
                 MM => NOP (reserved)
                 GG => NOP (reserved)
                 RR => NOP (reserved)
-                II => NOP (reserved)
+                DD => NOP (reserved)
                 */
 
         if( (src==Mx || src==Lx || src==Nx) && (dst==xM || dst==xL) ) {
@@ -278,12 +278,12 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
 
 
 void
-myth_exec_gput(struct myth_vm *vm, uchar opcode) /*Execute GETPUT instruction*/
+myth_exec_roid(struct myth_vm *vm, uchar opcode) /*Execute GIRO instruction*/
 {
         /* OPCODE
             BITS 0-2 encode byte address offset in local page (from F8)
             BIT 3 encodes GET/PUT mode
-            BITS 4-5 encode register index (ROIG)
+            BITS 4-5 encode register index (GIRO)
         */
 
         #define BIT3 8
@@ -294,17 +294,17 @@ myth_exec_gput(struct myth_vm *vm, uchar opcode) /*Execute GETPUT instruction*/
         mptr = &(vm->pagebyte[vm->l][0xF8 + offs]);
         if(opcode & BIT3)
                 switch((opcode>>4) & 3){ /*Zero except bits 4-5 at LSB*/
-                        case 0: *mptr = vm->r; break;
-                        case 1: *mptr = vm->o; break;
-                        case 2: *mptr = vm->i; break;
-                        case 3: *mptr = vm->g; break;
+                        case 0: *mptr = vm->g; break;
+                        case 1: *mptr = vm->i; break;
+                        case 2: *mptr = vm->r; break;
+                        case 3: *mptr = vm->o; break;
                 }
         else
                 switch((opcode>>4) & 3){ /*Zero except bits 4-5 at LSB*/
-                        case 0: vm->r = *mptr; break;
-                        case 1: vm->o = *mptr; break;
-                        case 2: vm->i = *mptr; break;
-                        case 3: vm->g = *mptr; break;
+                        case 0: vm->g = *mptr; break;
+                        case 1: vm->i = *mptr; break;
+                        case 2: vm->r = *mptr; break;
+                        case 3: vm->o = *mptr; break;
                 }
 }
 
