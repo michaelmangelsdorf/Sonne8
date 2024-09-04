@@ -42,7 +42,7 @@ void myth_reset(struct myth_vm *vm);
 uchar myth_fetch(struct myth_vm *vm);
 void myth_step(struct myth_vm *vm);
 void myth_exec_pair(struct myth_vm *vm, uchar opcode);
-void myth_exec_roid(struct myth_vm *vm, uchar opcode);
+void myth_exec_giro(struct myth_vm *vm, uchar opcode);
 void myth_exec_trap(struct myth_vm *vm, uchar opcode);
 void myth_exec_alu(struct myth_vm *vm, uchar opcode);
 void myth_exec_fix(struct myth_vm *vm, uchar opcode);
@@ -171,7 +171,7 @@ myth_cycle(struct myth_vm *vm) /* Single-step 1 instruction cycle */
                 /*Execute decoded instruction*/
 
                 if (opcode&0x80) myth_exec_pair(vm, opcode);
-                else if (opcode&0x40) myth_exec_roid(vm, opcode);
+                else if (opcode&0x40) myth_exec_giro(vm, opcode);
                 else if (opcode&0x20) myth_exec_trap(vm, opcode);
                 else if (opcode&0x10) myth_exec_alu(vm, opcode);
                 else if (opcode&0x08) myth_exec_fix(vm, opcode);
@@ -278,7 +278,7 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
 
 
 void
-myth_exec_roid(struct myth_vm *vm, uchar opcode) /*Execute GIRO instruction*/
+myth_exec_giro(struct myth_vm *vm, uchar opcode) /*Execute GIRO instruction*/
 {
         /* OPCODE
             BITS 0-2 encode byte address offset in local page (from F8)
