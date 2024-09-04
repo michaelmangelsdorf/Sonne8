@@ -181,8 +181,8 @@ myth_cycle(struct myth_vm *vm) /* Single-step 1 instruction cycle */
 void
 myth_sip(struct myth_vm *vm) /* Utility: Save instruction pointer*/
 {
-        vm->o = vm->pc;
-        vm->d = vm->c;   
+        vm->i = vm->pc;
+        vm->g = vm->c;   
 }
 
 void
@@ -379,8 +379,8 @@ myth_exec_sys(struct myth_vm *vm, uchar opcode)
                 
                 case RET: vm->l += 1; /*FALL THROUGH*/
                 case FAR:
-                        vm->c = vm->d;
-                        vm->pc = vm->o;
+                        vm->c = vm->g;
+                        vm->pc = vm->i;
                         break;
                 
                 case SIP: myth_sip(vm); break;
