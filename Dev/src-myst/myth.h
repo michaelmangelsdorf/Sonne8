@@ -60,7 +60,7 @@ void myth_ret(struct myth_vm *vm);
 #define Lx 2 /*from MEMORY via LOCAL page index*/
 #define Gx 3 /*from GLOBAL register*/
 #define Rx 4 /*from RESULT register*/
-#define Ix 5 /*from INNER register*/
+#define Dx 5 /*from DATA page register*/
 #define Sx 6 /*from SERIAL input*/
 #define Px 7 /*from PARALLEL input*/
 
@@ -204,7 +204,7 @@ myth_exec_pair_srcval(struct myth_vm *vm, uchar srcreg)
                 case Lx: return vm->pagebyte[ vm->l][ vm->o]; /*pseudo reg*/
                 case Gx: return vm->g;
                 case Rx: return vm->r;
-                case Ix: return vm->i;
+                case Dx: return vm->d;
                 case Sx: return vm->sir;
                 default /*Px*/: return vm->pir;
         }
@@ -283,7 +283,7 @@ myth_exec_gput(struct myth_vm *vm, uchar opcode) /*Execute GETPUT instruction*/
         /* OPCODE
             BITS 0-2 encode byte address offset in local page (from F8)
             BIT 3 encodes GET/PUT mode
-            BITS 4-5 encode register index (RODG)
+            BITS 4-5 encode register index (ROIG)
         */
 
         #define BIT3 8
@@ -296,14 +296,14 @@ myth_exec_gput(struct myth_vm *vm, uchar opcode) /*Execute GETPUT instruction*/
                 switch((opcode>>4) & 3){ /*Zero except bits 4-5 at LSB*/
                         case 0: *mptr = vm->r; break;
                         case 1: *mptr = vm->o; break;
-                        case 2: *mptr = vm->d; break;
+                        case 2: *mptr = vm->i; break;
                         case 3: *mptr = vm->g; break;
                 }
         else
                 switch((opcode>>4) & 3){ /*Zero except bits 4-5 at LSB*/
                         case 0: vm->r = *mptr; break;
                         case 1: vm->o = *mptr; break;
-                        case 2: vm->d = *mptr; break;
+                        case 2: vm->i = *mptr; break;
                         case 3: vm->g = *mptr; break;
                 }
 }
