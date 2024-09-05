@@ -93,7 +93,7 @@ main(int argc, char *argv[])
                 print("END after %d cycles: ", cyc);
                 vm.c = 0;
                 vm.pc = 0;
-                vm.l++; /* Fix L */
+                // vm.l++; /* Fix L */
         }
 
         /* Output 0x7F00 to 0x7F7F as zero terminated text

@@ -48,7 +48,6 @@ void myth_exec_alu(struct myth_vm *vm, uchar opcode);
 void myth_exec_fix(struct myth_vm *vm, uchar opcode);
 void myth_exec_sys(struct myth_vm *vm, uchar opcode);
 void myth_call(struct myth_vm *vm, uchar dstpage);
-void myth_ret(struct myth_vm *vm);
 
 
 /* The 'REGx' notation means: REG into (something)
@@ -108,9 +107,9 @@ void myth_ret(struct myth_vm *vm);
 #define SSO 2 /*Serial Shift Out*/
 #define SCL 3 /*Set serial Clock Low*/
 #define SCH 4 /*Set serial Clock High*/
-#define FAR 5 /*Wide Branch*/
-#define ENTER 6 /*Claim Stack Frame*/
-#define LEAVE 7 /*Resume Stack Frame*/
+#define RET 5 /*Return from nested call*/
+#define COR 6 /*Pointer jump*/
+#define NEW 7 /*Save code page*/
 
 #define P4 0 /*R PLUS 4*/
 #define P1 1
@@ -178,17 +177,18 @@ myth_cycle(struct myth_vm *vm) /* Single-step 1 instruction cycle */
                 else myth_exec_sys(vm, opcode);
 }
 
-void
-myth_sip(struct myth_vm *vm) /* Utility: Save instruction pointer*/
-{
-        vm->i = vm->pc;
-        vm->co = vm->c;
-}
 
 void
 myth_call(struct myth_vm *vm, uchar dstpage)
 {
-        myth_sip(vm); 
+        /*Save origin*/
+        vm->i = vm->pc;
+        vm->co = vm->c;
+
+        /*Create stack frame*/
+        vm->l--;
+
+        /*Branch to page head*/
         vm->pc = 0;
         vm->c = dstpage;
 }
@@ -364,21 +364,21 @@ myth_exec_sys(struct myth_vm *vm, uchar opcode)
                         break;
                 case SCL: vm->sclk = 0; break;
                 case SCH: vm->sclk = 1; break;
-                               
-                case FAR:
-                        vm->c = vm->co;
+
+                #define L7 (vm->pagebyte[vm->l][0xFF])
+
+                case RET:
+                        vm->c = L7;
                         vm->pc = vm->i;
-                        break;
- 
-                case ENTER:
-                        vm->l -= 1;
-                        vm->pagebyte[vm->l][0xFF] = vm->co;
+                        vm->l++;
                         break;
 
-                case LEAVE:
-                        vm->co = vm->pagebyte[vm->l][0xFF];
-                        vm->l += 1;
+                case COR:
+                        vm->c = vm->g;
+                        vm->pc = vm->i;
                         break;
+
+                case NEW: L7 = vm->co; break;
         }
 }
 
