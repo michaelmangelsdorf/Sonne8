@@ -20016,6 +20016,12 @@
 		(uuid "64c9987c-d1ed-4a81-ac09-b4b626b6ea9d")
 	)
 	(junction
+		(at 481.3933 526.1862)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "651be1ed-155d-4ab3-8885-8965bbac73db")
+	)
+	(junction
 		(at 694.4732 536.6399)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -22837,6 +22843,16 @@
 		)
 		(uuid "2627012f-8ef0-4c31-bdcf-48c7ca27e00b")
 	)
+	(wire
+		(pts
+			(xy 484.8212 551.8524) (xy 481.3933 551.8524)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2689691f-6ffb-4dbe-9ab0-bcf651ffabea")
+	)
 	(polyline
 		(pts
 			(xy 588.363 90.3922) (xy 588.3655 90.3922)
@@ -23719,7 +23735,7 @@
 	)
 	(wire
 		(pts
-			(xy 533.1407 532.1854) (xy 535.6807 532.1854)
+			(xy 502.6012 554.3924) (xy 500.0612 554.3924)
 		)
 		(stroke
 			(width 0)
@@ -28749,6 +28765,16 @@
 	)
 	(wire
 		(pts
+			(xy 481.3933 551.8524) (xy 481.3933 526.1862)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b09ffa6e-99df-41b5-a91b-3de82af81564")
+	)
+	(wire
+		(pts
 			(xy 1038.9126 182.7303) (xy 1038.9126 221.0698)
 		)
 		(stroke
@@ -32078,7 +32104,7 @@
 		)
 		(uuid "001726ec-890b-4b93-bf1e-68c04452fb27")
 	)
-	(text "(GLOBAL)\nPage Index"
+	(text "(DATA)\nPage Index"
 		(exclude_from_sim no)
 		(at 886.2679 522.7559 0)
 		(effects
@@ -32254,7 +32280,7 @@
 		)
 		(uuid "303577eb-b499-4c01-b2e8-b8ae3331e5d8")
 	)
-	(text "G"
+	(text "D"
 		(exclude_from_sim no)
 		(at 870.7275 525.6869 0)
 		(effects
@@ -32551,7 +32577,7 @@
 		)
 		(uuid "65cc0a0e-0d7d-46d9-be28-c9c09aaa9c32")
 	)
-	(text "G/I/R/O"
+	(text "D/I/R/O"
 		(exclude_from_sim no)
 		(at 84.0854 511.9029 0)
 		(effects
@@ -32628,7 +32654,7 @@
 		)
 		(uuid "76b54b0f-ffa6-440d-a7d3-644a97054b55")
 	)
-	(text "Implementation Semantics:\n\nCALL/TRAP: I <= PC, Co <= C, decrement L, PC <= 0, C <= DB0-7\nRET: C <= L7, PC <= I, increment L\nCOR: C <= G, PC <= I\nNEW: L7 <= Co\n\nxB does a PC-relative in-page branching\n\n"
+	(text "Implementation Semantics:\n\nCALL/TRAP: I <= PC, Co <= C, decrement L, PC <= 0, C <= DB0-7\nRET: C <= L7, PC <= I, increment L\nCOR: C <= D, PC <= I\nNEW: L7 <= Co\n\nxB does PC-relative in-page branching\n\n"
 		(exclude_from_sim no)
 		(at 967.3252 481.683 0)
 		(effects
@@ -32717,7 +32743,7 @@
 	)
 	(text "L"
 		(exclude_from_sim no)
-		(at 478.8371 570.0052 0)
+		(at 485.7704 594.8623 0)
 		(effects
 			(font
 				(size 15 15)
@@ -32949,7 +32975,7 @@
 	)
 	(text "(LOCAL)\nPage index\n(Stack Pointer)"
 		(exclude_from_sim no)
-		(at 494.1251 573.1581 0)
+		(at 501.0584 598.0152 0)
 		(effects
 			(font
 				(size 5 5)
@@ -33816,17 +33842,6 @@
 		)
 		(uuid "0a79db37-f1d9-40b1-a24d-8bdfb8f637e2")
 	)
-	(label "~{CMacc}"
-		(at 694.4732 557.0975 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "0ab5a6af-0c30-4c72-b7a7-d8c050194ac8")
-	)
 	(label "FETCH"
 		(at 838.3299 618.4854 180)
 		(fields_autoplaced yes)
@@ -34003,7 +34018,7 @@
 		)
 		(uuid "0fe449a9-efcd-4028-be69-9312053cd210")
 	)
-	(label "~{GETG}"
+	(label "~{GETD}"
 		(at 746.9641 205.0748 180)
 		(fields_autoplaced yes)
 		(effects
@@ -34102,7 +34117,7 @@
 		)
 		(uuid "13f77c7e-65ef-4dc6-83cb-136c1862b4f1")
 	)
-	(label "~{COG}"
+	(label "~{COD}"
 		(at 809.2739 506.3054 180)
 		(fields_autoplaced yes)
 		(effects
@@ -34145,17 +34160,6 @@
 			(justify right bottom)
 		)
 		(uuid "149733e0-972b-47ad-9659-015178a5d95e")
-	)
-	(label "~{MLacc}"
-		(at 550.9207 534.7254 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "149d10c2-5328-41fb-b04e-9bca29481650")
 	)
 	(label "PC6"
 		(at 501.9639 208.5014 180)
@@ -34795,7 +34799,7 @@
 		)
 		(uuid "2102c637-9f11-48f1-aae6-b4139dc22be2")
 	)
-	(label "~{GETG}"
+	(label "~{GETD}"
 		(at 115.4329 510.5003 0)
 		(fields_autoplaced yes)
 		(effects
@@ -34894,7 +34898,7 @@
 		)
 		(uuid "23aed7fa-1904-4377-9138-4331dd9ead14")
 	)
-	(label "~{opc_GIRO}"
+	(label "~{opc_DIRO}"
 		(at 254.1778 504.1138 0)
 		(fields_autoplaced yes)
 		(effects
@@ -35081,7 +35085,7 @@
 		)
 		(uuid "29aa786c-ac0a-422e-9f0b-215478686d41")
 	)
-	(label "~{BOG}"
+	(label "~{BOD}"
 		(at 834.6739 452.9654 0)
 		(fields_autoplaced yes)
 		(effects
@@ -35113,17 +35117,6 @@
 			(justify left bottom)
 		)
 		(uuid "29f65a6a-bccf-42be-be5f-11df28c3b7ac")
-	)
-	(label "~{MGacc}"
-		(at 901.9905 417.0084 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "2a699281-8be7-4a2b-b3ae-dbc60bc40620")
 	)
 	(label "xA"
 		(at 364.9218 304.4698 0)
@@ -36082,7 +36075,7 @@
 		)
 		(uuid "3bfc7f94-ec20-4d54-afb0-ec626bfb4a41")
 	)
-	(label "GETG"
+	(label "GETD"
 		(at 762.2041 205.0748 0)
 		(fields_autoplaced yes)
 		(effects
@@ -36456,7 +36449,7 @@
 		)
 		(uuid "44a8a96b-3053-4222-9241-aa484f5ebe13")
 	)
-	(label "~{Gx}"
+	(label "~{Dx}"
 		(at 362.3818 381.3048 0)
 		(fields_autoplaced yes)
 		(effects
@@ -36753,7 +36746,7 @@
 		)
 		(uuid "4a514b38-f0b4-4787-bbda-b134b96c171c")
 	)
-	(label "~{opc_GIRO}"
+	(label "~{opc_DIRO}"
 		(at 67.1729 520.6603 180)
 		(fields_autoplaced yes)
 		(effects
@@ -36852,7 +36845,7 @@
 		)
 		(uuid "4cb28e2c-3094-4858-9502-9c2dfa38e41c")
 	)
-	(label "~{Gx}"
+	(label "~{Dx}"
 		(at 871.5671 479.3249 0)
 		(fields_autoplaced yes)
 		(effects
@@ -36896,7 +36889,7 @@
 		)
 		(uuid "4ce120b8-c100-4eef-a9d4-380bf0c9ffc8")
 	)
-	(label "~{PUTG}"
+	(label "~{PUTD}"
 		(at 886.8071 481.8649 0)
 		(fields_autoplaced yes)
 		(effects
@@ -37049,17 +37042,6 @@
 			(justify left bottom)
 		)
 		(uuid "4fc3183f-297c-42b7-b3bd-25a9ea18c844")
-	)
-	(label "~{MLacc}"
-		(at 481.3933 523.6462 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "50892843-db2f-47a6-8aac-e966b653b2e6")
 	)
 	(label "~{COI}"
 		(at 557.3853 219.1739 180)
@@ -37611,7 +37593,7 @@
 		)
 		(uuid "5bf88657-fc48-4169-b301-adcc8dd1e313")
 	)
-	(label "~{COG}"
+	(label "~{COD}"
 		(at 834.6739 447.8854 0)
 		(fields_autoplaced yes)
 		(effects
@@ -37941,7 +37923,7 @@
 		)
 		(uuid "63be503b-f085-4fb7-af86-cde25c40f15a")
 	)
-	(label "~{xG}"
+	(label "~{xD}"
 		(at 706.2737 218.708 180)
 		(fields_autoplaced yes)
 		(effects
@@ -38634,7 +38616,7 @@
 		)
 		(uuid "7425717f-89a9-4580-b429-1728474d3310")
 	)
-	(label "xG"
+	(label "xD"
 		(at 721.5137 218.708 0)
 		(fields_autoplaced yes)
 		(effects
@@ -38976,13 +38958,13 @@
 		(uuid "8003f2d5-af41-4035-8512-2134d0c80be3")
 	)
 	(label "Lx_pre"
-		(at 517.9007 529.6454 180)
+		(at 517.8412 556.9324 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "80246d8b-dc46-488f-bac4-09ab20dd44d1")
 	)
@@ -39679,7 +39661,7 @@
 		)
 		(uuid "8e0e382f-7b33-4f89-92d2-e2b40bfad1e3")
 	)
-	(label "xG"
+	(label "xD"
 		(at 787.454 498.6854 180)
 		(fields_autoplaced yes)
 		(effects
@@ -40053,7 +40035,7 @@
 		)
 		(uuid "95c2b754-c5aa-449e-ac14-865c2428614d")
 	)
-	(label "~{xG}"
+	(label "~{xD}"
 		(at 364.2868 271.4498 0)
 		(fields_autoplaced yes)
 		(effects
@@ -41033,13 +41015,13 @@
 		(uuid "ab4c564d-6531-4477-9fe0-a9852f26a9c4")
 	)
 	(label "GETPUT"
-		(at 535.6807 537.2654 180)
+		(at 500.0612 549.3124 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "ab4c75f5-a466-46ed-9d58-3f949f9e6225")
 	)
@@ -42000,7 +41982,7 @@
 		)
 		(uuid "c21bfc62-1a0d-4208-874e-f52deeac3e17")
 	)
-	(label "~{PUTG}"
+	(label "~{PUTD}"
 		(at 115.4329 520.6603 0)
 		(fields_autoplaced yes)
 		(effects
@@ -43837,7 +43819,7 @@
 		)
 		(uuid "ed0e0369-2748-4012-9ede-3654c36501f7")
 	)
-	(label "GETG"
+	(label "GETD"
 		(at 787.454 503.7654 180)
 		(fields_autoplaced yes)
 		(effects
@@ -43860,13 +43842,13 @@
 		(uuid "ed59bd7c-368f-42f0-b8c9-5af357627161")
 	)
 	(label "xL_pre"
-		(at 517.9007 534.7254 180)
+		(at 517.8412 551.8524 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "ed5c1ee7-9771-4c8e-ae2e-775dfa1d2f7d")
 	)
@@ -44211,7 +44193,7 @@
 		)
 		(uuid "f5a907f3-2cb8-4b38-9f33-c2111ea1d30e")
 	)
-	(label "~{BOG}"
+	(label "~{BOD}"
 		(at 809.2739 508.8454 180)
 		(fields_autoplaced yes)
 		(effects
@@ -66925,7 +66907,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74LS02")
-		(at 525.5207 532.1854 0)
+		(at 510.2212 554.3924 180)
 		(unit 3)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -66933,7 +66915,7 @@
 		(dnp no)
 		(uuid "af4b2736-fd0e-4c42-9f87-b60e6d5a89f1")
 		(property "Reference" "U32"
-			(at 525.5207 523.9304 0)
+			(at 510.2212 562.6474 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -66941,7 +66923,7 @@
 			)
 		)
 		(property "Value" "74AHC02"
-			(at 525.5207 526.2418 0)
+			(at 510.2212 560.336 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -66949,7 +66931,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 525.5207 532.1854 0)
+			(at 510.2212 554.3924 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -66958,7 +66940,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74ls02"
-			(at 525.5207 532.1854 0)
+			(at 510.2212 554.3924 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -66967,7 +66949,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 525.5207 532.1854 0)
+			(at 510.2212 554.3924 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -72770,7 +72752,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74LS32")
-		(at 543.3007 534.7254 0)
+		(at 492.4412 551.8524 180)
 		(unit 3)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -72779,7 +72761,7 @@
 		(fields_autoplaced yes)
 		(uuid "f23c15da-8310-47ab-97e5-42f5794794c6")
 		(property "Reference" "U19"
-			(at 543.3007 526.7709 0)
+			(at 492.4412 559.8069 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -72787,7 +72769,7 @@
 			)
 		)
 		(property "Value" "74LS32"
-			(at 543.3007 529.1952 0)
+			(at 492.4412 557.3826 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -72795,7 +72777,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 543.3007 534.7254 0)
+			(at 492.4412 551.8524 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -72804,7 +72786,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74LS32"
-			(at 543.3007 534.7254 0)
+			(at 492.4412 551.8524 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -72813,7 +72795,7 @@
 			)
 		)
 		(property "Description" "Quad 2-input OR"
-			(at 543.3007 534.7254 0)
+			(at 492.4412 551.8524 0)
 			(effects
 				(font
 					(size 1.27 1.27)

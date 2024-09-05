@@ -27,12 +27,12 @@ struct myth_vm /*Complete machine state including all memory*/
         uchar por;  /*Parallel output register*/
 
         uchar pc;   /*PROGRAM Counter*/
-        uchar co;
-        uchar o;    /*ORIGIN*/
+        uchar co;   /*PC Co-Register*/
+        uchar o;    /*OFFSET*/
         uchar r;    /*RESULT*/
 
         uchar c;    /*CODE page register*/
-        uchar g;    /*GLOBAL page register*/
+        uchar d;    /*DATA page register*/
         uchar l;    /*LOCAL page register*/
 
         uchar i;    /*INNER*/
@@ -42,7 +42,7 @@ void myth_reset(struct myth_vm *vm);
 uchar myth_fetch(struct myth_vm *vm);
 void myth_step(struct myth_vm *vm);
 void myth_exec_pair(struct myth_vm *vm, uchar opcode);
-void myth_exec_giro(struct myth_vm *vm, uchar opcode);
+void myth_exec_diro(struct myth_vm *vm, uchar opcode);
 void myth_exec_trap(struct myth_vm *vm, uchar opcode);
 void myth_exec_alu(struct myth_vm *vm, uchar opcode);
 void myth_exec_fix(struct myth_vm *vm, uchar opcode);
@@ -57,7 +57,7 @@ void myth_call(struct myth_vm *vm, uchar dstpage);
 #define Nx 0 /*from code literal (NUMBER)*/
 #define Mx 1 /*from MEMORY via DATA page index*/
 #define Lx 2 /*from MEMORY via LOCAL page index*/
-#define Gx 3 /*from GLOBAL register*/
+#define Dx 3 /*from GLOBAL register*/
 #define Rx 4 /*from RESULT register*/
 #define Ix 5 /*from DATA page register*/
 #define Sx 6 /*from SERIAL input*/
@@ -70,7 +70,7 @@ void myth_call(struct myth_vm *vm, uchar dstpage);
 #define xO 0 /*to ORIGIN register*/
 #define xM 1 /*to MEMORY via DATA page index*/
 #define xL 2 /*to MEMORY via LOCAL page index*/
-#define xG 3 /*to GLOBAL register*/
+#define xD 3 /*to GLOBAL register*/
 #define xR 4 /*to RESULT register*/
 #define xI 5 /*to INNER register*/
 #define xS 6 /*to SERIAL output*/
@@ -144,7 +144,7 @@ myth_reset(struct myth_vm *vm) /*Initialise machine state*/
         vm->r = 0;
 
         vm->c = 0;
-        vm->g = 0;
+        vm->d = 0;
         vm->l = 0;
 
         vm->i = 0;
@@ -170,7 +170,7 @@ myth_cycle(struct myth_vm *vm) /* Single-step 1 instruction cycle */
                 /*Execute decoded instruction*/
 
                 if (opcode&0x80) myth_exec_pair(vm, opcode);
-                else if (opcode&0x40) myth_exec_giro(vm, opcode);
+                else if (opcode&0x40) myth_exec_diro(vm, opcode);
                 else if (opcode&0x20) myth_exec_trap(vm, opcode);
                 else if (opcode&0x10) myth_exec_alu(vm, opcode);
                 else if (opcode&0x08) myth_exec_fix(vm, opcode);
@@ -199,9 +199,9 @@ myth_exec_pair_srcval(struct myth_vm *vm, uchar srcreg)
 {
         switch(srcreg){
                 case Nx: return myth_fetch(vm); /*pseudo reg*/
-                case Mx: return vm->pagebyte[ vm->g][ vm->o]; /*pseudo reg*/
+                case Mx: return vm->pagebyte[ vm->d][ vm->o]; /*pseudo reg*/
                 case Lx: return vm->pagebyte[ vm->l][ vm->o]; /*pseudo reg*/
-                case Gx: return vm->g;
+                case Dx: return vm->d;
                 case Rx: return vm->r;
                 case Ix: return vm->i;
                 case Sx: return vm->sir;
@@ -239,9 +239,9 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
         int temp;
         switch(dst){
                 case xO: vm->o = srcval; break;
-                case xM: vm->pagebyte[ vm->g][ vm->o] = srcval; break;
+                case xM: vm->pagebyte[ vm->d][ vm->o] = srcval; break;
                 case xL: vm->pagebyte[ vm->l][ vm->o] = srcval; break;
-                case xG: vm->g = srcval; break;
+                case xD: vm->d = srcval; break;
                 case xR: vm->r = srcval; break;
                 case xI: vm->i = srcval; break;
                 case xS: vm->sor = srcval; break;
@@ -250,7 +250,7 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
                 case xA:
                         temp = vm->o + srcval;
                         vm->o = (uchar) (temp & 0xFF);
-                        if (temp>255) vm->g += 1;
+                        if (temp>255) vm->d += 1;
                         break;
                 case xB: vm->pc = vm->pc + srcval; break;
                 case xJ: vm->pc = srcval; break;
@@ -266,12 +266,12 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
 
 
 void
-myth_exec_giro(struct myth_vm *vm, uchar opcode) /*Execute GIRO instruction*/
+myth_exec_diro(struct myth_vm *vm, uchar opcode) /*Execute GIRO instruction*/
 {
         /* OPCODE
             BITS 0-2 encode byte address offset in local page (from F8)
             BIT 3 encodes GET/PUT mode
-            BITS 4-5 encode register index (GIRO)
+            BITS 4-5 encode register index (DIRO)
         */
 
         #define BIT3 8
@@ -282,14 +282,14 @@ myth_exec_giro(struct myth_vm *vm, uchar opcode) /*Execute GIRO instruction*/
         mptr = &(vm->pagebyte[vm->l][0xF8 + offs]);
         if(opcode & BIT3)
                 switch((opcode>>4) & 3){ /*Zero except bits 4-5 at LSB*/
-                        case 0: *mptr = vm->g; break;
+                        case 0: *mptr = vm->d; break;
                         case 1: *mptr = vm->i; break;
                         case 2: *mptr = vm->r; break;
                         case 3: *mptr = vm->o; break;
                 }
         else
                 switch((opcode>>4) & 3){ /*Zero except bits 4-5 at LSB*/
-                        case 0: vm->g = *mptr; break;
+                        case 0: vm->d = *mptr; break;
                         case 1: vm->i = *mptr; break;
                         case 2: vm->r = *mptr; break;
                         case 3: vm->o = *mptr; break;
@@ -374,7 +374,7 @@ myth_exec_sys(struct myth_vm *vm, uchar opcode)
                         break;
 
                 case COR:
-                        vm->c = vm->g;
+                        vm->c = vm->d;
                         vm->pc = vm->i;
                         break;
 
