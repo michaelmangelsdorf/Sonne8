@@ -13,7 +13,7 @@ struct myth_vm /*Complete machine state including all memory*/
 {
         uchar pagebyte[256][256];
 
-        uchar scrounge; /* Set by scrounge instruction stub */
+        uchar scrounge; /*Set by scrounge instruction stub - not part of state!*/
 
         uchar e;    /*Device ENABLE register */
 
@@ -85,6 +85,8 @@ void myth_call(struct myth_vm *vm, uchar dstpage);
 #define xF 14 /*write JUMP if R zero*/
 #define xC 15 /*write CALL page index*/
 
+/*ALU Instructions
+*/
 #define CLR 0 /*Clear (value 0)*/
 #define IDO 1 /*Identity O*/
 #define OCR 2 /*Ones' complement of R*/
@@ -102,6 +104,8 @@ void myth_call(struct myth_vm *vm, uchar dstpage);
 #define REO 14 /*255 if R=O else 0*/
 #define RGO 15 /*255 if R>O else 0*/
 
+/*SYS Instructions
+*/
 #define NOP 0 /*No Operation*/
 #define SSI 1 /*Serial Shift In*/
 #define SSO 2 /*Serial Shift Out*/
@@ -111,6 +115,8 @@ void myth_call(struct myth_vm *vm, uchar dstpage);
 #define COR 6 /*Pointer jump*/
 #define NEW 7 /*Save code page*/
 
+/*FIX Instructions
+*/
 #define P4 0 /*R PLUS 4*/
 #define P1 1
 #define P2 2
