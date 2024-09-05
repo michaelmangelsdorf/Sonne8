@@ -1,5 +1,5 @@
 
-cd src-myst
+cd src
 
 ls myst.c
 9c myst.c
@@ -9,10 +9,6 @@ mv a.out ../myst
 rm myst.o
 git add myst.c
 git add myth.h
-git add myth-verbose.h
-
-cd ..
-cd src-nettle
 
 ls nettle.c
 9c nettle.c
@@ -22,8 +18,6 @@ mv a.out ../nettle
 rm nettle.o
 git add nettle.c
 
-cd ..
-cd src-lox
 ls lox.c
 9c lox.c
 ls lox.o
@@ -31,9 +25,8 @@ ls lox.o
 mv a.out ../lox
 rm lox.o
 git add lox.c
+git add lox.h
 
-cd ..
-cd src-regs
 ls regs.c
 9c regs.c
 ls regs.o
