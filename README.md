@@ -10,4 +10,4 @@ Since then, I've redesigned the architecture. All this is in the top-level folde
 The work in the "Schematics" folder is based on the KiCad files I used for PCB production, but it's diverged a lot, and I am mainly using it to document my progress. It shouldn't be hard to test it out and make another board though.
 
 Probably the quickest way to understand what this little CPU does is by reading the C emulator
-[header file](https://github.com/Dosflange/Myth/blob/main/Dev/src-myst/myth.h).
+[header file](https://github.com/Dosflange/Myth/blob/main/Dev/src/myth.h).
