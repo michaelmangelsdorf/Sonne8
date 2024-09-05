@@ -87,6 +87,7 @@ void myth_call(struct myth_vm *vm, uchar dstpage);
 
 /*ALU Instructions
 */
+
 #define CLR 0 /*Clear (value 0)*/
 #define IDO 1 /*Identity O*/
 #define OCR 2 /*Ones' complement of R*/
@@ -106,6 +107,7 @@ void myth_call(struct myth_vm *vm, uchar dstpage);
 
 /*SYS Instructions
 */
+
 #define NOP 0 /*No Operation*/
 #define SSI 1 /*Serial Shift In*/
 #define SSO 2 /*Serial Shift Out*/
@@ -117,6 +119,7 @@ void myth_call(struct myth_vm *vm, uchar dstpage);
 
 /*FIX Instructions
 */
+
 #define P4 0 /*R PLUS 4*/
 #define P1 1
 #define P2 2
@@ -272,7 +275,7 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
 
 
 void
-myth_exec_diro(struct myth_vm *vm, uchar opcode) /*Execute GIRO instruction*/
+myth_exec_diro(struct myth_vm *vm, uchar opcode) /*Execute DIRO instruction*/
 {
         /* OPCODE
             BITS 0-2 encode byte address offset in local page (from F8)
