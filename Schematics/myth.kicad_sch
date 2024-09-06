@@ -32709,19 +32709,20 @@
 		)
 		(uuid "7ec2e5f2-63dc-4fef-b01c-562caf56e5ee")
 	)
-	(text "                   NL => NOP (reserved)\n                   NM => NOP (reserved)\n                   LL => NOP (reserved)\n                   LM => NOP (reserved)\n                   ML => NOP (reserved)\n                   MM => NOP (reserved)\n                   GG => NOP (reserved)\n                   RR => NOP (reserved)\n                   II => NOP (reserved)"
+	(text "                   NL => NOP (reserved)\n                   NM => NOP (reserved)\n                   LL => NOP (reserved)\n                   LM => NOP (reserved)\n                   ML => NOP (reserved)\n                   MM => NOP (reserved)\n                   DD => NOP (reserved)\n                   RR => NOP (reserved)\n                   II => NOP (reserved)"
 		(exclude_from_sim no)
 		(at 194.3077 303.7819 0)
 		(effects
 			(font
+				(face "Monaco")
 				(size 1.27 1.27)
 			)
 		)
 		(uuid "7facaf60-6813-4a93-b91f-bdef6647b1e4")
 	)
-	(text "Relative Addressing Unit"
+	(text "Relative Addressing"
 		(exclude_from_sim no)
-		(at 402.8152 312.0424 0)
+		(at 414.6633 310.4758 0)
 		(effects
 			(font
 				(size 5 5)

@@ -178,15 +178,15 @@ myth_cycle(struct myth_vm *vm)
         vm->scrounge = 0;
         uchar opcode = fetch(vm);
 
-                /*Decode priority encoded opcode*/
-                /*Execute decoded instruction*/
+        /*Decode priority encoded opcode*/
+        /*Execute decoded instruction*/
 
-                if (opcode&0x80) exec_pair(vm, opcode);
-                else if (opcode&0x40) exec_diro(vm, opcode);
-                else if (opcode&0x20) exec_trap(vm, opcode);
-                else if (opcode&0x10) exec_alu(vm, opcode);
-                else if (opcode&0x08) exec_fix(vm, opcode);
-                else exec_sys(vm, opcode);
+        if (opcode&0x80) exec_pair(vm, opcode);
+        else if (opcode&0x40) exec_diro(vm, opcode);
+        else if (opcode&0x20) exec_trap(vm, opcode);
+        else if (opcode&0x10) exec_alu(vm, opcode);
+        else if (opcode&0x08) exec_fix(vm, opcode);
+        else exec_sys(vm, opcode);
 }
 
 
@@ -278,7 +278,6 @@ exec_pair(struct myth_vm *vm, uchar opcode)
         uchar dst = opcode & 15; /* Zero except bits 0-3 at LSB*/
 
         if (scrounge(opcode)){
-                 print( "Scrounged %.02X\n", opcode);
                  vm->scrounge = opcode;
                  return;
         }
