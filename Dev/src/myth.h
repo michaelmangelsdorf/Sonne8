@@ -2,6 +2,7 @@
 #ifndef __MYTH_H__
 #define __MYTH_H__ 1
 
+
 /* Emulation routines for Sonne 8 micro-controller Rev. Myth/LOX
    Author: mim@ok-schalter.de (Michael/Dosflange@github)
     */
@@ -39,15 +40,18 @@ struct myth_vm /*Complete machine state including all memory*/
 };
 
 void myth_reset(struct myth_vm *vm);
-uchar myth_fetch(struct myth_vm *vm);
-void myth_step(struct myth_vm *vm);
-void myth_exec_pair(struct myth_vm *vm, uchar opcode);
-void myth_exec_diro(struct myth_vm *vm, uchar opcode);
-void myth_exec_trap(struct myth_vm *vm, uchar opcode);
-void myth_exec_alu(struct myth_vm *vm, uchar opcode);
-void myth_exec_fix(struct myth_vm *vm, uchar opcode);
-void myth_exec_sys(struct myth_vm *vm, uchar opcode);
-void myth_call(struct myth_vm *vm, uchar dstpage);
+void myth_cycle(struct myth_vm *vm);
+
+static uchar fetch(struct myth_vm *vm);
+static uchar exec_pair_srcval(struct myth_vm *vm, uchar srcreg);
+static int scrounge(uchar opcode);
+static void exec_pair(struct myth_vm *vm, uchar opcode);
+static void exec_diro(struct myth_vm *vm, uchar opcode);
+static void exec_trap(struct myth_vm *vm, uchar opcode);
+static void exec_alu(struct myth_vm *vm, uchar opcode);
+static void exec_fix(struct myth_vm *vm, uchar opcode);
+static void exec_sys(struct myth_vm *vm, uchar opcode);
+static void call(struct myth_vm *vm, uchar dstpage);
 
 
 /* The 'REGx' notation means: REG into (something)
@@ -62,6 +66,7 @@ void myth_call(struct myth_vm *vm, uchar dstpage);
 #define Ix 5 /*from DATA page register*/
 #define Sx 6 /*from SERIAL input*/
 #define Px 7 /*from PARALLEL input*/
+
 
 /* The 'xREG' notation means: (something) into REG
    i.e. REG is a destination
@@ -85,6 +90,7 @@ void myth_call(struct myth_vm *vm, uchar dstpage);
 #define xF 14 /*write JUMP if R zero*/
 #define xC 15 /*write CALL page index*/
 
+
 /*ALU Instructions
 */
 
@@ -105,6 +111,7 @@ void myth_call(struct myth_vm *vm, uchar dstpage);
 #define REO 14 /*255 if R=O else 0*/
 #define RGO 15 /*255 if R>O else 0*/
 
+
 /*SYS Instructions
 */
 
@@ -117,6 +124,7 @@ void myth_call(struct myth_vm *vm, uchar dstpage);
 #define COR 6 /*Pointer jump*/
 #define NEW 7 /*Save code page*/
 
+
 /*FIX Instructions
 */
 
@@ -128,6 +136,7 @@ void myth_call(struct myth_vm *vm, uchar dstpage);
 #define M3 5
 #define M2 6
 #define M1 7
+
 
 void
 myth_reset(struct myth_vm *vm) /*Initialise machine state*/
@@ -160,8 +169,33 @@ myth_reset(struct myth_vm *vm) /*Initialise machine state*/
 }
 
 
+/* Single-step 1 instruction cycle
+*/
+
+void
+myth_cycle(struct myth_vm *vm)
+{
+        vm->scrounge = 0;
+        uchar opcode = fetch(vm);
+
+                /*Decode priority encoded opcode*/
+                /*Execute decoded instruction*/
+
+                if (opcode&0x80) exec_pair(vm, opcode);
+                else if (opcode&0x40) exec_diro(vm, opcode);
+                else if (opcode&0x20) exec_trap(vm, opcode);
+                else if (opcode&0x10) exec_alu(vm, opcode);
+                else if (opcode&0x08) exec_fix(vm, opcode);
+                else exec_sys(vm, opcode);
+}
+
+
+/* Fetch next byte in CODE stream, then increment PC.
+   Fetches either an instruction, or an instruction literal (Nx)
+*/
+
 uchar
-myth_fetch(struct myth_vm *vm) /*Fetch next byte in CODE stream, increment PC*/
+fetch(struct myth_vm *vm)
 {
         uchar val = vm->pagebyte[ vm->c][ vm->pc];
         (vm->pc)++;
@@ -169,26 +203,12 @@ myth_fetch(struct myth_vm *vm) /*Fetch next byte in CODE stream, increment PC*/
 }
 
 
-void
-myth_cycle(struct myth_vm *vm) /* Single-step 1 instruction cycle */
-{
-        vm->scrounge = 0;
-        uchar opcode = myth_fetch(vm);
-
-                /*Decode priority encoded opcode*/
-                /*Execute decoded instruction*/
-
-                if (opcode&0x80) myth_exec_pair(vm, opcode);
-                else if (opcode&0x40) myth_exec_diro(vm, opcode);
-                else if (opcode&0x20) myth_exec_trap(vm, opcode);
-                else if (opcode&0x10) myth_exec_alu(vm, opcode);
-                else if (opcode&0x08) myth_exec_fix(vm, opcode);
-                else myth_exec_sys(vm, opcode);
-}
-
+/* TRAP has identical operation, but with an
+   immediate destination page operand
+*/
 
 void
-myth_call(struct myth_vm *vm, uchar dstpage)
+call(struct myth_vm *vm, uchar dstpage)
 {
         /*Save origin*/
         vm->i = vm->pc;
@@ -203,48 +223,67 @@ myth_call(struct myth_vm *vm, uchar dstpage)
 }
 
 
+/* First part of handling PAIR instructions,
+   derives the source value
+*/
+
 uchar
-myth_exec_pair_srcval(struct myth_vm *vm, uchar srcreg)
+exec_pair_srcval(struct myth_vm *vm, uchar srcreg)
 {
         switch(srcreg){
-                case Nx: return myth_fetch(vm); /*pseudo reg*/
+                case Nx: return fetch(vm); /*pseudo reg*/
                 case Mx: return vm->pagebyte[ vm->d][ vm->o]; /*pseudo reg*/
                 case Lx: return vm->pagebyte[ vm->l][ vm->o]; /*pseudo reg*/
                 case Dx: return vm->d;
                 case Rx: return vm->r;
                 case Ix: return vm->i;
                 case Sx: return vm->sir;
-                default /*Px*/: return vm->pir;
+           default /*Px*/: return vm->pir;
         }
 }
 
+
+/* SCROUNGING of certain PAIR instructions:
+Remap undesirable opcodes to other,
+application specific opcodes or CPU extensions etc.
+Don't assume that these are generally NOPs!
+*/
+
+int
+scrounge(uchar opcode)
+{
+        switch(opcode & 0x7F){
+                case 16*Nx + xM: return opcode; /*NM => NOP (reserved)*/
+                case 16*Nx + xL: return opcode; /*NL => NOP (reserved)*/
+                case 16*Mx + xM: return opcode; /*MM => NOP (reserved)*/
+                case 16*Mx + xL: return opcode; /*ML => NOP (reserved)*/
+                case 16*Lx + xM: return opcode; /*LM => NOP (reserved)*/
+                case 16*Lx + xL: return opcode; /*LL => NOP (reserved)*/
+                case 16*Dx + xD: return opcode; /*DD => NOP (reserved)*/
+                case 16*Rx + xR: return opcode; /*RR => NOP (reserved)*/
+                case 16*Ix + xI: return opcode; /*II => NOP (reserved)*/
+        }
+        return 0;
+}
+
+
+/* Second part of handling PAIR instructions,
+   stores source value into destination
+*/
+
 void
-myth_exec_pair(struct myth_vm *vm, uchar opcode)
+exec_pair(struct myth_vm *vm, uchar opcode)
 {
         uchar src = (opcode >> 4) & 7; /*Zero except bits 4-6 at LSB*/
         uchar dst = opcode & 15; /* Zero except bits 0-3 at LSB*/
 
-        /* SCROUNGING
-                Remap ("scrounge") opcodes to other instructions
-                These are application specific opcodes - don't assume
-                that they are generally NOPs!
-                NL => NOP (reserved)
-                NM => NOP (reserved)
-                LL => NOP (reserved)
-                LM => NOP (reserved)
-                ML => NOP (reserved)
-                MM => NOP (reserved)
-                GG => NOP (reserved)
-                RR => NOP (reserved)
-                II => NOP (reserved)
-                */
-
-        if( (src==Mx || src==Lx || src==Nx) && (dst==xM || dst==xL) ) {
-                vm->scrounge = opcode;
-                return;
+        if (scrounge(opcode)){
+                 print( "Scrounged %.02X\n", opcode);
+                 vm->scrounge = opcode;
+                 return;
         }
 
-        uchar srcval = myth_exec_pair_srcval(vm, src);
+        uchar srcval = exec_pair_srcval(vm, src);
         int temp;
         switch(dst){
                 case xO: vm->o = srcval; break;
@@ -269,13 +308,13 @@ myth_exec_pair(struct myth_vm *vm, uchar opcode)
                         break; 
                 case xT: if (vm->r) vm->pc = srcval; break;
                 case xF: if (!vm->r) vm->pc = srcval; break;
-                case xC: myth_call(vm, srcval); break;
+                case xC: call(vm, srcval); break;
         }
 }
 
 
 void
-myth_exec_diro(struct myth_vm *vm, uchar opcode) /*Execute DIRO instruction*/
+exec_diro(struct myth_vm *vm, uchar opcode) /*Execute DIRO instruction*/
 {
         /* OPCODE
             BITS 0-2 encode byte address offset in local page (from F8)
@@ -307,15 +346,15 @@ myth_exec_diro(struct myth_vm *vm, uchar opcode) /*Execute DIRO instruction*/
 
 
 void
-myth_exec_trap(struct myth_vm *vm, uchar opcode)
+exec_trap(struct myth_vm *vm, uchar opcode)
 {
         uchar dstpage = opcode & 31; /*Zero except low order 5 bits*/
-        myth_call(vm, dstpage);
+        call(vm, dstpage);
 }
 
 
 void
-myth_exec_alu(struct myth_vm *vm, uchar opcode)
+exec_alu(struct myth_vm *vm, uchar opcode)
 {
         switch(opcode & 15){/* Zero except low order 4 bits*/
                 case CLR: vm->r = 0; break;
@@ -341,7 +380,7 @@ myth_exec_alu(struct myth_vm *vm, uchar opcode)
 
 
 void /*Add sign-extended number to R*/
-myth_exec_fix(struct myth_vm *vm, uchar opcode)
+exec_fix(struct myth_vm *vm, uchar opcode)
 {
         switch(opcode & 7){ /*Zero except low order 3 bits*/
                 case P4: vm->r += 4; break;
@@ -357,7 +396,7 @@ myth_exec_fix(struct myth_vm *vm, uchar opcode)
 
 
 void
-myth_exec_sys(struct myth_vm *vm, uchar opcode)
+exec_sys(struct myth_vm *vm, uchar opcode)
 {
         switch(opcode & 7){ /*Zero except low order 3 bits*/
                 

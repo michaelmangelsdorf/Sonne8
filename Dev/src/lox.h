@@ -9,6 +9,7 @@
 
 /* The following are offsets in 0x7F00 page
  */
+
 #define ARG 0xF7 /*Current Argument address*/
 #define POS 0xF8 /*Output text cursor pos*/
 #define VTP 0xF9 /*VOCAB top page*/
@@ -22,7 +23,8 @@
 
 /* Application specific opcode
 */
-#define END 0x81
+
+#define END 0x81 /*0x80 + 16 * Nx + xM // scrounge NM*/
 
 
 #endif
