@@ -43,14 +43,14 @@ void myth_reset(struct myth_vm *vm);
 void myth_cycle(struct myth_vm *vm);
 
 static uchar fetch(struct myth_vm *vm);
-static uchar exec_pair_srcval(struct myth_vm *vm, uchar srcreg);
+static uchar srcval(struct myth_vm *vm, uchar srcreg);
 static int scrounge(uchar opcode);
-static void exec_pair(struct myth_vm *vm, uchar opcode);
-static void exec_diro(struct myth_vm *vm, uchar opcode);
-static void exec_trap(struct myth_vm *vm, uchar opcode);
-static void exec_alu(struct myth_vm *vm, uchar opcode);
-static void exec_fix(struct myth_vm *vm, uchar opcode);
-static void exec_sys(struct myth_vm *vm, uchar opcode);
+static void pair(struct myth_vm *vm, uchar opcode);
+static void diro(struct myth_vm *vm, uchar opcode);
+static void trap(struct myth_vm *vm, uchar opcode);
+static void alu(struct myth_vm *vm, uchar opcode);
+static void fix(struct myth_vm *vm, uchar opcode);
+static void sys(struct myth_vm *vm, uchar opcode);
 static void call(struct myth_vm *vm, uchar dstpage);
 
 
@@ -181,12 +181,12 @@ myth_cycle(struct myth_vm *vm)
         /*Decode priority encoded opcode*/
         /*Execute decoded instruction*/
 
-        if (opcode&0x80) exec_pair(vm, opcode);
-        else if (opcode&0x40) exec_diro(vm, opcode);
-        else if (opcode&0x20) exec_trap(vm, opcode);
-        else if (opcode&0x10) exec_alu(vm, opcode);
-        else if (opcode&0x08) exec_fix(vm, opcode);
-        else exec_sys(vm, opcode);
+        if (opcode&0x80) pair(vm, opcode);
+        else if (opcode&0x40) diro(vm, opcode);
+        else if (opcode&0x20) trap(vm, opcode);
+        else if (opcode&0x10) alu(vm, opcode);
+        else if (opcode&0x08) fix(vm, opcode);
+        else sys(vm, opcode);
 }
 
 
@@ -223,12 +223,20 @@ call(struct myth_vm *vm, uchar dstpage)
 }
 
 
+void
+trap(struct myth_vm *vm, uchar opcode)
+{
+        uchar dstpage = opcode & 31; /*Zero except low order 5 bits*/
+        call(vm, dstpage);
+}
+
+
 /* First part of handling PAIR instructions,
    derives the source value
 */
 
 uchar
-exec_pair_srcval(struct myth_vm *vm, uchar srcreg)
+srcval(struct myth_vm *vm, uchar srcreg)
 {
         switch(srcreg){
                 case Nx: return fetch(vm); /*pseudo reg*/
@@ -272,7 +280,7 @@ scrounge(uchar opcode)
 */
 
 void
-exec_pair(struct myth_vm *vm, uchar opcode)
+pair(struct myth_vm *vm, uchar opcode)
 {
         uchar src = (opcode >> 4) & 7; /*Zero except bits 4-6 at LSB*/
         uchar dst = opcode & 15; /* Zero except bits 0-3 at LSB*/
@@ -282,38 +290,38 @@ exec_pair(struct myth_vm *vm, uchar opcode)
                  return;
         }
 
-        uchar srcval = exec_pair_srcval(vm, src);
+        uchar v = srcval(vm, src);
         int temp;
         switch(dst){
-                case xO: vm->o = srcval; break;
-                case xM: vm->pagebyte[ vm->d][ vm->o] = srcval; break;
-                case xL: vm->pagebyte[ vm->l][ vm->o] = srcval; break;
-                case xD: vm->d = srcval; break;
-                case xR: vm->r = srcval; break;
-                case xI: vm->i = srcval; break;
-                case xS: vm->sor = srcval; break;
-                case xP: vm->por = srcval; break;
-                case xE: vm->e = srcval; break;
+                case xO: vm->o = v; break;
+                case xM: vm->pagebyte[ vm->d][ vm->o] = v; break;
+                case xL: vm->pagebyte[ vm->l][ vm->o] = v; break;
+                case xD: vm->d = v; break;
+                case xR: vm->r = v; break;
+                case xI: vm->i = v; break;
+                case xS: vm->sor = v; break;
+                case xP: vm->por = v; break;
+                case xE: vm->e = v; break;
                 case xA:
-                        temp = vm->o + srcval;
+                        temp = vm->o + v;
                         vm->o = (uchar) (temp & 0xFF);
                         if (temp>255) vm->d += 1;
                         break;
-                case xB: vm->pc = vm->pc + srcval; break;
-                case xJ: vm->pc = srcval; break;
+                case xB: vm->pc = vm->pc + v; break;
+                case xJ: vm->pc = v; break;
                 case xW:
-                        if (vm->i) vm->pc = srcval;
+                        if (vm->i) vm->pc = v;
                         (vm->i)--; /*Post decrement, either case!*/
                         break; 
-                case xT: if (vm->r) vm->pc = srcval; break;
-                case xF: if (!vm->r) vm->pc = srcval; break;
-                case xC: call(vm, srcval); break;
+                case xT: if (vm->r) vm->pc = v; break;
+                case xF: if (!vm->r) vm->pc = v; break;
+                case xC: call(vm, v); break;
         }
 }
 
 
 void
-exec_diro(struct myth_vm *vm, uchar opcode) /*Execute DIRO instruction*/
+diro(struct myth_vm *vm, uchar opcode) /*Execute DIRO instruction*/
 {
         /* OPCODE
             BITS 0-2 encode byte address offset in local page (from F8)
@@ -345,15 +353,7 @@ exec_diro(struct myth_vm *vm, uchar opcode) /*Execute DIRO instruction*/
 
 
 void
-exec_trap(struct myth_vm *vm, uchar opcode)
-{
-        uchar dstpage = opcode & 31; /*Zero except low order 5 bits*/
-        call(vm, dstpage);
-}
-
-
-void
-exec_alu(struct myth_vm *vm, uchar opcode)
+alu(struct myth_vm *vm, uchar opcode)
 {
         switch(opcode & 15){/* Zero except low order 4 bits*/
                 case CLR: vm->r = 0; break;
@@ -379,7 +379,7 @@ exec_alu(struct myth_vm *vm, uchar opcode)
 
 
 void /*Add sign-extended number to R*/
-exec_fix(struct myth_vm *vm, uchar opcode)
+fix(struct myth_vm *vm, uchar opcode)
 {
         switch(opcode & 7){ /*Zero except low order 3 bits*/
                 case P4: vm->r += 4; break;
@@ -395,7 +395,7 @@ exec_fix(struct myth_vm *vm, uchar opcode)
 
 
 void
-exec_sys(struct myth_vm *vm, uchar opcode)
+sys(struct myth_vm *vm, uchar opcode)
 {
         switch(opcode & 7){ /*Zero except low order 3 bits*/
                 

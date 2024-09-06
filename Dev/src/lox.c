@@ -39,7 +39,7 @@ int i;
 void
 insertOrExitAt(int *offs)
 {
-        if( *offs >= 0xF0){
+        if( *offs >= 0xEF){
                 print("truncated argline error");
                 exits("truncated args");
         }
@@ -74,7 +74,7 @@ main(int argc, char *argv[])
                         insertOrExitAt( &offs);
                 }
                 insertOrExitAt( &offs);
-                vm.pagebyte[0x7F][offs] = 0;
+                vm.pagebyte[0x7F][offs] = 0; /*Double zero*/
         }
 
         /* Cycle until 0x7FFF not equal to zero (return code)
