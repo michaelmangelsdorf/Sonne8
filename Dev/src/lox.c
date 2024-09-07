@@ -99,7 +99,7 @@ main(int argc, char *argv[])
         /* Output 0x7F00 to 0x7F7F as zero-terminated string
         */
         for( i=0x00; i<0x80; i++){
-                ch = vm.pagebyte[0x7F][i]);
+                ch = vm.pagebyte[0x7F][i];
                 if( !ch) break;
                 print("%c", ch);
         }
