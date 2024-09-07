@@ -10,10 +10,10 @@
 /* The following are offsets in 0x7F00 page
  */
 
-#define ARG 0xF7 /*Current Argument address*/
-#define POS 0xF8 /*Output text cursor pos*/
+#define ARG 0xF7 /*Current argument string offset*/
+#define POS 0xF8 /*Output text position offset*/
 #define VTP 0xF9 /*VOCAB top page*/
-#define VTO 0xFA /*VOCAB top page*/
+#define VTO 0xFA /*VOCAB top offset*/
 #define DESTP 0xFB /*Destination address page*/
 #define DESTO 0xFC /*Destination address offs*/
 #define SRCP 0xFD /*Source address page*/
