@@ -6,7 +6,7 @@
 	(paper "A0")
 	(title_block
 		(title "Sonne-8 Micro-Controller")
-		(date "2024-09-05")
+		(date "2024-09-07")
 		(rev "Myth")
 		(company "Contact: mim@ok-schalter.de")
 		(comment 1 "Author: Michael Mangelsdorf")
@@ -32555,7 +32555,7 @@
 		)
 		(uuid "61ff9068-e3ea-4144-ab1f-986d6198063a")
 	)
-	(text "0 CLR (\"Clear\" / R:=0)\n1 IDO (\"Identity O\" / R:=Old)\n2 OCR (\"Ones Complement R\" / R:=~R)\n3 OCO (\"Ones Complement O\" / R:=~O)\n4 SLR (\"Shift left New\" / R:=R<<1)\n5 SLO (\"Shift left Old\" / R:=O<<1)\n6 SRR (\"Shift right R\" / R:=R>>1)\n7 SRO (\"Shift right O\" / R:=O>>1)"
+	(text "0 CLR (\"Clear\" / R:=0)\n1 IDO (\"Identity O\" / R:=O)\n2 OCR (\"Ones Complement R\" / R:=~R)\n3 OCO (\"Ones Complement O\" / R:=~O)\n4 SLR (\"Shift left R\" / R:=R<<1)\n5 SLO (\"Shift left O\" / R:=O<<1)\n6 SRR (\"Shift right R\" / R:=R>>1)\n7 SRO (\"Shift right O\" / R:=O>>1)"
 		(exclude_from_sim no)
 		(at 1080.1979 391.3049 0)
 		(effects
@@ -32654,7 +32654,7 @@
 		)
 		(uuid "76b54b0f-ffa6-440d-a7d3-644a97054b55")
 	)
-	(text "Implementation Semantics:\n\nCALL/TRAP: I <= PC, Co <= C, decrement L, PC <= 0, C <= DB0-7\nRET: C <= L7, PC <= I, increment L\nCOR: C <= D, PC <= I\nNEW: L7 <= Co\n\nxB does PC-relative in-page branching\n\n"
+	(text "Implementation Semantics:\n\nCALL/TRAP: I <= PC, Co <= C, decrement L, PC <= 0, C <= DB0-7\nRET: C <= L7, PC <= I, increment L\nCOR: C <= D, PC <= I\nOWN: L7 <= Co\n\nxB does PC-relative in-page branching\n\n"
 		(exclude_from_sim no)
 		(at 967.3252 481.683 0)
 		(effects
@@ -33304,9 +33304,9 @@
 		)
 		(uuid "ef476fea-72a7-4e22-954c-c53b5ee41af2")
 	)
-	(text "Force ENTER/LEAVE/FAR\nref L7 (\"Owner\")"
+	(text "Hard wire so that OWN and RET \nreference L7 (\"Owner\")"
 		(exclude_from_sim no)
-		(at 889.9284 579.7445 0)
+		(at 876.1322 582.1109 0)
 		(effects
 			(font
 				(size 2 2)
@@ -34008,7 +34008,7 @@
 		)
 		(uuid "0f72ff82-86dd-4254-9ea7-39a1ce565369")
 	)
-	(label "~{NEW}"
+	(label "~{OWN}"
 		(at 749.6363 161.9153 180)
 		(fields_autoplaced yes)
 		(effects
@@ -37055,7 +37055,7 @@
 		)
 		(uuid "508f8cd1-18cc-4dc1-bc97-428a90aabf19")
 	)
-	(label "~{NEW}"
+	(label "~{OWN}"
 		(at 671.6372 613.8228 180)
 		(fields_autoplaced yes)
 		(effects
@@ -38837,7 +38837,7 @@
 		)
 		(uuid "7b0716b4-2140-4c24-8c62-0c881824a3a4")
 	)
-	(label "NEW"
+	(label "OWN"
 		(at 764.8763 161.9153 0)
 		(fields_autoplaced yes)
 		(effects
@@ -39497,7 +39497,7 @@
 		)
 		(uuid "8ab6313c-0c3d-4aaa-a8e5-21cd1639072f")
 	)
-	(label "NEW"
+	(label "OWN"
 		(at 941.5443 579.3538 180)
 		(fields_autoplaced yes)
 		(effects
@@ -43171,7 +43171,7 @@
 		)
 		(uuid "de982686-461c-4c61-aa08-de0000c20fe7")
 	)
-	(label "~{NEW}"
+	(label "~{OWN}"
 		(at 216.6174 392.7348 0)
 		(fields_autoplaced yes)
 		(effects
@@ -44447,7 +44447,7 @@
 		)
 		(uuid "fa312de3-b30d-4f34-88d4-fb89058108c0")
 	)
-	(label "NEW"
+	(label "OWN"
 		(at 812.4552 675.102 180)
 		(fields_autoplaced yes)
 		(effects
@@ -44535,7 +44535,7 @@
 		)
 		(uuid "fb5fad7b-5d9d-4d4f-85b5-50eb46d98890")
 	)
-	(label "~{NEW}"
+	(label "~{OWN}"
 		(at 1117.9585 624.302 0)
 		(fields_autoplaced yes)
 		(effects

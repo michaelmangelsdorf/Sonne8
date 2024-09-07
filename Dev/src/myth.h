@@ -14,8 +14,6 @@ struct myth_vm /*Complete machine state including all memory*/
 {
         uchar pagebyte[256][256];
 
-        uchar scrounge; /*Set by scrounge instruction stub - not part of state!*/
-
         uchar e;    /*Device ENABLE register */
 
         uchar sclk; /*Serial clock state bit*/
@@ -27,16 +25,21 @@ struct myth_vm /*Complete machine state including all memory*/
         uchar pir;  /*Parallel input register*/
         uchar por;  /*Parallel output register*/
 
-        uchar pc;   /*PROGRAM Counter*/
-        uchar co;   /*PC Co-Register*/
-        uchar o;    /*OFFSET*/
         uchar r;    /*RESULT*/
+        uchar o;    /*OFFSET*/
 
+        uchar i;    /*INNER*/
+        uchar pc;   /*PROGRAM Counter*/
+
+        uchar co;   /*Coroutine register*/
         uchar c;    /*CODE page register*/
         uchar d;    /*DATA page register*/
         uchar l;    /*LOCAL page register*/
 
-        uchar i;    /*INNER*/
+        /*Set by scrounge instruction stub.
+          Not part of state!
+        */
+        uchar scrounge;
 };
 
 void myth_reset(struct myth_vm *vm);
@@ -122,7 +125,7 @@ static void call(struct myth_vm *vm, uchar dstpage);
 #define SCH 4 /*Set serial Clock High*/
 #define RET 5 /*Return from nested call*/
 #define COR 6 /*Pointer jump*/
-#define NEW 7 /*Save code page*/
+#define OWN 7 /*Copy code page index*/
 
 
 /*FIX Instructions
@@ -425,7 +428,7 @@ sys(struct myth_vm *vm, uchar opcode)
                         vm->pc = vm->i;
                         break;
 
-                case NEW: L7 = vm->co; break;
+                case OWN: L7 = vm->co; break;
         }
 }
 
