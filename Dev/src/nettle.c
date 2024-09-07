@@ -33415,7 +33415,7 @@ writeD( struct myth_vm *vm)
     pg = 0x40;
     offs = 0x00;
 
-    uchar *ptr = &vm->pagebyte[0][0];
+    uchar *ptr = &vm->ram[0][0];
     uint cursor = 256 * pg + offs;
     int i;
 
@@ -33430,8 +33430,8 @@ writeD( struct myth_vm *vm)
             *(ptr + cursor++) = strlits[i].val; /*DATA VALUE*/
             if( !strcmp( strlits[i++].str, "*HALT*")) break;
         }
-    //vm->pagebyte[0x7F][VTP] = cursor/256;
-    //vm->pagebyte[0x7F][VTO] = cursor%256;
+    //vm->ram[0x7F][VTP] = cursor/256;
+    //vm->ram[0x7F][VTO] = cursor%256;
 }
 
 
@@ -33454,7 +33454,7 @@ main()
                         s = page[i].offs[j].mnemonic;
                         if ( lookup(s, &n) < 0){
                                  print("@%.02X_%.02X@ look-up failed\n", i, j);
-                        } else vm.pagebyte[i][j] = n;
+                        } else vm.ram[i][j] = n;
                  }
         }
         writeD( &vm);

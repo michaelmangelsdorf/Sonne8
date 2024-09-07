@@ -33,7 +33,7 @@ main()
         struct myth_vm vm;
         load(&vm, fname);
         //myth_reset(&vm);
-        myth_cycle(&vm);
+        myth_step(&vm);
         save(&vm, fname);
         //print("myth\n");
         exits("");

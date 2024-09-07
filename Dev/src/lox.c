@@ -61,7 +61,7 @@ main(int argc, char *argv[])
         /* Clear LOX arg buffer, output text buffer and return code
         */
         for( i=0x00; i<0xF0; i++)
-                vm.pagebyte[0x7F][i] = 0;
+                vm.ram[0x7F][i] = 0;
 
         /* Collect CLI parameters, concatenate at 0x7F80
         */
@@ -70,18 +70,18 @@ main(int argc, char *argv[])
                 if( i==0) continue;
                 chpos = 0;
                 while( (ch=argv[i][chpos++]) != 0){
-                        vm.pagebyte[0x7F][offs] = ch;
+                        vm.ram[0x7F][offs] = ch;
                         insertOrExitAt( &offs);
                 }
                 insertOrExitAt( &offs);
-                vm.pagebyte[0x7F][offs] = 0; /*Double zero*/
+                vm.ram[0x7F][offs] = 0; /*Double zero*/
         }
 
         /* Cycle until VM executes END,
            Max. 10.000 cycles
         */
         for( cyc=1; cyc<999*1000; cyc++){
-                myth_cycle( &vm);
+                myth_step( &vm);
                 if ( vm.scrounge == END) break;
         }
         if( cyc==999*1000) {
@@ -93,14 +93,14 @@ main(int argc, char *argv[])
                 print("END after %d cycles: ", cyc);
                 vm.c = 0;
                 vm.pc = 0;
-                vm.pagebyte[0x7F][POS] = 0;
+                vm.ram[0x7F][POS] = 0;
                 // vm.l++; /* Fix L */
         }
 
         /* Output 0x7F00 to 0x7F7F as zero-terminated string
         */
         for( i=0x00; i<0x80; i++){
-                ch = vm.pagebyte[0x7F][i];
+                ch = vm.ram[0x7F][i];
                 if( !ch) break;
                 print("%c", ch);
         }

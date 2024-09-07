@@ -10,9 +10,9 @@
 #include <u.h>
 #include <libc.h>
 
-struct myth_vm /*Complete machine state including all memory*/
+struct myth_vm /*Complete machine state including all ram*/
 {
-        uchar pagebyte[256][256];
+        uchar ram[256][256];
 
         uchar e;    /*Device ENABLE register */
 
@@ -39,11 +39,11 @@ struct myth_vm /*Complete machine state including all memory*/
         /*Set by scrounge instruction stub.
           Not part of state!
         */
-        uchar scrounge;
+        uchar scrounge; /*An application specific opcode*/
 };
 
 void myth_reset(struct myth_vm *vm);
-void myth_cycle(struct myth_vm *vm);
+void myth_step(struct myth_vm *vm);
 
 static uchar fetch(struct myth_vm *vm);
 static uchar srcval(struct myth_vm *vm, uchar srcreg);
@@ -140,13 +140,12 @@ static void call(struct myth_vm *vm, uchar dstpage);
 #define M2 6
 #define M1 7
 
+#define DIRO_BASE_OFFSET 0xF8 /*Local-page offset used by DIRO instructions*/
 
 void
 myth_reset(struct myth_vm *vm) /*Initialise machine state*/
 {
-        memset(vm->pagebyte, 0, 256*256);
-
-        vm->scrounge = 0; /*Set application specific opcode*/
+        memset(vm->ram, 0, 256*256);
 
         vm->e = 0; /*Deselect any device*/
 
@@ -159,16 +158,17 @@ myth_reset(struct myth_vm *vm) /*Initialise machine state*/
         vm->pir = 0;
         vm->por = 0;
 
-        vm->pc = 0;
-        vm->co = 0;
-        vm->o = 0;
         vm->r = 0;
+        vm->o = 0;
+        vm->i = 0;
+        vm->pc = 0;
 
+        vm->co = 0;
         vm->c = 0;
         vm->d = 0;
         vm->l = 0;
 
-        vm->i = 0;
+        vm->scrounge = 0;
 }
 
 
@@ -176,7 +176,7 @@ myth_reset(struct myth_vm *vm) /*Initialise machine state*/
 */
 
 void
-myth_cycle(struct myth_vm *vm)
+myth_step(struct myth_vm *vm)
 {
         vm->scrounge = 0;
         uchar opcode = fetch(vm);
@@ -200,7 +200,7 @@ myth_cycle(struct myth_vm *vm)
 uchar
 fetch(struct myth_vm *vm)
 {
-        uchar val = vm->pagebyte[ vm->c][ vm->pc];
+        uchar val = vm->ram[ vm->c][ vm->pc];
         (vm->pc)++;
         return val;
 }
@@ -243,8 +243,8 @@ srcval(struct myth_vm *vm, uchar srcreg)
 {
         switch(srcreg){
                 case Nx: return fetch(vm); /*pseudo reg*/
-                case Mx: return vm->pagebyte[ vm->d][ vm->o]; /*pseudo reg*/
-                case Lx: return vm->pagebyte[ vm->l][ vm->o]; /*pseudo reg*/
+                case Mx: return vm->ram[ vm->d][ vm->o]; /*pseudo reg*/
+                case Lx: return vm->ram[ vm->l][ vm->o]; /*pseudo reg*/
                 case Dx: return vm->d;
                 case Rx: return vm->r;
                 case Ix: return vm->i;
@@ -263,7 +263,7 @@ Don't assume that these are generally NOPs!
 int
 scrounge(uchar opcode)
 {
-        switch(opcode & 0x7F){
+        switch(opcode & 0x7F /*0111_1111 zero b7*/){
                 case 16*Nx + xM: return opcode; /*NM => NOP (reserved)*/
                 case 16*Nx + xL: return opcode; /*NL => NOP (reserved)*/
                 case 16*Mx + xM: return opcode; /*MM => NOP (reserved)*/
@@ -297,8 +297,8 @@ pair(struct myth_vm *vm, uchar opcode)
         int temp;
         switch(dst){
                 case xO: vm->o = v; break;
-                case xM: vm->pagebyte[ vm->d][ vm->o] = v; break;
-                case xL: vm->pagebyte[ vm->l][ vm->o] = v; break;
+                case xM: vm->ram[ vm->d][ vm->o] = v; break;
+                case xL: vm->ram[ vm->l][ vm->o] = v; break;
                 case xD: vm->d = v; break;
                 case xR: vm->r = v; break;
                 case xI: vm->i = v; break;
@@ -322,7 +322,6 @@ pair(struct myth_vm *vm, uchar opcode)
         }
 }
 
-
 void
 diro(struct myth_vm *vm, uchar opcode) /*Execute DIRO instruction*/
 {
@@ -335,9 +334,9 @@ diro(struct myth_vm *vm, uchar opcode) /*Execute DIRO instruction*/
         #define BIT3 8
 
         uchar *mptr;
-        uchar offs = opcode & 7; /*Zero except low order 3 bits*/
+        uchar index = opcode & 7; /*Zero except low order 3 bits*/
         
-        mptr = &(vm->pagebyte[vm->l][0xF8 + offs]);
+        mptr = &(vm->ram[vm->l][DIRO_BASE_OFFSET + index]);
         if(opcode & BIT3)
                 switch((opcode>>4) & 3){ /*Zero except bits 4-5 at LSB*/
                         case 0: *mptr = vm->d; break;
@@ -415,7 +414,7 @@ sys(struct myth_vm *vm, uchar opcode)
                 case SCL: vm->sclk = 0; break;
                 case SCH: vm->sclk = 1; break;
 
-                #define L7 (vm->pagebyte[vm->l][0xFF])
+                #define L7 (vm->ram[vm->l][DIRO_BASE_OFFSET +7])
 
                 case RET:
                         vm->c = L7;
