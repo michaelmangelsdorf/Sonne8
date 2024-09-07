@@ -33,7 +33,7 @@
 #include "myst.h"
 #include "lox.h"
 
-char* fname="corestate.myst";
+char* fname = "corestate.myst";
 int i;
 
 void
@@ -77,7 +77,7 @@ main(int argc, char *argv[])
                 vm.pagebyte[0x7F][offs] = 0; /*Double zero*/
         }
 
-        /* Cycle until 0x7FFF not equal to zero (return code)
+        /* Cycle until VM executes END,
            Max. 10.000 cycles
         */
         for( cyc=1; cyc<999*1000; cyc++){
@@ -96,10 +96,13 @@ main(int argc, char *argv[])
                 // vm.l++; /* Fix L */
         }
 
-        /* Output 0x7F00 to 0x7F7F as zero terminated text
+        /* Output 0x7F00 to 0x7F7F as zero-terminated string
         */
-        for( i=0x00; i<0x80; i++)
-                print("%c", vm.pagebyte[0x7F][i]);
+        for( i=0x00; i<0x80; i++){
+                ch = vm.pagebyte[0x7F][i]);
+                if( !ch) break;
+                print("%c", ch);
+        }
 
         print("\n");
         save(&vm, fname);
