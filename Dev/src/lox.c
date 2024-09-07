@@ -53,7 +53,7 @@ main(int argc, char *argv[])
         int offs, chpos;
         char ch;
 
-        print("LOX ");
+        print("Lox C version Dosflange/2409\n");
         struct myth_vm vm;
         load(&vm, fname);
 

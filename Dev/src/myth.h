@@ -36,10 +36,9 @@ struct myth_vm /*Complete machine state including all ram*/
         uchar d;    /*DATA page register*/
         uchar l;    /*LOCAL page register*/
 
-        /*Set by scrounge instruction stub.
-          Not part of state!
+        /*Set by scrounge instruction stub
         */
-        uchar scrounge; /*An application specific opcode*/
+        uchar scrounge; /*Application specific opcode, else zero*/
 };
 
 void myth_reset(struct myth_vm *vm);
