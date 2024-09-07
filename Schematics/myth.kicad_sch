@@ -19776,12 +19776,6 @@
 		(uuid "3ee4be58-58a3-47e1-a8b9-986ef825afee")
 	)
 	(junction
-		(at 907.1633 457.6138)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "401533d9-1f5e-4458-8853-823984ea6b03")
-	)
-	(junction
 		(at 243.3016 350.8248)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -20494,6 +20488,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "d45d1afe-78e6-4045-862c-b274469da903")
+	)
+	(junction
+		(at 919.8633 467.6125)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "d4a6ba7c-a84d-443b-a898-5155192f6707")
 	)
 	(junction
 		(at 1046.7457 231.2298)
@@ -24705,6 +24705,16 @@
 	)
 	(wire
 		(pts
+			(xy 897.6448 416.979) (xy 897.6448 459.9925)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5150af3e-553a-4d21-87a4-e76f41068f6a")
+	)
+	(wire
+		(pts
 			(xy 91.2368 353.3648) (xy 91.2368 391.6172)
 		)
 		(stroke
@@ -25785,16 +25795,6 @@
 	)
 	(wire
 		(pts
-			(xy 901.9905 417.0084) (xy 901.9905 457.6138)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6b9c93fc-2992-41ef-9fdc-5f273d41b48a")
-	)
-	(wire
-		(pts
 			(xy 1082.0955 306.8674) (xy 1045.5703 306.8674)
 		)
 		(stroke
@@ -26852,16 +26852,6 @@
 			(type default)
 		)
 		(uuid "82319e49-2cdc-4970-a0b4-b04b8282636c")
-	)
-	(wire
-		(pts
-			(xy 901.9905 457.6138) (xy 907.1633 457.6138)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "823dfa35-93e8-4e29-8e4b-1779e07dcc25")
 	)
 	(wire
 		(pts
@@ -30655,16 +30645,6 @@
 	)
 	(wire
 		(pts
-			(xy 907.1633 457.4525) (xy 907.1633 457.6138)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "decf3fc1-fbc6-4a24-86d4-bd5be22fcc5a")
-	)
-	(wire
-		(pts
 			(xy 973.3672 221.0698) (xy 974.4848 221.0698)
 		)
 		(stroke
@@ -31145,6 +31125,16 @@
 	)
 	(wire
 		(pts
+			(xy 897.6448 459.9925) (xy 907.1633 459.9925)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e878c2b6-f508-4b0c-9737-35801d3eb802")
+	)
+	(wire
+		(pts
 			(xy 1001.7535 654.782) (xy 1039.8535 654.782)
 		)
 		(stroke
@@ -31262,16 +31252,6 @@
 			(type default)
 		)
 		(uuid "ec1ade12-3e4c-4517-be56-01c5cfbeed11")
-	)
-	(wire
-		(pts
-			(xy 907.1633 457.6138) (xy 907.1633 459.9925)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ec22b3a2-a083-4f03-8aa9-28ffde3f29fa")
 	)
 	(wire
 		(pts
@@ -31752,6 +31732,16 @@
 			(type default)
 		)
 		(uuid "f9156145-1fb0-44f6-98e0-5517a5f83e12")
+	)
+	(wire
+		(pts
+			(xy 926.2133 426.9725) (xy 919.8633 426.9725)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f965f96b-085a-4faa-b9f7-96caa39dcc5f")
 	)
 	(wire
 		(pts
@@ -32290,6 +32280,17 @@
 			(justify left bottom)
 		)
 		(uuid "3353aea3-e77c-41fb-89a5-6ec3dcdb7409")
+	)
+	(text "Register at CLOSE\n(MO is a valid instruction)"
+		(exclude_from_sim no)
+		(at 762.4972 623.7377 0)
+		(effects
+			(font
+				(size 2 2)
+			)
+			(justify left bottom)
+		)
+		(uuid "34c9a077-5888-49f8-a5cc-206e356f0f83")
 	)
 	(text "Clear Program Counter\napplied during CLOSE"
 		(exclude_from_sim no)
@@ -33028,6 +33029,17 @@
 			(justify left bottom)
 		)
 		(uuid "bacd8a59-8524-43bb-b7d7-4add523729f3")
+	)
+	(text "Register at CLOSE\n(MD is a valid instruction)"
+		(exclude_from_sim no)
+		(at 903.4689 481.6395 0)
+		(effects
+			(font
+				(size 2 2)
+			)
+			(justify left bottom)
+		)
+		(uuid "be2b9315-16f0-41b3-945a-2b3243685e1f")
 	)
 	(text "~{RES} request"
 		(exclude_from_sim no)
@@ -35999,6 +36011,17 @@
 		)
 		(uuid "3b2b2092-96e0-4ebd-a542-c9fb11c025cc")
 	)
+	(label "CLOSE"
+		(at 907.1633 457.4525 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "3b40b225-e1fd-4e3e-a1f1-7aa1f429e999")
+	)
 	(label "Lx"
 		(at 720.8251 275.1611 0)
 		(fields_autoplaced yes)
@@ -36198,7 +36221,7 @@
 		(uuid "3f1aee58-03d5-45e6-b7c7-d17272582385")
 	)
 	(label "xM_pre"
-		(at 886.7505 419.5484 180)
+		(at 882.4048 419.519 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -37650,7 +37673,7 @@
 		(uuid "5d6e638f-380b-461d-9362-1b7f05cddb87")
 	)
 	(label "Mx_pre"
-		(at 886.7505 414.4684 180)
+		(at 882.4048 414.439 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -38088,17 +38111,6 @@
 			(justify right bottom)
 		)
 		(uuid "68d605b4-eeb2-48f8-aeae-c29c0f8157cf")
-	)
-	(label "+5V"
-		(at 919.8633 426.9725 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "68e6f329-9d9b-4647-b1ca-c4ad3ba85e5b")
 	)
 	(label "SH1_PARCP"
 		(at 423.8986 690.4996 180)
@@ -43357,6 +43369,17 @@
 			(justify left bottom)
 		)
 		(uuid "e2453573-9e86-41f4-b5bc-661e3401ef3f")
+	)
+	(label "+5V"
+		(at 926.2133 426.9725 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "e24be5c0-6b4b-4b53-8df6-8aa31779562c")
 	)
 	(label "EL2"
 		(at 287.1835 721.3985 180)
@@ -58943,71 +58966,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 919.8633 467.6125 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "3d7685c5-9d77-4255-8fbe-d2527c87ca72")
-		(property "Reference" "#PWR049"
-			(at 919.8633 473.9625 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 919.9903 472.0067 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 919.8633 467.6125 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 919.8633 467.6125 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 919.8633 467.6125 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "bced31e1-a222-48a8-950d-1071d1c566ff")
-		)
-		(instances
-			(project "myth"
-				(path "/29cbb0bc-f66b-4d11-80e7-5bb270e42496"
-					(reference "#PWR049")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "74xx:74AHC04")
 		(at 713.2051 275.1611 0)
 		(unit 3)
@@ -59215,6 +59173,72 @@
 			(project "sonne-controller"
 				(path "/29cbb0bc-f66b-4d11-80e7-5bb270e42496"
 					(reference "U34")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 919.8633 467.6125 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "3f1f7662-cc60-42a5-be9c-d504e3274851")
+		(property "Reference" "#PWR040"
+			(at 919.8633 473.9625 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 919.9903 472.0067 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" ""
+			(at 919.8633 467.6125 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 919.8633 467.6125 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 919.8633 467.6125 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "69b91033-2a7c-4dc5-a29b-e6fa73cbe181")
+		)
+		(instances
+			(project "myth"
+				(path "/29cbb0bc-f66b-4d11-80e7-5bb270e42496"
+					(reference "#PWR040")
 					(unit 1)
 				)
 			)
@@ -62632,6 +62656,71 @@
 			(project "sonne-controller"
 				(path "/29cbb0bc-f66b-4d11-80e7-5bb270e42496"
 					(reference "#PWR07")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 919.8633 467.6125 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "6d710775-0f1c-4a78-be02-931b3ef5fa30")
+		(property "Reference" "#PWR061"
+			(at 919.8633 473.9625 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 919.9903 472.0067 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 919.8633 467.6125 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 919.8633 467.6125 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 919.8633 467.6125 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "18dfe70b-43ce-4d68-93f1-40704ea40a96")
+		)
+		(instances
+			(project "myth"
+				(path "/29cbb0bc-f66b-4d11-80e7-5bb270e42496"
+					(reference "#PWR061")
 					(unit 1)
 				)
 			)
@@ -67108,130 +67197,6 @@
 		)
 	)
 	(symbol
-		(lib_id "74xx:74AHC244")
-		(at 919.8633 447.2925 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "b0771125-d5a7-4f4d-8c4c-b8d8cd719369")
-		(property "Reference" "U80"
-			(at 921.8192 428.4725 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "74AHC244"
-			(at 921.8192 430.5205 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
-			(at 919.8633 447.2925 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74AHC_AHCT244.pdf"
-			(at 919.8633 447.2925 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 919.8633 447.2925 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "deb62621-abde-418e-a63b-063eaf972034")
-		)
-		(pin "10"
-			(uuid "f3223f07-85e8-4ba0-98e0-02822d98b552")
-		)
-		(pin "11"
-			(uuid "81da07ae-29dd-483d-8732-df640df281a8")
-		)
-		(pin "12"
-			(uuid "0ae57dd9-b9c6-4726-adb2-6cabe973f50b")
-		)
-		(pin "13"
-			(uuid "4544860a-559f-4fcb-ba63-492eccc8c7ce")
-		)
-		(pin "14"
-			(uuid "e1f29ae7-248a-4d0f-9975-38238c96c637")
-		)
-		(pin "15"
-			(uuid "8e6c80a9-3b02-40e5-899f-315d976a7b1c")
-		)
-		(pin "16"
-			(uuid "0e892d67-ad21-43e6-9986-10eb78dce66a")
-		)
-		(pin "17"
-			(uuid "4f4e8f43-4a24-432c-967e-33fdcd40510a")
-		)
-		(pin "18"
-			(uuid "10ceb618-2421-4913-8074-c772134c2965")
-		)
-		(pin "19"
-			(uuid "00674cd1-e030-4743-87fb-b71c8c252a81")
-		)
-		(pin "2"
-			(uuid "5393a964-f314-40eb-ad93-4c856e5bb679")
-		)
-		(pin "20"
-			(uuid "cafd46bd-6ee6-4c8f-adf6-bd893cc32b6e")
-		)
-		(pin "3"
-			(uuid "7cf78915-4ad9-4528-8d83-93f4fc2140a4")
-		)
-		(pin "4"
-			(uuid "c1c90a54-edc8-4510-944d-ec1025a74a63")
-		)
-		(pin "5"
-			(uuid "eef5c02c-efcd-45a3-adb7-75f4cad6bf0a")
-		)
-		(pin "6"
-			(uuid "e25a8fa8-4e90-47a6-9fd0-51b2bc9d4870")
-		)
-		(pin "7"
-			(uuid "4ba0a17d-afe5-4d52-85c0-8e0b33c50c7e")
-		)
-		(pin "8"
-			(uuid "00ea439c-0621-4707-9dc1-f5d3a65d0022")
-		)
-		(pin "9"
-			(uuid "55e3f360-ac91-4144-9f76-83dbb7605b37")
-		)
-		(instances
-			(project "myth"
-				(path "/29cbb0bc-f66b-4d11-80e7-5bb270e42496"
-					(reference "U80")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "74xx:74HC04")
 		(at 757.2563 161.9153 0)
 		(unit 1)
@@ -70338,7 +70303,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74HC02")
-		(at 894.3705 417.0084 0)
+		(at 890.0248 416.979 0)
 		(unit 2)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -70347,7 +70312,7 @@
 		(fields_autoplaced yes)
 		(uuid "d725e0d9-e27f-42b2-af52-26b25438cbe3")
 		(property "Reference" "U47"
-			(at 894.3705 409.0541 0)
+			(at 890.0248 409.0247 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -70355,7 +70320,7 @@
 			)
 		)
 		(property "Value" "74HC02"
-			(at 894.3705 411.4783 0)
+			(at 890.0248 411.4489 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -70363,7 +70328,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 894.3705 417.0084 0)
+			(at 890.0248 416.979 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -70372,7 +70337,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74hc02"
-			(at 894.3705 417.0084 0)
+			(at 890.0248 416.979 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -70381,7 +70346,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 894.3705 417.0084 0)
+			(at 890.0248 416.979 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -71887,6 +71852,127 @@
 			(project "myth"
 				(path "/29cbb0bc-f66b-4d11-80e7-5bb270e42496"
 					(reference "U77")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "74xx:74LS574")
+		(at 919.8633 447.2925 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "e54149c6-7a3f-4e49-88b8-d3aa7a5f5779")
+		(property "Reference" "U69"
+			(at 919.8633 422.3751 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "74AHC574"
+			(at 919.8633 424.6865 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
+			(at 919.8633 447.2925 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74LS574"
+			(at 919.8633 447.2925 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 919.8633 447.2925 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "2c6db22f-4f2f-4f4a-aac4-c95f659a538a")
+		)
+		(pin "10"
+			(uuid "6a1d79f3-c577-460c-94bb-bf3fb242f9f8")
+		)
+		(pin "11"
+			(uuid "9d8fa873-139a-49ce-bcec-0cc7f3400f23")
+		)
+		(pin "12"
+			(uuid "8c44d487-20ea-497b-b9b6-61330c634582")
+		)
+		(pin "13"
+			(uuid "318e2061-9c9f-402c-bd57-2f5dcaf96560")
+		)
+		(pin "14"
+			(uuid "a378d336-a54c-4fd9-bbf6-68ad62da9064")
+		)
+		(pin "15"
+			(uuid "37898345-eff2-4589-8c34-5332863fc63b")
+		)
+		(pin "16"
+			(uuid "f64cee0c-74cd-4e77-96a1-65c644ab6d6a")
+		)
+		(pin "17"
+			(uuid "952ddd36-ad6b-422b-970f-7c07d2a2ddc3")
+		)
+		(pin "18"
+			(uuid "43114577-3f14-45fe-a5ea-0f669de180dc")
+		)
+		(pin "19"
+			(uuid "13ebe8a0-0cc3-4343-ad99-83f6e01ea18c")
+		)
+		(pin "2"
+			(uuid "74eee2ff-6fae-420d-b4c7-f02359826974")
+		)
+		(pin "20"
+			(uuid "0cfbe760-4b5f-4667-82ac-574a2b88d4ea")
+		)
+		(pin "3"
+			(uuid "f0a3dc71-142b-4883-900e-bcde477d7241")
+		)
+		(pin "4"
+			(uuid "0aa3465f-578c-4763-8ac3-bc1578296b26")
+		)
+		(pin "5"
+			(uuid "3c916808-368e-4607-b7c4-4f1ad9c80c4e")
+		)
+		(pin "6"
+			(uuid "9c968bf2-7182-4686-b544-d2fbf24f70eb")
+		)
+		(pin "7"
+			(uuid "6b54feb5-ed59-4929-975c-312327d5f26a")
+		)
+		(pin "8"
+			(uuid "5e536547-d1fc-4c6c-b70d-bb44a96d9f36")
+		)
+		(pin "9"
+			(uuid "da280e46-04a9-49d8-b308-aaa2ff705042")
+		)
+		(instances
+			(project "myth"
+				(path "/29cbb0bc-f66b-4d11-80e7-5bb270e42496"
+					(reference "U69")
 					(unit 1)
 				)
 			)

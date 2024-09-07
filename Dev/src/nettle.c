@@ -33461,7 +33461,8 @@ main()
         save( &vm, fname);
 
 
-        /*Generate opcode matrix JSON file*/
+/* Generate JSON file with an opcode matrix
+
         j=0;
         while( strcmp (strlits[++j].str, "NOP"))
         ;
@@ -33473,15 +33474,21 @@ main()
                 fprint( fdesc, "{\n");
                 fprint( fdesc, "  \"opcodes\": [\n");
                 for( i=0; i<=255; i++) {
+
+                    // print( "%.02X %s\n", strlits[j].val, strlits[j].str);
+
                     fprint( fdesc, "\t{\n");
                     fprint( fdesc, "\t\t\"val\": %d,\n",strlits[j].val);
                     fprint( fdesc, "\t\t\"name\": \"%s\"\n", strlits[j].str);
                     if( i!=255) fprint( fdesc, "\t},\n");
-                    else fprint( fdesc, "\t}\n"); /*no comma*/
+                    else fprint( fdesc, "\t}\n");
                     j++;
                 }
                 fprint( fdesc, "  ]\n");
                 fprint( fdesc, "}\n");
         close( fdesc);
+*/
+
 }
+
 

@@ -1,0 +1,1538 @@
+[
+{
+  "val": 0,
+  "name": "NOP",
+  "group": "SYS",
+  "desc": "no operation"
+},
+{
+  "val": 1,
+  "name": "SSI",
+  "group": "SYS",
+  "desc": "sir=(sir<<1)+miso"
+},
+{
+  "val": 2,
+  "name": "SSO",
+  "group": "SYS",
+  "desc": "mosi=sor&0x80 ? 1:0; sor<<=1"
+},
+{
+  "val": 3,
+  "name": "SCL",
+  "group": "SYS",
+  "desc": "sclk=0"
+},
+{
+  "val": 4,
+  "name": "SCH",
+  "group": "SYS",
+  "desc": "sclk=1"
+},
+{
+  "val": 5,
+  "name": "RET",
+  "group": "SYS",
+  "desc": "c=L7; pc=i; l++;"
+},
+{
+  "val": 6,
+  "name": "COR",
+  "group": "SYS",
+  "desc": "c=d; pc=i"
+},
+{
+  "val": 7,
+  "name": "OWN",
+  "group": "SYS",
+  "desc": "L7=co"
+},
+{
+  "val": 8,
+  "name": "P4",
+  "group": "FIX",
+  "desc": "r+=4"
+},
+{
+  "val": 9,
+  "name": "P1",
+  "group": "FIX",
+  "desc": "r+=1"
+},
+{
+  "val": 10,
+  "name": "P2",
+  "group": "FIX",
+  "desc": "r+=2"
+},
+{
+  "val": 11,
+  "name": "P3",
+  "group": "FIX",
+  "desc": "r+=3"
+},
+{
+  "val": 12,
+  "name": "M4",
+  "group": "FIX",
+  "desc": "r-=4"
+},
+{
+  "val": 13,
+  "name": "M3",
+  "group": "FIX",
+  "desc": "r-=3"
+},
+{
+  "val": 14,
+  "name": "M2",
+  "group": "FIX",
+  "desc": "r-=2"
+},
+{
+  "val": 15,
+  "name": "M1",
+  "group": "FIX",
+  "desc": "r-=1"
+},
+{
+  "val": 16,
+  "name": "CLR",
+  "group": "ALU",
+  "desc": "r=0"
+},
+{
+  "val": 17,
+  "name": "IDO",
+  "group": "ALU",
+  "desc": "r=o"
+},
+{
+  "val": 18,
+  "name": "OCR",
+  "group": "ALU",
+  "desc": "r=~r"
+},
+{
+  "val": 19,
+  "name": "OCO",
+  "group": "ALU",
+  "desc": "r=~o"
+},
+{
+  "val": 20,
+  "name": "SLR",
+  "group": "ALU",
+  "desc": "r=r<<1"
+},
+{
+  "val": 21,
+  "name": "SLO",
+  "group": "ALU",
+  "desc": "r=o<<1"
+},
+{
+  "val": 22,
+  "name": "SRR",
+  "group": "ALU",
+  "desc": "r=r>>1"
+},
+{
+  "val": 23,
+  "name": "SRO",
+  "group": "ALU",
+  "desc": "r=o>>1"
+},
+{
+  "val": 24,
+  "name": "AND",
+  "group": "ALU",
+  "desc": "r=r&o"
+},
+{
+  "val": 25,
+  "name": "IOR",
+  "group": "ALU",
+  "desc": "r=r|o"
+},
+{
+  "val": 26,
+  "name": "EOR",
+  "group": "ALU",
+  "desc": "r=r^o"
+},
+{
+  "val": 27,
+  "name": "ADD",
+  "group": "ALU",
+  "desc": "r=r+o"
+},
+{
+  "val": 28,
+  "name": "CAR",
+  "group": "ALU",
+  "desc": "if (r+o)>255 then r=1 else r=0"
+},
+{
+  "val": 29,
+  "name": "RLO",
+  "group": "ALU",
+  "desc": "if r<o then r=255 else r=0"
+},
+{
+  "val": 30,
+  "name": "REO",
+  "group": "ALU",
+  "desc": "if r=o then r=255 else r=0"
+},
+{
+  "val": 31,
+  "name": "RGO",
+  "group": "ALU",
+  "desc": "if r>o then r=255 else r=0"
+},
+{
+  "val": 32,
+  "name": "*0",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=0; l--"
+},
+{
+  "val": 33,
+  "name": "*1",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=1; l--"
+},
+{
+  "val": 34,
+  "name": "*2",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=2; l--"
+},
+{
+  "val": 35,
+  "name": "*3",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=3; l--"
+},
+{
+  "val": 36,
+  "name": "*4",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=4; l--"
+},
+{
+  "val": 37,
+  "name": "*5",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=5; l--"
+},
+{
+  "val": 38,
+  "name": "*6",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=6; l--"
+},
+{
+  "val": 39,
+  "name": "*7",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=7; l--"
+},
+{
+  "val": 40,
+  "name": "*8",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=8; l--"
+},
+{
+  "val": 41,
+  "name": "*9",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=9; l--"
+},
+{
+  "val": 42,
+  "name": "*10",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=10; l--"
+},
+{
+  "val": 43,
+  "name": "*11",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=11; l--"
+},
+{
+  "val": 44,
+  "name": "*12",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=12; l--"
+},
+{
+  "val": 45,
+  "name": "*13",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=13; l--"
+},
+{
+  "val": 46,
+  "name": "*14",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=14; l--"
+},
+{
+  "val": 47,
+  "name": "*15",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=15; l--"
+},
+{
+  "val": 48,
+  "name": "*16",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=16; l--"
+},
+{
+  "val": 49,
+  "name": "*17",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=17; l--"
+},
+{
+  "val": 50,
+  "name": "*18",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=18; l--"
+},
+{
+  "val": 51,
+  "name": "*19",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=19; l--"
+},
+{
+  "val": 52,
+  "name": "*20",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=20; l--"
+},
+{
+  "val": 53,
+  "name": "*21",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=21; l--"
+},
+{
+  "val": 54,
+  "name": "*22",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=22; l--"
+},
+{
+  "val": 55,
+  "name": "*23",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=23; l--"
+},
+{
+  "val": 56,
+  "name": "*24",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=24; l--"
+},
+{
+  "val": 57,
+  "name": "*25",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=25; l--"
+},
+{
+  "val": 58,
+  "name": "*26",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=26; l--"
+},
+{
+  "val": 59,
+  "name": "*27",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=27; l--"
+},
+{
+  "val": 60,
+  "name": "*28",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=28; l--"
+},
+{
+  "val": 61,
+  "name": "*29",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=29; l--"
+},
+{
+  "val": 62,
+  "name": "*30",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=30; l--"
+},
+{
+  "val": 63,
+  "name": "*31",
+  "group": "TRAP",
+  "desc": "i=pc; pc=0; co=c; c=31; l--"
+},
+{
+  "val": 64,
+  "name": "0d",
+  "group": "DIRO",
+  "desc": "d=L0"
+},
+{
+  "val": 65,
+  "name": "1d",
+  "group": "DIRO",
+  "desc": "d=L1"
+},
+{
+  "val": 66,
+  "name": "2d",
+  "group": "DIRO",
+  "desc": "d=L2"
+},
+{
+  "val": 67,
+  "name": "3d",
+  "group": "DIRO",
+  "desc": "d=L3"
+},
+{
+  "val": 68,
+  "name": "4d",
+  "group": "DIRO",
+  "desc": "d=L4"
+},
+{
+  "val": 69,
+  "name": "5d",
+  "group": "DIRO",
+  "desc": "d=L5"
+},
+{
+  "val": 70,
+  "name": "6d",
+  "group": "DIRO",
+  "desc": "d=L6"
+},
+{
+  "val": 71,
+  "name": "7d",
+  "group": "DIRO",
+  "desc": "d=L7"
+},
+{
+  "val": 72,
+  "name": "d0",
+  "group": "DIRO",
+  "desc": "L0 = d"
+},
+{
+  "val": 73,
+  "name": "d1",
+  "group": "DIRO",
+  "desc": "L1 = d"
+},
+{
+  "val": 74,
+  "name": "d2",
+  "group": "DIRO",
+  "desc": "L2 = d"
+},
+{
+  "val": 75,
+  "name": "d3",
+  "group": "DIRO",
+  "desc": "L3 = d"
+},
+{
+  "val": 76,
+  "name": "d4",
+  "group": "DIRO",
+  "desc": "L4 = d"
+},
+{
+  "val": 77,
+  "name": "d5",
+  "group": "DIRO",
+  "desc": "L5 = d"
+},
+{
+  "val": 78,
+  "name": "d6",
+  "group": "DIRO",
+  "desc": "L6 = d"
+},
+{
+  "val": 79,
+  "name": "d7",
+  "group": "DIRO",
+  "desc": "L7 = d"
+},
+{
+  "val": 80,
+  "name": "0i",
+  "group": "DIRO",
+  "desc": "i=L0"
+},
+{
+  "val": 81,
+  "name": "1i",
+  "group": "DIRO",
+  "desc": "i=L1"
+},
+{
+  "val": 82,
+  "name": "2i",
+  "group": "DIRO",
+  "desc": "i=L2"
+},
+{
+  "val": 83,
+  "name": "3i",
+  "group": "DIRO",
+  "desc": "i=L3"
+},
+{
+  "val": 84,
+  "name": "4i",
+  "group": "DIRO",
+  "desc": "i=L4"
+},
+{
+  "val": 85,
+  "name": "5i",
+  "group": "DIRO",
+  "desc": "i=L5"
+},
+{
+  "val": 86,
+  "name": "6i",
+  "group": "DIRO",
+  "desc": "i=L6"
+},
+{
+  "val": 87,
+  "name": "7i",
+  "group": "DIRO",
+  "desc": "i=L7"
+},
+{
+  "val": 88,
+  "name": "i0",
+  "group": "DIRO",
+  "desc": "L0 = i"
+},
+{
+  "val": 89,
+  "name": "i1",
+  "group": "DIRO",
+  "desc": "L1 = i"
+},
+{
+  "val": 90,
+  "name": "i2",
+  "group": "DIRO",
+  "desc": "L2 = i"
+},
+{
+  "val": 91,
+  "name": "i3",
+  "group": "DIRO",
+  "desc": "L3 = i"
+},
+{
+  "val": 92,
+  "name": "i4",
+  "group": "DIRO",
+  "desc": "L4 = i"
+},
+{
+  "val": 93,
+  "name": "i5",
+  "group": "DIRO",
+  "desc": "L5 = i"
+},
+{
+  "val": 94,
+  "name": "i6",
+  "group": "DIRO",
+  "desc": "L6 = i"
+},
+{
+  "val": 95,
+  "name": "i7",
+  "group": "DIRO",
+  "desc": "L7 = i"
+},
+{
+  "val": 96,
+  "name": "0r",
+  "group": "DIRO",
+  "desc": "r=L0"
+},
+{
+  "val": 97,
+  "name": "1r",
+  "group": "DIRO",
+  "desc": "r=L1"
+},
+{
+  "val": 98,
+  "name": "2r",
+  "group": "DIRO",
+  "desc": "r=L2"
+},
+{
+  "val": 99,
+  "name": "3r",
+  "group": "DIRO",
+  "desc": "r=L3"
+},
+{
+  "val": 100,
+  "name": "4r",
+  "group": "DIRO",
+  "desc": "r=L4"
+},
+{
+  "val": 101,
+  "name": "5r",
+  "group": "DIRO",
+  "desc": "r=L5"
+},
+{
+  "val": 102,
+  "name": "6r",
+  "group": "DIRO",
+  "desc": "r=L6"
+},
+{
+  "val": 103,
+  "name": "7r",
+  "group": "DIRO",
+  "desc": "r=L7"
+},
+{
+  "val": 104,
+  "name": "r0",
+  "group": "DIRO",
+  "desc": "L0 = r"
+},
+{
+  "val": 105,
+  "name": "r1",
+  "group": "DIRO",
+  "desc": "L1 = r"
+},
+{
+  "val": 106,
+  "name": "r2",
+  "group": "DIRO",
+  "desc": "L2 = r"
+},
+{
+  "val": 107,
+  "name": "r3",
+  "group": "DIRO",
+  "desc": "L3 = r"
+},
+{
+  "val": 108,
+  "name": "r4",
+  "group": "DIRO",
+  "desc": "L4 = r"
+},
+{
+  "val": 109,
+  "name": "r5",
+  "group": "DIRO",
+  "desc": "L5 = r"
+},
+{
+  "val": 110,
+  "name": "r6",
+  "group": "DIRO",
+  "desc": "L6 = r"
+},
+{
+  "val": 111,
+  "name": "r7",
+  "group": "DIRO",
+  "desc": "L7 = r"
+},
+{
+  "val": 112,
+  "name": "0o",
+  "group": "DIRO",
+  "desc": "o=L0"
+},
+{
+  "val": 113,
+  "name": "1o",
+  "group": "DIRO",
+  "desc": "o=L1"
+},
+{
+  "val": 114,
+  "name": "2o",
+  "group": "DIRO",
+  "desc": "o=L2"
+},
+{
+  "val": 115,
+  "name": "3o",
+  "group": "DIRO",
+  "desc": "o=L3"
+},
+{
+  "val": 116,
+  "name": "4o",
+  "group": "DIRO",
+  "desc": "o=L4"
+},
+{
+  "val": 117,
+  "name": "5o",
+  "group": "DIRO",
+  "desc": "o=L5"
+},
+{
+  "val": 118,
+  "name": "6o",
+  "group": "DIRO",
+  "desc": "o=L6"
+},
+{
+  "val": 119,
+  "name": "7o",
+  "group": "DIRO",
+  "desc": "o=L7"
+},
+{
+  "val": 120,
+  "name": "o0",
+  "group": "DIRO",
+  "desc": "L0 = o"
+},
+{
+  "val": 121,
+  "name": "o1",
+  "group": "DIRO",
+  "desc": "L1 = o"
+},
+{
+  "val": 122,
+  "name": "o2",
+  "group": "DIRO",
+  "desc": "L2 = o"
+},
+{
+  "val": 123,
+  "name": "o3",
+  "group": "DIRO",
+  "desc": "L3 = o"
+},
+{
+  "val": 124,
+  "name": "o4",
+  "group": "DIRO",
+  "desc": "L4 = o"
+},
+{
+  "val": 125,
+  "name": "o5",
+  "group": "DIRO",
+  "desc": "L5 = o"
+},
+{
+  "val": 126,
+  "name": "o6",
+  "group": "DIRO",
+  "desc": "L6 = o"
+},
+{
+  "val": 127,
+  "name": "o7",
+  "group": "DIRO",
+  "desc": "L7 = o"
+},
+{
+  "val": 128,
+  "name": "no",
+  "group": "PAIR",
+  "desc": "o=ram[c][pc]; pc++"
+},
+{
+  "val": 129,
+  "name": "END",
+  "group": "PAIR",
+  "desc": "NM scrounge"
+},
+{
+  "val": 130,
+  "name": "-",
+  "group": "PAIR",
+  "desc": "NL scrounge"
+},
+{
+  "val": 131,
+  "name": "nd",
+  "group": "PAIR",
+  "desc": "d=ram[c][pc]; pc++"
+},
+{
+  "val": 132,
+  "name": "nr",
+  "group": "PAIR",
+  "desc": "r=ram[c][pc]; pc++"
+},
+{
+  "val": 133,
+  "name": "ni",
+  "group": "PAIR",
+  "desc": "i=ram[c][pc]; pc++"
+},
+{
+  "val": 134,
+  "name": "ns",
+  "group": "PAIR",
+  "desc": "sor=ram[c][pc]; pc++"
+},
+{
+  "val": 135,
+  "name": "np",
+  "group": "PAIR",
+  "desc": "por=ram[c][pc]; pc++"
+},
+{
+  "val": 136,
+  "name": "ne",
+  "group": "PAIR",
+  "desc": "e=ram[c][pc]; pc++"
+},
+{
+  "val": 137,
+  "name": "na",
+  "group": "PAIR",
+  "desc": "if (o+ram[c][pc]; pc++)>255 then d+=1"
+},
+{
+  "val": 138,
+  "name": "nb",
+  "group": "PAIR",
+  "desc": "pc+=ram[c][pc]"
+},
+{
+  "val": 139,
+  "name": "nj",
+  "group": "PAIR",
+  "desc": "pc=ram[c][pc]"
+},
+{
+  "val": 140,
+  "name": "nw",
+  "group": "PAIR",
+  "desc": "if i!=0 then pc=ram[c][pc]; i--"
+},
+{
+  "val": 141,
+  "name": "nt",
+  "group": "PAIR",
+  "desc": "if r!=0 then pc=ram[c][pc]"
+},
+{
+  "val": 142,
+  "name": "nf",
+  "group": "PAIR",
+  "desc": "if r==0 then pc=ram[c][pc]"
+},
+{
+  "val": 143,
+  "name": "nc",
+  "group": "PAIR",
+  "desc": "i=pc; pc=0; co=c; c=ram[c][pc]; l--"
+},
+{
+  "val": 144,
+  "name": "mo",
+  "group": "PAIR",
+  "desc": "o=ram[d][o]"
+},
+{
+  "val": 145,
+  "name": "--",
+  "group": "PAIR",
+  "desc": "MM scrounge"
+},
+{
+  "val": 146,
+  "name": "--",
+  "group": "PAIR",
+  "desc": "ML scrounge"
+},
+{
+  "val": 147,
+  "name": "md",
+  "group": "PAIR",
+  "desc": "d=ram[d][o]"
+},
+{
+  "val": 148,
+  "name": "mr",
+  "group": "PAIR",
+  "desc": "r=ram[d][o]"
+},
+{
+  "val": 149,
+  "name": "mi",
+  "group": "PAIR",
+  "desc": "i=ram[d][o]"
+},
+{
+  "val": 150,
+  "name": "ms",
+  "group": "PAIR",
+  "desc": "sor=ram[d][o]"
+},
+{
+  "val": 151,
+  "name": "mp",
+  "group": "PAIR",
+  "desc": "por=ram[d][o]"
+},
+{
+  "val": 152,
+  "name": "me",
+  "group": "PAIR",
+  "desc": "e=ram[d][o]"
+},
+{
+  "val": 153,
+  "name": "ma",
+  "group": "PAIR",
+  "desc": "if (o+ram[d][o])>255 then d+=1"
+},
+{
+  "val": 154,
+  "name": "mb",
+  "group": "PAIR",
+  "desc": "pc+=ram[d][o]"
+},
+{
+  "val": 155,
+  "name": "mj",
+  "group": "PAIR",
+  "desc": "pc=ram[d][o]"
+},
+{
+  "val": 156,
+  "name": "mw",
+  "group": "PAIR",
+  "desc": "if i!=0 then pc=ram[d][o]; i--"
+},
+{
+  "val": 157,
+  "name": "mt",
+  "group": "PAIR",
+  "desc": "if r!=0 then pc=ram[d][o]"
+},
+{
+  "val": 158,
+  "name": "mf",
+  "group": "PAIR",
+  "desc": "if r==0 then pc=ram[d][o]"
+},
+{
+  "val": 159,
+  "name": "mc",
+  "group": "PAIR",
+  "desc": "i=pc; pc=0; co=c; c=ram[d][o]; l--"
+},
+{
+  "val": 160,
+  "name": "lo",
+  "group": "PAIR",
+  "desc": "o=ram[l][o]"
+},
+{
+  "val": 161,
+  "name": "--",
+  "group": "PAIR",
+  "desc": "LM scrounge"
+},
+{
+  "val": 162,
+  "name": "--",
+  "group": "PAIR",
+  "desc": "LL scrounge"
+},
+{
+  "val": 163,
+  "name": "ld",
+  "group": "PAIR",
+  "desc": "d=ram[l][o]"
+},
+{
+  "val": 164,
+  "name": "lr",
+  "group": "PAIR",
+  "desc": "r=ram[l][o]"
+},
+{
+  "val": 165,
+  "name": "li",
+  "group": "PAIR",
+  "desc": "i=ram[l][o]"
+},
+{
+  "val": 166,
+  "name": "ls",
+  "group": "PAIR",
+  "desc": "sor=ram[l][o]"
+},
+{
+  "val": 167,
+  "name": "lp",
+  "group": "PAIR",
+  "desc": "por=ram[l][o]"
+},
+{
+  "val": 168,
+  "name": "le",
+  "group": "PAIR",
+  "desc": "e=ram[l][o]"
+},
+{
+  "val": 169,
+  "name": "la",
+  "group": "PAIR",
+  "desc": "if (o+ram[l][o])>255 then d+=1"
+},
+{
+  "val": 170,
+  "name": "lb",
+  "group": "PAIR",
+  "desc": "pc+=ram[l][o]"
+},
+{
+  "val": 171,
+  "name": "lj",
+  "group": "PAIR",
+  "desc": "pc=ram[l][o]"
+},
+{
+  "val": 172,
+  "name": "lw",
+  "group": "PAIR",
+  "desc": "if i!=0 then pc=ram[l][o]; i--"
+},
+{
+  "val": 173,
+  "name": "lt",
+  "group": "PAIR",
+  "desc": "if r!=0 then pc=ram[l][o]"
+},
+{
+  "val": 174,
+  "name": "lf",
+  "group": "PAIR",
+  "desc": "if r==0 then pc=ram[l][o]"
+},
+{
+  "val": 175,
+  "name": "lc",
+  "group": "PAIR",
+  "desc": "i=pc; pc=0; co=c; c=ram[l][o]; l--"
+},
+{
+  "val": 176,
+  "name": "do",
+  "group": "PAIR",
+  "desc": "o=d"
+},
+{
+  "val": 177,
+  "name": "dm",
+  "group": "PAIR",
+  "desc": "ram[d][o]=d"
+},
+{
+  "val": 178,
+  "name": "dl",
+  "group": "PAIR",
+  "desc": "ram[l][o]=d"
+},
+{
+  "val": 179,
+  "name": "--",
+  "group": "PAIR",
+  "desc": "DD scrounge"
+},
+{
+  "val": 180,
+  "name": "dr",
+  "group": "PAIR",
+  "desc": "r=d"
+},
+{
+  "val": 181,
+  "name": "di",
+  "group": "PAIR",
+  "desc": "i=d"
+},
+{
+  "val": 182,
+  "name": "ds",
+  "group": "PAIR",
+  "desc": "sor=d"
+},
+{
+  "val": 183,
+  "name": "dp",
+  "group": "PAIR",
+  "desc": "por=d"
+},
+{
+  "val": 184,
+  "name": "de",
+  "group": "PAIR",
+  "desc": "e=d"
+},
+{
+  "val": 185,
+  "name": "da",
+  "group": "PAIR",
+  "desc": "if (o+d)>255 then d+=1"
+},
+{
+  "val": 186,
+  "name": "db",
+  "group": "PAIR",
+  "desc": "pc+=d"
+},
+{
+  "val": 187,
+  "name": "dj",
+  "group": "PAIR",
+  "desc": "pc=d"
+},
+{
+  "val": 188,
+  "name": "dw",
+  "group": "PAIR",
+  "desc": "if i!=0 then pc=d; i--"
+},
+{
+  "val": 189,
+  "name": "dt",
+  "group": "PAIR",
+  "desc": "if r!=0 then pc=d"
+},
+{
+  "val": 190,
+  "name": "df",
+  "group": "PAIR",
+  "desc": "if r==0 then pc=d"
+},
+{
+  "val": 191,
+  "name": "dc",
+  "group": "PAIR",
+  "desc": "i=pc; pc=0; co=c; c=d; l--"
+},
+{
+  "val": 192,
+  "name": "ro",
+  "group": "PAIR",
+  "desc": "o=r"
+},
+{
+  "val": 193,
+  "name": "rm",
+  "group": "PAIR",
+  "desc": "ram[d][o]=r"
+},
+{
+  "val": 194,
+  "name": "rl",
+  "group": "PAIR",
+  "desc": "ram[l][o]=r"
+},
+{
+  "val": 195,
+  "name": "rd",
+  "group": "PAIR",
+  "desc": "d=r"
+},
+{
+  "val": 196,
+  "name": "--",
+  "group": "PAIR",
+  "desc": "RR scrounge"
+},
+{
+  "val": 197,
+  "name": "ri",
+  "group": "PAIR",
+  "desc": "i=r"
+},
+{
+  "val": 198,
+  "name": "rs",
+  "group": "PAIR",
+  "desc": "sor=r"
+},
+{
+  "val": 199,
+  "name": "rp",
+  "group": "PAIR",
+  "desc": "por=r"
+},
+{
+  "val": 200,
+  "name": "re",
+  "group": "PAIR",
+  "desc": "e=r"
+},
+{
+  "val": 201,
+  "name": "ra",
+  "group": "PAIR",
+  "desc": "if (o+r)>255 then d+=1"
+},
+{
+  "val": 202,
+  "name": "rb",
+  "group": "PAIR",
+  "desc": "pc+=r"
+},
+{
+  "val": 203,
+  "name": "rj",
+  "group": "PAIR",
+  "desc": "pc=r"
+},
+{
+  "val": 204,
+  "name": "rw",
+  "group": "PAIR",
+  "desc": "if i!=0 then pc=r; i--"
+},
+{
+  "val": 205,
+  "name": "rt",
+  "group": "PAIR",
+  "desc": "if r!=0 then pc=r"
+},
+{
+  "val": 206,
+  "name": "rf",
+  "group": "PAIR",
+  "desc": "if r==0 then pc=r"
+},
+{
+  "val": 207,
+  "name": "rc",
+  "group": "PAIR",
+  "desc": "i=pc; pc=0; co=c; c=r; l--"
+},
+{
+  "val": 208,
+  "name": "io",
+  "group": "PAIR",
+  "desc": "o=i"
+},
+{
+  "val": 209,
+  "name": "im",
+  "group": "PAIR",
+  "desc": "ram[d][o]=i"
+},
+{
+  "val": 210,
+  "name": "il",
+  "group": "PAIR",
+  "desc": "ram[l][o]=i"
+},
+{
+  "val": 211,
+  "name": "id",
+  "group": "PAIR",
+  "desc": "d=i"
+},
+{
+  "val": 212,
+  "name": "ir",
+  "group": "PAIR",
+  "desc": "r=i"
+},
+{
+  "val": 213,
+  "name": "--",
+  "group": "PAIR",
+  "desc": "II scrounge"
+},
+{
+  "val": 214,
+  "name": "is",
+  "group": "PAIR",
+  "desc": "sor=i"
+},
+{
+  "val": 215,
+  "name": "ip",
+  "group": "PAIR",
+  "desc": "por=i"
+},
+{
+  "val": 216,
+  "name": "ie",
+  "group": "PAIR",
+  "desc": "e=i"
+},
+{
+  "val": 217,
+  "name": "ia",
+  "group": "PAIR",
+  "desc": "if (o+i)>255 then d+=1"
+},
+{
+  "val": 218,
+  "name": "ib",
+  "group": "PAIR",
+  "desc": "pc+=i"
+},
+{
+  "val": 219,
+  "name": "ij",
+  "group": "PAIR",
+  "desc": "pc=i"
+},
+{
+  "val": 220,
+  "name": "iw",
+  "group": "PAIR",
+  "desc": "if i!=0 then pc=i; i--"
+},
+{
+  "val": 221,
+  "name": "it",
+  "group": "PAIR",
+  "desc": "if r!=0 then pc=i"
+},
+{
+  "val": 222,
+  "name": "if",
+  "group": "PAIR",
+  "desc": "if r==0 then pc=i"
+},
+{
+  "val": 223,
+  "name": "ic",
+  "group": "PAIR",
+  "desc": "i=pc; pc=0; co=c; c=i; l--"
+},
+{
+  "val": 224,
+  "name": "so",
+  "group": "PAIR",
+  "desc": "o=sir"
+},
+{
+  "val": 225,
+  "name": "sm",
+  "group": "PAIR",
+  "desc": "ram[d][o]=sir"
+},
+{
+  "val": 226,
+  "name": "sl",
+  "group": "PAIR",
+  "desc": "ram[l][o]=sir"
+},
+{
+  "val": 227,
+  "name": "sd",
+  "group": "PAIR",
+  "desc": "d=sir"
+},
+{
+  "val": 228,
+  "name": "sr",
+  "group": "PAIR",
+  "desc": "r=sir"
+},
+{
+  "val": 229,
+  "name": "si",
+  "group": "PAIR",
+  "desc": "i=sir"
+},
+{
+  "val": 230,
+  "name": "ss",
+  "group": "PAIR",
+  "desc": "sor=sir"
+},
+{
+  "val": 231,
+  "name": "sp",
+  "group": "PAIR",
+  "desc": "por=sir"
+},
+{
+  "val": 232,
+  "name": "se",
+  "group": "PAIR",
+  "desc": "e=sir"
+},
+{
+  "val": 233,
+  "name": "sa",
+  "group": "PAIR",
+  "desc": "if (o+sir)>255 then d+=1"
+},
+{
+  "val": 234,
+  "name": "sb",
+  "group": "PAIR",
+  "desc": "pc+=sir"
+},
+{
+  "val": 235,
+  "name": "sj",
+  "group": "PAIR",
+  "desc": "pc=sir"
+},
+{
+  "val": 236,
+  "name": "sw",
+  "group": "PAIR",
+  "desc": "if i!=0 then pc=sir; i--"
+},
+{
+  "val": 237,
+  "name": "st",
+  "group": "PAIR",
+  "desc": "if r!=0 then pc=sir"
+},
+{
+  "val": 238,
+  "name": "sf",
+  "group": "PAIR",
+  "desc": "if r==0 then pc=sir"
+},
+{
+  "val": 239,
+  "name": "sc",
+  "group": "PAIR",
+  "desc": "i=pc; pc=0; co=c; c=sir; l--"
+},
+{
+  "val": 240,
+  "name": "po",
+  "group": "PAIR",
+  "desc": "o=pir"
+},
+{
+  "val": 241,
+  "name": "pm",
+  "group": "PAIR",
+  "desc": "ram[d][o]=pir"
+},
+{
+  "val": 242,
+  "name": "pl",
+  "group": "PAIR",
+  "desc": "ram[l][o]=pir"
+},
+{
+  "val": 243,
+  "name": "pd",
+  "group": "PAIR",
+  "desc": "d=pir"
+},
+{
+  "val": 244,
+  "name": "pr",
+  "group": "PAIR",
+  "desc": "r=pir"
+},
+{
+  "val": 245,
+  "name": "pi",
+  "group": "PAIR",
+  "desc": "i=pir"
+},
+{
+  "val": 246,
+  "name": "ps",
+  "group": "PAIR",
+  "desc": "sor=pir"
+},
+{
+  "val": 247,
+  "name": "pp",
+  "group": "PAIR",
+  "desc": "por=pir"
+},
+{
+  "val": 248,
+  "name": "pe",
+  "group": "PAIR",
+  "desc": "e=pir"
+},
+{
+  "val": 249,
+  "name": "pa",
+  "group": "PAIR",
+  "desc": "if (o+pir)>255 then d+=1"
+},
+{
+  "val": 250,
+  "name": "pb",
+  "group": "PAIR",
+  "desc": "pc+=pir"
+},
+{
+  "val": 251,
+  "name": "pj",
+  "group": "PAIR",
+  "desc": "pc=pir"
+},
+{
+  "val": 252,
+  "name": "pw",
+  "group": "PAIR",
+  "desc": "if i!=0 then pc=pir; i--"
+},
+{
+  "val": 253,
+  "name": "pt",
+  "group": "PAIR",
+  "desc": "if r!=0 then pc=pir"
+},
+{
+  "val": 254,
+  "name": "pf",
+  "group": "PAIR",
+  "desc": "if r==0 then pc=pir"
+},
+{
+  "val": 255,
+  "name": "pc",
+  "group": "PAIR",
+  "desc": "i=pc; pc=0; co=c; c=pir; l--"
+}
+]
