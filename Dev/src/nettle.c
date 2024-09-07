@@ -33444,7 +33444,7 @@ main()
         load( &vm, fname);
         myth_reset( &vm);
 
-        //Read source code from struct into VM memory
+        /*Read source code from struct into VM memory*/
         int i,j;
         uchar n;
         char *s;
@@ -33459,4 +33459,29 @@ main()
         }
         writeD( &vm);
         save( &vm, fname);
+
+
+        /*Generate opcode matrix JSON file*/
+        j=0;
+        while( strcmp (strlits[++j].str, "NOP"))
+        ;
+
+        int fdesc;
+        create( "myth_opcodes.json", 0, 0666);
+        fdesc = open( "myth_opcodes.json", OWRITE);
+        if (fdesc != -1)
+                fprint( fdesc, "{\n");
+                fprint( fdesc, "  \"opcodes\": [\n");
+                for( i=0; i<=255; i++) {
+                    fprint( fdesc, "\t{\n");
+                    fprint( fdesc, "\t\t\"val\": %d,\n",strlits[j].val);
+                    fprint( fdesc, "\t\t\"name\": \"%s\"\n", strlits[j].str);
+                    if( i!=255) fprint( fdesc, "\t},\n");
+                    else fprint( fdesc, "\t}\n"); /*no comma*/
+                    j++;
+                }
+                fprint( fdesc, "  ]\n");
+                fprint( fdesc, "}\n");
+        close( fdesc);
 }
+
