@@ -12,29 +12,27 @@
 
 struct myth_vm /*Complete machine state including all ram*/
 {
-        uchar ram[256][256];
+        uchar ram[256][256]; /*MemoryByte[page][offset]*/
 
-        uchar e;    /*Device ENABLE register */
+        uchar e;    /*Device ENABLE register - set by VM */
+        uchar sclk; /*Serial clock state bit - set by VM*/
+        uchar miso; /*Serial input line state bit - set by OUTSIDE*/
+        uchar mosi; /*Serial output line state bit - set by VM*/
+        uchar sir;  /*Serial input register - set by VM*/
+        uchar sor;  /*Serial output register - set by VM*/
+        uchar pir;  /*Parallel input register - set by OUTSIDE*/
+        uchar por;  /*Parallel output register - set by VM*/
 
-        uchar sclk; /*Serial clock state bit*/
-        uchar miso; /*Serial input line state bit*/
-        uchar mosi; /*Serial output line state bit*/
-        uchar sir;  /*Serial input register, modelled after HC595*/
-        uchar sor;  /*Serial output register, modelled after HC165*/
+        uchar r;    /*Result*/
+        uchar o;    /*Operand*/
 
-        uchar pir;  /*Parallel input register*/
-        uchar por;  /*Parallel output register*/
+        uchar i;    /*Inner counter*/
+        uchar pc;   /*Program counter*/
 
-        uchar r;    /*RESULT*/
-        uchar o;    /*OFFSET*/
-
-        uchar i;    /*INNER*/
-        uchar pc;   /*PROGRAM Counter*/
-
-        uchar co;   /*Coroutine register*/
-        uchar c;    /*CODE page register*/
-        uchar d;    /*DATA page register*/
-        uchar l;    /*LOCAL page register*/
+        uchar co;   /*Coroutine page index*/
+        uchar c;    /*Code page index*/
+        uchar d;    /*Data page index*/
+        uchar l;    /*Local page index*/
 
         /*Set by scrounge instruction stub
         */
