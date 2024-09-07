@@ -332,25 +332,26 @@ diro(struct myth_vm *vm, uchar opcode) /*Execute DIRO instruction*/
         */
 
         #define BIT3 8
+        #define BITS45 (opcode >> 4) & 3
+        #define BITS02 opcode & 7
 
-        uchar *mptr;
-        uchar index = opcode & 7; /*Zero except low order 3 bits*/
-        
-        mptr = &(vm->ram[vm->l][DIRO_BASE_OFFSET + index]);
+        uchar index = BITS02;              
+        uchar *mptr = &(vm->ram[vm->l][DIRO_BASE_OFFSET + index]);
+
         if(opcode & BIT3)
-                switch((opcode>>4) & 3){ /*Zero except bits 4-5 at LSB*/
+                switch(BITS45){
                         case 0: *mptr = vm->d; break;
                         case 1: *mptr = vm->i; break;
                         case 2: *mptr = vm->r; break;
                         case 3: *mptr = vm->o; break;
                 }
         else
-                switch((opcode>>4) & 3){ /*Zero except bits 4-5 at LSB*/
-                        case 0: vm->d = *mptr; break;
-                        case 1: vm->i = *mptr; break;
-                        case 2: vm->r = *mptr; break;
-                        case 3: vm->o = *mptr; break;
-                }
+        switch(BITS45){
+                case 0: vm->d = *mptr; break;
+                case 1: vm->i = *mptr; break;
+                case 2: vm->r = *mptr; break;
+                case 3: vm->o = *mptr; break;
+        }
 }
 
 

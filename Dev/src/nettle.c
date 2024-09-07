@@ -378,7 +378,7 @@ struct { uchar val; char *str; } strlits[] = {
 /*SYS*/
 {0x00, "NOP"}, 
 {0x01, "SSI"}, {0x02, "SSO"}, {0x03, "SCL"}, {0x04, "SCH"}, 
-{0x05, "RET"}, {0x06, "COR"}, {0x07, "NEW"},
+{0x05, "RET"}, {0x06, "COR"}, {0x07, "OWN"},
 /*FIX*/
 {0x08, "P4"}, 
 {0x09, "P1"}, {0x0A, "P2"}, {0x0B, "P3"}, {0x0C, "M4"}, 
@@ -8657,7 +8657,7 @@ struct{
 /*0x1FFE*/ {"           ", "00h        ", "                                                               "},
 /*0x1FFF*/ {"           ", "00h        ", "                                                               "},
           },"Interpret  ",{
-/*0x2000*/ {"           ", "NEW        ", "********** Look up a word in the dictionary *******************"},
+/*0x2000*/ {"           ", "OWN        ", "********** Look up a word in the dictionary *******************"},
 /*0x2001*/ {"           ", "i6         ", "                                                               "},
 /*0x2002*/ {"           ", "nd         ", "                                                               "},
 /*0x2003*/ {"           ", "LOXBASE    ", "                                                               "},
@@ -8688,7 +8688,7 @@ struct{
 /*0x201C*/ {"           ", "PrMsg      ", "                                                               "},
 /*0x201D*/ {"           ", "6i         ", "                                                               "},
 /*0x201E*/ {"           ", "RET        ", "                                                               "},
-/*0x201F*/ {"NextArg    ", "NEW        ", "********** Advance LOX ARG PTR to next string **************** "},
+/*0x201F*/ {"NextArg    ", "OWN        ", "********** Advance LOX ARG PTR to next string **************** "},
 /*0x2020*/ {"           ", "i6         ", "                                                               "},
 /*0x2021*/ {"           ", "nd         ", "                                                               "},
 /*0x2022*/ {"           ", "LOXBASE    ", "                                                               "},
@@ -8914,7 +8914,7 @@ struct{
 /*0x20FE*/ {"           ", "00h        ", "                                                               "},
 /*0x20FF*/ {"           ", "00h        ", "                                                               "},
           },"Mul8       ",{
-/*0x2100*/ {"           ", "NEW        ", "Multiplies R by O result in R and O                            "},
+/*0x2100*/ {"           ", "OWN        ", "Multiplies R by O result in R and O                            "},
 /*0x2101*/ {"           ", "i6         ", "                                                               "},
 /*0x2102*/ {"           ", "o1         ", "Initialise copy of multiplicand (low order)                    "},
 /*0x2103*/ {"           ", "r0         ", "Save multiplier                                                "},
@@ -9171,7 +9171,7 @@ struct{
 /*0x21FE*/ {"           ", "00h        ", "                                                               "},
 /*0x21FF*/ {"           ", "00h        ", "                                                               "},
           },"DivMod8    ",{
-/*0x2200*/ {"           ", "NEW        ", "Divide R by G, return quotient in R, remainder in G            "},
+/*0x2200*/ {"           ", "OWN        ", "Divide R by G, return quotient in R, remainder in G            "},
 /*0x2201*/ {"           ", "i6         ", "                                                               "},
 /*0x2202*/ {"           ", "r0         ", "Save dividend                                                  "},
 /*0x2203*/ {"           ", "o1         ", "Save divisor                                                   "},
@@ -9428,7 +9428,7 @@ struct{
 /*0x22FE*/ {"           ", "00h        ", "                                                               "},
 /*0x22FF*/ {"           ", "00h        ", "                                                               "},
           },"SkipToNULL ",{
-/*0x2300*/ {"           ", "NEW        ", "********** Advance string pointer to next NULL char  **********"},
+/*0x2300*/ {"           ", "OWN        ", "********** Advance string pointer to next NULL char  **********"},
 /*0x2301*/ {"           ", "i6         ", "                                                               "},
 /*0x2302*/ {"SkipNFind0 ", "mr         ", "DO points to char                                              "},
 /*0x2303*/ {"           ", "nf         ", "If char zero, done       t                                     "},
@@ -9685,7 +9685,7 @@ struct{
 /*0x23FE*/ {"           ", "00h        ", "                                                               "},
 /*0x23FF*/ {"           ", "00h        ", "                                                               "},
           },"VSrch      ",{
-/*0x2400*/ {"           ", "NEW        ", "VOCAB Look-UP, search string address in D/O                    "},
+/*0x2400*/ {"           ", "OWN        ", "VOCAB Look-UP, search string address in D/O                    "},
 /*0x2401*/ {"           ", "i6         ", "                                                               "},
 /*0x2402*/ {"           ", "d0         ", "Search zero terminated string in this page                     "},
 /*0x2403*/ {"           ", "o1         ", "at this offset                                                 "},
@@ -9942,7 +9942,7 @@ struct{
 /*0x24FE*/ {"           ", "00h        ", "                                                               "},
 /*0x24FF*/ {"           ", "00h        ", "                                                               "},
           },"PrMsg      ",{
-/*0x2500*/ {"           ", "NEW         ", "                                                               "},
+/*0x2500*/ {"           ", "OWN         ", "                                                               "},
 /*0x2501*/ {"           ", "i6         ", "                                                               "},
 /*0x2502*/ {"           ", "r0         ", "                                                               "},
 /*0x2503*/ {"           ", "nd         ", "                                                               "},
@@ -10456,7 +10456,7 @@ struct{
 /*0x26FE*/ {"           ", "00h        ", "                                                               "},
 /*0x26FF*/ {"           ", "00h        ", "                                                               "},
           },"dst        ",{
-/*0x2700*/ {"           ", "NEW        ", "                                                               "},
+/*0x2700*/ {"           ", "OWN        ", "                                                               "},
 /*0x2701*/ {"           ", "6i         ", "                                                               "},
 /*0x2702*/ {"           ", "RET        ", "                                                               "},
 /*0x2703*/ {"           ", "00h        ", "                                                               "},
@@ -10713,7 +10713,7 @@ struct{
 /*0x27FE*/ {"           ", "00h        ", "                                                               "},
 /*0x27FF*/ {"           ", "00h        ", "                                                               "},
           },"src        ",{
-/*0x2800*/ {"           ", "NEW        ", "                                                               "},
+/*0x2800*/ {"           ", "OWN        ", "                                                               "},
 /*0x2801*/ {"           ", "6i         ", "                                                               "},
 /*0x2802*/ {"           ", "RET        ", "                                                               "},
 /*0x2803*/ {"           ", "00h        ", "                                                               "},
@@ -10970,7 +10970,7 @@ struct{
 /*0x28FE*/ {"           ", "00h        ", "                                                               "},
 /*0x28FF*/ {"           ", "00h        ", "                                                               "},
           },"ins        ",{
-/*0x2900*/ {"           ", "NEW        ", "                                                               "},
+/*0x2900*/ {"           ", "OWN        ", "                                                               "},
 /*0x2901*/ {"           ", "6i         ", "                                                               "},
 /*0x2902*/ {"           ", "RET        ", "                                                               "},
 /*0x2903*/ {"           ", "00h        ", "                                                               "},
@@ -11227,7 +11227,7 @@ struct{
 /*0x29FE*/ {"           ", "00h        ", "                                                               "},
 /*0x29FF*/ {"           ", "00h        ", "                                                               "},
           },"del        ",{
-/*0x2A00*/ {"           ", "NEW        ", "                                                               "},
+/*0x2A00*/ {"           ", "OWN        ", "                                                               "},
 /*0x2A01*/ {"           ", "6i         ", "                                                               "},
 /*0x2A02*/ {"           ", "RET        ", "                                                               "},
 /*0x2A03*/ {"           ", "00h        ", "                                                               "},
@@ -11484,7 +11484,7 @@ struct{
 /*0x2AFE*/ {"           ", "00h        ", "                                                               "},
 /*0x2AFF*/ {"           ", "00h        ", "                                                               "},
           },"add        ",{
-/*0x2B00*/ {"           ", "NEW        ", "                                                               "},
+/*0x2B00*/ {"           ", "OWN        ", "                                                               "},
 /*0x2B01*/ {"           ", "6i         ", "                                                               "},
 /*0x2B02*/ {"           ", "RET        ", "                                                               "},
 /*0x2B03*/ {"           ", "00h        ", "                                                               "},
@@ -11741,7 +11741,7 @@ struct{
 /*0x2BFE*/ {"           ", "00h        ", "                                                               "},
 /*0x2BFF*/ {"           ", "00h        ", "                                                               "},
           },"ls         ",{
-/*0x2C00*/ {"           ", "NEW        ", "                                                               "},
+/*0x2C00*/ {"           ", "OWN        ", "                                                               "},
 /*0x2C01*/ {"           ", "6i         ", "                                                               "},
 /*0x2C02*/ {"           ", "RET        ", "                                                               "},
 /*0x2C03*/ {"           ", "00h        ", "                                                               "},
@@ -11998,7 +11998,7 @@ struct{
 /*0x2CFE*/ {"           ", "00h        ", "                                                               "},
 /*0x2CFF*/ {"           ", "00h        ", "                                                               "},
           },"asm        ",{
-/*0x2D00*/ {"           ", "NEW        ", "                                                               "},
+/*0x2D00*/ {"           ", "OWN        ", "                                                               "},
 /*0x2D01*/ {"           ", "6i         ", "                                                               "},
 /*0x2D02*/ {"           ", "RET        ", "                                                               "},
 /*0x2D03*/ {"           ", "00h        ", "                                                               "},
@@ -12255,7 +12255,7 @@ struct{
 /*0x2DFE*/ {"           ", "00h        ", "                                                               "},
 /*0x2DFF*/ {"           ", "00h        ", "                                                               "},
           },"NextArg    ",{
-/*0x2E00*/ {"           ", "NEW        ", "********** Advance LOX ARG PTR to next string **************** "},
+/*0x2E00*/ {"           ", "OWN        ", "********** Advance LOX ARG PTR to next string **************** "},
 /*0x2E01*/ {"           ", "i6         ", "                                                               "},
 /*0x2E02*/ {"           ", "nd         ", "                                                               "},
 /*0x2E03*/ {"           ", "LOXBASE    ", "                                                               "},
