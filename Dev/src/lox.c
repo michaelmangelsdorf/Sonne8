@@ -93,6 +93,7 @@ main(int argc, char *argv[])
                 print("END after %d cycles: ", cyc);
                 vm.c = 0;
                 vm.pc = 0;
+                vm.pagebyte[0x7F][POS] = 0;
                 // vm.l++; /* Fix L */
         }
 
