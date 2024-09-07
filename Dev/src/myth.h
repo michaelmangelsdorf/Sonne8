@@ -123,8 +123,8 @@ static void call(struct myth_vm *vm, uchar dstpage);
 #define SCL 3 /*Set serial Clock Low*/
 #define SCH 4 /*Set serial Clock High*/
 #define RET 5 /*Return from nested call*/
-#define COR 6 /*Pointer jump*/
-#define OWN 7 /*Copy code page index*/
+#define COR 6 /*Coroutine jump*/
+#define OWN 7 /*Save code page index*/
 
 
 /*FIX Instructions
