@@ -15,12 +15,15 @@ struct myth_vm /*Complete machine state including all ram*/
         uchar ram[256][256]; /*MemoryByte[page][offset]*/
 
         uchar e;    /*Device ENABLE register - set by VM */
+
+        uchar irq;  /*Interrupt request bit - set by PERIPHERY*/
         uchar sclk; /*Serial clock state bit - set by VM*/
-        uchar miso; /*Serial input line state bit - set by OUTSIDE*/
+        uchar miso; /*Serial input line state bit - set by PERIPHERY*/
         uchar mosi; /*Serial output line state bit - set by VM*/
+
         uchar sir;  /*Serial input register - set by VM*/
         uchar sor;  /*Serial output register - set by VM*/
-        uchar pir;  /*Parallel input register - set by OUTSIDE*/
+        uchar pir;  /*Parallel input register - set by PERIPHERY*/
         uchar por;  /*Parallel output register - set by VM*/
 
         uchar r;    /*Result*/
@@ -120,9 +123,9 @@ static void call(struct myth_vm *vm, uchar dstpage);
 #define SSO 2 /*Serial Shift Out*/
 #define SCL 3 /*Set serial Clock Low*/
 #define SCH 4 /*Set serial Clock High*/
-#define RET 5 /*Return from nested call*/
-#define COR 6 /*Coroutine jump*/
-#define OWN 7 /*Save code page index*/
+#define RET 5 /*Return to L7:I from nested call*/
+#define COR 6 /*Coroutine jump to D:I*/
+#define OWN 7 /*Save code page index in L7*/
 
 
 /*FIX Instructions
@@ -146,9 +149,11 @@ myth_reset(struct myth_vm *vm) /*Initialise machine state*/
 
         vm->e = 0; /*Deselect any device*/
 
+        vm->irq = 0;
         vm->sclk = 0;
         vm->miso = 0;
         vm->mosi = 0;
+
         vm->sir = 0;
         vm->sor = 0;
 
@@ -181,6 +186,8 @@ myth_step(struct myth_vm *vm)
         /*Decode priority encoded opcode*/
         /*Execute decoded instruction*/
 
+        if (vm->irq && (vm->c < 32)) trap(vm, 32); /*to page zero if FREE*/
+        else
         if (opcode&0x80) pair(vm, opcode);
         else if (opcode&0x40) diro(vm, opcode);
         else if (opcode&0x20) trap(vm, opcode);
