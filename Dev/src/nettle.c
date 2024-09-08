@@ -33489,6 +33489,135 @@ main()
         close( fdesc);
 */
 
+/* Generate HTML doc files */
+
+        i=0;
+        while( strcmp (strlits[++i].str, "NOP"))
+        ;
+
+        j=0;
+        int fdesc;
+        create( "myth_opcodes.html", 0, 0666);
+        fdesc = open( "myth_opcodes.html", OWRITE);
+        if (fdesc != -1)
+                fprint( fdesc, "<html><body>\n");
+                
+                /* Generate SYS column*/
+                fprint( fdesc, "\t<div class=\"SYS\">\n");
+                while (j<8) {
+                    fprint( fdesc, "\t\t<a href=\"sys/%s.html\">%s</a>\n", strlits[i+j].str, strlits[i+j].str);
+                    j++;
+                }
+                fprint( fdesc, "\t</div>\n");
+
+                
+                /* Generate FIX column*/
+                fprint( fdesc, "\t<div class=\"FIX\">\n");
+                while (j<16) {
+                    fprint( fdesc, "\t\t<a href=\"fix/%s.html\">%s</a>\n", strlits[i+j].str, strlits[i+j].str);
+                    j++;
+                }
+                fprint( fdesc, "\t</div>\n");
+
+
+                /* Generate ALU column*/
+                fprint( fdesc, "\t<div class=\"ALU\">\n");
+                while (j<32) {
+                    fprint( fdesc, "\t\t<a href=\"alu/%s.html\">%s</a>\n", strlits[i+j].str, strlits[i+j].str);
+                    j++;
+                }
+                fprint( fdesc, "\t</div>\n");
+
+
+                /* Generate TRAP column*/
+                fprint( fdesc, "\t<div class=\"TRAP\">\n");
+                while (j<64) {
+                    fprint( fdesc, "\t\t<a href=\"trap/%s.html\">%s</a>\n", strlits[i+j].str, strlits[i+j].str);
+                    j++;
+                }
+                fprint( fdesc, "\t</div>\n");
+
+
+                /* Generate DIRO columns*/
+                fprint( fdesc, "\t<div class=\"DIRO D\">\n");
+                while (j<64+16) {
+                    fprint( fdesc, "\t\t<a href=\"diro/%s.html\">%s</a>\n", strlits[i+j].str, strlits[i+j].str);
+                    j++;
+                }
+                fprint( fdesc, "\t</div>\n");
+                fprint( fdesc, "\t<div class=\"DIRO I\">\n");
+                while (j<64+32) {
+                    fprint( fdesc, "\t\t<a href=\"diro/%s.html\">%s</a>\n", strlits[i+j].str, strlits[i+j].str);
+                    j++;
+                }
+                fprint( fdesc, "\t</div>\n");
+                fprint( fdesc, "\t<div class=\"DIRO R\">\n");
+                while (j<64+48) {
+                    fprint( fdesc, "\t\t<a href=\"diro/%s.html\">%s</a>\n", strlits[i+j].str, strlits[i+j].str);
+                    j++;
+                }
+                fprint( fdesc, "\t</div>\n");
+                fprint( fdesc, "\t<div class=\"DIRO O\">\n");
+                while (j<64+64) {
+                    fprint( fdesc, "\t\t<a href=\"diro/%s.html\">%s</a>\n", strlits[i+j].str, strlits[i+j].str);
+                    j++;
+                }
+                fprint( fdesc, "\t</div>\n");
+
+
+                /* Generate PAIR columns*/
+                fprint( fdesc, "\t<div class=\"PAIR N\">\n");
+                while (j<128+16) {
+                    fprint( fdesc, "\t\t<a href=\"pair/%s.html\">%s</a>\n", strlits[i+j].str, strlits[i+j].str);
+                    j++;
+                }
+                fprint( fdesc, "\t</div>\n");
+                fprint( fdesc, "\t<div class=\"PAIR M\">\n");
+                while (j<128+32) {
+                    fprint( fdesc, "\t\t<a href=\"pair/%s.html\">%s</a>\n", strlits[i+j].str, strlits[i+j].str);
+                    j++;
+                }
+                fprint( fdesc, "\t</div>\n");
+                fprint( fdesc, "\t<div class=\"PAIR L\">\n");
+                while (j<128+48) {
+                    fprint( fdesc, "\t\t<a href=\"pair/%s.html\">%s</a>\n", strlits[i+j].str, strlits[i+j].str);
+                    j++;
+                }
+                fprint( fdesc, "\t</div>\n");
+                fprint( fdesc, "\t<div class=\"PAIR D\">\n");
+                while (j<128+64) {
+                    fprint( fdesc, "\t\t<a href=\"pair/%s.html\">%s</a>\n", strlits[i+j].str, strlits[i+j].str);
+                    j++;
+                }
+                fprint( fdesc, "\t</div>\n");
+                fprint( fdesc, "\t<div class=\"PAIR R\">\n");
+                while (j<128+80) {
+                    fprint( fdesc, "\t\t<a href=\"pair/%s.html\">%s</a>\n", strlits[i+j].str, strlits[i+j].str);
+                    j++;
+                }
+                fprint( fdesc, "\t</div>\n");
+                fprint( fdesc, "\t<div class=\"PAIR I\">\n");
+                while (j<128+96) {
+                    fprint( fdesc, "\t\t<a href=\"pair/%s.html\">%s</a>\n", strlits[i+j].str, strlits[i+j].str);
+                    j++;
+                }
+                fprint( fdesc, "\t</div>\n");
+                fprint( fdesc, "\t<div class=\"PAIR S\">\n");
+                while (j<128+112) {
+                    fprint( fdesc, "\t\t<a href=\"pair/%s.html\">%s</a>\n", strlits[i+j].str, strlits[i+j].str);
+                    j++;
+                }
+                fprint( fdesc, "\t</div>\n");
+                fprint( fdesc, "\t<div class=\"PAIR P\">\n");
+                while (j<128+128) {
+                    fprint( fdesc, "\t\t<a href=\"pair/%s.html\">%s</a>\n", strlits[i+j].str, strlits[i+j].str);
+                    j++;
+                }
+                fprint( fdesc, "\t</div>\n");
+
+                fprint( fdesc, "</body></html>\n");
+        close( fdesc);
+
 }
 
 
