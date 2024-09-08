@@ -33449,10 +33449,10 @@ boilerPlateHeader( int fdesc, char *title)
         fprint( fdesc, "<header></header>\n");
         fprint( fdesc, "\t<div>\n");
         fprint( fdesc, "\t\t<ul>\n");
-        fprint( fdesc, "\t\t\t<li><a href=\"index.html\">Home</a></li>\n");
-        fprint( fdesc, "\t\t\t<li><a href=\"architecture.html\">architecture</a></li>\n");
-        fprint( fdesc, "\t\t\t<li><a href=\"instructions.html\">Instructions</a></li>\n");
-        fprint( fdesc, "\t\t\t<li><a href=\"groups.html\">Groups</a></li>\n");
+        fprint( fdesc, "\t\t\t<li class=\"nav\"><a href=\"index.html\">Home</a></li>\n");
+        fprint( fdesc, "\t\t\t<li class=\"nav\"><a href=\"architecture.html\">architecture</a></li>\n");
+        fprint( fdesc, "\t\t\t<li class=\"nav\"><a href=\"instructions.html\">Instructions</a></li>\n");
+        fprint( fdesc, "\t\t\t<li class=\"nav\"><a href=\"groups.html\">Groups</a></li>\n");
         fprint( fdesc, "\t\t</ul>\n");
 }
 
