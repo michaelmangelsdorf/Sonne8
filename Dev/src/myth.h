@@ -29,8 +29,8 @@ struct myth_vm /*Complete machine state including all ram*/
         uchar r;    /*Result*/
         uchar o;    /*Operand*/
 
-        uchar i;    /*Inner counter*/
-        uchar pc;   /*Program counter*/
+        uchar i;    /*Inner Counter*/
+        uchar pc;   /*Program Counter*/
 
         uchar co;   /*Coroutine page index*/
         uchar c;    /*Code page index*/
