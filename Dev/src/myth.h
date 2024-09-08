@@ -37,9 +37,7 @@ struct myth_vm /*Complete machine state including all ram*/
         uchar d;    /*Data page index*/
         uchar l;    /*Local page index*/
 
-        /*Set by scrounge instruction stub
-        */
-        uchar scrounge; /*Application specific opcode, else zero*/
+        uchar scrounge; /*Set by VM if scrounge opcode executed, else zero*/
 };
 
 void myth_reset(struct myth_vm *vm);
