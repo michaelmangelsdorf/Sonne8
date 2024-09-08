@@ -171,7 +171,7 @@
   "val": 28,
   "name": "CAR",
   "group": "ALU",
-  "desc": "if (r+o)>255 then r=1 else r=0; pc++"
+  "desc": "if (int16)(r+o)>255 then r=1 else r=0; pc++"
 },
 {
   "val": 29,
@@ -195,193 +195,193 @@
   "val": 32,
   "name": "*0",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=0; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=0; l--"
 },
 {
   "val": 33,
   "name": "*1",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=1; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=1; l--"
 },
 {
   "val": 34,
   "name": "*2",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=2; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=2; l--"
 },
 {
   "val": 35,
   "name": "*3",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=3; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=3; l--"
 },
 {
   "val": 36,
   "name": "*4",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=4; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=4; l--"
 },
 {
   "val": 37,
   "name": "*5",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=5; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=5; l--"
 },
 {
   "val": 38,
   "name": "*6",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=6; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=6; l--"
 },
 {
   "val": 39,
   "name": "*7",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=7; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=7; l--"
 },
 {
   "val": 40,
   "name": "*8",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=8; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=8; l--"
 },
 {
   "val": 41,
   "name": "*9",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=9; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=9; l--"
 },
 {
   "val": 42,
   "name": "*10",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=10; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=10; l--"
 },
 {
   "val": 43,
   "name": "*11",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=11; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=11; l--"
 },
 {
   "val": 44,
   "name": "*12",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=12; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=12; l--"
 },
 {
   "val": 45,
   "name": "*13",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=13; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=13; l--"
 },
 {
   "val": 46,
   "name": "*14",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=14; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=14; l--"
 },
 {
   "val": 47,
   "name": "*15",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=15; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=15; l--"
 },
 {
   "val": 48,
   "name": "*16",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=16; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=16; l--"
 },
 {
   "val": 49,
   "name": "*17",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=17; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=17; l--"
 },
 {
   "val": 50,
   "name": "*18",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=18; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=18; l--"
 },
 {
   "val": 51,
   "name": "*19",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=19; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=19; l--"
 },
 {
   "val": 52,
   "name": "*20",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=20; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=20; l--"
 },
 {
   "val": 53,
   "name": "*21",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=21; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=21; l--"
 },
 {
   "val": 54,
   "name": "*22",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=22; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=22; l--"
 },
 {
   "val": 55,
   "name": "*23",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=23; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=23; l--"
 },
 {
   "val": 56,
   "name": "*24",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=24; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=24; l--"
 },
 {
   "val": 57,
   "name": "*25",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=25; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=25; l--"
 },
 {
   "val": 58,
   "name": "*26",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=26; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=26; l--"
 },
 {
   "val": 59,
   "name": "*27",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=27; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=27; l--"
 },
 {
   "val": 60,
   "name": "*28",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=28; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=28; l--"
 },
 {
   "val": 61,
   "name": "*29",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=29; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=29; l--"
 },
 {
   "val": 62,
   "name": "*30",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=30; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=30; l--"
 },
 {
   "val": 63,
   "name": "*31",
   "group": "TRAP",
-  "desc": "i=pc; pc=0; co=c; c=31; l--"
+  "desc": "pc++; i=pc; pc=0; co=c; c=31; l--"
 },
 {
   "val": 64,
