@@ -33446,6 +33446,7 @@ boilerPlateHeader( int fdesc, char *title)
         fprint( fdesc, "\t<link rel=\"stylesheet\" href=\"mythdoc.css\">\n");
         fprint( fdesc, "</head>\n");
         fprint( fdesc, "<body>\n");
+        fprint( fdesc, "<header></header>\n");
         fprint( fdesc, "\t<div>\n");
         fprint( fdesc, "\t\t<ul>\n");
         fprint( fdesc, "\t\t\t<li><a href=\"index.html\">Home</a></li>\n");
@@ -33801,6 +33802,7 @@ main()
                 }
                 j++;
         }
+ 
         while( j<256) {
                 sprint( fname, "pair/%s.html", strlits[i+j].str);
                 create( fname, 0, 0666);
@@ -33808,38 +33810,74 @@ main()
                 if (fdesc != -1){
                         k = strlits[i+j].val;
                         boilerPlateHeader(fdesc, strlits[i+j].str);
-                        fprint( fdesc, "\t\t<span class=\"group\">Group: <a href=\"pair.html\">PAIR</a></span>\n");
-                        fprint( fdesc, "\t\t<span class=\"mnemonic\">Mnemonic: %s</span>\n", strlits[i+j].str);
-                        fprint( fdesc, "\t\t<span class=\"opcode\">Opcode: %d (%.02Xh, %.04b_%.04bb)</span>\n", k, k, k/16, k%16);
-                        fprint( fdesc, "\t\t<span class=\"encoding\">Encoding: 1b (PAIR prefix) _ %.03b (source) _ %.04b (destination)</span>\n",(k>>4)&15, k&15);
+                        fprint( fdesc, "\t\t<ul>\n");
+                        fprint( fdesc, "\t\t\t<li class=\"group\">Group: <a href=\"pair.html\">PAIR</a></li>\n");
+                        fprint( fdesc, "\t\t\t<li class=\"mnemonic\">Mnemonic: %s</li>\n", strlits[i+j].str);
+                        fprint( fdesc, "\t\t\t<li class=\"opcode\">Opcode: %d (%.02Xh, %.04b_%.04bb)</li>\n", k, k, k/16, k%16);
+                        fprint( fdesc, "\t\t\t<li class=\"encoding\">Encoding: 1b (PAIR prefix) _ %.03b (source) _ %.04b (destination)</li>\n",(k>>4)&7, k&15);
+                        fprint( fdesc, "\t\t</ul>\n");
+
+                        char *explstr_SRC[8] = {
+                            "N for NUMBER",
+                            "M for MEMORY",
+                            "L for LOCAL",
+                            "D for DATA",
+                            "R for RESULT",
+                            "I for INNER",
+                            "S for SERIAL",
+                            "P for PARALLEL",
+                        };
+
+                        char *explstr_DST[16] = {
+                            "O for OPERAND",
+                            "M for MEMORY",
+                            "L for LOCAL",
+                            "D for DATA",
+                            "R for RESULT",
+                            "I for INNER",
+                            "S for SERIAL",
+                            "P for PARALLEL",
+                            "E for ENABLE",
+                            "A for ADD",
+                            "B for BRANCH",
+                            "J for JUMP",
+                            "W for WHILE",
+                            "T for TRUE",
+                            "F for FALSE",
+                            "C for CALL",
+                        };
+
+
+                        // Explain the letters in an info span
+                        fprint( fdesc, "\t\t<ul><li>Source: %s</li><li>Destination: %s</li></ul>\n", explstr_SRC[(k>>4)&7], explstr_DST[k&15]);
+
                         fprint( fdesc, "\t\t<p class=\"desc\">\n");
- 
-                        fprint( fdesc, "\t\tThis instruction ");
                         switch((k>>4)&7){
-                                case Nx: fprint( fdesc, "increments the Program Counter (PC) and loads the value of the memory cell at address C:PC (following the current instruction's opcode) as the source value. The PC is then incremented again to skip over the loaded literal, so that the PC points to the next instruction. <a href=\"Nx.html\">N</a> stands for NUMBER.\n");
+                                case Nx:
+                                    fprint( fdesc, "\t\tThis instruction increments the Program Counter (PC) and loads the value of the memory cell referenced by the CODE <a href=\"pointers.html\">pointer</a> (register pair C:PC) as the source value. The PC is then incremented again to skip over this literal, so that the PC points to the next instruction.\n");
                                     break;
-                                case Mx: fprint( fdesc, "loads the memory cell at address D:O. <a href=\"MxM.html\">M</a> stands for MEMORY.\n");
+                                case Mx: fprint( fdesc, "\t\tThis instruction loads the memory cell referenced by the DATA <a href=\"pointers.html\">pointer</a> (register pair D:O).\n");
                                     break;
-                                case Lx: fprint( fdesc, "loads the memory cell at address L:O. <a href=\"LxL.html\">L</a> stands for LOCAL.\n");
+                                case Lx: fprint( fdesc, "\t\tThis instruction loads the memory cell referenced by the LOCAL <a href=\"pointers.html\">pointer</a> (register pair L:O).\n");
                                     break;
-                                case Dx: fprint( fdesc, "loads the value of register <a href=\"DxD.html\">D</a>.\n");
+                                case Dx: fprint( fdesc, "\t\tThis instruction loads the value of register <a href=\"DxD.html\">D</a>.\n");
                                     break;
-                                case Rx: fprint( fdesc, "loads the value of register <a href=\"RxR.html\">R</a>.\n");
+                                case Rx: fprint( fdesc, "\t\tThis instruction loads the value of register <a href=\"RxR.html\">R</a>.\n");
                                     break;
-                                case Ix: fprint( fdesc, "loads the value of register <a href=\"IxI.html\">I</a>.\n");
+                                case Ix: fprint( fdesc, "\t\tThis instruction loads the value of register <a href=\"IxI.html\">I</a>.\n");
                                     break;
-                                case Sx:  fprint( fdesc, "loads the value of the Serial Input Register <a href=\"SxS.html\">SIR</a>.\n");
+                                case Sx:  fprint( fdesc, "\t\tThis instruction loads the value of the Serial Input Register <a href=\"SxS.html\">SIR</a>.\n");
                                     break;
-                                default: fprint( fdesc, "loads the value of the Parallel Input Register <a href=\"PxP.html\">PIR</a>.\n");
+                                default: fprint( fdesc, "\t\tThis instruction loads the value of the Parallel Input Register <a href=\"PxP.html\">PIR</a>.\n");
                         }
 
                         fprint( fdesc, "\t\tThen it ");
                         switch(k&15){
                                 case xO: fprint( fdesc, "stores that value into the Operand register <a href=\"xO.html\">O</a>.\n");
                                     break;
-                                case xM: fprint( fdesc, "stores that value into the memory cell at address <a href=\"DxD.html\">D</a>:<a href=\"xO.html\">O</a>.\n");
+                                case xM: fprint( fdesc, "stores that value into the memory cell referenced by the DATA <a href=\"pointers.html\">pointer</a> (register pair <a href=\"DxD.html\">D</a>:<a href=\"xO.html\">O</a>).\n");
                                     break;
-                                case xL: fprint( fdesc, "stores that value into the memory cell at address <a href=\"LxL.html\">L</a>:<a href=\"xO.html\">O</a>.\n");
+                                case xL: fprint( fdesc, "stores that value into the memory cell referenced by the LOCAL <a href=\"pointers.html\">pointer</a> (register pair <a href=\"LxL.html\">L</a>:<a href=\"xO.html\">O</a>).\n");
                                     break;
                                 case xD: fprint( fdesc, "stores that value into the Data Page register <a href=\"DxD.html\">D</a>.\n");
                                      break;
