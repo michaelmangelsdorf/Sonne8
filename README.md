@@ -1,7 +1,7 @@
 Ongoing project around an 8-bit microcontroller I've designed.
 
 In the prototype folder, there are production files and the legacy repo for a working PCB. I've had it manufactured by JLCPCB and it works fine at around 8 MHz clock, which corresponds to around 1 million instructions per second. The components are all 74HC-series CMOS chips. I basically wanted to design a CPU I could actually build, not an FPGA fantasy like
-![my previous](https://github.com/Dosflange/Paver)
+[my previous](https://github.com/Dosflange/Paver)
 one (which I still like and it works fine).
 
 The PCB is shown below.
