@@ -33766,15 +33766,17 @@ main()
         char tempstr80[80];
         char docfname80[80];
         char content80[80];
-        i=0;
-        while( strcmp (strlits[++i].str, "NOP")) ;
-        j=0;
         char *mnemonic;
         uchar opcode;
+        i=0;
+        while( strcmp (strlits[++i].str, "NOP")) ;
+        strcpy(hrefprefix80, "doc");
+
+        /*Group SYS*/
+        j=0;
         while( j<8) {
                 mnemonic = strlits[i+j].str;
                 opcode = strlits[i+j].val;
-                strcpy(hrefprefix80, "doc");
                 strcpy(tempstr80, "SYS Instructions - ");
                 strcat(tempstr80, mnemonic);
                 sprint( docfname80, "%s/sys/%s.html", hrefprefix80, mnemonic);
@@ -33798,7 +33800,12 @@ main()
                                 tag("li", "", content80);
 
                 sprint(content80,
-                    "Encoding: 0000_%.03bb (SYS_INDEX)",
+                    "Encoding: 00000_%.03bb (SYS_INDEX)",
+                         opcode & 7 );
+                                tag("li", "", content80);
+
+                sprint(content80,
+                    "Encoding: 00001_%.03bb (FIX_ADDEND)",
                          opcode & 7 );
                                 tag("li", "", content80);
 
@@ -33818,12 +33825,434 @@ main()
                         wrDocFooter();
                         close(htmlgen_fdesc);
                 }
-
                 j++;
         }
 
 
+        /*Group FIX*/
+        while(j<16) {
+                mnemonic = strlits[i+j].str;
+                opcode = strlits[i+j].val;
+                strcpy(tempstr80, "FIX Instructions - ");
+                strcat(tempstr80, mnemonic);
+                sprint( docfname80, "%s/fix/%s.html", hrefprefix80, mnemonic);
+                create( docfname80, 0, 0666);
+                htmlgen_fdesc = open( docfname80, OWRITE);
+                if (htmlgen_fdesc != -1){
+                        wrDocHeader(tempstr80);
+                        lo("div", "class=\"main\"");
+                            lo("h2","");
+                                line("This page describes the following instruction:");
+                            lc("h2");
+                            lo("ul", "");
+                                
+                                sprint(content80, "Group: %s", href("fix.html", "FIX"));
+                                tag("li", "", content80);
 
+                                sprint(content80, "Mnemonic: %s", mnemonic);
+                                tag("li", "", content80);
+
+                                sprint(content80, "Opcode: %dd, %.02Xh", opcode, opcode);
+                                tag("li", "", content80);
+
+
+                sprint(content80,
+                    "Encoding: 00001_%.03bb (FIX_ADDEND)",
+                         opcode & 7 );
+                                tag("li", "", content80);
+
+                                sprint(content80, "Pseudo-code: %s", pseudocode[opcode]);
+                                tag("li", "class=\"pseudo\"", content80);
+                           
+                                lo("li", "class=\"aside\"");
+                                    sprint(content80, "");
+                                    line(content80);
+                                lc("li");
+                            lc("ul");
+                            lo("p","desc");
+                            lc("p");
+                            lo("p","further");
+                            lc("p");
+                        lc("div");
+                        wrDocFooter();
+                        close(htmlgen_fdesc);
+                }
+                j++;
+        }
+
+
+        /*Group ALU*/
+        while(j<32) {
+                mnemonic = strlits[i+j].str;
+                opcode = strlits[i+j].val;
+                strcpy(tempstr80, "ALU Instructions - ");
+                strcat(tempstr80, mnemonic);
+                sprint( docfname80, "%s/alu/%s.html", hrefprefix80, mnemonic);
+                create( docfname80, 0, 0666);
+                htmlgen_fdesc = open( docfname80, OWRITE);
+                if (htmlgen_fdesc != -1){
+                        wrDocHeader(tempstr80);
+                        lo("div", "class=\"main\"");
+                            lo("h2","");
+                                line("This page describes the following instruction:");
+                            lc("h2");
+                            lo("ul", "");
+                                
+                                sprint(content80, "Group: %s", href("alu.html", "ALU"));
+                                tag("li", "", content80);
+
+                                sprint(content80, "Mnemonic: %s", mnemonic);
+                                tag("li", "", content80);
+
+                                sprint(content80, "Opcode: %dd, %.02Xh", opcode, opcode);
+                                tag("li", "", content80);
+
+
+                sprint(content80,
+                    "Encoding: 0001_%.04bb (ALU_OPERATION)",
+                         opcode & 15 );
+                                tag("li", "", content80);
+
+                                sprint(content80, "Pseudo-code: %s", pseudocode[opcode]);
+                                tag("li", "class=\"pseudo\"", content80);
+                           
+                                lo("li", "class=\"aside\"");
+                                    sprint(content80, "");
+                                    line(content80);
+                                lc("li");
+                            lc("ul");
+                            lo("p","desc");
+                            lc("p");
+                            lo("p","further");
+                            lc("p");
+                        lc("div");
+                        wrDocFooter();
+                        close(htmlgen_fdesc);
+                }
+                j++;
+        }
+
+
+        /*Group TRAP*/
+        while(j<64) {
+                mnemonic = strlits[i+j].str;
+                opcode = strlits[i+j].val;
+                strcpy(tempstr80, "TRAP Instructions - ");
+                strcat(tempstr80, mnemonic);
+                sprint( docfname80, "%s/trap/%s.html", hrefprefix80, &mnemonic[1]);
+                create( docfname80, 0, 0666);
+                htmlgen_fdesc = open( docfname80, OWRITE);
+                if (htmlgen_fdesc != -1){
+                        wrDocHeader(tempstr80);
+                        lo("div", "class=\"main\"");
+                            lo("h2","");
+                                line("This page describes the following instruction:");
+                            lc("h2");
+                            lo("ul", "");
+                                
+                                sprint(content80, "Group: %s", href("trap.html", "TRAP"));
+                                tag("li", "", content80);
+
+                                sprint(content80, "Mnemonic: %s", mnemonic);
+                                tag("li", "", content80);
+
+                                sprint(content80, "Opcode: %dd, %.02Xh", opcode, opcode);
+                                tag("li", "", content80);
+
+
+                sprint(content80,
+                    "Encoding: 001_%.05bb (TRAP_PAGE)",
+                         opcode & 31 );
+                                tag("li", "", content80);
+
+                                sprint(content80, "Pseudo-code: %s", pseudocode[opcode]);
+                                tag("li", "class=\"pseudo\"", content80);
+                           
+                                lo("li", "class=\"aside\"");
+                                    sprint(content80, "");
+                                    line(content80);
+                                lc("li");
+                            lc("ul");
+                            lo("p","desc");
+                            lc("p");
+                            lo("p","further");
+                            lc("p");
+                        lc("div");
+                        wrDocFooter();
+                        close(htmlgen_fdesc);
+                }
+                j++;
+        }
+
+        /*Group DIRO*/
+        while(j<128) {
+                mnemonic = strlits[i+j].str;
+                opcode = strlits[i+j].val;
+                strcpy(tempstr80, "DIRO Instructions - ");
+                strcat(tempstr80, mnemonic);
+                sprint( docfname80, "%s/diro/%s.html", hrefprefix80, mnemonic);
+                create( docfname80, 0, 0666);
+                htmlgen_fdesc = open( docfname80, OWRITE);
+                if (htmlgen_fdesc != -1){
+                        wrDocHeader(tempstr80);
+                        lo("div", "class=\"main\"");
+                            lo("h2","");
+                                line("This page describes the following instruction:");
+                            lc("h2");
+                            lo("ul", "");
+                                
+                                sprint(content80, "Group: %s", href("diro.html", "DIRO"));
+                                tag("li", "", content80);
+
+                                sprint(content80, "Mnemonic: %s", mnemonic);
+                                tag("li", "", content80);
+
+                                sprint(content80, "Opcode: %dd, %.02Xh", opcode, opcode);
+                                tag("li", "", content80);
+
+
+                sprint(content80,
+                    "Encoding: 01_%.02b_%.01b_%.03bb (TRAP_REG_DIRECTION_INDEX)",
+                        (opcode>>4)&3, opcode&8?1:0, 
+                         opcode & 7 );
+                                tag("li", "", content80);
+
+                                sprint(content80, "Pseudo-code: %s", pseudocode[opcode]);
+                                tag("li", "class=\"pseudo\"", content80);
+                           
+                                lo("li", "class=\"aside\"");
+                                    sprint(content80, "");
+                                    line(content80);
+                                lc("li");
+                            lc("ul");
+                            lo("p","desc");
+                            lc("p");
+                            lo("p","further");
+                            lc("p");
+                        lc("div");
+                        wrDocFooter();
+                        close(htmlgen_fdesc);
+                }
+                j++;
+        }
+
+        /*Group PAIR*/
+        while(j<256) {
+                mnemonic = strlits[i+j].str;
+                opcode = strlits[i+j].val;
+                strcpy(tempstr80, "PAIR Instructions - ");
+                strcat(tempstr80, mnemonic);
+                sprint( docfname80, "%s/pair/%s.html", hrefprefix80, mnemonic);
+                create( docfname80, 0, 0666);
+                htmlgen_fdesc = open( docfname80, OWRITE);
+                if (htmlgen_fdesc != -1){
+                        wrDocHeader(tempstr80);
+                        lo("div", "class=\"main\"");
+                            lo("h2","");
+                                line("This page describes the following instruction:");
+                            lc("h2");
+                            lo("ul", "");
+                                
+                                sprint(content80, "Group: %s", href("pair.html", "PAIR"));
+                                tag("li", "", content80);
+
+                                sprint(content80, "Mnemonic: %s", mnemonic);
+                                tag("li", "", content80);
+
+                                sprint(content80, "Opcode: %dd, %.02Xh", opcode, opcode);
+                                tag("li", "", content80);
+
+
+                sprint(content80,
+                    "Encoding: 1_%.03b_%.04bb (TRAP_SRC_DST)",
+                        (opcode>>4)&7, opcode&15);
+                                tag("li", "", content80);
+
+                                sprint(content80, "Pseudo-code: %s", pseudocode[opcode]);
+                                tag("li", "class=\"pseudo\"", content80);
+                           
+                                lo("li", "class=\"aside\"");
+                                      switch((opcode>>4)&7){
+                                              case Nx: line(href("pair/letters/N.html", "N:NUMBER"));
+                                                break;
+                                              case Mx: line(href("pair/letters/M.html", "M:MEMORY"));
+                                                break;
+                                              case Lx: line(href("pair/letters/L.html", "L:LOCAL"));
+                                                break;
+                                              case Dx: line(href("pair/letters/D.html", "D:DATA")); 
+                                                break;
+                                              case Rx: line(href("pair/letters/R.html", "R:RESULT")); 
+                                                break;
+                                              case Ix: line(href("pair/letters/I.html", "I:INNER"));
+                                                break;
+                                              case Sx: line(href("pair/letters/S.html", "S:SERIAL"));
+                                                break;
+                                       default /*Px*/: line(href("pair/letters/P.html", "P:PARALLEL"));
+                                                break;
+                                      }
+                                      switch(opcode&15){
+                                              case xO: line(href("pair/letters/O.html", "O:OPERAND"));
+                                                break;
+                                              case xM: line(href("pair/letters/M.html", "M:MEMORY"));
+                                                break;
+                                              case xL: line(href("pair/letters/L.html", "L:PARALLEL"));
+                                                break;
+                                              case xD: line(href("pair/letters/D.html", "D:DATA"));
+                                                break;
+                                              case xR: line(href("pair/letters/R.html", "R:RESULT"));
+                                                break;
+                                              case xI: line(href("pair/letters/I.html", "I:INNER"));
+                                                break;
+                                              case xS: line(href("pair/letters/S.html", "S:SERIAL"));
+                                                break;
+                                              case xP: line(href("pair/letters/P.html", "P:PARALLEL"));
+                                                break;
+                                              case xE: line(href("pair/letters/E.html", "E:ENABLE"));
+                                                break;
+                                              case xA: line(href("pair/letters/A.html", "A:ADD"));
+                                                break;
+                                              case xB: line(href("pair/letters/B.html", "B:BRANCH"));
+                                                break;
+                                              case xJ: line(href("pair/letters/J.html", "J:JUMP"));
+                                                break;
+                                              case xW: line(href("pair/letters/W.html", "W:WHILE"));
+                                                break;
+                                              case xT: line(href("pair/letters/T.html", "T:TRUE"));
+                                                break;
+                                              case xF: line(href("pair/letters/F.html", "F:FALSE"));
+                                                break;
+                                              case xC: line(href("pair/letters/C.html", "C:CALL"));
+                                                break;
+                                      }
+                                lc("li");
+                            lc("ul");
+                            lo("p","desc");
+                                lo("ul","class=\"pair\"");
+
+                                    lo("li","class=\"from\"");
+                                      switch((opcode>>4)&7){
+                                              case Nx: line("Fetch the byte following the current opcode from memory. This is the source value ('N').");
+                                                break;
+                                              case Mx: line("Load the byte pointed to by the Data Pointer (page D offset O) from memory. This is the source value ('M').");
+                                                break;
+                                              case Lx: line("Load the byte pointed to by the Local Pointer (page L offset O) from memory. This is the source value ('L')."); 
+                                                break;
+                                              case Dx: line("Take the value of the Data register D as the source value ('D')."); 
+                                                break;
+                                              case Rx: line("Take the value of the Result register R as the source value ('R').");
+                                                break;
+                                              case Ix: line("Take the value of the Inner Counter register I as the source value ('I')."); 
+                                                break;
+                                              case Sx: line("Sample the value of the Serial Input register SIR as the source value ('S')."); 
+                                                break;
+                                       default /*Px*/: line("Sample the value of the Parallel Input register PIR as the source value ('P').");
+                                                break;
+                                      }
+                                    lc("li");
+
+                                    lo("li","class=\"from\"");
+                                      switch(opcode&15){
+                                              case xO: line("Store this value into the Operand register O.");
+                                                break;
+                                              case xM: line("Store this value into the memory cell pointed to by the Data Pointer (page D offset O).");
+                                                break;
+                                              case xL: line("Store this value into the memory cell pointed to by the Local Pointer (page L offset O).");
+                                                break;
+                                              case xD: line("Store this value into the Data register D.");
+                                                break;
+                                              case xR: line("Store this value into the Result register R.");
+                                                break;
+                                              case xI: line("Store this value into the Inner Counter register I.");
+                                                break;
+                                              case xS: line("Store this value into the Serial Output register SOR ('S').");
+                                                break;
+                                              case xP: line("Store this value into the Parallel Output register POR ('P').");
+                                                break;
+                                              case xE: line("Store this value into the Enable register E.");
+                                                break;
+                                              case xA: line("Add this value to the Operand register O. If this produces a carry bit, add the carry bit to the Data register D.");
+                                                break;
+                                              case xB: line("Add this value to the Program Counter register.");
+                                                break;
+                                              case xJ: line("Set the Program Counter register to this value.");
+                                                break;
+                                              case xW: line("Test the Inner Counter register I. If it is NOT zero, set the Program Counter to the source value. Then decrement I.");
+                                                break;
+                                              case xT: line("Test the Result register R. If it is NOT zero, set the Program Counter to the source value.");
+                                                break;
+                                              case xF: line("Test the Result register R. If it IS zero, set the Program Counter to the source value.");
+                                                break;
+                                              case xC: line("Save the content of the Code Page register C into the Coroutine register CO. Save the content of the Program Counter register into register I.");
+                                                       line("Set the Program Counter register to zero. Set the Code Page register C to the source value. Decrement the Local Page register L.");
+                                                break;
+                                      }
+                                    lc("li");
+
+                                lc("ul");
+                            lc("p");
+                            lo("p","further");
+
+                                switch((opcode>>4)&7){
+                                        case Nx: line("");
+                                          break;
+                                        case Mx: line("");
+                                          break;
+                                        case Lx: line(""); 
+                                          break;
+                                        case Dx: line("");
+                                          break;
+                                        case Rx: line("");
+                                          break;
+                                        case Ix: line(""); 
+                                          break;
+                                        case Sx: line("");
+                                          break;
+                                  default /*Px*/: line("");
+                                          break;
+                                }
+
+                                switch(opcode&15){
+                                        case xO: line("");
+                                          break;
+                                        case xM: line("");
+                                          break;
+                                        case xL: line("");
+                                          break;
+                                        case xD: line("");
+                                          break;
+                                        case xR: line("");
+                                          break;
+                                        case xI: line("");
+                                          break;
+                                        case xS: line("");
+                                          break;
+                                        case xP: line("");
+                                          break;
+                                        case xE: line("");
+                                          break;
+                                        case xA: line("");
+                                          break;
+                                        case xB: line("");
+                                          break;
+                                        case xJ: line("");
+                                          break;
+                                        case xW: line("");
+                                          break;
+                                        case xT: line("");
+                                          break;
+                                        case xF: line("");
+                                          break;
+                                        case xC: line("");
+                                          break;
+                                }
+
+                            lc("p");
+                        lc("div");
+                        wrDocFooter();
+                        close(htmlgen_fdesc);
+                }
+                j++;
+        }
 
 }
 
