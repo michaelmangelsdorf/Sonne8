@@ -28,6 +28,7 @@
 #include "myst.h"
 
 #include "lox.h"
+#include "htmlgen.h"
 
 /* Struct for looking up opcodes for string literals
    such as numbers and mnemonics */
@@ -420,6 +421,266 @@ struct { uchar val; char *str; } strlits[] = {
 {0x00,"*HALT*"}
 };
 
+
+char *pseudocode[] =
+{
+  "pc++",
+  "sir=(sir<<1)+miso; pc++",
+  "mosi=sor&0x80 ? 1:0; sor<<=1; pc++",
+  "sclk=0; pc++",
+  "sclk=1; pc++",
+  "c=L7; pc=i; l++;",
+  "c=d; pc=i",
+  "L7=co; pc++",
+  "r+=4; pc++",
+  "r+=1; pc++",
+  "r+=2; pc++",
+  "r+=3; pc++",
+  "r-=4; pc++",
+  "r-=3; pc++",
+  "r-=2; pc++",
+  "r-=1; pc++",
+  "r=0; pc++",
+  "r=o; pc++",
+  "r=~r; pc++",
+  "r=~o; pc++",
+  "r=r<<1; pc++",
+  "r=o<<1; pc++",
+  "r=r>>1; pc++",
+  "r=o>>1; pc++",
+  "r=r&o; pc++",
+  "r=r|o; pc++",
+  "r=r^o; pc++",
+  "r=r+o; pc++",
+  "if (int16)(r+o)>255 then r=1 else r=0; pc++",
+  "if r<o then r=255 else r=0; pc++",
+  "if r=o then r=255 else r=0; pc++",
+  "if r>o then r=255 else r=0; pc++",
+  "pc++; i=pc; pc=0; co=c; c=0; l--",
+  "pc++; i=pc; pc=0; co=c; c=1; l--",
+  "pc++; i=pc; pc=0; co=c; c=2; l--",
+  "pc++; i=pc; pc=0; co=c; c=3; l--",
+  "pc++; i=pc; pc=0; co=c; c=4; l--",
+  "pc++; i=pc; pc=0; co=c; c=5; l--",
+  "pc++; i=pc; pc=0; co=c; c=6; l--",
+  "pc++; i=pc; pc=0; co=c; c=7; l--",
+  "pc++; i=pc; pc=0; co=c; c=8; l--",
+  "pc++; i=pc; pc=0; co=c; c=9; l--",
+  "pc++; i=pc; pc=0; co=c; c=10; l--",
+  "pc++; i=pc; pc=0; co=c; c=11; l--",
+  "pc++; i=pc; pc=0; co=c; c=12; l--",
+  "pc++; i=pc; pc=0; co=c; c=13; l--",
+  "pc++; i=pc; pc=0; co=c; c=14; l--",
+  "pc++; i=pc; pc=0; co=c; c=15; l--",
+  "pc++; i=pc; pc=0; co=c; c=16; l--",
+  "pc++; i=pc; pc=0; co=c; c=17; l--",
+  "pc++; i=pc; pc=0; co=c; c=18; l--",
+  "pc++; i=pc; pc=0; co=c; c=19; l--",
+  "pc++; i=pc; pc=0; co=c; c=20; l--",
+  "pc++; i=pc; pc=0; co=c; c=21; l--",
+  "pc++; i=pc; pc=0; co=c; c=22; l--",
+  "pc++; i=pc; pc=0; co=c; c=23; l--",
+  "pc++; i=pc; pc=0; co=c; c=24; l--",
+  "pc++; i=pc; pc=0; co=c; c=25; l--",
+  "pc++; i=pc; pc=0; co=c; c=26; l--",
+  "pc++; i=pc; pc=0; co=c; c=27; l--",
+  "pc++; i=pc; pc=0; co=c; c=28; l--",
+  "pc++; i=pc; pc=0; co=c; c=29; l--",
+  "pc++; i=pc; pc=0; co=c; c=30; l--",
+  "pc++; i=pc; pc=0; co=c; c=31; l--",
+  "d=L0; pc++",
+  "d=L1; pc++",
+  "d=L2; pc++",
+  "d=L3; pc++",
+  "d=L4; pc++",
+  "d=L5; pc++",
+  "d=L6; pc++",
+  "d=L7; pc++",
+  "L0 = d; pc++",
+  "L1 = d; pc++",
+  "L2 = d; pc++",
+  "L3 = d; pc++",
+  "L4 = d; pc++",
+  "L5 = d; pc++",
+  "L6 = d; pc++",
+  "L7 = d; pc++",
+  "i=L0; pc++",
+  "i=L1; pc++",
+  "i=L2; pc++",
+  "i=L3; pc++",
+  "i=L4; pc++",
+  "i=L5; pc++",
+  "i=L6; pc++",
+  "i=L7; pc++",
+  "L0 = i; pc++",
+  "L1 = i; pc++",
+  "L2 = i; pc++",
+  "L3 = i; pc++",
+  "L4 = i; pc++",
+  "L5 = i; pc++",
+  "L6 = i; pc++",
+  "L7 = i; pc++",
+  "r=L0; pc++",
+  "r=L1; pc++",
+  "r=L2; pc++",
+  "r=L3; pc++",
+  "r=L4; pc++",
+  "r=L5; pc++",
+  "r=L6; pc++",
+  "r=L7; pc++",
+  "L0 = r; pc++",
+  "L1 = r; pc++",
+  "L2 = r; pc++",
+  "L3 = r; pc++",
+  "L4 = r; pc++",
+  "L5 = r; pc++",
+  "L6 = r; pc++",
+  "L7 = r; pc++",
+  "o=L0; pc++",
+  "o=L1; pc++",
+  "o=L2; pc++",
+  "o=L3; pc++",
+  "o=L4; pc++",
+  "o=L5; pc++",
+  "o=L6; pc++",
+  "o=L7; pc++",
+  "L0 = o; pc++",
+  "L1 = o; pc++",
+  "L2 = o; pc++",
+  "L3 = o; pc++",
+  "L4 = o; pc++",
+  "L5 = o; pc++",
+  "L6 = o; pc++",
+  "L7 = o; pc++",
+  "pc++; o=ram[c][pc]; pc++",
+  "NM scrounge",
+  "NL scrounge",
+  "pc++; d=ram[c][pc]; pc++",
+  "pc++; r=ram[c][pc]; pc++",
+  "pc++; i=ram[c][pc]; pc++",
+  "pc++; sor=ram[c][pc]; pc++",
+  "pc++; por=ram[c][pc]; pc++",
+  "pc++; e=ram[c][pc]; pc++",
+  "pc++; if (o+ram[c][pc])>255 then d+=1; pc++",
+  "pc+=ram[c][pc]",
+  "pc=ram[c][pc]",
+  "if i!=0 then pc=ram[c][pc] else pc++; i--",
+  "if r!=0 then pc=ram[c][pc] else pc++",
+  "if r==0 then pc=ram[c][pc] else pc++",
+  "pc++; i=pc; pc=0; co=c; c=ram[c][pc]; l--",
+  "o=ram[d][o]; pc++",
+  "MM scrounge",
+  "ML scrounge",
+  "d=ram[d][o]; pc++",
+  "r=ram[d][o]; pc++",
+  "i=ram[d][o]; pc++",
+  "sor=ram[d][o]; pc++",
+  "por=ram[d][o]; pc++",
+  "e=ram[d][o]; pc++",
+  "if (o+ram[d][o])>255 then d+=1; pc++",
+  "pc+=ram[d][o]",
+  "pc=ram[d][o]",
+  "if i!=0 then pc=ram[d][o] else pc++; i--",
+  "if r!=0 then pc=ram[d][o] else pc++",
+  "if r==0 then pc=ram[d][o] else pc++",
+  "pc++; i=pc; pc=0; co=c; c=ram[d][o]; l--",
+  "o=ram[l][o]; pc++",
+  "LM scrounge",
+  "LL scrounge",
+  "d=ram[l][o]; pc++",
+  "r=ram[l][o]; pc++",
+  "i=ram[l][o]; pc++",
+  "sor=ram[l][o]; pc++",
+  "por=ram[l][o]; pc++",
+  "e=ram[l][o]; pc++",
+  "if (o+ram[l][o])>255 then d+=1; pc++",
+  "pc+=ram[l][o]",
+  "pc=ram[l][o]",
+  "if i!=0 then pc=ram[l][o] else pc++; i--",
+  "if r!=0 then pc=ram[l][o] else pc++",
+  "if r==0 then pc=ram[l][o] else pc++",
+  "pc++; i=pc; pc=0; co=c; c=ram[l][o]; l--",
+  "o=d; pc++",
+  "ram[d][o]=d; pc++",
+  "ram[l][o]=d; pc++",
+  "DD scrounge",
+  "r=d; pc++",
+  "i=d; pc++",
+  "sor=d; pc++",
+  "por=d; pc++",
+  "e=d; pc++",
+  "if (o+d)>255 then d+=1; pc++",
+  "pc+=d",
+  "pc=d",
+  "if i!=0 then pc=d else pc++; i--",
+  "if r!=0 then pc=d else pc++",
+  "if r==0 then pc=d else pc++",
+  "pc++; i=pc; pc=0; co=c; c=d; l--",
+  "o=r; pc++",
+  "ram[d][o]=r; pc++",
+  "ram[l][o]=r; pc++",
+  "d=r; pc++",
+  "RR scrounge",
+  "i=r; pc++",
+  "sor=r; pc++",
+  "por=r; pc++",
+  "e=r; pc++",
+  "if (o+r)>255 then d+=1",
+  "pc+=r",
+  "pc=r",
+  "if i!=0 then pc=r else pc++; i--",
+  "if r!=0 then pc=r else pc++",
+  "if r==0 then pc=r else pc++",
+  "pc++; i=pc; pc=0; co=c; c=r; l--",
+  "o=i; pc++",
+  "ram[d][o]=i; pc++",
+  "ram[l][o]=i; pc++",
+  "d=i; pc++",
+  "r=i; pc++",
+  "II scrounge",
+  "sor=i; pc++",
+  "por=i; pc++",
+  "e=i; pc++",
+  "if (o+i)>255 then d+=1; pc++",
+  "pc+=i",
+  "pc=i",
+  "if i!=0 then pc=i else pc++; i--",
+  "if r!=0 then pc=i else pc++",
+  "if r==0 then pc=i else pc++",
+  "pc++; i=pc; pc=0; co=c; c=i; l--",
+  "o=sir; pc++",
+  "ram[d][o]=sir; pc++",
+  "ram[l][o]=sir; pc++",
+  "d=sir; pc++",
+  "r=sir; pc++",
+  "i=sir; pc++",
+  "sor=sir; pc++",
+  "por=sir; pc++",
+  "e=sir; pc++",
+  "if (o+sir)>255 then d+=1; pc++",
+  "pc+=sir",
+  "pc=sir",
+  "if i!=0 then pc=sir else pc++; i--",
+  "if r!=0 then pc=sir else pc++",
+  "if r==0 then pc=sir else pc++",
+  "pc++; i=pc; pc=0; co=c; c=sir; l--",
+  "o=pir; pc++",
+  "ram[d][o]=pir; pc++",
+  "ram[l][o]=pir; pc++",
+  "d=pir; pc++",
+  "r=pir; pc++",
+  "i=pir; pc++",
+  "sor=pir; pc++",
+  "por=pir; pc++",
+  "e=pir; pc++",
+  "if (o+pir)>255 then d+=1; pc++",
+  "pc+=pir",
+  "pc=pir",
+  "if i!=0 then pc=pir else pc++; i--",
+  "if r!=0 then pc=pir else pc++",
+  "if r==0 then pc=pir else pc++",
+  "pc++; i=pc; pc=0; co=c; c=pir; l--"
+};
 
 
 /* LOX Bootstrap Firmware for Myth
@@ -33436,38 +33697,43 @@ writeD( struct myth_vm *vm)
 
 
 void
-boilerPlateHeader( int fdesc, char *title)
+wrDocHeader(char* title)
 {
-        fprint( fdesc, "<!DOCTYPE html>\n");
-        fprint( fdesc, "<html>\n");
-        fprint( fdesc, "<head>\n");
-        fprint( fdesc, "\t<meta charset=\"UTF-8\"/>\n");
-        fprint( fdesc, "\t<title>Instruction '%s'</title>\n", title );
-        fprint( fdesc, "\t<link rel=\"stylesheet\" href=\"mythdoc.css\">\n");
-        fprint( fdesc, "</head>\n");
-        fprint( fdesc, "<body>\n");
-        fprint( fdesc, "<header></header>\n");
-        fprint( fdesc, "\t<div>\n");
-        fprint( fdesc, "\t\t<ul>\n");
-        fprint( fdesc, "\t\t\t<li class=\"nav\"><a href=\"index.html\">Home</a></li>\n");
-        fprint( fdesc, "\t\t\t<li class=\"nav\"><a href=\"architecture.html\">architecture</a></li>\n");
-        fprint( fdesc, "\t\t\t<li class=\"nav\"><a href=\"instructions.html\">Instructions</a></li>\n");
-        fprint( fdesc, "\t\t\t<li class=\"nav\"><a href=\"groups.html\">Groups</a></li>\n");
-        fprint( fdesc, "\t\t</ul>\n");
+        line("<!DOCTYPE html>");
+        line("<link rel=\"stylesheet\" href=\"styles.css\">");
+        lo("html", "");
+            lo("head", "");
+                meta("charset=\"UTF-8\"");
+                lo("title", "");
+                line(title);
+                lc("title");
+            lc("head");
+            lo("body", "");
+                lo("header", "");
+                    lo("h1","");
+                        line(href("overview.html", "Myth Microcontroller Documentation"));
+                    lc("h1");
+                    lo("ul", "class=\"nav\"");
+                        tag("li", "", href("index.html", "Home"));
+                        tag("li", "", href("architecture.html", "Architecture"));
+                        tag("li", "", href("instructions.html", "Instructions"));
+                        tag("li", "", href("groups.html", "Groups"));
+                    lc("ul");
+                lc("header");
 }
 
 void
-boilerPlateFooter( int fdesc)
-{
-        fprint( fdesc, "\t</div>\n");
-        fprint( fdesc, "\t<footer>\n");
-        fprint( fdesc, "\t\t<span class=\"copyr\">©Dosflange 2024</span>\n");
-        fprint( fdesc, "\t\t<a href=\"tou.html\">Terms of Use</a>\n");
-        fprint( fdesc, "\t\t<span class=\"impressum\">(Impressum)</span>\n");
-        fprint( fdesc, "\t</footer>\n");
-        fprint( fdesc, "</body>\n");
-        fprint( fdesc, "</html>\n");
+wrDocFooter()
+{               lo("footer", "");
+                    lo("ul", "");
+                        tag("li", "class=\"copyr\"", "©Dosflange 2024");
+                        tag("li", "class=\"tou\"", href("tou.html", "Terms of Use (Impressum)"));
+                    lc("ul");
+                lc("footer");
+            lc("body");
+        lc("html");
 }
+
 
 void
 main()
@@ -33495,431 +33761,69 @@ main()
         save( &vm, fname);
 
 
-/* Generate JSON file with an opcode matrix
+        /*Create HTML documentation*/
 
-        j=0;
-        while( strcmp (strlits[++j].str, "NOP"))
-        ;
-
-        int fdesc;
-        create( "myth_opcodes.json", 0, 0666);
-        fdesc = open( "myth_opcodes.json", OWRITE);
-        if (fdesc != -1)
-                fprint( fdesc, "{\n");
-                fprint( fdesc, "  \"opcodes\": [\n");
-                for( i=0; i<=255; i++) {
-
-                    // print( "%.02X %s\n", strlits[j].val, strlits[j].str);
-
-                    fprint( fdesc, "\t{\n");
-                    fprint( fdesc, "\t\t\"val\": %d,\n",strlits[j].val);
-                    fprint( fdesc, "\t\t\"name\": \"%s\"\n", strlits[j].str);
-                    if( i!=255) fprint( fdesc, "\t},\n");
-                    else fprint( fdesc, "\t}\n");
-                    j++;
-                }
-                fprint( fdesc, "  ]\n");
-                fprint( fdesc, "}\n");
-        close( fdesc);
-*/
-
-/* Generate HTML doc files */
-
-        // i=0;
-        // while( strcmp (strlits[++i].str, "NOP"))
-        // ;
-
-        // j=0;
-        // int fdesc;
-        // create( "myth_opcodes.html", 0, 0666);
-        // fdesc = open( "myth_opcodes.html", OWRITE);
-        // if (fdesc != -1){
-
-        //         fprint( fdesc, "<html><body>\n");
-                
-        //         /* Generate SYS column*/
-        //         fprint( fdesc, "\t<div class=\"SYS\">\n");
-        //         while (j<8) {
-        //             fprint( fdesc, "\t\t<a href=\"sys/%s.html\">%s</a>\n", strlits[i+j].str, strlits[i+j].str);
-        //             j++;
-        //         }
-        //         fprint( fdesc, "\t</div>\n");
-
-                
-        //         /* Generate FIX column*/
-        //         fprint( fdesc, "\t<div class=\"FIX\">\n");
-        //         while (j<16) {
-        //             fprint( fdesc, "\t\t<a href=\"fix/%s.html\">%s</a>\n", strlits[i+j].str, strlits[i+j].str);
-        //             j++;
-        //         }
-        //         fprint( fdesc, "\t</div>\n");
-
-
-        //         /* Generate ALU column*/
-        //         fprint( fdesc, "\t<div class=\"ALU\">\n");
-        //         while (j<32) {
-        //             fprint( fdesc, "\t\t<a href=\"alu/%s.html\">%s</a>\n", strlits[i+j].str, strlits[i+j].str);
-        //             j++;
-        //         }
-        //         fprint( fdesc, "\t</div>\n");
-
-
-        //         /* Generate TRAP column*/
-        //         char alt[80];
-        //         fprint( fdesc, "\t<div class=\"TRAP\">\n");
-        //         while (j<64) {
-        //             strcpy( alt, "");
-        //             strcat( alt, &strlits[i+j].str[1]);
-        //             fprint( fdesc, "\t\t<a href=\"trap/%s.html\">%s</a>\n", alt, strlits[i+j].str);
-        //             j++;
-        //         }
-        //         fprint( fdesc, "\t</div>\n");
-
-
-        //         /* Generate DIRO columns*/
-        //         fprint( fdesc, "\t<div class=\"DIRO\">\n");                
-        //             fprint( fdesc, "\t\t<div class=\"D\">\n");
-        //                 while (j<64+16) {
-        //                     strcpy( alt, "");
-        //                     strcat( alt, strlits[i+j].str);
-        //                     fprint( fdesc, "\t\t\t<a href=\"diro/%s.html\">%s</a>\n", alt, strlits[i+j].str);
-        //                     j++;
-        //                 }
-        //                 fprint( fdesc, "\t\t</div>\n");
-        //                 fprint( fdesc, "\t\t<div class=\"I\">\n");
-        //                 while (j<64+32) {
-        //                     strcpy( alt, "");
-        //                     strcat( alt, strlits[i+j].str);
-        //                     fprint( fdesc, "\t\t\t<a href=\"diro/%s.html\">%s</a>\n", alt, strlits[i+j].str);
-        //                     j++;
-        //                 }
-        //                 fprint( fdesc, "\t\t</div>\n");
-        //                 fprint( fdesc, "\t\t<div class=\"R\">\n");
-        //                 while (j<64+48) {
-        //                     strcpy( alt, "");
-        //                     strcat( alt, strlits[i+j].str);
-        //                     fprint( fdesc, "\t\t\t<a href=\"diro/%s.html\">%s</a>\n", alt, strlits[i+j].str);
-        //                     j++;
-        //                 }
-        //                 fprint( fdesc, "\t\t</div>\n");
-        //                 fprint( fdesc, "\t\t<div class=\"O\">\n");
-        //                 while (j<64+64) {
-        //                     strcpy( alt, "");
-        //                     strcat( alt, strlits[i+j].str);
-        //                     fprint( fdesc, "\t\t\t<a href=\"diro/%s.html\">%s</a>\n", alt, strlits[i+j].str);
-        //                     j++;
-        //                 }
-        //             fprint( fdesc, "\t\t<div>\n");
-        //         fprint( fdesc, "\t</div>\n");
-
-
-        //         /* Generate PAIR columns*/
-        //         fprint( fdesc, "\t<div class=\"PAIR N\">\n");
-        //         while (j<128+16) {
-        //             strcpy( alt, "");
-        //             strcat( alt, strlits[i+j].str);
-        //             fprint( fdesc, "\t\t<a href=\"pair/%s.html\">%s</a>\n", alt, strlits[i+j].str);
-        //             j++;
-        //         }
-        //         fprint( fdesc, "\t</div>\n");
-        //         fprint( fdesc, "\t<div class=\"PAIR M\">\n");
-        //         while (j<128+32) {
-        //             strcpy( alt, "");
-        //             strcat( alt, strlits[i+j].str);
-        //             fprint( fdesc, "\t\t<a href=\"pair/%s.html\">%s</a>\n", alt, strlits[i+j].str);
-        //             j++;
-        //         }
-        //         fprint( fdesc, "\t</div>\n");
-        //         fprint( fdesc, "\t<div class=\"PAIR L\">\n");
-        //         while (j<128+48) {
-        //             strcpy( alt, "");
-        //             strcat( alt, strlits[i+j].str);
-        //             fprint( fdesc, "\t\t<a href=\"pair/%s.html\">%s</a>\n", alt, strlits[i+j].str);
-        //             j++;
-        //         }
-        //         fprint( fdesc, "\t</div>\n");
-        //         fprint( fdesc, "\t<div class=\"PAIR D\">\n");
-        //         while (j<128+64) {
-        //             strcpy( alt, "");
-        //             strcat( alt, strlits[i+j].str);
-        //             fprint( fdesc, "\t\t<a href=\"pair/%s.html\">%s</a>\n", alt, strlits[i+j].str);
-        //             j++;
-        //         }
-        //         fprint( fdesc, "\t</div>\n");
-        //         fprint( fdesc, "\t<div class=\"PAIR R\">\n");
-        //         while (j<128+80) {
-        //             strcpy( alt, "");
-        //             strcat( alt, strlits[i+j].str);
-        //             fprint( fdesc, "\t\t<a href=\"pair/%s.html\">%s</a>\n", alt, strlits[i+j].str);
-        //             j++;
-        //         }
-        //         fprint( fdesc, "\t</div>\n");
-        //         fprint( fdesc, "\t<div class=\"PAIR I\">\n");
-        //         while (j<128+96) {
-        //             strcpy( alt, "");
-        //             strcat( alt, strlits[i+j].str);
-        //             fprint( fdesc, "\t\t<a href=\"pair/%s.html\">%s</a>\n", alt, strlits[i+j].str);
-        //             j++;
-        //         }
-        //         fprint( fdesc, "\t</div>\n");
-        //         fprint( fdesc, "\t<div class=\"PAIR S\">\n");
-        //         while (j<128+112) {
-        //             strcpy( alt, "");
-        //             strcat( alt, strlits[i+j].str);
-        //             fprint( fdesc, "\t\t<a href=\"pair/%s.html\">%s</a>\n", alt, strlits[i+j].str);
-        //             j++;
-        //         }
-        //         fprint( fdesc, "\t</div>\n");
-        //         fprint( fdesc, "\t<div class=\"PAIR P\">\n");
-        //         while (j<128+128) {
-        //             strcpy( alt, "");
-        //             strcat( alt, strlits[i+j].str);
-        //             fprint( fdesc, "\t\t<a href=\"pair/%s.html\">%s</a>\n", alt, strlits[i+j].str);
-        //             j++;
-        //         }
-        //         fprint( fdesc, "\t</div>\n");
-
-        //         fprint( fdesc, "</body></html>\n");
-                
-        //         close( fdesc);
-        // }
-
-
-        int fdesc;
+        char tempstr80[80];
+        char docfname80[80];
+        char content80[80];
         i=0;
-        while( strcmp (strlits[++i].str, "NOP"))
-        ;
-
-        char fname[80];
+        while( strcmp (strlits[++i].str, "NOP")) ;
         j=0;
+        char *mnemonic;
+        uchar opcode;
         while( j<8) {
-                sprint( fname, "sys/%s.html", strlits[i+j].str);
-                create( fname, 0, 0666);
-                fdesc = open( fname, OWRITE);
-                if (fdesc != -1){
-                        k = strlits[i+j].val;
-                        boilerPlateHeader(fdesc, strlits[i+j].str);
-                        fprint( fdesc, "\t\t<span class=\"group\">Group: <a href=\"sys.html\">SYS</a></span>\n");
-                        fprint( fdesc, "\t\t<span class=\"group\">Mnemonic: %s</span>\n", strlits[i+j].str);
-                        fprint( fdesc, "\t\t<span class=\"group\">Opcode: %d (%.02Xh, %.04b_%.04bb)</span>\n", strlits[i+j].val, strlits[i+j].val, strlits[i+j].val, strlits[i+j].val/256, strlits[i+j].val%256);
-                        fprint( fdesc, "\t\t<span class=\"encoding\">Encoding: %.05 (SYS prefix) _ %0.03 (operation index)</span>\n",0, k&7);
-                        fprint( fdesc, "\t\t<p class=\"desc\">\n");
-                        fprint( fdesc, "\t\tThis is a system instruction.\n");
-                        fprint( fdesc, "\t\t</p>\n");
-                        boilerPlateFooter(fdesc);
-                        close( fdesc);
+                mnemonic = strlits[i+j].str;
+                opcode = strlits[i+j].val;
+                strcpy(hrefprefix80, "doc");
+                strcpy(tempstr80, "SYS Instructions - ");
+                strcat(tempstr80, mnemonic);
+                sprint( docfname80, "%s/sys/%s.html", hrefprefix80, mnemonic);
+                create( docfname80, 0, 0666);
+                htmlgen_fdesc = open( docfname80, OWRITE);
+                if (htmlgen_fdesc != -1){
+                        wrDocHeader(tempstr80);
+                        lo("div", "class=\"main\"");
+                            lo("h2","");
+                                line("This page describes the following instruction:");
+                            lc("h2");
+                            lo("ul", "");
+                                
+                                sprint(content80, "Group: %s", href("sys.html", "SYS"));
+                                tag("li", "", content80);
+
+                                sprint(content80, "Mnemonic: %s", mnemonic);
+                                tag("li", "", content80);
+
+                                sprint(content80, "Opcode: %dd, %.02Xh", opcode, opcode);
+                                tag("li", "", content80);
+
+                sprint(content80,
+                    "Encoding: 0000_%.03bb (SYS_INDEX)",
+                         opcode & 7 );
+                                tag("li", "", content80);
+
+                                sprint(content80, "Pseudo-code: %s", pseudocode[opcode]);
+                                tag("li", "class=\"pseudo\"", content80);
+                           
+                                lo("li", "class=\"aside\"");
+                                    sprint(content80, "");
+                                    line(content80);
+                                lc("li");
+                            lc("ul");
+                            lo("p","desc");
+                            lc("p");
+                            lo("p","further");
+                            lc("p");
+                        lc("div");
+                        wrDocFooter();
+                        close(htmlgen_fdesc);
                 }
+
                 j++;
         }
-        while( j<16) {
-                sprint( fname, "fix/%s.html", strlits[i+j].str);
-                create( fname, 0, 0666);
-                fdesc = open( fname, OWRITE);
-                if (fdesc != -1){
-                        k = strlits[i+j].val;
-                        boilerPlateHeader(fdesc, strlits[i+j].str);
-                        fprint( fdesc, "\t\t<span class=\"group\">Group: <a href=\"fix.html\">FIX</a></span>\n");
-                        fprint( fdesc, "\t\t<span class=\"mnemonic\">Mnemonic: %s</span>\n", strlits[i+j].str);
-                        fprint( fdesc, "\t\t<span class=\"opcode\">Opcode: %d (%.02Xh, %.04b_%.04bb)</span>\n", strlits[i+j].val, strlits[i+j].val, strlits[i+j].val, strlits[i+j].val/16, strlits[i+j].val%16);
-                        fprint( fdesc, "\t\t<span class=\"encoding\">Encoding: %.05b (FIX prefix) _ %.03b (signed value)</span>\n",1, k&7);
-                        fprint( fdesc, "\t\t<p class=\"desc\">\n");
-                        fprint( fdesc, "\t\tThis instruction changes the value of the R register by a small positive or negative number.\n");
-                        fprint( fdesc, "\t\t</p>\n");
-                        boilerPlateFooter(fdesc);
-                        close( fdesc);
-                }
-                j++;
-        }
-        while( j<32) {
-                sprint( fname, "alu/%s.html", strlits[i+j].str);
-                create( fname, 0, 0666);
-                fdesc = open( fname, OWRITE);
-                if (fdesc != -1){
-                        k = strlits[i+j].val;
-                        boilerPlateHeader(fdesc, strlits[i+j].str);
-                        fprint( fdesc, "\t\t<span class=\"group\">Group: <a href=\"alu.html\">ALU</a></span>\n");
-                        fprint( fdesc, "\t\t<span class=\"mnemonic\">Mnemonic: %s</span>\n", strlits[i+j].str);
-                        fprint( fdesc, "\t\t<span class=\"opcode\">Opcode: %d (%.02Xh, %.04b_%.04bb)</span>\n", strlits[i+j].val, strlits[i+j].val, strlits[i+j].val/16, strlits[i+j].val%16);
-                        fprint( fdesc, "\t\t<span class=\"encoding\">Encoding: %.04b (ALU prefix) _ %.04b (operation index)</span>\n",1, k&15);
-                        fprint( fdesc, "\t\t<p class=\"desc\">\n");
-                        fprint( fdesc, "\t\tThis is an ALU (Arithmetic Logic Unit) instruction which computes a function between the value of the R register and the value of the O register. The result of this computation is stored in R, overwriting its previous value.\n");
-                        fprint( fdesc, "\t\t</p>\n");
-                        boilerPlateFooter(fdesc);
-                        close( fdesc);
-                }
-                j++;
-        }
-        while( j<64) {
-                sprint( fname, "trap/%s.html", &strlits[i+j].str[1]);
-                create( fname, 0, 0666);
-                fdesc = open( fname, OWRITE);
-                if (fdesc != -1){
-                        k = strlits[i+j].val;
-                        boilerPlateHeader(fdesc, strlits[i+j].str);
-                        fprint( fdesc, "\t\t<span class=\"group\">Group: <a href=\"trap.html\">TRAP</a></span>\n");
-                        fprint( fdesc, "\t\t<span class=\"mnemonic\">Mnemonic: %s</span>\n", strlits[i+j].str);
-                        fprint( fdesc, "\t\t<span class=\"opcode\">Opcode: %d (%.02Xh, %.04b_%.04bb)</span>\n", k, k, k/16, k%16);
-                        fprint( fdesc, "\t\t<span class=\"encoding\">Encoding: %.03b (TRAP prefix) _ %.05b (destination page index)</span>\n",1, k&31);
-                        fprint( fdesc, "\t\t<p class=\"desc\">\n");
-                        fprint( fdesc, "\t\tThis is a TRAP Call instruction. When executed, it increments the PC and saves the values of C and PC in registers CO and I, respectively, so that the CPU can recover these values to resume, once the TRAP call returns. It then sets the PC to zero and loads the constant %d (encoded in the opcode) into C. It then decrements the local page register to create a new stack frame. It then transfers control to C:%d.\n", strlits[i+j].val&31, strlits[i+j].val&31);
-                        fprint( fdesc, "\t\t</p>\n");
-                        fprint( fdesc, "\t\t<p class=\"desc\">\n");
-                        fprint( fdesc, "\t\tWhile the CPU is executing code in pages 0-31, the <a href=\"interrupts.html\">interrupt</a> logic is disabled.\n");
-                        fprint( fdesc, "\t\t</p>\n");
-                        boilerPlateFooter(fdesc);
-                        close( fdesc);
-                }
-                j++;
-        }
-        while( j<128) {
-                sprint( fname, "diro/%s.html", strlits[i+j].str);
-                create( fname, 0, 0666);
-                fdesc = open( fname, OWRITE);
-                if (fdesc != -1){
-                        k = strlits[i+j].val;
-                        uchar gp, loffs, lreg;
-                        boilerPlateHeader(fdesc, strlits[i+j].str);
-                        fprint( fdesc, "\t\t<span class=\"group\">Group: <a href=\"diro.html\">DIRO</a></span>\n");
-                        fprint( fdesc, "\t\t<span class=\"mnemonic\">Mnemonic: %s</span>\n", strlits[i+j].str);
-                        fprint( fdesc, "\t\t<span class=\"opcode\">Opcode: %d (%.02Xh, %.04b_%.04bb)</span>\n", k, k, k/16, k%16);
-                        gp = k&8 ? 1:0;
-                        loffs = k&7;
-                        lreg = (k>>4)&3;
-                        char *lregch = "DIRO";
-                        fprint( fdesc, "\t\t<span class=\"encoding\">Encoding: %.02b (DIRO prefix) _ %.02b (register index into D, I, R, O) _ %.01b (get/put operation) _ %.03b (local variable index)</span>\n",1,lreg,gp,loffs);
-                        fprint( fdesc, "\t\t<p class=\"desc\">\n");
-                        if (gp) {
-                            fprint( fdesc, "\t\tThis instruction stores (PUTS) the value of register %c into the current <a href=\"localpage.html\">local page</a> at offset F8h + %d (L%d).\n", lregch[lreg], loffs, loffs);
-                        } else {
-                            fprint( fdesc, "\t\tThis instruction loads (GETS) the value of register %c from the current <a href=\"localpage.html\">local page</a> at offset F8h + %d (L%d).\n", lregch[lreg], loffs, loffs);
-                        }
-                        fprint( fdesc, "\t\t</p>\n");
-                        fprint( fdesc, "\t\t<p class=\"desc\">\n");
-                        fprint( fdesc, "\t\tWhile the CPU is executing code in pages 0-31, the <a href=\"interrupts.html\">interrupt</a> logic is disabled.\n");
-                        fprint( fdesc, "\t\t</p>\n");
-                        boilerPlateFooter(fdesc);
-                        close( fdesc);
-                }
-                j++;
-        }
- 
-        while( j<256) {
-                sprint( fname, "pair/%s.html", strlits[i+j].str);
-                create( fname, 0, 0666);
-                fdesc = open( fname, OWRITE);
-                if (fdesc != -1){
-                        k = strlits[i+j].val;
-                        boilerPlateHeader(fdesc, strlits[i+j].str);
-                        fprint( fdesc, "\t\t<ul>\n");
-                        fprint( fdesc, "\t\t\t<li class=\"group\">Group: <a href=\"pair.html\">PAIR</a></li>\n");
-                        fprint( fdesc, "\t\t\t<li class=\"mnemonic\">Mnemonic: %s</li>\n", strlits[i+j].str);
-                        fprint( fdesc, "\t\t\t<li class=\"opcode\">Opcode: %d (%.02Xh, %.04b_%.04bb)</li>\n", k, k, k/16, k%16);
-                        fprint( fdesc, "\t\t\t<li class=\"encoding\">Encoding: 1b (PAIR prefix) _ %.03b (source) _ %.04b (destination)</li>\n",(k>>4)&7, k&15);
-                        fprint( fdesc, "\t\t</ul>\n");
-
-                        char *explstr_SRC[8] = {
-                            "N for NUMBER",
-                            "M for MEMORY",
-                            "L for LOCAL",
-                            "D for DATA",
-                            "R for RESULT",
-                            "I for INNER",
-                            "S for SERIAL",
-                            "P for PARALLEL",
-                        };
-
-                        char *explstr_DST[16] = {
-                            "O for OPERAND",
-                            "M for MEMORY",
-                            "L for LOCAL",
-                            "D for DATA",
-                            "R for RESULT",
-                            "I for INNER",
-                            "S for SERIAL",
-                            "P for PARALLEL",
-                            "E for ENABLE",
-                            "A for ADD",
-                            "B for BRANCH",
-                            "J for JUMP",
-                            "W for WHILE",
-                            "T for TRUE",
-                            "F for FALSE",
-                            "C for CALL",
-                        };
 
 
-                        // Explain the letters in an info span
-                        fprint( fdesc, "\t\t<ul><li>Source: %s</li><li>Destination: %s</li></ul>\n", explstr_SRC[(k>>4)&7], explstr_DST[k&15]);
-
-                        fprint( fdesc, "\t\t<p class=\"desc\">\n");
-                        switch((k>>4)&7){
-                                case Nx:
-                                    fprint( fdesc, "\t\tThis instruction increments the Program Counter (PC) and loads the value of the memory cell referenced by the CODE <a href=\"pointers.html\">pointer</a> (register pair C:PC) as the source value. The PC is then incremented again to skip over this literal, so that the PC points to the next instruction.\n");
-                                    break;
-                                case Mx: fprint( fdesc, "\t\tThis instruction loads the memory cell referenced by the DATA <a href=\"pointers.html\">pointer</a> (register pair D:O).\n");
-                                    break;
-                                case Lx: fprint( fdesc, "\t\tThis instruction loads the memory cell referenced by the LOCAL <a href=\"pointers.html\">pointer</a> (register pair L:O).\n");
-                                    break;
-                                case Dx: fprint( fdesc, "\t\tThis instruction loads the value of register <a href=\"DxD.html\">D</a>.\n");
-                                    break;
-                                case Rx: fprint( fdesc, "\t\tThis instruction loads the value of register <a href=\"RxR.html\">R</a>.\n");
-                                    break;
-                                case Ix: fprint( fdesc, "\t\tThis instruction loads the value of register <a href=\"IxI.html\">I</a>.\n");
-                                    break;
-                                case Sx:  fprint( fdesc, "\t\tThis instruction loads the value of the Serial Input Register <a href=\"SxS.html\">SIR</a>.\n");
-                                    break;
-                                default: fprint( fdesc, "\t\tThis instruction loads the value of the Parallel Input Register <a href=\"PxP.html\">PIR</a>.\n");
-                        }
-
-                        fprint( fdesc, "\t\tThen it ");
-                        switch(k&15){
-                                case xO: fprint( fdesc, "stores that value into the Operand register <a href=\"xO.html\">O</a>.\n");
-                                    break;
-                                case xM: fprint( fdesc, "stores that value into the memory cell referenced by the DATA <a href=\"pointers.html\">pointer</a> (register pair <a href=\"DxD.html\">D</a>:<a href=\"xO.html\">O</a>).\n");
-                                    break;
-                                case xL: fprint( fdesc, "stores that value into the memory cell referenced by the LOCAL <a href=\"pointers.html\">pointer</a> (register pair <a href=\"LxL.html\">L</a>:<a href=\"xO.html\">O</a>).\n");
-                                    break;
-                                case xD: fprint( fdesc, "stores that value into the Data Page register <a href=\"DxD.html\">D</a>.\n");
-                                     break;
-                                case xR: fprint( fdesc, "stores that value into the Result register <a href=\"RxR.html\">R</a>.\n");
-                                     break;
-                                case xI: fprint( fdesc, "stores that value into the Inner counter register <a href=\"IxI.html\">I</a>.\n");
-                                     break;
-                                case xS: fprint( fdesc, "stores that value into the Serial Output Register <a href=\"SxS.html\">SOR</a>.\n");
-                                     break;
-                                case xP: fprint( fdesc, "stores that value into the Parallel Output Register <a href=\"PxP.html\">POR</a>.\n");
-                                     break;
-                                case xE: fprint( fdesc, "stores that value into the Enable register <a href=\"xE.html\">E</a>.\n");
-                                     break;
-                                case xA: fprint( fdesc, "(<a href=\"xA.html\">A</a> for ADD) adds that value to register <a href=\"xO.html\">O</a>, and if that addition produces a carry (8-bit unsigned addition overflow), that carry bit is added to register D. This instruction turns the D:O register pair into a 16-bit counter.\n");
-                                     break;
-                                case xB: fprint( fdesc, "adds that value to register <a href=\"PC.html\">PC</a> (Program Counter).\n");
-                                     break;
-                                case xJ: fprint( fdesc, "sets register <a href=\"PC.html\">PC</a> (Program Counter) to that value.\n");
-                                     break;
-                                case xW: fprint( fdesc, "checks register <a href=\"IxI.html\">I</a> (Inner Counter). If I is NOT zero, it sets the Program Counter (PC) to the source value. Otherwise it increments the PC by 1. In either case, the I register is decremented after the checking.\n");
-                                     break; 
-                                case xT: fprint( fdesc, "checks register <a href=\"RxR.html\">R</a>. If R is NOT zero, the CPU sets the Program Counter (PC) to the source value. Otherwise it increments the PC by 1.\n");
-                                    break;
-                                case xF: fprint( fdesc, "checks register <a href=\"RxR.html\">R</a>. If R is zero, the CPU sets the Program Counter (PC) to the source value. Otherwise it increments the PC by 1.\n");
-                                    break;
-                                case xC:
-                                    fprint( fdesc, "executes a subroutine call: It increments register <a href=\"PC.html\">PC</a> (Program Counter) and saves the values of C and PC in registers <a href=\"CO.html\">CO</a> and <a href=\"IxI.html\">I</a>, respectively, so that the CPU can recover these values to resume the calling thread, once the CALL returns. It then sets the PC to zero and loads the source value into C. It then decrements the local page register to create a new stack frame. At that point, control is transferred to the page index that is the source value.");
-                                    fprint( fdesc, "\t\t</p>\n");
-                                    fprint( fdesc, "\t\t<p class=\"further\">\n");
-                                    fprint( fdesc, "\t\t<span>See also:</span> <a href=\"cflow.html\">Control Flow</a>, <a href=\"pointers.html\">Page/Offset Pointers</a>\n");
-                                    fprint( fdesc, "\t\t</p>\n");
-                                    break;
-                        }
 
 
-                        fprint( fdesc, "\t\t</p>\n");
-                        fprint( fdesc, "\t\t<p class=\"desc\">\n");
-                        fprint( fdesc, "\t\t</p>\n");
-                        boilerPlateFooter(fdesc);
-                        close( fdesc);
-                }
-                j++;
-        }
 }
 
