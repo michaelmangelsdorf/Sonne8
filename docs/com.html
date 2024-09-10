@@ -45,7 +45,8 @@
         </p><p>
           Select signal SL0 is reserved to select a NULL device ("nothing").
           SL1 corresponds to the internal POR register output enable signal (SL1_PAROE).
-          SL2-15 can be used freely for application hardware.
+          SL2-15 can be used freely for application hardware.</p>
+        <p>
           The high-order four-bit group (EH) drives a 4-to-16 line non-inverted decoder,
           which maps the bit pattern in EH to 1 of 16 possible, mutually exclusive
           active-high select signals (SH0-15).
@@ -58,9 +59,10 @@
         <h3>SOR (Serial Output Register)</h3>
         <p>
           A write-only parallel-to-serial shift register for serialising an output byte,
-          modelled after a 74HC165 chip. 
+          modelled after a 74HC165 chip.
           Writing an output value for serialisation is done by writing the value
-          into register S. The value is clocked out/serialized by pulsing the SCLK
+          into register S.</p>
+          The value is clocked out/serialized by pulsing the SCLK
           clock line. This happens when the SCL/SCH instructions are used repeatedly.
           SCL-SCH-SCL gives a posititve clock edge. SCH-SCL-SCH generates an inverted clock.
           Eight clock cycles are required to process a byte.</p>
