@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="../styles.css">
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>
+      PAIR Instructions - lr
+    </title>
+  </head>
+  <body>
+    <header>
+      <h1>
+        Myth Microcontroller Documentation
+      </h1>
+      <ul class="nav">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../architecture.html">Architecture</a></li>
+        <li><a href="../instructions.html">Instructions</a></li>
+        <li><a href="../groups.html">Groups</a></li>
+      </ul>
+    </header>
+    <div class="main">
+      <h2>
+        This page describes the following instruction:
+      </h2>
+      <ul>
+        <li>Group: <a href="../pair.html">PAIR</a></li>
+        <li>Mnemonic: lr</li>
+        <li>Opcode: 164d, A4h</li>
+        <li>Encoding: 1_010_0100b (TRAP_SRC_DST)</li>
+        <li class="pseudo">Pseudo-code: r=ram[l][o]; pc++</li>
+        <li class="aside">
+          <a href="letters/L.html">L:LOCAL</a>
+          <a href="pair/letters/R.html">R:RESULT</a>
+        </li>
+      </ul>
+      <p desc>
+        <ul class="pair">
+          <li class="from">
+            Source is the memory cell at page L offset O.
+          </li>
+          <li class="to">
+            Destination is the R register.
+          </li>
+        </ul>
+      </p>
+      <p further>
+        The 'L' source is the value of a memory cell in the L-page.
+        See <a href="../pages.html">Page Registers</a> for more information on the three page register (D, L, C).
+      </p>
+    </div>
+    <footer>
+      <ul>
+        <li class="copyr">©Dosflange 2024</li>
+        <li class="tou"><a href="../tou.html">Terms of Use (Impressum)</a></li>
+      </ul>
+    </footer>
+  </body>
+</html>

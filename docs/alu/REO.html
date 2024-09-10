@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="../styles.css">
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>
+      ALU Instructions - REO
+    </title>
+  </head>
+  <body>
+    <header>
+      <h1>
+        Myth Microcontroller Documentation
+      </h1>
+      <ul class="nav">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../architecture.html">Architecture</a></li>
+        <li><a href="../instructions.html">Instructions</a></li>
+        <li><a href="../groups.html">Groups</a></li>
+      </ul>
+    </header>
+    <div class="main">
+      <h2>
+        This page describes the following instruction:
+      </h2>
+      <ul>
+        <li>Group: <a href="../alu.html">ALU</a></li>
+        <li>Mnemonic: REO</li>
+        <li>Opcode: 30d, 1Eh</li>
+        <li>Encoding: 0001_1110b (ALU_OPERATION)</li>
+        <li class="pseudo">Pseudo-code: if r=o then r=255 else r=0; pc++</li>
+        <li class="aside">
+        </li>
+      </ul>
+      <p desc>
+      </p>
+      <p further>
+        This instruction sets R to 255 if it is equal to O. If R is not equal to O, register R is set to zero.
+      </p>
+    </div>
+    <footer>
+      <ul>
+        <li class="copyr">©Dosflange 2024</li>
+        <li class="tou"><a href="../tou.html">Terms of Use (Impressum)</a></li>
+      </ul>
+    </footer>
+  </body>
+</html>

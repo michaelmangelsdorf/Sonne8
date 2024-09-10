@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="../styles.css">
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>
+      PAIR Instructions - sr
+    </title>
+  </head>
+  <body>
+    <header>
+      <h1>
+        Myth Microcontroller Documentation
+      </h1>
+      <ul class="nav">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../architecture.html">Architecture</a></li>
+        <li><a href="../instructions.html">Instructions</a></li>
+        <li><a href="../groups.html">Groups</a></li>
+      </ul>
+    </header>
+    <div class="main">
+      <h2>
+        This page describes the following instruction:
+      </h2>
+      <ul>
+        <li>Group: <a href="../pair.html">PAIR</a></li>
+        <li>Mnemonic: sr</li>
+        <li>Opcode: 228d, E4h</li>
+        <li>Encoding: 1_110_0100b (TRAP_SRC_DST)</li>
+        <li class="pseudo">Pseudo-code: r=sir; pc++</li>
+        <li class="aside">
+          <a href="pair/letters/S.html">S:SERIAL</a>
+          <a href="pair/letters/R.html">R:RESULT</a>
+        </li>
+      </ul>
+      <p desc>
+        <ul class="pair">
+          <li class="from">
+            Source is the Serial Input register (SIR).
+          </li>
+          <li class="to">
+            Destination is the R register.
+          </li>
+        </ul>
+      </p>
+      <p further>
+        The 'S' source is a deserialised byte received over the serial bus.
+        See <a href="../com.html">Device Communication</a> for how this works.
+      </p>
+    </div>
+    <footer>
+      <ul>
+        <li class="copyr">©Dosflange 2024</li>
+        <li class="tou"><a href="../tou.html">Terms of Use (Impressum)</a></li>
+      </ul>
+    </footer>
+  </body>
+</html>

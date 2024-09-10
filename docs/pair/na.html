@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="../styles.css">
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>
+      PAIR Instructions - na
+    </title>
+  </head>
+  <body>
+    <header>
+      <h1>
+        Myth Microcontroller Documentation
+      </h1>
+      <ul class="nav">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../architecture.html">Architecture</a></li>
+        <li><a href="../instructions.html">Instructions</a></li>
+        <li><a href="../groups.html">Groups</a></li>
+      </ul>
+    </header>
+    <div class="main">
+      <h2>
+        This page describes the following instruction:
+      </h2>
+      <ul>
+        <li>Group: <a href="../pair.html">PAIR</a></li>
+        <li>Mnemonic: na</li>
+        <li>Opcode: 137d, 89h</li>
+        <li>Encoding: 1_000_1001b (TRAP_SRC_DST)</li>
+        <li class="pseudo">Pseudo-code: pc++; if (o+ram[c][pc])>255 then d+=1; pc++</li>
+        <li class="aside">
+          <a href="letters/N.html">N:NUMBER</a>
+          <a href="pair/letters/A.html">A:ADD</a>
+        </li>
+      </ul>
+      <p desc>
+        <ul class="pair">
+          <li class="from">
+            Source is the literal following the current opcode.
+          </li>
+          <li class="to">
+            Add source to O. If this produces a carry bit, add the carry bit to D.
+          </li>
+        </ul>
+      </p>
+      <p further>
+        The 'N' source is a literal byte embedded in the instruction stream.
+        Reading 'N' acts in the same way as an instruction fetch, only it fetches a literal.
+        The 'A' destination takes the source value as the addend which is added to the Data pointer (register pair D:O).
+        See <a href="../jumps.html">In-Page Branching</a> for more on this.
+      </p>
+    </div>
+    <footer>
+      <ul>
+        <li class="copyr">©Dosflange 2024</li>
+        <li class="tou"><a href="../tou.html">Terms of Use (Impressum)</a></li>
+      </ul>
+    </footer>
+  </body>
+</html>

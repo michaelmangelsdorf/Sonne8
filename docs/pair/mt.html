@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="../styles.css">
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>
+      PAIR Instructions - mt
+    </title>
+  </head>
+  <body>
+    <header>
+      <h1>
+        Myth Microcontroller Documentation
+      </h1>
+      <ul class="nav">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../architecture.html">Architecture</a></li>
+        <li><a href="../instructions.html">Instructions</a></li>
+        <li><a href="../groups.html">Groups</a></li>
+      </ul>
+    </header>
+    <div class="main">
+      <h2>
+        This page describes the following instruction:
+      </h2>
+      <ul>
+        <li>Group: <a href="../pair.html">PAIR</a></li>
+        <li>Mnemonic: mt</li>
+        <li>Opcode: 157d, 9Dh</li>
+        <li>Encoding: 1_001_1101b (TRAP_SRC_DST)</li>
+        <li class="pseudo">Pseudo-code: if r!=0 then pc=ram[d][o] else pc++</li>
+        <li class="aside">
+          <a href="letters/M.html">M:MEMORY</a>
+          <a href="pair/letters/T.html">T:TRUE</a>
+        </li>
+      </ul>
+      <p desc>
+        <ul class="pair">
+          <li class="from">
+            Source is the memory cell at page D offset O.
+          </li>
+          <li class="to">
+            If R is NOT zero, set the Program Counter to source.
+          </li>
+        </ul>
+      </p>
+      <p further>
+        The 'M' source is the value of a memory cell in the D-page.
+        See <a href="../pages.html">Page Registers</a> for more information on the three page register (D, L, C).
+        The 'T' destination takes the source value as the target offset of a conditional jump (R!=0) to within the current code page.
+        See <a href="../jumps.html">In-Page Branching</a> for more on this.
+      </p>
+    </div>
+    <footer>
+      <ul>
+        <li class="copyr">©Dosflange 2024</li>
+        <li class="tou"><a href="../tou.html">Terms of Use (Impressum)</a></li>
+      </ul>
+    </footer>
+  </body>
+</html>

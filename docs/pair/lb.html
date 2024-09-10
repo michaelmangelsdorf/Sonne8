@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="../styles.css">
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>
+      PAIR Instructions - lb
+    </title>
+  </head>
+  <body>
+    <header>
+      <h1>
+        Myth Microcontroller Documentation
+      </h1>
+      <ul class="nav">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../architecture.html">Architecture</a></li>
+        <li><a href="../instructions.html">Instructions</a></li>
+        <li><a href="../groups.html">Groups</a></li>
+      </ul>
+    </header>
+    <div class="main">
+      <h2>
+        This page describes the following instruction:
+      </h2>
+      <ul>
+        <li>Group: <a href="../pair.html">PAIR</a></li>
+        <li>Mnemonic: lb</li>
+        <li>Opcode: 170d, AAh</li>
+        <li>Encoding: 1_010_1010b (TRAP_SRC_DST)</li>
+        <li class="pseudo">Pseudo-code: pc+=ram[l][o]</li>
+        <li class="aside">
+          <a href="letters/L.html">L:LOCAL</a>
+          <a href="pair/letters/B.html">B:BRANCH</a>
+        </li>
+      </ul>
+      <p desc>
+        <ul class="pair">
+          <li class="from">
+            Source is the memory cell at page L offset O.
+          </li>
+          <li class="to">
+            Add source to the Program Counter.
+          </li>
+        </ul>
+      </p>
+      <p further>
+        The 'L' source is the value of a memory cell in the L-page.
+        See <a href="../pages.html">Page Registers</a> for more information on the three page register (D, L, C).
+        The 'B' destination takes the source value as the offset relative to the current value of the Program Counter. Writing to 'B' triggers an unconditional jump to the address offset that is the sum of the Program Counter and the source byte within the current code page.
+        See <a href="../jumps.html">In-Page Branching</a> for more on this.
+      </p>
+    </div>
+    <footer>
+      <ul>
+        <li class="copyr">©Dosflange 2024</li>
+        <li class="tou"><a href="../tou.html">Terms of Use (Impressum)</a></li>
+      </ul>
+    </footer>
+  </body>
+</html>

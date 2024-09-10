@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="../styles.css">
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>
+      PAIR Instructions - pc
+    </title>
+  </head>
+  <body>
+    <header>
+      <h1>
+        Myth Microcontroller Documentation
+      </h1>
+      <ul class="nav">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../architecture.html">Architecture</a></li>
+        <li><a href="../instructions.html">Instructions</a></li>
+        <li><a href="../groups.html">Groups</a></li>
+      </ul>
+    </header>
+    <div class="main">
+      <h2>
+        This page describes the following instruction:
+      </h2>
+      <ul>
+        <li>Group: <a href="../pair.html">PAIR</a></li>
+        <li>Mnemonic: pc</li>
+        <li>Opcode: 255d, FFh</li>
+        <li>Encoding: 1_111_1111b (TRAP_SRC_DST)</li>
+        <li class="pseudo">Pseudo-code: pc++; i=pc; pc=0; co=c; c=pir; l--</li>
+        <li class="aside">
+          <a href="pair/letters/P.html">P:PARALLEL</a>
+          <a href="pair/letters/C.html">C:CALL</a>
+        </li>
+      </ul>
+      <p desc>
+        <ul class="pair">
+          <li class="from">
+            Source is the Parallel Input register (PIR).
+          </li>
+          <li class="to">
+            Save the content of the Code Page register C into the Coroutine register CO.<br/Save the content of the Program Counter register into register I.<br/>
+            Set the Program Counter register to zero.</br>Set the Code Page register C to the source value.<br/> Decrement the Local Page register L.
+          </li>
+        </ul>
+      </p>
+      <p further>
+        The 'P' source is a data byte received on the parallel bus.
+        See <a href="../com.html">Device Communication</a> for how this works.
+        The 'C' destination takes the source value as a page index, which it uses as the destination for subroutine call.
+        Decrementing L creates a new stack frame page. The previous stackframe can be resumed by executing 'RET'.
+        Observe that I gets overwritten (with the return address offset) during 'CALL'.
+        The code page of the caller is saved into the Coroutine register.
+        The subroutine will typically execute 'OWN', which copies the value of the Coroutine register into the subroutine's local page at L7.
+        See <a href="../subroutines.html">Subroutines</a> for details on this.
+      </p>
+    </div>
+    <footer>
+      <ul>
+        <li class="copyr">©Dosflange 2024</li>
+        <li class="tou"><a href="../tou.html">Terms of Use (Impressum)</a></li>
+      </ul>
+    </footer>
+  </body>
+</html>
