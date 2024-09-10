@@ -157,8 +157,9 @@
           <h3>
           Data Transmission
           </h3>
-          <p>To transmit data to the selected device, the processor writes the dataus
-          to be sent into the SOR (Serial Output) register.</p>
+          <p>To transmit data to the selected device, the processor writes a data byte
+          (8 bits to be serialised for output)
+          into the SOR (Serial Output) register.</p>
           <p>
           The SSO (Serial Shift Out) instruction is then used,
           which clocks the serial output shift register and produces a data bit
