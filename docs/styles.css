@@ -39,13 +39,18 @@ h1 {
 .main ul div {
     max-width: 400px;
 }
+
 .main ul {
     margin: 0;
     padding: 0;
 }
 
-
 .main h2 {
+    color: #DEE5D4;
+}
+
+.main h3 {
+    font-size: smaller;
     color: #DEE5D4;
 }
 
@@ -58,6 +63,7 @@ h1 {
 
 .groups-top li {
     margin: 4px;
+    font-family:'Courier New', Courier, monospace
 }
 
 footer {
@@ -87,3 +93,14 @@ footer a:hover {
 .main a {
     display: inline;
 }
+
+.group-single {
+    font-size: smaller;
+    font-family:'Courier New', Courier, monospace
+}
+
+.group-single div {
+    min-width: 500px;
+    padding-top: 5px;
+}
+
