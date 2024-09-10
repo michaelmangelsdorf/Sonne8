@@ -24,7 +24,6 @@ char *linetrm = "\n";  /*Line termination string use Unix*/
 char *whitesp = "  "; /*White space string per indentation level*/
 char indentstr[ MAX_LINE_LENGTH+1]; /*Current indentation whitespace*/
 char strbuf[ MAX_LINE_LENGTH+1];
-char hrefprefix80[80];
 char imgprefix80[80];
 
 void line( char* str) /*Adds str at current indent level*/
@@ -93,7 +92,7 @@ tag(char *tag, char *attrib, char *str) /*Enclose str in tag pair*/
 char *
 href( char *href, char *str)
 {
-        sprint(strbuf, "<a href=\"%s/%s\">%s</a>", hrefprefix80, href, str, href);
+        sprint(strbuf, "<a href=\"%s\">%s</a>", href, str, href);
         return strbuf;
 }
 
