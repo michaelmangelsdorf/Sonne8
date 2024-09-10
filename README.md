@@ -14,4 +14,4 @@ The work in the "Schematics" folder is based on the KiCad files I used for PCB p
 Probably the quickest way to understand what this little CPU does is by reading the C emulator
 [header file](https://github.com/Dosflange/Myth/blob/main/Dev/src/myth.h).
 
-I've produced [some documentation](https://dosflange.github.io/Myth/groups.html) on GitHub pages, but it's very time-consuming.
+I've produced [some documentation](https://dosflange.github.io/Myth/groups.html) on GitHub pages, including auto-generated html pages for each instruction, but it's very time-consuming.
