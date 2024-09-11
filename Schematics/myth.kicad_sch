@@ -11,7 +11,7 @@
 		(company "Contact: mim@ok-schalter.de")
 		(comment 1 "Author: Michael Mangelsdorf")
 		(comment 2 "Project homepage: https://github.com/Dosflange/Myth")
-		(comment 3 "Rev. Step LOX (\"Frozen\")")
+		(comment 3 "Rev. Step LOX (\"Frozen 100\")")
 	)
 	(lib_symbols
 		(symbol "4xxx:4002"
@@ -33049,7 +33049,7 @@
 		)
 		(uuid "8c941df9-8e1f-439b-af3a-84f93c154285")
 	)
-	(text "Selected state\noutput is hard-coded\nTRAP to page zero"
+	(text "Selected-state\noutput bits are\na hardcoded\nTRAP instruction\nto page zero"
 		(exclude_from_sim no)
 		(at 109.0637 482.4699 0)
 		(effects

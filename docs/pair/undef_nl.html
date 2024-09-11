@@ -21,12 +21,16 @@
     </header>
     <div class="main">
       <h2>
-        This page describes a small set of PAIR opcodes
+        This page describes the reserved, unimplemented instruction 'NL'
       </h2>
       <p desc>
-        Some PAIR combinations are reserved ("scrounged" away before decoding).
-        They are mapped to NOP, but subject to change for application specific uses
+        Some PAIR combinations such as NL are reserved ("scrounged" away before decoding).
+        They are mapped to NOP, but this is subject to change for application specific uses
         or instruction set extensions.
+        The instruction that would move N into L would involve an instruction fetch
+        and two additional data fetches in the same instruction cycle. The opcode
+        which corresponds to this instruction is remapped to NOP or to other
+        opcodes/instructions.
       </p>
       <p further>
       </p>
