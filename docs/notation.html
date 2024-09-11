@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="styles.css">
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>
+        Doc
+    </title>
+  </head>
+  <body>
+    <header>
+      <h1>
+        Myth Microcontroller Documentation
+      </h1>
+      <ul class="nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="architecture.html">Architecture</a></li>
+        <li><a href="instructions.html">Instructions</a></li>
+        <li><a href="groups.html">Groups</a></li>
+      </ul>
+    </header>
+    <div class="main">
+        <div class="notation">
+          <h2>Assembler Notation and Conventions</h2>
+          <p>
+            Bit positions are numbered starting from 0 (LSB - least significant bit) to 7 (MSB), usually with the letter 'b' for 'bit' prefixed.
+            Single uppercase letters refer to registers when used in the text. Instruction mnemonics use lowercase.
+          </p>
+          <h2>Comments</h2>
+          <p>
+            Comments are introduced by a semicolon (";"). Everything on the same line after the semicolon is ignored.
+          </p>
+          <h2>Phrasing</h2>
+          <p>
+            Multiple assembler mnemonics can occur on a single line. Commas (",") can optionally be used for grouping "phrases" of instructions that logically belong together. They don't generate code and are just for visual clarity.
+          </p>
+          <h2>Number Literals</h2>
+          <p>
+            Decimal numbers from 0-255 can be included in the source text as literals,
+            and be prefixed by an optional minus sign.
+            Hexadecimal numbers must be in two uppercase digits and marked with the suffix "h", for instance: "80h" for 128.
+            Binary numbers can either be formatted as four numeric digits with the suffic "b" (1111b = 15), or in the following way,
+            as two 4-bit groups separated by an underscore ("_") with the suffix "b", for instance: "0010_0000b" for 32.
+          </p>
+          <h2>Page Labels</h2>
+          <p>
+            Page labels are alphanumeric identifiers with an at-sign prefix ("@xyz").
+            Page labels mark the beginning of pages (offset=0), and only one page label is allowed per page.
+            Only page labels can be targets of CALL and TRAP instructions. They can be used as literals anywhere in the code.
+          </p>
+          <h2>Offset Labels</h2>
+          <p>
+            Offset labels are identifiers *ending* with an at-sign ("xyz@").
+            Offset labels can be jumped to, or they can represent address offsets within a page.
+          </p>
+          <h2>Trap Labels</h2>
+          <p>
+            An asterisk placed before a page label encodes a trap call instruction to that address.
+            Such label references will generate an opcode that will trigger a TRAP and call the handler function referenced by the label.
+          </p>
+          <h2>Label References</h2>
+          <p>
+            Page and offset labels are referenced by prefixing their identifier with "&lt;" (for backward references, i.e. the label is defined earlier in the source code than the reference to it), or with "&gt;" (forward reference, i.e. the label is defined later than the reference to it in the source code). If a label is not unique, the reference goes to the nearest occurrence of it in the given direction. A label reference is just a numerical value and can be used as a literal anywhere in the code.
+          </p>
+          <h2>Local variable shortcuts (DIRO)</h2>
+          <p>
+            Examples: r0 ("PUT R into local var L0"), 4o ("GET O from local var L4").
+          </p>
+        </div>
+
+      </div>
+    <footer>
+      <ul>
+        <li class="copyr">©Dosflange 2024</li>
+        <li class="tou"><a href="tou.html">Terms of Use (Impressum)</a></li>
+      </ul>
+    </footer>
+  </body>
+</html>

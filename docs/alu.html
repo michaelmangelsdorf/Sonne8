@@ -23,26 +23,32 @@
         <h2>
           This page shows a list of all ALU instructions.
         </h2>
-        <ul class="group-single">
-            <div class="ALU">
-              <a href="alu/CLR.html">CLR</a>
-              <a href="alu/IDO.html">IDO</a>
-              <a href="alu/OCR.html">OCR</a>
-              <a href="alu/OCO.html">OCO</a>
-              <a href="alu/SLR.html">SLR</a>
-              <a href="alu/SLO.html">SLO</a>
-              <a href="alu/SRR.html">SRR</a>
-              <a href="alu/SRO.html">SRO</a>
-              <a href="alu/AND.html">AND</a>
-              <a href="alu/IOR.html">IOR</a>
-              <a href="alu/EOR.html">EOR</a>
-              <a href="alu/ADD.html">ADD</a>
-              <a href="alu/CAR.html">CAR</a>
-              <a href="alu/RLO.html">RLO</a>
-              <a href="alu/REO.html">REO</a>
-              <a href="alu/RGO.html">RGO</a>
-            </div>
-        </ul>
+        <p>
+          ALU opcodes encode instructions which compute a function
+          between operand registers R and O, and then place the
+          result into the R register.
+          There are sixteen such instructions. The function index
+          is encoded in the low-order four bits of the opcode.
+        </p>
+          <ul class="alu_opcodes group-single">
+            <li><a href="alu/CLR.html">CLR</a> Set R to zero</li>
+            <li><a href="alu/IDO.html">IDO</a> Identity O</li>
+            <li><a href="alu/OCR.html">OCR</a> One's complement of R</li>
+            <li><a href="alu/OCO.html">OCO</a> One's complement of O</li>
+            <li><a href="alu/SLR.html">SLR</a> Shift left R</li>
+            <li><a href="alu/SLO.html">SLO</a> Shift left O</li>
+            <li><a href="alu/SRR.html">SRR</a> Shift right (logical) R</li>
+            <li><a href="alu/SRO.html">SRO</a> Shift right (logical) O</li>
+            <li><a href="alu/AND.html">AND</a> Bitwise AND between R and O</li>
+            <li><a href="alu/IOR.html">IOR</a> Bitwise inclusive OR between R and O</li>
+            <li><a href="alu/EOR.html">EOR</a> Bitwise exclusive OR between R and O</li>
+            <li><a href="alu/ADD.html">ADD</a> 8-bit Addition result of R plus O</li>
+            <li><a href="alu/CAR.html">CAR</a> Carry bit of addition result of R plus O, zero or one<//li>
+            <li><a href="alu/RLO.html">RLO</a> Logical flag (TRUE=255, FALSE=0) R less than O<//li>
+            <li><a href="alu/REO.html">REO</a> Logical flag (TRUE=255, FALSE=0) R equals O</li>
+            <li><a href="alu/RGO.html">RGO</a> Logical flag (TRUE=255, FALSE=0) R greater than O</li>
+          </ul>
+        </p>
     </div>
     <footer>
       <ul>

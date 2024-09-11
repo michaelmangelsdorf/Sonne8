@@ -106,11 +106,15 @@
           The following Signal instructions contained in the SYS group
           operate on the communication registers:</p>
           <h3>SSI (Shift Serial In)</h3>
-          Shift in one bit from serial data input line into SIR (at LSB position)
+          <p>This instruction receives a serial bit via the serial input line.
+            It the shifts SIR left and sets its least significant bit (LSB) to the received bit state.</p>
           <h3>SSO (Shift Serial Out)</h3>
-          Shift out one bit from SOR onto serial data output line (from MSB position)
+          <p>This instruction outputs the most significant bit (MSB)
+             of SOR onto the serial output line and then shifts SOR left.</p>
           <h3>SCH (Set serial clock line high)</h3>
+          <p>This instruction sets the clock line to HIGH.</p>
           <h3>SCL (Serial clock low)</h3>
+          <p>This instruction sets the clock line to LOW.</p>
           <h2>  
           Parallel Communication
           </h2>
@@ -207,7 +211,8 @@
           </h3>
           <p>
           After data transmission is complete, the selected device needs to be deselected
-          to allow other devices to communicate on the bus. This is done by clearing the corresponding selector bit for the device in the E register.
+          to allow other devices to communicate on the bus.
+          This is done by updating the E register with the appropriate value.
           </p>
     </div>
     <footer>
