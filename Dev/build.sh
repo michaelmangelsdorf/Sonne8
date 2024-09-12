@@ -35,6 +35,12 @@ mv a.out ../regs
 rm regs.o
 git add regs.c
 
+cd src-goldie
+git add goldie.go
+go build goldie.go
+cd ..
 
 cd ..
+git add lox.asm
 git add build.sh
+git add run.sh
