@@ -32278,17 +32278,6 @@
 		)
 		(uuid "013dbc0a-bf2b-48aa-bdee-823004ddd9a8")
 	)
-	(text "ALT: JRNZ"
-		(exclude_from_sim no)
-		(at 368.5148 314.8425 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "043551bd-98ee-4b8b-9206-9cf8f0768fec")
-	)
 	(text "~{SL0_NULL} device"
 		(exclude_from_sim no)
 		(at 312.4424 667.1989 0)
@@ -32431,17 +32420,6 @@
 			(justify left bottom)
 		)
 		(uuid "240120a1-056e-435c-9529-8946eb9aff0d")
-	)
-	(text "ALT: xSOR"
-		(exclude_from_sim no)
-		(at 367.9979 278.8966 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "2510cecd-2eb4-43f5-bb13-9cc4e8c083c6")
 	)
 	(text "Pair SRC Decoder"
 		(exclude_from_sim no)
@@ -32618,17 +32596,6 @@
 		)
 		(uuid "4e701eea-ce90-4959-852f-f7bd40dc2435")
 	)
-	(text "ALT: ADD PC"
-		(exclude_from_sim no)
-		(at 368.4151 307.1688 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "4ee3351d-3969-4396-afa5-93c5036c634b")
-	)
 	(text "W=While\nIntended to\npost decrement\nfor either case"
 		(exclude_from_sim no)
 		(at 542.3786 178.9077 0)
@@ -32705,17 +32672,6 @@
 			(justify left bottom)
 		)
 		(uuid "5a376657-254e-4314-a763-529c6f03c0d9")
-	)
-	(text "ALT: xPOR"
-		(exclude_from_sim no)
-		(at 367.9979 281.6772 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "5a519c92-3001-4d02-9873-11442e73049a")
 	)
 	(text "HI7 switches\nbetween RAM and ROM"
 		(exclude_from_sim no)
@@ -33247,17 +33203,6 @@
 		)
 		(uuid "ada721e5-d6d3-4396-bcd4-feea63ff6dfa")
 	)
-	(text "ALT: x[DO]"
-		(exclude_from_sim no)
-		(at 368.2296 266.384 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "ada8f802-5540-4db3-b24e-18c799684587")
-	)
 	(text "Branching"
 		(exclude_from_sim no)
 		(at 107.2642 187.1472 0)
@@ -33334,17 +33279,6 @@
 			(justify left bottom)
 		)
 		(uuid "be2b9315-16f0-41b3-945a-2b3243685e1f")
-	)
-	(text "ALT: CALL"
-		(exclude_from_sim no)
-		(at 368.4151 320.0247 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "c04484b3-1246-4344-9b82-32ce869d8f22")
 	)
 	(text "~{RES} request"
 		(exclude_from_sim no)
@@ -33445,17 +33379,6 @@
 		)
 		(uuid "d5a628dd-f2c4-4701-b616-b117c5f660a5")
 	)
-	(text "ALT: JUMP"
-		(exclude_from_sim no)
-		(at 368.4151 309.6603 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "d5e8f801-95a2-46b8-b1c6-a8403a15876b")
-	)
 	(text "Hard-coded:\nif bits 0-2 all 0\nreplace by 4"
 		(exclude_from_sim no)
 		(at 835.7128 126.2434 0)
@@ -33499,17 +33422,6 @@
 			(justify left bottom)
 		)
 		(uuid "d9549f53-1f03-4931-a4ed-ab9b2d9eb31b")
-	)
-	(text "ALT: x[LO]"
-		(exclude_from_sim no)
-		(at 368.1137 268.9328 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "d9a8e4a4-4b76-4688-be26-0747a9cd5946")
 	)
 	(text "Power"
 		(exclude_from_sim no)
@@ -33599,28 +33511,6 @@
 		)
 		(uuid "e01d1759-031a-4d00-89b7-f78b95978811")
 	)
-	(text "ALT: ADD DO"
-		(exclude_from_sim no)
-		(at 368.4613 304.6169 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "e208fd2e-6b18-4017-b8f3-7c9c3622f995")
-	)
-	(text "ALT: JINZ"
-		(exclude_from_sim no)
-		(at 368.5148 312.2514 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "e2b485cd-ce0b-4d27-b08f-8809aa6e0176")
-	)
 	(text " 8 AND (R:=R&O)\n 9 IOR (R:=R|O)\n10 EOR (R:=R^O)\n11 ADD (Add\" / R:=R+O, bits 0-7)\n12 CAR (\"Carry Bit\" / R:= Carry, 9th bit of R+O) 00h or 01h\n13 RLO (\"Flag: R less than O\" / R:= (R<O)? 0xFF:0\n14 REO (\"Flag: R equals O\" / R:= (R==O)? 0xFF:0\n15 RGO (\"Flag: R greater than O\" / R:= (R>O)? 0xFF:0\n"
 		(exclude_from_sim no)
 		(at 1043.9887 414.8097 0)
@@ -33686,17 +33576,6 @@
 			(justify left bottom)
 		)
 		(uuid "f1e5efdd-0411-4baf-8920-f9498942a381")
-	)
-	(text "ALT: JRZ"
-		(exclude_from_sim no)
-		(at 368.5148 317.4336 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "f3af4107-5272-43d1-8fc3-f88cdc7f12dd")
 	)
 	(text "O"
 		(exclude_from_sim no)
