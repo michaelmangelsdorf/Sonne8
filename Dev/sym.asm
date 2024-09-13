@@ -957,7 +957,7 @@ P[BASEVOCAB]40h
 
     (Printable ASCII Characters)
 
-    "' '", 'NUL', 81h, 0, 20h
+    "'SP'", 'NUL', 81h, 0, 20h
     "'!'", 'NUL', 81h, 0, 21h
     "'"'", 'NUL', 81h, 0, 22h
     "'#'", 'NUL', 81h, 0, 23h

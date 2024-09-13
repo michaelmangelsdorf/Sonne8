@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"encoding/binary"
 	"fmt"
 	"log"
@@ -328,7 +329,7 @@ var symTab = []symbol{
 	{0x07, "0111b"}, {0x08, "1000b"}, {0x09, "1001b"},
 	{0x0A, "1010b"}, {0x0B, "1011b"}, {0x0C, "1100b"},
 	{0x0D, "1101b"}, {0x0E, "1110b"}, {0x0F, "1111b"},
-	{0x20, "' '"}, {0x21, "'!'"}, {0x22, "'\"'"},
+	{0x20, "'SP'"}, {0x21, "'!'"}, {0x22, "'\"'"},
 	{0x23, "'#'"}, {0x24, "'$'"}, {0x25, "'%'"},
 	{0x26, "'&'"}, {0x27, "'''"}, {0x28, "'('"},
 	{0x29, "')'"}, {0x2A, "'*'"}, {0x2B, "'+'"},
@@ -443,11 +444,12 @@ var defConst = [1024]symbol{} // Defined constants
 var blameLine [256][256]int   // Source line that generated this object byte
 var page byte = 0             // Global used during assembly, current page
 var offs byte = 0             // Current offset
-var lineNum = 0               // Current line of source code
+var lineNum = 1               // Current line of source code
 var insideComment = false     // Character position is inside a comment
 var insideString = false      // Character position is inside a string literal
 var chPos = 0                 // Character position in source line
 var constTopIndex = 0         // Insertion point into defConst array
+var lid [256]byte             // Last inserted object byte in the page
 
 func ldSrc(fname string) []byte {
 	var e error
@@ -460,11 +462,62 @@ func ldSrc(fname string) []byte {
 	return t
 }
 
-func wrListing() {
-	objList := []byte("test\n")
-	e := os.WriteFile("lox.txt", objList, 0644)
+func wrDebugTxt() {
+
+	f, e := os.Create("lox_debug.txt")
 	if e != nil {
-		panic(e)
+		log.Fatal("Could not create output file")
+	}
+	defer f.Close()
+
+	w := bufio.NewWriter(f)
+
+	fmt.Fprintf(w, "Goldie/LOX assembly log\n\n")
+	fmt.Fprintf(w, "Frame.Offset     Object code        Lid Line# Source text\n\n")
+
+	var fill int
+	var i byte
+	var j byte
+	var pos int
+	var firstLine bool
+	for line := 1; line <= len(srcLine); line++ {
+
+		fill = 0
+		pos = 0
+		if line == blameLine[i][j] {
+			fmt.Fprintf(w, "%.02X.%.02X:  ", i, j)
+
+			fill = 8
+			firstLine = true
+			for line == blameLine[i][j] {
+				if (pos%8) == 0 && !firstLine {
+					fmt.Fprintf(w, "\n        ")
+					fill = 8
+				}
+				firstLine = false
+				fmt.Fprintf(w, "%.02X ", vm.ram[i][j])
+				fill += 3
+				j++
+				pos++
+			}
+		}
+		for k := fill; k <= 32; k++ {
+			fmt.Fprintf(w, " ")
+		}
+
+		fmt.Fprintf(w, "%.3d %.04d  %s\n", lid[i], line, srcLine[line-1])
+		w.Flush()
+
+		//fmt.Printf("p%d o%d l%d bl%d\n", i, j, line, blameLine[i][j])
+
+		for blameLine[i][j] == 0 || lid[i] == 0 {
+			j = 0
+			if i == 255 {
+				return
+			}
+			i++
+			//fmt.Printf("Advancing: p%d o%d l%d bl%d\n", i, j, line, blameLine[i][j])
+		}
 	}
 }
 
@@ -480,17 +533,10 @@ func wrVM() {
 	}
 }
 
-func chAhead(i int) byte {
-	line := srcLine[lineNum]
-	if chPos+i < len(line) {
-		return line[chPos+i]
-	}
-	return 0
-}
-
 func putCode(b byte) {
 	blameLine[page][offs] = lineNum
 	vm.ram[page][offs] = b
+	lid[page]++
 	if offs == 255 {
 		page++
 	}
@@ -522,189 +568,335 @@ func extractLabel(word string) (hasVal bool, label string, value byte) {
 }
 
 func backRef(str string) bool {
-
+	for j := offs; j != 0; j-- {
+		if str == offsLabel[page][j] {
+			putCode(j)
+			return true
+		}
+	}
 	return false
 }
 
 func fwdRef(str string) bool {
+	var j int
+	for j = int(offs); j != 256; j++ {
+		if str == offsLabel[page][j] {
+			putCode(byte(j))
+			return true
+		}
+	}
+	return false
+}
+
+func putStr(str string) {
+	for i := 0; i < len(str); i++ {
+		putCode(str[i])
+	}
+}
+
+func tryPredefined(word string) bool {
+	for j := 0; j < len(symTab); j++ { // Predefined
+		var searchStr string
+		if len(word) > 1 && word[len(word)-1] == ',' {
+			searchStr = word[0 : len(word)-1]
+		} else {
+			searchStr = word
+		}
+		if symTab[j].str == searchStr {
+			putCode(symTab[j].val)
+			return true
+		}
+	}
+	return false
+}
+
+func tryConstDefined(word string) bool {
+	for j := 0; j < constTopIndex; j++ { // Defined consts
+		var searchStr string
+		if len(word) > 1 && word[len(word)-1] == ',' {
+			searchStr = word[0 : len(word)-1]
+		} else {
+			searchStr = word
+		}
+		if defConst[j].str == searchStr {
+			putCode(defConst[j].val)
+			return true
+		}
+	}
+	return false
+}
+
+func tryPageLabelRef(word string) bool {
+	for j := 0; j < 256; j++ { // Page labels refs
+		var searchStr string
+		if len(word) > 1 && word[len(word)-1] == ',' {
+			searchStr = word[0 : len(word)-1]
+		} else {
+			searchStr = word
+		}
+		if searchStr != "" && pageLabel[j] == searchStr {
+			putCode(byte(j))
+			return true
+		}
+	}
+	return false
+}
+
+func tryOffsLabelRef(word string) bool {
+	// References: three cases: < > .
+
+	if len(word) > 1 {
+
+		if word[0] == '<' {
+			if backRef(word[1:]) {
+				return true
+			}
+
+		} else if word[0] == '>' {
+			if fwdRef(word[1:]) {
+				return true
+			}
+
+		} else if strings.Contains(word, ".") { // page.offset format
+			part := strings.Split(word, ".")
+			for j := 0; j <= 255; j++ { // locate page label
+				if part[0] == pageLabel[j] {
+					for k := 0; k <= 255; k++ { // locate offset label
+						if part[1] == offsLabel[j][k] {
+							putCode(byte(k))
+							return true
+						}
+					}
+				}
+			}
+		}
+	}
+	return false
+}
+
+func tryStringRelated(word string) bool {
+	if len(word) > 0 && word[0] == '"' && !insideString {
+		insideString = true
+		//fmt.Printf("Strings on: %s final char:%c\n", word, word[len(word)-1])
+		//Assemble part after ""
+		if len(word) > 1 {
+			putStr(word[1:])
+		} else {
+			panic("Single double quote")
+		}
+		if word[len(word)-1] == '"' {
+			//fmt.Printf("Strings off: %s\n", word)
+			insideString = false // "0" etc.
+		}
+		return true
+	}
+	if len(word) > 0 && word[len(word)-1] == '"' && insideString {
+		insideString = false
+		//fmt.Printf("Strings off: %s\n", word)
+		//Assemble part before ""
+		if len(word) > 1 {
+			putStr(word[:len(word)-2])
+		}
+		return true
+	}
+	if insideString {
+		//Assemble whole word
+		putStr(word)
+		return true
+	}
+	return false
+}
+
+func tryCommentRelated(word string) bool {
+	if strings.Contains(word, "(") {
+		insideComment = true
+		return true
+	}
+
+	if strings.Contains(word, ")") {
+		insideComment = false
+		return true
+	}
+
+	if insideComment == true {
+		return true
+	}
 
 	return false
 }
 
-func fullRef(str string) bool {
+func tryPOC(word string) bool {
 
+	var label string
+	var value byte
+
+	if strings.Contains(word, "P[") {
+		hasVal, label, value = extractLabel(word)
+		if hasVal {
+			pageLabel[value] = label
+			page = value
+			offs = 0
+		} else {
+			page++
+			offs = 0
+			pageLabel[page] = label
+		}
+		return true
+	}
+
+	if strings.Contains(word, "O[") {
+		hasVal, label, value = extractLabel(word)
+		if hasVal {
+			offsLabel[page][value] = label
+			offs = value
+		} else {
+			offsLabel[page][offs] = label
+		}
+		return true
+	}
+
+	if strings.Contains(word, "C[") {
+		hasVal, label, value = extractLabel(word)
+		if hasVal == false {
+			panic("Const has no value")
+		}
+		defConst[constTopIndex].str = label
+		defConst[constTopIndex].val = value
+		constTopIndex++
+		return true
+	}
+
+	return false
+}
+
+func tryTrapCall(word string) bool {
+	if len(word) > 0 && word[0] == '*' { //Trap call
+		for i := 0; i < 32; i++ {
+			if pageLabel[i] == word[1:] {
+				putCode(byte(i) & 0x40)
+				return true
+			}
+		}
+	}
 	return false
 }
 
 var hasVal bool // Silence "unused" warning/err if I put this inside the function!?
-func parse() {
+func parse(pass byte) {
 
-	for lineNum = 0; lineNum < len(srcLine); lineNum++ {
+	var wordIndex int
+	//var sumOfGoodness int
 
-		wordsOnLine := strings.Split(srcLine[lineNum], " ")
+	fmt.Printf("Pass %d\n", pass)
 
-		var wordIndex int
-		var label string
-		var value byte
+	for lineNum = 1; lineNum < len(srcLine); lineNum++ {
+		wordsInLine := strings.Fields(srcLine[lineNum-1])
 
-		for wordIndex < len(wordsOnLine) {
+		wordIndex = 0
+		for wordIndex < len(wordsInLine) {
+			word := wordsInLine[wordIndex]
+			if len(word) == 0 {
+				continue // Empty source line!
+			}
 
-			word := wordsOnLine[wordIndex]
-			if strings.Contains(word, "(") {
-				insideComment = true
+			if word[len(word)-1] == ',' {
+				word = word[:len(word)-1] // Chop
+			}
+
+			if tryCommentRelated(word) {
 				wordIndex++
 				continue
 			}
 
-			if strings.Contains(word, ")") {
-				insideComment = false
+			if tryOffsLabelRef(word) {
 				wordIndex++
 				continue
 			}
 
-			if insideComment == true {
+			if tryPOC(word) {
 				wordIndex++
 				continue
 			}
 
-			if strings.Contains(word, "P[") {
-				hasVal, label, value = extractLabel(word)
-				if hasVal {
-					pageLabel[value] = label
-					page = value
-				} else {
-					pageLabel[page] = label
-				}
+			if tryPredefined(word) {
 				wordIndex++
 				continue
 			}
 
-			if strings.Contains(word, "O[") {
-				hasVal, label, value = extractLabel(word)
-				if hasVal {
-					offsLabel[page][value] = label
-					offs = value
-				} else {
-					offsLabel[page][offs] = label
-				}
+			if tryConstDefined(word) {
 				wordIndex++
 				continue
 			}
 
-			if strings.Contains(word, "C[") {
-				hasVal, label, value = extractLabel(word)
-				if hasVal == false {
-					panic("Const has no value")
-				}
-				defConst[constTopIndex].str = label
-				defConst[constTopIndex].val = value
-				constTopIndex++
+			if tryPageLabelRef(word) {
 				wordIndex++
 				continue
 			}
 
-			for j := 0; j < len(symTab); j++ { // Predefined
-				var searchStr string
-				if len(word) > 1 && word[len(word)-1] == ',' {
-					searchStr = word[0 : len(word)-1]
-				} else {
-					searchStr = word
-				}
-				if symTab[j].str == searchStr {
-					putCode(symTab[j].val)
-					wordIndex++
-					continue
-				}
-			}
-
-			for j := 0; j < constTopIndex; j++ { // Assembled
-				var searchStr string
-				if len(word) > 1 && word[len(word)-1] == ',' {
-					searchStr = word[0 : len(word)-1]
-				} else {
-					searchStr = word
-				}
-				if defConst[j].str == searchStr {
-					putCode(defConst[j].val)
-					wordIndex++
-					continue
-				}
-			}
-
-			for j := 0; j < 256; j++ { // Page labels refs
-				var searchStr string
-				if len(word) > 1 && word[len(word)-1] == ',' {
-					searchStr = word[0 : len(word)-1]
-				} else {
-					searchStr = word
-				}
-				if pageLabel[j] == searchStr {
-					putCode(byte(j))
-					wordIndex++
-					continue
-				}
-			}
-
-			// References: three cases: < > .
-			if len(word) > 1 {
-				foundRef := false
-				if word[0] == '<' {
-					foundRef = backRef(word[1:])
-				} else if word[0] == '>' {
-					foundRef = fwdRef(word[1:])
-				} else if strings.Contains(word, ".") {
-					foundRef = fullRef(word)
-				}
-				if foundRef {
-					wordIndex++
-					continue
-				}
-			}
-
-			if len(word) > 0 && word[0] == '"' && !insideString {
-				insideString = true
-				//Assemble part after ""
-
+			if tryTrapCall(word) {
 				wordIndex++
 				continue
 			}
-			if len(word) > 0 && word[len(word)-1] == '"' && insideString {
-				insideString = false
-				//Assemble part before ""
 
-				wordIndex++
-				continue
-			}
-			if insideString {
-				//Assemble whole word
-
+			if tryStringRelated(word) {
 				wordIndex++
 				continue
 			}
 
 			wordIndex++
-			//panic("Unknown literal")
+			if pass == 1 || pass == 2 {
+				fmt.Printf("Line %d: Using 0 for unknown literal '%s'\n", lineNum, word)
+			}
+			putCode(0)
+			continue
 		}
 	}
 }
 
+// func genSymTabSrc() {
+// 	f, e := os.Create("symtab.asm")
+// 	if e != nil {
+// 		log.Fatal("Could not create output file")
+// 	}
+// 	defer f.Close()
+
+// 	w := bufio.NewWriter(f)
+// 	fmt.Fprintf(w, "P[BASEVOCAB]40h\n\n")
+// 	for i := 0; i < len(symTab); i++ {
+// 		fmt.Fprintf(w, "\"%s\", 'NUL', 81h, 0, %.02X\n", symTab[i].str, symTab[i].val)
+// 		w.Flush()
+// 	}
+// }
+
 func main() {
 
-	if len(os.Args[1:]) == 0 {
-		fmt.Println("Missing input file argument")
+	//genSymTabSrc()
+	//os.Exit(0)
+
+	if len(os.Args[1:]) < 2 {
+		fmt.Println("Missing input file arguments <asmsrc> <symtabsrc>")
 		os.Exit(1)
 	}
 
 	fmt.Println("Goldie/LOX assembler v.2409")
 
-	fname := os.Args[1:][0]
-	srcText := ldSrc(fname)
-	srcLine = strings.Split(string(srcText), "\n")
-
 	vm = myth_vm{}
-	parse()
+
+	srcText := ldSrc(os.Args[1:][0])
+	srcTextStr := string(srcText)
+	srcLine = strings.Split(srcTextStr, "\n")
+
+	parse(1)
+	for i := 0; i < 256; i++ {
+		lid[i] = 0
+	}
+	parse(2) // Second Pass to resolve forward refs
+
+	//srcText = ldSrc(os.Args[1:][1])
+	//srcLine = strings.Split(string(srcText), "\n")
+	//parse()
 
 	wrVM()
-	wrListing()
+	wrDebugTxt()
 	fmt.Println("Goldie/LOX finished")
 }
