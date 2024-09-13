@@ -1,0 +1,438 @@
+Goldie/LOX assembly log
+
+Frame.Offset     Object code        Lid Line# Source text
+
+                                 004 0001  
+                                 004 0002  
+                                 004 0003  P[COLD]0
+00.00:  8F 20                    004 0004             nc Interpret  (LOX Bootstrap Firmware for Myth micro-controller)
+                                 004 0005                           (Author: mim@ok-schalter.de - Michael/Dosflange@github)
+00.02:  81                       004 0006             END           (Lox has copied its null-separated command line arguments)
+00.03:  00                       004 0007             00h           (into 7F80h-7FEFh. Application specific opcode END exits LOX.)
+                                 048 0008  
+                                 048 0009  P[Interpret]20h
+                                 048 0010  
+20.00:  07                       048 0011             OWN        (********** Look up a word in the dictionary *******************)
+20.01:  5E                       048 0012             i6
+20.02:  83 28                    048 0013             nd LOXBASE
+20.04:  80 F7                    048 0014             no LOXBASE.ARG
+20.06:  90                       048 0015             mo
+20.07:  8F 24                    048 0016             nc VSrch
+20.09:  8D 11                    048 0017             nt >InterpSucc
+20.0B:  84 01                    048 0018             nr 1        (Look-up failed)
+20.0D:  8F 25                    048 0019             nc PrMsg
+20.0F:  56                       048 0020             6i
+20.10:  05                       048 0021             RET
+                                 048 0022  
+                                 048 0023  O[InterpSucc]
+20.11:  78                       048 0024             o0         (Save target offset)
+20.12:  80 02                    048 0025             no 2         (Compare to type 2 - CMD)
+20.14:  1E                       048 0026             REO        (Target type still in R)
+20.15:  8E 19                    048 0027             nf >InterpRFail
+20.17:  50                       048 0028             0i         (Restore target offset)
+20.18:  06                       048 0029             COR        (Target page still in G)
+                                 048 0030  
+                                 048 0031  O[InterpRFail]
+20.19:  84 02                    048 0032             nr 2
+20.1B:  8F 25                    048 0033             nc PrMsg
+20.1D:  56                       048 0034             6i
+20.1E:  05                       048 0035             RET
+                                 048 0036  O[NextArg]
+20.1F:  07                       048 0037             OWN        (********** Advance LOX ARG PTR to next string ****************)
+20.20:  5E                       048 0038             i6
+20.21:  83 28                    048 0039             nd LOXBASE
+20.23:  80 F7                    048 0040             no LOXBASE.ARG
+20.25:  90                       048 0041             mo
+20.26:  8F 23                    048 0042             nc SkipToNULL (DO points to char following NULL)
+20.28:  83 28                    048 0043             nd LOXBASE      (Ignore updated page index in D)
+20.2A:  11                       048 0044             IDO
+20.2B:  80 F7                    048 0045             no LOXBASE.ARG
+20.2D:  C1                       048 0046             rm         (Store updated offset in ARG variable)
+20.2E:  56                       048 0047             6i
+20.2F:  05                       048 0048             RET
+                                 044 0049  
+                                 044 0050  P[Mul8]
+21.00:  07                       044 0051             OWN        (Multiplies R by O result in R and O)
+21.01:  5E                       044 0052             i6
+21.02:  79                       044 0053             o1         (Initialise copy of multiplicand - low order)
+21.03:  68                       044 0054             r0         (Save multiplier)
+21.04:  84 00                    044 0055             nr 00h    (Clear high-order result)
+21.06:  6A                       044 0056             r2
+21.07:  85                       044 0057             ni         (Initilise loop counter, 8 bits)
+21.08:  07                       044 0058             07h
+                                 044 0059  O[Mul8Loop]
+21.09:  80 01                    044 0060             no 01h        (Bit mask for bit 0)
+21.0B:  61                       044 0061             1r
+21.0C:  18                       044 0062             AND        (Check if multiplicand bit 0 set)
+21.0D:  8E 13                    044 0063             nf >Mul8Skip        (Skip if not)
+21.0F:  60                       044 0064             0r
+21.10:  72                       044 0065             2o
+21.11:  1B                       044 0066             ADD        (Add multiplier to high order result)
+21.12:  6A                       044 0067             r2
+                                 044 0068  O[Mul8Skip]
+21.13:  80 01                    044 0069             no 01h        (Bit mask for bit 0)
+21.15:  62                       044 0070             2r
+21.16:  18                       044 0071             AND
+21.17:  6B                       044 0072             r3         (Flag whether high order LSB is set)
+21.18:  61                       044 0073             1r
+21.19:  16                       044 0074             SRR        (Shift low-order result right)
+21.1A:  69                       044 0075             r1
+21.1B:  62                       044 0076             2r
+21.1C:  16                       044 0077             SRR        (Shift high-order result right)
+21.1D:  6A                       044 0078             r2
+21.1E:  63                       044 0079             3r         (Test whether high-order bit set)
+21.1F:  8E 26                    044 0080             nf >Mul8Done
+21.21:  84 80                    044 0081             nr 80h        (Bit mask for MSB)
+21.23:  71                       044 0082             1o
+21.24:  19                       044 0083             IOR        (Set MSB if LSB of high order was shifted down into low-order)
+21.25:  69                       044 0084             r1
+                                 044 0085  O[Mul8Done]
+21.26:  8C 09                    044 0086             nw <Mul8Loop
+21.28:  71                       044 0087             1o         (Result low-order)
+21.29:  62                       044 0088             2r         (Result high-order)
+21.2A:  56                       044 0089             6i         (Restore return address)
+21.2B:  05                       044 0090             RET
+                                 053 0091  
+                                 053 0092  P[DivMod8]
+22.00:  07                       053 0093             OWN        (Divide R by G, return quotient in R, remainder in G)
+22.01:  5E                       053 0094             i6
+22.02:  68                       053 0095             r0         (Save dividend)
+22.03:  79                       053 0096             o1         (Save divisor)
+22.04:  85 00                    053 0097             ni 00h        (Initialise shift counter to number of positions)
+                                 053 0098                          (of first 1-bit)
+22.06:  84 00                    053 0099             nr 00h        (Initialise quotient to zero)
+22.08:  6B                       053 0100             r3
+22.09:  61                       053 0101             1r         (Skip if divisor is zero)
+22.0A:  8E 31                    053 0102             nf >DivMod8Quit
+22.0C:  84                       053 0103             nr         (Set MSB mask)
+22.0D:  80                       053 0104             80h
+22.0E:  6D                       053 0105             r5
+                                 053 0106  
+                                 053 0107  O[DivMod8Sh]
+                                 053 0108  
+22.0F:  65                       053 0109             5r         (Shift divisor left until first 1 bit at MSB position)
+22.10:  71                       053 0110             1o
+22.11:  18                       053 0111             AND        (Compare to mask)
+22.12:  8D 1B                    053 0112             nt >DivMod8Div (Exit shift loop once MSB set)
+22.14:  15                       053 0113             SLO        (Shift divisor)
+22.15:  69                       053 0114             r1         (Store result)
+22.16:  D4                       053 0115             ir         (Increment shift counter)
+22.17:  09                       053 0116             P1
+22.18:  C5                       053 0117             ri
+22.19:  8B 0F                    053 0118             nj <DivMod8Sh
+                                 053 0119  
+                                 053 0120  O[DivMod8Div]
+                                 053 0121  
+22.1B:  73                       053 0122             3o         (Shift quotient left)
+22.1C:  15                       053 0123             SLO
+22.1D:  6B                       053 0124             r3         (Store shifted quotient for latter)
+22.1E:  61                       053 0125             1r         (Negate divisor)
+22.1F:  12                       053 0126             OCR        (Do this by getting the ones'complement)
+22.20:  09                       053 0127             P1         (and adding 1 to it)
+22.21:  6C                       053 0128             r4         (Save this)
+22.22:  70                       053 0129             0o         (Get the dividend and see if adding the negated divisor)
+22.23:  1C                       053 0130             CAR        (produces a borrow bit)
+22.24:  8E                       053 0131             nf         (If not, don't accept the subtraction)
+22.25:  2C                       053 0132             >DivMod8Rep
+22.26:  64                       053 0133             4r         (Accept subtraction result)
+22.27:  1B                       053 0134             ADD        (Dividend still in O)
+22.28:  68                       053 0135             r0         (Store new dividend)
+22.29:  63                       053 0136             3r         (Increment quotient)
+22.2A:  09                       053 0137             P1
+22.2B:  6B                       053 0138             r3
+                                 053 0139  
+                                 053 0140  O[DivMod8Rep]
+                                 053 0141  
+22.2C:  61                       053 0142             1r
+22.2D:  16                       053 0143             SRR        (Shift divisor right for next subtraction)
+22.2E:  69                       053 0144             r1
+22.2F:  8C                       053 0145             nw         (Decrement counter)
+22.30:  1B                       053 0146             <DivMod8Div (Branch back if not zero)
+                                 053 0147  
+                                 053 0148  O[DivMod8Quit]
+                                 053 0149  
+22.31:  63                       053 0150             3r
+22.32:  70                       053 0151             0o
+22.33:  56                       053 0152             6i
+22.34:  05                       053 0153             RET
+                                 011 0154  
+                                 011 0155  P[SkipToNULL]
+                                 011 0156  
+23.00:  07                       011 0157             OWN        (********** Advance string pointer to next NULL char  **********)
+23.01:  5E                       011 0158             i6
+                                 011 0159  
+23.02:  94                       011 0160  O[SkipNFind0] mr         (DO points to char)
+                                 011 0161  
+23.03:  8E                       011 0162             nf         (If char zero, done)
+23.04:  09                       011 0163             >SkipNAt0
+23.05:  89                       011 0164             na         (Else increment DO and check again)
+23.06:  01                       011 0165             1
+23.07:  8B 02                    011 0166             nj <SkipNFind0
+                                 011 0167  
+                                 011 0168  O[SkipNAt0]
+23.09:  56                       011 0169             6i
+23.0A:  05                       011 0170             RET
+                                 064 0171  
+                                 064 0172  P[VSrch]
+24.00:  07                       064 0173             OWN        (VOCAB Look-UP, search string address in D/O)
+24.01:  5E                       064 0174             i6
+24.02:  48                       064 0175             d0         (Search zero terminated string in this page)
+24.03:  79                       064 0176             o1         (at this offset)
+24.04:  4C                       064 0177             d4         (Create working copies)
+24.05:  7D                       064 0178             o5
+24.06:  83                       064 0179             nd         (Set Data Pointer to first entry)
+24.07:  40                       064 0180             BASEVOCAB
+24.08:  80                       064 0181             no
+24.09:  00                       064 0182             00h
+24.0A:  4A                       064 0183             d2         (Current dict base ptr)
+24.0B:  7B                       064 0184             o3         (and offs)
+                                 064 0185  
+                                 064 0186  O[VSrchNxtCh]
+                                 064 0187  
+24.0C:  44                       064 0188             4d         (Compare current char in dict to char in search str)
+24.0D:  75                       064 0189             5o
+24.0E:  94                       064 0190             mr         (Char in sstr)
+24.0F:  42                       064 0191             2d
+24.10:  73                       064 0192             3o
+24.11:  90                       064 0193             mo         (Char in dict)
+24.12:  1E                       064 0194             REO
+24.13:  8E 26                    064 0195             nf >VSrchMismat
+24.15:  11                       064 0196             IDO
+24.16:  8E                       064 0197             nf         (Matching chars, success if both NUL)
+24.17:  39                       064 0198             >VSrchFound
+24.18:  44                       064 0199             4d
+24.19:  75                       064 0200             5o
+24.1A:  89                       064 0201             na         (Advance sstring ptr)
+24.1B:  01                       064 0202             1
+24.1C:  4C                       064 0203             d4
+24.1D:  7D                       064 0204             o5
+24.1E:  42                       064 0205             2d
+24.1F:  73                       064 0206             3o
+24.20:  89 01                    064 0207             na 1        (Advance dict ptr)
+24.22:  4A                       064 0208             d2
+24.23:  7B                       064 0209             o3
+24.24:  8B 0C                    064 0210             nj <VSrchNxtCh (Branch back, check next character)
+                                 064 0211  
+                                 064 0212  O[VSrchMismat]
+                                 064 0213  
+24.26:  60                       064 0214             0r         (Reset sstring ptr)
+24.27:  6C                       064 0215             r4
+24.28:  61                       064 0216             1r
+24.29:  6D                       064 0217             r5
+24.2A:  42                       064 0218             2d         (Find next NULL byte)
+24.2B:  73                       064 0219             3o
+24.2C:  8F 23                    064 0220             nc SkipToNULL
+24.2E:  4A                       064 0221             d2
+24.2F:  7B                       064 0222             o3
+24.30:  89 04                    064 0223             na 4        (Skip NUL char and Data Bytes - Type+Page+Offs)
+24.32:  4A                       064 0224             d2
+24.33:  7B                       064 0225             o3
+24.34:  94                       064 0226             mr         (Check if first byte of next data entry is NUL - End of list)
+                                 064 0227  
+24.35:  8E 00                    064 0228             nf >VSrchFail
+                                 064 0229             
+24.37:  8B 0C                    064 0230             nj <VSrchNxtCh
+                                 064 0231  
+                                 064 0232  O[VSrchFound]
+                                 064 0233  
+24.39:  42                       064 0234             2d
+24.3A:  73                       064 0235             3o
+24.3B:  89                       064 0236             na         (Advance vocab ptr to type byte)
+24.3C:  01                       064 0237             1
+24.3D:  94                       064 0238             mr         (Type)
+                                 064 0239             r2
+                                 064 0240             na
+                                 064 0241             1
+                                 064 0242             mr         (Page)
+                                 064 0243             r3
+                                 064 0244             na
+                                 064 0245             1
+                                 064 0246             mo         (Offs)
+                                 064 0247             3d
+                                 064 0248             2r
+                                 064 0249             6i
+                                 064 0250             RET
+                                 064 0251  
+                                 064 0252  O[VSrchFail]
+                                 064 0253  
+                                 064 0254             CLR        (Not found if result type = 0)
+24.3E:  56                       064 0255             6i
+24.3F:  05                       064 0256             RET
+                                 101 0257  
+                                 101 0258  P[PrMsg]
+25.00:  07                       101 0259             OWN
+25.01:  5E                       101 0260             i6
+25.02:  68                       101 0261             r0
+25.03:  83 25                    101 0262             nd PrMsg
+25.05:  49                       101 0263             d1
+25.06:  80 40                    101 0264             no >PrMsg0
+25.08:  7A                       101 0265             o2
+                                 101 0266  
+                                 101 0267  O[PrMsgNxtCh]
+                                 101 0268  
+25.09:  41                       101 0269             1d
+25.0A:  72                       101 0270             2o
+25.0B:  94                       101 0271             mr
+25.0C:  70                       101 0272             0o         (Compare message IDs)
+25.0D:  1E                       101 0273             REO
+25.0E:  8D                       101 0274             nt
+25.0F:  21                       101 0275             >PrMsgFound
+                                 101 0276  
+                                 101 0277  O[PrMsgSkip]
+                                 101 0278  
+25.10:  72                       101 0279             2o
+25.11:  89                       101 0280             na         (Increment to next msg char)
+25.12:  01                       101 0281             1
+25.13:  7A                       101 0282             o2
+25.14:  94                       101 0283             mr
+25.15:  8E                       101 0284             nf
+25.16:  19                       101 0285             >PrMsgChk0
+25.17:  8B                       101 0286             nj         (This wasn't a NULL, keep incrementing)
+25.18:  10                       101 0287             <PrMsgSkip
+                                 101 0288  
+                                 101 0289  O[PrMsgChk0]
+                                 101 0290  
+25.19:  89 01                    101 0291             na 1       (Skip over the NULL char)
+25.1B:  7A                       101 0292             o2
+25.1C:  94                       101 0293             mr         (Check double NULL)
+25.1D:  8D 09                    101 0294             nt <PrMsgNxtCh (If it was not NULL, check next entry - then it's an ID)
+25.1F:  8B 3E                    101 0295             nj >PrMsgQuit  (Lookup failed)
+                                 101 0296  
+                                 101 0297  O[PrMsgFound]
+                                 101 0298  
+25.21:  83 28                    101 0299             nd LOXBASE
+25.23:  80 F8                    101 0300             no LOXBASE.POS
+25.25:  90                       101 0301             mo         (Get current printing POS)
+25.26:  7B                       101 0302             o3
+                                 101 0303  
+                                 101 0304  O[PrMsgCpy]
+                                 101 0305  
+25.27:  41                       101 0306             1d         (Page of src char ptr)
+25.28:  72                       101 0307             2o         (Offset of src char ptr)
+25.29:  89 01                    101 0308             na 1        (Advance to next char)
+25.2B:  7A                       101 0309             o2
+25.2C:  94                       101 0310             mr         (Char to print)
+25.2D:  8E                       101 0311             nf         (Finished if NULL terminator)
+25.2E:  38                       101 0312             >PrMsgDone
+25.2F:  83                       101 0313             nd
+25.30:  28                       101 0314             LOXBASE
+25.31:  73                       101 0315             3o
+25.32:  C1                       101 0316             rm         (Store character in output buffer at POS)
+25.33:  89                       101 0317             na
+25.34:  01                       101 0318             1
+25.35:  7B                       101 0319             o3         (Advance printing pos)
+25.36:  8B 27                    101 0320             nj <PrMsgCpy
+                                 101 0321  
+                                 101 0322  O[PrMsgDone]
+                                 101 0323  
+25.38:  83                       101 0324             nd         (Update POS)
+25.39:  28                       101 0325             LOXBASE
+25.3A:  80 F8                    101 0326             no LOXBASE.POS
+25.3C:  63                       101 0327             3r
+25.3D:  C1                       101 0328             rm
+                                 101 0329  
+                                 101 0330  O[PrMsgQuit]
+                                 101 0331  
+25.3E:  56                       101 0332             6i
+25.3F:  05                       101 0333             RET
+                                 101 0334  
+                                 101 0335  O[PrMsg0]
+25.40:  00                       101 0336              0
+25.41:  52                       101 0337             'R'
+25.42:  65                       101 0338             'e'
+25.43:  61                       101 0339             'a'
+25.44:  64                       101 0340             'd'
+25.45:  79                       101 0341             'y'
+25.46:  00                       101 0342             'NUL'
+25.47:  01                       101 0343             1
+25.48:  4E                       101 0344             'N'
+25.49:  6F                       101 0345             'o'
+25.4A:  74                       101 0346             't'
+25.4B:  20                       101 0347             'SP'
+25.4C:  66                       101 0348             'f'
+25.4D:  6F                       101 0349             'o'
+25.4E:  75                       101 0350             'u'
+25.4F:  6E                       101 0351             'n'
+25.50:  64                       101 0352             'd'
+25.51:  00                       101 0353             'NUL'
+25.52:  02                       101 0354             2
+25.53:  4E                       101 0355             'N'
+25.54:  6F                       101 0356             'o'
+25.55:  74                       101 0357             't'
+25.56:  20                       101 0358             'SP'
+25.57:  61                       101 0359             'a'
+25.58:  20                       101 0360             'SP'
+25.59:  63                       101 0361             'c'
+25.5A:  6D                       101 0362             'm'
+25.5B:  64                       101 0363             'd'
+25.5C:  00                       101 0364             'NUL'
+25.5D:  03                       101 0365             3
+25.5E:  43                       101 0366             'C'
+25.5F:  72                       101 0367             'r'
+25.60:  61                       101 0368             'a'
+25.61:  74                       101 0369             't'
+25.62:  65                       101 0370             'e'
+25.63:  72                       101 0371             'r'
+25.64:  00                       101 0372             'NUL'
+                                 007 0373  
+                                 007 0374  P[ready]
+                                 007 0375  
+26.00:  10                       007 0376             CLR
+26.01:  84                       007 0377             nr
+26.02:  03                       007 0378             3
+26.03:  8F 25                    007 0379             nc PrMsg
+26.05:  56                       007 0380             6i
+26.06:  05                       007 0381             RET
+                                 017 0382  
+                                 017 0383  P[NextArg]
+                                 017 0384  
+27.00:  07                       017 0385             OWN        (********** Advance LOX ARG PTR to next string ****************)
+27.01:  5E                       017 0386             i6
+27.02:  83 28                    017 0387             nd LOXBASE
+27.04:  80 F7                    017 0388             no LOXBASE.ARG
+27.06:  90                       017 0389             mo
+27.07:  8F 23                    017 0390             nc SkipToNULL  (DO points to char following NULL)
+27.09:  83                       017 0391             nd         (Ignore updated page index in D)
+27.0A:  28                       017 0392             LOXBASE
+27.0B:  11                       017 0393             IDO
+27.0C:  80 F7                    017 0394             no LOXBASE.ARG
+27.0E:  C1                       017 0395             rm         (Store updated offset in ARG variable)
+27.0F:  56                       017 0396             6i
+27.10:  05                       017 0397             RET
+                                 020 0398  
+                                 020 0399  P[LOXBASE]
+28.00:  48                       020 0400             'H'
+28.01:  65                       020 0401             'e'
+28.02:  6C                       020 0402             'l'
+28.03:  6C                       020 0403             'l'
+28.04:  20                       020 0404             'SP'
+28.05:  57                       020 0405             'W'
+28.06:  6F                       020 0406             'o'
+28.07:  72                       020 0407             'r'
+28.08:  6C                       020 0408             'l'
+28.09:  64                       020 0409             'd'
+28.0A:  00                       020 0410             00h
+                                 054 0411  
+                                 054 0412  O[SYSVARS]F7h
+                                 054 0413  
+                                 054 0414  O[ARG]        80h        (Offset in LOXBASE of current cmd line argument str)
+                                 054 0415  O[POS]        00h        (Current position in output text buffer - offset in LOXBASE)
+                                 054 0416  O[VTP]        VTOPPAGE   (Hardcoded! Page index of final entry in symtab )
+                                 054 0417  O[VTO]        VTOPOFFSET (Hardcoded! Check lox.c source-code. Offset of final entry)
+                                 054 0418  O[DESTP]      FFh
+                                 054 0419  O[DESTO]      00h
+                                 054 0420  O[SRCP]       FFh
+                                 054 0421  O[SRCO]       00h
+                                 054 0422  O[ECODE]      00h
+                                 054 0423  
+                                 054 0424  P[BASEVOCAB]40h
+                                 054 0425  
+40.00:  30 22 00 81 00 00        054 0426      "0", 'NUL', 81h, 0, 00h
+40.06:  31 22 00 81 00 01        054 0427      "1", 'NUL', 81h, 0, 01h
+40.0C:  32 22 00 81 00 02        054 0428      "2", 'NUL', 81h, 0, 02h
+40.12:  33 22 00 81 00 03        054 0429      "3", 'NUL', 81h, 0, 03h
+40.18:  34 22 00 81 00 04        054 0430      "4", 'NUL', 81h, 0, 04h
+40.1E:  35 22 00 81 00 05        054 0431      "5", 'NUL', 81h, 0, 05h
+40.24:  36 22 00 81 00 06        054 0432      "6", 'NUL', 81h, 0, 06h
+40.2A:  37 22 00 81 00 07        054 0433      "7", 'NUL', 81h, 0, 07h
+40.30:  38 22 00 81 00 08        054 0434      "8", 'NUL', 81h, 0, 08h
