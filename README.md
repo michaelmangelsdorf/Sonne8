@@ -20,7 +20,7 @@ I've written a new assembler for this machine in Go(lang). The following is a na
 
 ```
 Goldie/LOX assembly log
-Frame.Offset  Object code  Lid Line# Source text
+Page.Offset  Object code  Lid Line# Source text
 
                            048 0062  ;****** ***************************************************************
                            048 0063  P[Mul8]+  (Multiplies R by O result in R and O)
