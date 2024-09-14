@@ -497,10 +497,14 @@ func wrDebugTxt() {
 				firstLine = false
 				fmt.Fprintf(w, "%.02X ", vm.ram[i][j])
 				fill += 3
+				if j == 255 {
+					i++
+				}
 				j++
 				pos++
 			}
 		}
+
 		for k := fill; k <= 32; k++ {
 			fmt.Fprintf(w, " ")
 		}
@@ -536,9 +540,11 @@ func wrVM() {
 func putCode(b byte) {
 	blameLine[page][offs] = lineNum
 	vm.ram[page][offs] = b
-	lid[page]++
 	if offs == 255 {
 		page++
+		//fmt.Printf("Line %d: Lid overflow to page %.02Xh\n", lineNum, page)
+	} else {
+		lid[page]++
 	}
 	offs++
 }
@@ -799,6 +805,10 @@ func parse(pass byte) {
 			word := wordsInLine[wordIndex]
 			if len(word) == 0 {
 				continue // Empty source line!
+			} else {
+				if word[0] == ';' { //Ignore entire line
+					break
+				}
 			}
 
 			if word[len(word)-1] == ',' {
@@ -846,7 +856,7 @@ func parse(pass byte) {
 			}
 
 			wordIndex++
-			if pass == 1 || pass == 2 {
+			if pass == 2 {
 				fmt.Printf("Line %d: Using 0 for unknown literal '%s'\n", lineNum, word)
 			}
 			putCode(0)
@@ -875,8 +885,8 @@ func main() {
 	//genSymTabSrc()
 	//os.Exit(0)
 
-	if len(os.Args[1:]) < 2 {
-		fmt.Println("Missing input file arguments <asmsrc> <symtabsrc>")
+	if len(os.Args[1:]) < 1 {
+		fmt.Println("Missing input file arguments <asmsrc>")
 		os.Exit(1)
 	}
 
@@ -893,10 +903,6 @@ func main() {
 		lid[i] = 0
 	}
 	parse(2) // Second Pass to resolve forward refs
-
-	//srcText = ldSrc(os.Args[1:][1])
-	//srcLine = strings.Split(string(srcText), "\n")
-	//parse()
 
 	wrVM()
 	wrDebugTxt()
