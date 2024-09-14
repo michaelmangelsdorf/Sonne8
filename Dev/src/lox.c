@@ -74,7 +74,7 @@ main(int argc, char *argv[])
                         insertOrExitAt( &offs);
                 }
                 insertOrExitAt( &offs);
-                vm.ram[0x7F][offs] = 0; /*Double zero*/
+                vm.ram[0x7F][offs] = 0;
         }
 
         /* Cycle until VM executes END,

@@ -37,7 +37,7 @@ P[Interpret]20h (Look up a word in the dictionary)
             0i    (Restore target offset)
             COR   (Target page still in G)
 
-        O[InterpRFail]
+      O[InterpRFail]
 
             nr 2, nc PrMsg
             6i, RET
@@ -60,49 +60,40 @@ P[Interpret]20h (Look up a word in the dictionary)
            RET
 
 ;****** *********************************************************************
-P[Mul8]+
+P[Mul8]+  (Multiplies R by O result in R and O)
 ;****** *********************************************************************
 
-           OWN        (Multiplies R by O result in R and O)
-           i6
-           o1         (Initialise copy of multiplicand - low order)
-           r0         (Save multiplier)
-           nr 00h    (Clear high-order result)
-           r2
-           ni         (Initilise loop counter, 8 bits)
-           07h
-O[Mul8Loop]
-           no 01h        (Bit mask for bit 0)
-           1r
-           AND        (Check if multiplicand bit 0 set)
-           nf >Mul8Skip        (Skip if not)
-           0r
-           2o
-           ADD        (Add multiplier to high order result)
-           r2
-O[Mul8Skip]
-           no 01h        (Bit mask for bit 0)
-           2r
-           AND
-           r3         (Flag whether high order LSB is set)
-           1r
-           SRR        (Shift low-order result right)
-           r1
-           2r
-           SRR        (Shift high-order result right)
-           r2
-           3r         (Test whether high-order bit set)
-           nf >Mul8Done
-           nr 80h        (Bit mask for MSB)
-           1o
-           IOR        (Set MSB if LSB of high order was shifted down into low-order)
-           r1
-O[Mul8Done]
+           OWN i6        (Save return pointer in L7/L6)
+           o1            (Multiplicand into L1, turns into low order result)
+           r0            (Multiplier into L0)
+           CLR r2        (Clear high-order result, copy to L2)
+           ni 07h        (Initilise loop counter, 8 bits)
+
+         O[Mul8Loop]
+      
+           no 01h        (Bit mask for LSB)
+           1r AND        (Check if multiplicand has LSB set)
+           nf >Mul8Skip  (Skip if not)
+           0r 2o ADD r2  (Add multiplier to high order result)
+
+         O[Mul8Skip]
+
+           no 01h        (Bit mask for LSB)
+           2r AND r3     (Flag whether high order LSB is set)
+           1r SRR r1      (Shift low-order result right)
+           2r SRR r2       (Shift high-order result right)
+
+           3r nf >Mul8Done  (Check flag from earlier - HO LSB set?)
+           nr 80h          (Bit mask for MSB)
+           1o IOR r1     (Handle shift-result carry bit into MSB)
+
+         O[Mul8Done]
+
            nw <Mul8Loop
-           1o         (Result low-order)
-           2r         (Result high-order)
-           6i         (Restore return address)
-           RET
+           1o            (Result low-order)
+           2r            (Result high-order)
+           6i RET        (Restore return pointer from L7/L6)
+
 
 ;********* ******************************************************************
 P[DivMod8]+

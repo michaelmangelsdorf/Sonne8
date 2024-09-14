@@ -493,6 +493,7 @@ func wrDebugTxt() {
 	var lid0 byte
 
 	for line := 1; line <= len(srcLine); line++ {
+		//fmt.Fprintf(w, "---------------------------------------\n")
 
 		fill = 0
 		pos = 0
