@@ -480,11 +480,13 @@ func wrDebugTxt() {
 	var j byte
 	var pos int
 	var firstLine bool
+	var lid0 byte
 	for line := 1; line <= len(srcLine); line++ {
 
 		fill = 0
 		pos = 0
 		if line == blameLine[i][j] {
+			lid0 = lid[i]
 			fmt.Fprintf(w, "%.02X.%.02X:  ", i, j)
 
 			fill = 8
@@ -509,17 +511,22 @@ func wrDebugTxt() {
 			fmt.Fprintf(w, " ")
 		}
 
-		fmt.Fprintf(w, "%.3d %.04d  %s\n", lid[i], line, srcLine[line-1])
+		fmt.Fprintf(w, "%.3d %.04d  %s\n", lid0, line, srcLine[line-1])
 		w.Flush()
 
 		//fmt.Printf("p%d o%d l%d bl%d\n", i, j, line, blameLine[i][j])
-
-		for blameLine[i][j] == 0 || lid[i] == 0 {
-			j = 0
-			if i == 255 {
-				return
-			}
+		if lid[i] == 0 {
 			i++
+			j = 0
+		}
+		for blameLine[i][j] == 0 {
+			if j == 255 {
+				if i == 255 {
+					return
+				}
+				i++
+			}
+			j++
 			//fmt.Printf("Advancing: p%d o%d l%d bl%d\n", i, j, line, blameLine[i][j])
 		}
 	}
@@ -542,7 +549,6 @@ func putCode(b byte) {
 	vm.ram[page][offs] = b
 	if offs == 255 {
 		page++
-		//fmt.Printf("Line %d: Lid overflow to page %.02Xh\n", lineNum, page)
 	} else {
 		lid[page]++
 	}
@@ -563,6 +569,9 @@ func extractLabel(word string) (hasVal bool, label string, value byte) {
 	i++
 	hasVal = false
 	if len(word[i:]) != 0 {
+		if word[len(word)-1] == '+' {
+			return hasVal, label, 0
+		}
 		hasVal = true
 		for j := 0; j < len(symTab); j++ {
 			if symTab[j].str == word[i:] {
@@ -745,8 +754,10 @@ func tryPOC(word string) bool {
 			page = value
 			offs = 0
 		} else {
-			page++
-			offs = 0
+			if word[len(word)-1] == '+' { //Advance to next page
+				page++
+				offs = 0
+			}
 			pageLabel[page] = label
 		}
 		return true
@@ -757,6 +768,9 @@ func tryPOC(word string) bool {
 		if hasVal {
 			offsLabel[page][value] = label
 			offs = value
+			if offs > lid[page] {
+				lid[page] = offs
+			}
 		} else {
 			offsLabel[page][offs] = label
 		}
@@ -865,25 +879,7 @@ func parse(pass byte) {
 	}
 }
 
-// func genSymTabSrc() {
-// 	f, e := os.Create("symtab.asm")
-// 	if e != nil {
-// 		log.Fatal("Could not create output file")
-// 	}
-// 	defer f.Close()
-
-// 	w := bufio.NewWriter(f)
-// 	fmt.Fprintf(w, "P[BASEVOCAB]40h\n\n")
-// 	for i := 0; i < len(symTab); i++ {
-// 		fmt.Fprintf(w, "\"%s\", 'NUL', 81h, 0, %.02X\n", symTab[i].str, symTab[i].val)
-// 		w.Flush()
-// 	}
-// }
-
 func main() {
-
-	//genSymTabSrc()
-	//os.Exit(0)
 
 	if len(os.Args[1:]) < 1 {
 		fmt.Println("Missing input file arguments <asmsrc>")
@@ -897,6 +893,7 @@ func main() {
 	srcText := ldSrc(os.Args[1:][0])
 	srcTextStr := string(srcText)
 	srcLine = strings.Split(srcTextStr, "\n")
+	fmt.Printf("Source file has %d lines\n", len(srcLine))
 
 	parse(1)
 	for i := 0; i < 256; i++ {
