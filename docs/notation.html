@@ -97,9 +97,9 @@
           They are referred to as L0 (local page offset F8h) to L7 (offset FFh).
           The RET instruction expects the page index of the caller-code to be in L7.
           There is a group of instructions that copy values between
-          registers DIRO and the local variables L0-L7.
+          registers D, I, R, O and the local variables L0-L7.
           </p>
-          <h2>Local variable shortcuts (DIRO)</h2>
+          <h2>Local variable shortcuts (DIRO get/put)</h2>
           <p>
             Examples: r0 ("PUT R into local var L0"), 4o ("GET O from local var L4").
           </p>
