@@ -56,7 +56,7 @@
           <p>
             P[label] defines a label with the page index of the object code pointer as its value.
             P[label]index does the same, but also sets the page index of the pointer to 'index'.
-            P[label]+ defines label, and advances the page index of the pointer by 1.
+            P[label]+ defines label as before, advances the page index of the pointer by 1 and sets the offset position to zero.
             Page indices can be targets of CALL and TRAP instructions. They can be used as literals anywhere in the code.
           </p>
           <h2>Offset Labels</h2>
