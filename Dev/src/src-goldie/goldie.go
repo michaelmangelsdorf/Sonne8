@@ -708,6 +708,9 @@ func tryOffsLabelRef(word string) bool {
 
 func tryStringRelated(word string) bool {
 	if len(word) > 0 && word[0] == '"' && !insideString {
+		if insideComment {
+			return false
+		}
 		insideString = true
 		//fmt.Printf("Strings on: %s final char:%c\n", word, word[len(word)-1])
 		//Assemble part after ""
@@ -723,6 +726,9 @@ func tryStringRelated(word string) bool {
 		return true
 	}
 	if len(word) > 0 && word[len(word)-1] == '"' && insideString {
+		if insideComment {
+			return false
+		}
 		insideString = false
 		//fmt.Printf("Strings off: %s\n", word)
 		//Assemble part before ""
@@ -741,6 +747,9 @@ func tryStringRelated(word string) bool {
 
 func tryCommentRelated(word string) bool {
 	if strings.Contains(word, "(") {
+		if insideString {
+			return false
+		}
 		if word[len(word)-1] != ')' {
 			insideComment = true
 		}
@@ -748,6 +757,9 @@ func tryCommentRelated(word string) bool {
 	}
 
 	if strings.Contains(word, ")") {
+		if insideString {
+			return false
+		}
 		insideComment = false
 		return true
 	}

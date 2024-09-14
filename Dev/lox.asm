@@ -276,9 +276,9 @@ P[PrMsg]+
 
       O[PrMsgQuit] 6i RET
 
-***************
+;**************
       O[PrMsg0]
-***************
+;**************
 
            0, "Ready",     'NUL'
            1, "Not found", 'NUL'
@@ -1661,6 +1661,8 @@ P[BASEVOCAB]40h
     "pt", 'NUL', 81h, 0, FDh
     "pf", 'NUL', 81h, 0, FEh
     "pc", 'NUL', 81h, 0, FFh
+
+    (Handcoded firmware "exports")
 
     "Interpret", 'NUL', 1, Interpret, 00h
     "Mul8",      'NUL', 1, Mul8,      00h
