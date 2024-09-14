@@ -87,6 +87,15 @@
             by fully qualifying it with the pagelabel of the page where it is defined,
             for example: PAGELABEL.offslabel.
           </p>
+          <h2>Local page and L-Notation</h2>
+          <p>The local page is the one whose page index is stored in the L register.
+          Subroutine calls and traps decrement L, the RET instructions increments L.
+          The high-order 8 bytes of the local page are named, and work in a special way.
+          They are referred to as L0 (local page offset F8h) to L7 (offset FFh).
+          The RET instruction expects the page index of the caller-code to be in L7.
+          There is a group of instructions that copy values between
+          registers DIRO and the local variables L0-L7.
+          </p>
           <h2>Local variable shortcuts (DIRO)</h2>
           <p>
             Examples: r0 ("PUT R into local var L0"), 4o ("GET O from local var L4").
