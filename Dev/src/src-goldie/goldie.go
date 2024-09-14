@@ -1,3 +1,12 @@
+/*
+   Goldie
+   Assembles LOX assembler source file into corestate.myst file.
+
+   *Myth* Project
+   Author: mim@ok-schalter.de (Michael/Dosflange@github)
+
+*/
+
 package main
 
 import (

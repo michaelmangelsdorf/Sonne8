@@ -2,437 +2,2229 @@ Goldie/LOX assembly log
 
 Frame.Offset     Object code        Lid Line# Source text
 
-                                 004 0001  
-                                 004 0002  
-                                 004 0003  P[COLD]0
-00.00:  8F 20                    004 0004             nc Interpret  (LOX Bootstrap Firmware for Myth micro-controller)
-                                 004 0005                           (Author: mim@ok-schalter.de - Michael/Dosflange@github)
-00.02:  81                       004 0006             END           (Lox has copied its null-separated command line arguments)
-00.03:  00                       004 0007             00h           (into 7F80h-7FEFh. Application specific opcode END exits LOX.)
-                                 048 0008  
-                                 048 0009  P[Interpret]20h
-                                 048 0010  
-20.00:  07                       048 0011             OWN        (********** Look up a word in the dictionary *******************)
-20.01:  5E                       048 0012             i6
-20.02:  83 28                    048 0013             nd LOXBASE
-20.04:  80 F7                    048 0014             no LOXBASE.ARG
-20.06:  90                       048 0015             mo
-20.07:  8F 24                    048 0016             nc VSrch
-20.09:  8D 11                    048 0017             nt >InterpSucc
-20.0B:  84 01                    048 0018             nr 1        (Look-up failed)
-20.0D:  8F 25                    048 0019             nc PrMsg
-20.0F:  56                       048 0020             6i
-20.10:  05                       048 0021             RET
+                                 000 0001  
+                                 000 0002  (LOX Bootstrap Firmware for Myth micro-controller)
+                                 000 0003  (Author: mim@ok-schalter.de - Michael/Dosflange@github)
+                                 000 0004  
+                                 000 0005  ;******* ********************************************************************
+                                 000 0006  P[COLD]0
+                                 000 0007  ;******* ********************************************************************
+                                 000 0008  
+                                 000 0009   (Lox has copied its null-separated command line arguments into 7F80h-7FEFh.)
+                                 000 0010  
+00.00:  8F 20                    003 0011          nc Interpret
+00.02:  81                       003 0012          END (Application specific opcode END exits LOX.)
+                                 003 0013  
+                                 003 0014  ;************** *************************************************************
+                                 003 0015  P[Interpret]20h (Look up a word in the dictionary)
+                                 003 0016  ;************** *************************************************************
+                                 003 0017  
+20.00:  07 5E                    048 0018          OWN, i6
+20.02:  83 7F 80 F7 90           048 0019          nd LOXBASE, no LOXBASE.ARG, mo
+20.07:  8F 24                    048 0020          nc VSrch
+20.09:  8D 11                    048 0021          nt >InterpSucc (Branch if result non-zero)
                                  048 0022  
-                                 048 0023  O[InterpSucc]
-20.11:  78                       048 0024             o0         (Save target offset)
-20.12:  80 02                    048 0025             no 2         (Compare to type 2 - CMD)
-20.14:  1E                       048 0026             REO        (Target type still in R)
-20.15:  8E 19                    048 0027             nf >InterpRFail
-20.17:  50                       048 0028             0i         (Restore target offset)
-20.18:  06                       048 0029             COR        (Target page still in G)
-                                 048 0030  
-                                 048 0031  O[InterpRFail]
-20.19:  84 02                    048 0032             nr 2
-20.1B:  8F 25                    048 0033             nc PrMsg
-20.1D:  56                       048 0034             6i
-20.1E:  05                       048 0035             RET
-                                 048 0036  O[NextArg]
-20.1F:  07                       048 0037             OWN        (********** Advance LOX ARG PTR to next string ****************)
-20.20:  5E                       048 0038             i6
-20.21:  83 28                    048 0039             nd LOXBASE
-20.23:  80 F7                    048 0040             no LOXBASE.ARG
-20.25:  90                       048 0041             mo
-20.26:  8F 23                    048 0042             nc SkipToNULL (DO points to char following NULL)
-20.28:  83 28                    048 0043             nd LOXBASE      (Ignore updated page index in D)
-20.2A:  11                       048 0044             IDO
-20.2B:  80 F7                    048 0045             no LOXBASE.ARG
-20.2D:  C1                       048 0046             rm         (Store updated offset in ARG variable)
-20.2E:  56                       048 0047             6i
-20.2F:  05                       048 0048             RET
-                                 044 0049  
-                                 044 0050  P[Mul8]
-21.00:  07                       044 0051             OWN        (Multiplies R by O result in R and O)
-21.01:  5E                       044 0052             i6
-21.02:  79                       044 0053             o1         (Initialise copy of multiplicand - low order)
-21.03:  68                       044 0054             r0         (Save multiplier)
-21.04:  84 00                    044 0055             nr 00h    (Clear high-order result)
-21.06:  6A                       044 0056             r2
-21.07:  85                       044 0057             ni         (Initilise loop counter, 8 bits)
-21.08:  07                       044 0058             07h
-                                 044 0059  O[Mul8Loop]
-21.09:  80 01                    044 0060             no 01h        (Bit mask for bit 0)
-21.0B:  61                       044 0061             1r
-21.0C:  18                       044 0062             AND        (Check if multiplicand bit 0 set)
-21.0D:  8E 13                    044 0063             nf >Mul8Skip        (Skip if not)
-21.0F:  60                       044 0064             0r
-21.10:  72                       044 0065             2o
-21.11:  1B                       044 0066             ADD        (Add multiplier to high order result)
-21.12:  6A                       044 0067             r2
-                                 044 0068  O[Mul8Skip]
-21.13:  80 01                    044 0069             no 01h        (Bit mask for bit 0)
-21.15:  62                       044 0070             2r
-21.16:  18                       044 0071             AND
-21.17:  6B                       044 0072             r3         (Flag whether high order LSB is set)
-21.18:  61                       044 0073             1r
-21.19:  16                       044 0074             SRR        (Shift low-order result right)
-21.1A:  69                       044 0075             r1
-21.1B:  62                       044 0076             2r
-21.1C:  16                       044 0077             SRR        (Shift high-order result right)
-21.1D:  6A                       044 0078             r2
-21.1E:  63                       044 0079             3r         (Test whether high-order bit set)
-21.1F:  8E 26                    044 0080             nf >Mul8Done
-21.21:  84 80                    044 0081             nr 80h        (Bit mask for MSB)
-21.23:  71                       044 0082             1o
-21.24:  19                       044 0083             IOR        (Set MSB if LSB of high order was shifted down into low-order)
-21.25:  69                       044 0084             r1
-                                 044 0085  O[Mul8Done]
-21.26:  8C 09                    044 0086             nw <Mul8Loop
-21.28:  71                       044 0087             1o         (Result low-order)
-21.29:  62                       044 0088             2r         (Result high-order)
-21.2A:  56                       044 0089             6i         (Restore return address)
-21.2B:  05                       044 0090             RET
-                                 053 0091  
-                                 053 0092  P[DivMod8]
-22.00:  07                       053 0093             OWN        (Divide R by G, return quotient in R, remainder in G)
-22.01:  5E                       053 0094             i6
-22.02:  68                       053 0095             r0         (Save dividend)
-22.03:  79                       053 0096             o1         (Save divisor)
-22.04:  85 00                    053 0097             ni 00h        (Initialise shift counter to number of positions)
-                                 053 0098                          (of first 1-bit)
-22.06:  84 00                    053 0099             nr 00h        (Initialise quotient to zero)
-22.08:  6B                       053 0100             r3
-22.09:  61                       053 0101             1r         (Skip if divisor is zero)
-22.0A:  8E 31                    053 0102             nf >DivMod8Quit
-22.0C:  84                       053 0103             nr         (Set MSB mask)
-22.0D:  80                       053 0104             80h
-22.0E:  6D                       053 0105             r5
-                                 053 0106  
-                                 053 0107  O[DivMod8Sh]
-                                 053 0108  
-22.0F:  65                       053 0109             5r         (Shift divisor left until first 1 bit at MSB position)
-22.10:  71                       053 0110             1o
-22.11:  18                       053 0111             AND        (Compare to mask)
-22.12:  8D 1B                    053 0112             nt >DivMod8Div (Exit shift loop once MSB set)
-22.14:  15                       053 0113             SLO        (Shift divisor)
-22.15:  69                       053 0114             r1         (Store result)
-22.16:  D4                       053 0115             ir         (Increment shift counter)
-22.17:  09                       053 0116             P1
-22.18:  C5                       053 0117             ri
-22.19:  8B 0F                    053 0118             nj <DivMod8Sh
-                                 053 0119  
-                                 053 0120  O[DivMod8Div]
-                                 053 0121  
-22.1B:  73                       053 0122             3o         (Shift quotient left)
-22.1C:  15                       053 0123             SLO
-22.1D:  6B                       053 0124             r3         (Store shifted quotient for latter)
-22.1E:  61                       053 0125             1r         (Negate divisor)
-22.1F:  12                       053 0126             OCR        (Do this by getting the ones'complement)
-22.20:  09                       053 0127             P1         (and adding 1 to it)
-22.21:  6C                       053 0128             r4         (Save this)
-22.22:  70                       053 0129             0o         (Get the dividend and see if adding the negated divisor)
-22.23:  1C                       053 0130             CAR        (produces a borrow bit)
-22.24:  8E                       053 0131             nf         (If not, don't accept the subtraction)
-22.25:  2C                       053 0132             >DivMod8Rep
-22.26:  64                       053 0133             4r         (Accept subtraction result)
-22.27:  1B                       053 0134             ADD        (Dividend still in O)
-22.28:  68                       053 0135             r0         (Store new dividend)
-22.29:  63                       053 0136             3r         (Increment quotient)
-22.2A:  09                       053 0137             P1
-22.2B:  6B                       053 0138             r3
+                                 048 0023              (Look-up failed)
+20.0B:  84 01 8F 25              048 0024              nr 1, nc PrMsg
+20.0F:  56 05                    048 0025              6i, RET
+                                 048 0026  
+                                 048 0027          O[InterpSucc]
+                                 048 0028  
+                                 048 0029              (Look-up succeeded, check correct type of entry)
+20.11:  78                       048 0030              o0    (Save target offset)
+20.12:  80 02                    048 0031              no 2  (Compare to type 2 - CMD)
+20.14:  1E                       048 0032              REO   (Target type still in R)
+                                 048 0033  
+20.15:  8E 19                    048 0034              nf >InterpRFail
+                                 048 0035  
+                                 048 0036              (Jump to CMD)
+20.17:  50                       048 0037              0i    (Restore target offset)
+20.18:  06                       048 0038              COR   (Target page still in G)
+                                 048 0039  
+                                 048 0040          O[InterpRFail]
+                                 048 0041  
+20.19:  84 02 8F 25              048 0042              nr 2, nc PrMsg
+20.1D:  56 05                    048 0043              6i, RET
+                                 048 0044  
+                                 048 0045  ;*****************
+                                 048 0046          O[NextArg]
+                                 048 0047  ;*****************
+                                 048 0048  
+20.1F:  07                       048 0049             OWN        (Advance LOX ARG PTR to next string)
+20.20:  5E                       048 0050             i6
+20.21:  83 7F                    048 0051             nd LOXBASE
+20.23:  80 F7                    048 0052             no LOXBASE.ARG
+20.25:  90                       048 0053             mo
+20.26:  8F 23                    048 0054             nc SkipToNULL (DO points to char following NULL)
+20.28:  83 7F                    048 0055             nd LOXBASE      (Ignore updated page index in D)
+20.2A:  11                       048 0056             IDO
+20.2B:  80 F7                    048 0057             no LOXBASE.ARG
+20.2D:  C1                       048 0058             rm         (Store updated offset in ARG variable)
+20.2E:  56                       048 0059             6i
+20.2F:  05                       048 0060             RET
+                                 048 0061  
+                                 048 0062  ;****** *********************************************************************
+                                 048 0063  P[Mul8]+
+                                 048 0064  ;****** *********************************************************************
+                                 048 0065  
+21.00:  07                       044 0066             OWN        (Multiplies R by O result in R and O)
+21.01:  5E                       044 0067             i6
+21.02:  79                       044 0068             o1         (Initialise copy of multiplicand - low order)
+21.03:  68                       044 0069             r0         (Save multiplier)
+21.04:  84 00                    044 0070             nr 00h    (Clear high-order result)
+21.06:  6A                       044 0071             r2
+21.07:  85                       044 0072             ni         (Initilise loop counter, 8 bits)
+21.08:  07                       044 0073             07h
+                                 044 0074  O[Mul8Loop]
+21.09:  80 01                    044 0075             no 01h        (Bit mask for bit 0)
+21.0B:  61                       044 0076             1r
+21.0C:  18                       044 0077             AND        (Check if multiplicand bit 0 set)
+21.0D:  8E 13                    044 0078             nf >Mul8Skip        (Skip if not)
+21.0F:  60                       044 0079             0r
+21.10:  72                       044 0080             2o
+21.11:  1B                       044 0081             ADD        (Add multiplier to high order result)
+21.12:  6A                       044 0082             r2
+                                 044 0083  O[Mul8Skip]
+21.13:  80 01                    044 0084             no 01h        (Bit mask for bit 0)
+21.15:  62                       044 0085             2r
+21.16:  18                       044 0086             AND
+21.17:  6B                       044 0087             r3         (Flag whether high order LSB is set)
+21.18:  61                       044 0088             1r
+21.19:  16                       044 0089             SRR        (Shift low-order result right)
+21.1A:  69                       044 0090             r1
+21.1B:  62                       044 0091             2r
+21.1C:  16                       044 0092             SRR        (Shift high-order result right)
+21.1D:  6A                       044 0093             r2
+21.1E:  63                       044 0094             3r         (Test whether high-order bit set)
+21.1F:  8E 26                    044 0095             nf >Mul8Done
+21.21:  84 80                    044 0096             nr 80h        (Bit mask for MSB)
+21.23:  71                       044 0097             1o
+21.24:  19                       044 0098             IOR        (Set MSB if LSB of high order was shifted down into low-order)
+21.25:  69                       044 0099             r1
+                                 044 0100  O[Mul8Done]
+21.26:  8C 09                    044 0101             nw <Mul8Loop
+21.28:  71                       044 0102             1o         (Result low-order)
+21.29:  62                       044 0103             2r         (Result high-order)
+21.2A:  56                       044 0104             6i         (Restore return address)
+21.2B:  05                       044 0105             RET
+                                 044 0106  
+                                 044 0107  ;********* ******************************************************************
+                                 044 0108  P[DivMod8]+
+                                 044 0109  ;********* ******************************************************************
+                                 044 0110  
+22.00:  07                       053 0111             OWN        (Divide R by G, return quotient in R, remainder in G)
+22.01:  5E                       053 0112             i6
+22.02:  68                       053 0113             r0         (Save dividend)
+22.03:  79                       053 0114             o1         (Save divisor)
+22.04:  85 00                    053 0115             ni 00h        (Initialise shift counter to number of positions)
+                                 053 0116                          (of first 1-bit)
+22.06:  84 00                    053 0117             nr 00h        (Initialise quotient to zero)
+22.08:  6B                       053 0118             r3
+22.09:  61                       053 0119             1r         (Skip if divisor is zero)
+22.0A:  8E 31                    053 0120             nf >DivMod8Quit
+22.0C:  84                       053 0121             nr         (Set MSB mask)
+22.0D:  80                       053 0122             80h
+22.0E:  6D                       053 0123             r5
+                                 053 0124  
+                                 053 0125          O[DivMod8Sh]
+                                 053 0126  
+22.0F:  65                       053 0127             5r         (Shift divisor left until first 1 bit at MSB position)
+22.10:  71                       053 0128             1o
+22.11:  18                       053 0129             AND        (Compare to mask)
+22.12:  8D 1B                    053 0130             nt >DivMod8Div (Exit shift loop once MSB set)
+22.14:  15                       053 0131             SLO        (Shift divisor)
+22.15:  69                       053 0132             r1         (Store result)
+22.16:  D4                       053 0133             ir         (Increment shift counter)
+22.17:  09                       053 0134             P1
+22.18:  C5                       053 0135             ri
+22.19:  8B 0F                    053 0136             nj <DivMod8Sh
+                                 053 0137  
+                                 053 0138          O[DivMod8Div]
                                  053 0139  
-                                 053 0140  O[DivMod8Rep]
-                                 053 0141  
-22.2C:  61                       053 0142             1r
-22.2D:  16                       053 0143             SRR        (Shift divisor right for next subtraction)
-22.2E:  69                       053 0144             r1
-22.2F:  8C                       053 0145             nw         (Decrement counter)
-22.30:  1B                       053 0146             <DivMod8Div (Branch back if not zero)
-                                 053 0147  
-                                 053 0148  O[DivMod8Quit]
-                                 053 0149  
-22.31:  63                       053 0150             3r
-22.32:  70                       053 0151             0o
-22.33:  56                       053 0152             6i
-22.34:  05                       053 0153             RET
-                                 011 0154  
-                                 011 0155  P[SkipToNULL]
-                                 011 0156  
-23.00:  07                       011 0157             OWN        (********** Advance string pointer to next NULL char  **********)
-23.01:  5E                       011 0158             i6
-                                 011 0159  
-23.02:  94                       011 0160  O[SkipNFind0] mr         (DO points to char)
-                                 011 0161  
-23.03:  8E                       011 0162             nf         (If char zero, done)
-23.04:  09                       011 0163             >SkipNAt0
-23.05:  89                       011 0164             na         (Else increment DO and check again)
-23.06:  01                       011 0165             1
-23.07:  8B 02                    011 0166             nj <SkipNFind0
-                                 011 0167  
-                                 011 0168  O[SkipNAt0]
-23.09:  56                       011 0169             6i
-23.0A:  05                       011 0170             RET
-                                 064 0171  
-                                 064 0172  P[VSrch]
-24.00:  07                       064 0173             OWN        (VOCAB Look-UP, search string address in D/O)
-24.01:  5E                       064 0174             i6
-24.02:  48                       064 0175             d0         (Search zero terminated string in this page)
-24.03:  79                       064 0176             o1         (at this offset)
-24.04:  4C                       064 0177             d4         (Create working copies)
-24.05:  7D                       064 0178             o5
-24.06:  83                       064 0179             nd         (Set Data Pointer to first entry)
-24.07:  40                       064 0180             BASEVOCAB
-24.08:  80                       064 0181             no
-24.09:  00                       064 0182             00h
-24.0A:  4A                       064 0183             d2         (Current dict base ptr)
-24.0B:  7B                       064 0184             o3         (and offs)
-                                 064 0185  
-                                 064 0186  O[VSrchNxtCh]
-                                 064 0187  
-24.0C:  44                       064 0188             4d         (Compare current char in dict to char in search str)
-24.0D:  75                       064 0189             5o
-24.0E:  94                       064 0190             mr         (Char in sstr)
-24.0F:  42                       064 0191             2d
-24.10:  73                       064 0192             3o
-24.11:  90                       064 0193             mo         (Char in dict)
-24.12:  1E                       064 0194             REO
-24.13:  8E 26                    064 0195             nf >VSrchMismat
-24.15:  11                       064 0196             IDO
-24.16:  8E                       064 0197             nf         (Matching chars, success if both NUL)
-24.17:  39                       064 0198             >VSrchFound
-24.18:  44                       064 0199             4d
-24.19:  75                       064 0200             5o
-24.1A:  89                       064 0201             na         (Advance sstring ptr)
-24.1B:  01                       064 0202             1
-24.1C:  4C                       064 0203             d4
-24.1D:  7D                       064 0204             o5
-24.1E:  42                       064 0205             2d
-24.1F:  73                       064 0206             3o
-24.20:  89 01                    064 0207             na 1        (Advance dict ptr)
-24.22:  4A                       064 0208             d2
-24.23:  7B                       064 0209             o3
-24.24:  8B 0C                    064 0210             nj <VSrchNxtCh (Branch back, check next character)
-                                 064 0211  
-                                 064 0212  O[VSrchMismat]
-                                 064 0213  
-24.26:  60                       064 0214             0r         (Reset sstring ptr)
-24.27:  6C                       064 0215             r4
-24.28:  61                       064 0216             1r
-24.29:  6D                       064 0217             r5
-24.2A:  42                       064 0218             2d         (Find next NULL byte)
-24.2B:  73                       064 0219             3o
-24.2C:  8F 23                    064 0220             nc SkipToNULL
-24.2E:  4A                       064 0221             d2
-24.2F:  7B                       064 0222             o3
-24.30:  89 04                    064 0223             na 4        (Skip NUL char and Data Bytes - Type+Page+Offs)
-24.32:  4A                       064 0224             d2
-24.33:  7B                       064 0225             o3
-24.34:  94                       064 0226             mr         (Check if first byte of next data entry is NUL - End of list)
-                                 064 0227  
-24.35:  8E 00                    064 0228             nf >VSrchFail
-                                 064 0229             
-24.37:  8B 0C                    064 0230             nj <VSrchNxtCh
-                                 064 0231  
-                                 064 0232  O[VSrchFound]
-                                 064 0233  
-24.39:  42                       064 0234             2d
-24.3A:  73                       064 0235             3o
-24.3B:  89                       064 0236             na         (Advance vocab ptr to type byte)
-24.3C:  01                       064 0237             1
-24.3D:  94                       064 0238             mr         (Type)
-                                 064 0239             r2
-                                 064 0240             na
-                                 064 0241             1
-                                 064 0242             mr         (Page)
-                                 064 0243             r3
-                                 064 0244             na
-                                 064 0245             1
-                                 064 0246             mo         (Offs)
-                                 064 0247             3d
-                                 064 0248             2r
-                                 064 0249             6i
-                                 064 0250             RET
-                                 064 0251  
-                                 064 0252  O[VSrchFail]
-                                 064 0253  
-                                 064 0254             CLR        (Not found if result type = 0)
-24.3E:  56                       064 0255             6i
-24.3F:  05                       064 0256             RET
-                                 101 0257  
-                                 101 0258  P[PrMsg]
-25.00:  07                       101 0259             OWN
-25.01:  5E                       101 0260             i6
-25.02:  68                       101 0261             r0
-25.03:  83 25                    101 0262             nd PrMsg
-25.05:  49                       101 0263             d1
-25.06:  80 40                    101 0264             no >PrMsg0
-25.08:  7A                       101 0265             o2
-                                 101 0266  
-                                 101 0267  O[PrMsgNxtCh]
-                                 101 0268  
-25.09:  41                       101 0269             1d
-25.0A:  72                       101 0270             2o
-25.0B:  94                       101 0271             mr
-25.0C:  70                       101 0272             0o         (Compare message IDs)
-25.0D:  1E                       101 0273             REO
-25.0E:  8D                       101 0274             nt
-25.0F:  21                       101 0275             >PrMsgFound
-                                 101 0276  
-                                 101 0277  O[PrMsgSkip]
-                                 101 0278  
-25.10:  72                       101 0279             2o
-25.11:  89                       101 0280             na         (Increment to next msg char)
-25.12:  01                       101 0281             1
-25.13:  7A                       101 0282             o2
-25.14:  94                       101 0283             mr
-25.15:  8E                       101 0284             nf
-25.16:  19                       101 0285             >PrMsgChk0
-25.17:  8B                       101 0286             nj         (This wasn't a NULL, keep incrementing)
-25.18:  10                       101 0287             <PrMsgSkip
-                                 101 0288  
-                                 101 0289  O[PrMsgChk0]
+22.1B:  73                       053 0140             3o         (Shift quotient left)
+22.1C:  15                       053 0141             SLO
+22.1D:  6B                       053 0142             r3         (Store shifted quotient for latter)
+22.1E:  61                       053 0143             1r         (Negate divisor)
+22.1F:  12                       053 0144             OCR        (Do this by getting the ones'complement)
+22.20:  09                       053 0145             P1         (and adding 1 to it)
+22.21:  6C                       053 0146             r4         (Save this)
+22.22:  70                       053 0147             0o         (Get the dividend and see if adding the negated divisor)
+22.23:  1C                       053 0148             CAR        (produces a borrow bit)
+22.24:  8E                       053 0149             nf         (If not, don't accept the subtraction)
+22.25:  2C                       053 0150             >DivMod8Rep
+22.26:  64                       053 0151             4r         (Accept subtraction result)
+22.27:  1B                       053 0152             ADD        (Dividend still in O)
+22.28:  68                       053 0153             r0         (Store new dividend)
+22.29:  63                       053 0154             3r         (Increment quotient)
+22.2A:  09                       053 0155             P1
+22.2B:  6B                       053 0156             r3
+                                 053 0157  
+                                 053 0158          O[DivMod8Rep]
+                                 053 0159  
+22.2C:  61                       053 0160             1r
+22.2D:  16                       053 0161             SRR        (Shift divisor right for next subtraction)
+22.2E:  69                       053 0162             r1
+22.2F:  8C                       053 0163             nw         (Decrement counter)
+22.30:  1B                       053 0164             <DivMod8Div (Branch back if not zero)
+                                 053 0165  
+                                 053 0166          O[DivMod8Quit]
+                                 053 0167  
+22.31:  63                       053 0168             3r
+22.32:  70                       053 0169             0o
+22.33:  56                       053 0170             6i
+22.34:  05                       053 0171             RET
+                                 053 0172  
+                                 053 0173  ;************ ***************************************************************
+                                 053 0174  P[SkipToNULL]+
+                                 053 0175  ;************ ***************************************************************
+                                 053 0176  
+23.00:  07                       011 0177             OWN        (Advance string pointer to next NULL char)
+23.01:  5E                       011 0178             i6
+                                 011 0179  
+23.02:  94                       011 0180          O[SkipNFind0] mr         (DO points to char)
+                                 011 0181  
+23.03:  8E                       011 0182             nf         (If char zero, done)
+23.04:  09                       011 0183             >SkipNAt0
+23.05:  89                       011 0184             na         (Else increment DO and check again)
+23.06:  01                       011 0185             1
+23.07:  8B 02                    011 0186             nj <SkipNFind0
+                                 011 0187  
+                                 011 0188          O[SkipNAt0]
+23.09:  56                       011 0189             6i
+23.0A:  05                       011 0190             RET
+                                 011 0191  
+                                 011 0192  ;******* ********************************************************************
+                                 011 0193  P[VSrch]+
+                                 011 0194  ;******* ********************************************************************
+                                 011 0195  
+24.00:  07                       077 0196             OWN        (VOCAB Look-UP, search string address in D/O)
+24.01:  5E                       077 0197             i6
+24.02:  48                       077 0198             d0         (Search zero terminated string in this page)
+24.03:  79                       077 0199             o1         (at this offset)
+24.04:  4C                       077 0200             d4         (Create working copies)
+24.05:  7D                       077 0201             o5
+24.06:  83                       077 0202             nd         (Set Data Pointer to first entry)
+24.07:  40                       077 0203             BASEVOCAB
+24.08:  80                       077 0204             no
+24.09:  00                       077 0205             00h
+24.0A:  4A                       077 0206             d2         (Current dict base ptr)
+24.0B:  7B                       077 0207             o3         (and offs)
+                                 077 0208  
+                                 077 0209          O[VSrchNxtCh]
+                                 077 0210  
+24.0C:  44                       077 0211             4d         (Compare current char in dict to char in search str)
+24.0D:  75                       077 0212             5o
+24.0E:  94                       077 0213             mr         (Char in sstr)
+24.0F:  42                       077 0214             2d
+24.10:  73                       077 0215             3o
+24.11:  90                       077 0216             mo         (Char in dict)
+24.12:  1E                       077 0217             REO
+24.13:  8E 26                    077 0218             nf >VSrchMismat
+24.15:  11                       077 0219             IDO
+24.16:  8E                       077 0220             nf         (Matching chars, success if both NUL)
+24.17:  39                       077 0221             >VSrchFound
+24.18:  44                       077 0222             4d
+24.19:  75                       077 0223             5o
+24.1A:  89                       077 0224             na         (Advance sstring ptr)
+24.1B:  01                       077 0225             1
+24.1C:  4C                       077 0226             d4
+24.1D:  7D                       077 0227             o5
+24.1E:  42                       077 0228             2d
+24.1F:  73                       077 0229             3o
+24.20:  89 01                    077 0230             na 1        (Advance dict ptr)
+24.22:  4A                       077 0231             d2
+24.23:  7B                       077 0232             o3
+24.24:  8B 0C                    077 0233             nj <VSrchNxtCh (Branch back, check next character)
+                                 077 0234  
+                                 077 0235          O[VSrchMismat]
+                                 077 0236  
+24.26:  60                       077 0237             0r         (Reset sstring ptr)
+24.27:  6C                       077 0238             r4
+24.28:  61                       077 0239             1r
+24.29:  6D                       077 0240             r5
+24.2A:  42                       077 0241             2d         (Find next NULL byte)
+24.2B:  73                       077 0242             3o
+24.2C:  8F 23                    077 0243             nc SkipToNULL
+24.2E:  4A                       077 0244             d2
+24.2F:  7B                       077 0245             o3
+24.30:  89 04                    077 0246             na 4        (Skip NUL char and Data Bytes - Type+Page+Offs)
+24.32:  4A                       077 0247             d2
+24.33:  7B                       077 0248             o3
+24.34:  94                       077 0249             mr         (Check if first byte of next data entry is NUL - End of list)
+24.35:  8E 4A                    077 0250             nf >VSrchFail
+24.37:  8B 0C                    077 0251             nj <VSrchNxtCh
+                                 077 0252  
+                                 077 0253          O[VSrchFound]
+                                 077 0254  
+24.39:  42                       077 0255             2d
+24.3A:  73                       077 0256             3o
+24.3B:  89                       077 0257             na         (Advance vocab ptr to type byte)
+24.3C:  01                       077 0258             1
+24.3D:  94                       077 0259             mr         (Type)
+24.3E:  6A                       077 0260             r2
+24.3F:  89                       077 0261             na
+24.40:  01                       077 0262             1
+24.41:  94                       077 0263             mr         (Page)
+24.42:  6B                       077 0264             r3
+24.43:  89                       077 0265             na
+24.44:  01                       077 0266             1
+24.45:  90                       077 0267             mo         (Offs)
+24.46:  43                       077 0268             3d
+24.47:  62                       077 0269             2r
+24.48:  56                       077 0270             6i
+24.49:  05                       077 0271             RET
+                                 077 0272  
+                                 077 0273          O[VSrchFail]
+                                 077 0274  
+24.4A:  10                       077 0275             CLR        (Not found if result type = 0)
+24.4B:  56                       077 0276             6i
+24.4C:  05                       077 0277             RET
+                                 077 0278  
+                                 077 0279  ;******* ********************************************************************
+                                 077 0280  P[PrMsg]+
+                                 077 0281  ;******* ********************************************************************
+                                 077 0282  
+25.00:  07                       101 0283             OWN
+25.01:  5E                       101 0284             i6
+25.02:  68                       101 0285             r0
+25.03:  83 25                    101 0286             nd PrMsg
+25.05:  49                       101 0287             d1
+25.06:  80 40                    101 0288             no >PrMsg0
+25.08:  7A                       101 0289             o2
                                  101 0290  
-25.19:  89 01                    101 0291             na 1       (Skip over the NULL char)
-25.1B:  7A                       101 0292             o2
-25.1C:  94                       101 0293             mr         (Check double NULL)
-25.1D:  8D 09                    101 0294             nt <PrMsgNxtCh (If it was not NULL, check next entry - then it's an ID)
-25.1F:  8B 3E                    101 0295             nj >PrMsgQuit  (Lookup failed)
-                                 101 0296  
-                                 101 0297  O[PrMsgFound]
-                                 101 0298  
-25.21:  83 28                    101 0299             nd LOXBASE
-25.23:  80 F8                    101 0300             no LOXBASE.POS
-25.25:  90                       101 0301             mo         (Get current printing POS)
-25.26:  7B                       101 0302             o3
-                                 101 0303  
-                                 101 0304  O[PrMsgCpy]
-                                 101 0305  
-25.27:  41                       101 0306             1d         (Page of src char ptr)
-25.28:  72                       101 0307             2o         (Offset of src char ptr)
-25.29:  89 01                    101 0308             na 1        (Advance to next char)
-25.2B:  7A                       101 0309             o2
-25.2C:  94                       101 0310             mr         (Char to print)
-25.2D:  8E                       101 0311             nf         (Finished if NULL terminator)
-25.2E:  38                       101 0312             >PrMsgDone
-25.2F:  83                       101 0313             nd
-25.30:  28                       101 0314             LOXBASE
-25.31:  73                       101 0315             3o
-25.32:  C1                       101 0316             rm         (Store character in output buffer at POS)
-25.33:  89                       101 0317             na
-25.34:  01                       101 0318             1
-25.35:  7B                       101 0319             o3         (Advance printing pos)
-25.36:  8B 27                    101 0320             nj <PrMsgCpy
-                                 101 0321  
-                                 101 0322  O[PrMsgDone]
-                                 101 0323  
-25.38:  83                       101 0324             nd         (Update POS)
-25.39:  28                       101 0325             LOXBASE
-25.3A:  80 F8                    101 0326             no LOXBASE.POS
-25.3C:  63                       101 0327             3r
-25.3D:  C1                       101 0328             rm
+                                 101 0291          O[PrMsgNxtCh]
+                                 101 0292  
+25.09:  41                       101 0293             1d
+25.0A:  72                       101 0294             2o
+25.0B:  94                       101 0295             mr
+25.0C:  70                       101 0296             0o         (Compare message IDs)
+25.0D:  1E                       101 0297             REO
+25.0E:  8D                       101 0298             nt
+25.0F:  21                       101 0299             >PrMsgFound
+                                 101 0300  
+                                 101 0301          O[PrMsgSkip]
+                                 101 0302  
+25.10:  72                       101 0303             2o
+25.11:  89                       101 0304             na         (Increment to next msg char)
+25.12:  01                       101 0305             1
+25.13:  7A                       101 0306             o2
+25.14:  94                       101 0307             mr
+25.15:  8E                       101 0308             nf
+25.16:  19                       101 0309             >PrMsgChk0
+25.17:  8B                       101 0310             nj         (This wasn't a NULL, keep incrementing)
+25.18:  10                       101 0311             <PrMsgSkip
+                                 101 0312  
+                                 101 0313          O[PrMsgChk0]
+                                 101 0314  
+25.19:  89 01                    101 0315             na 1       (Skip over the NULL char)
+25.1B:  7A                       101 0316             o2
+25.1C:  94                       101 0317             mr         (Check double NULL)
+25.1D:  8D 09                    101 0318             nt <PrMsgNxtCh (If it was not NULL, check next entry - then it's an ID)
+25.1F:  8B 3E                    101 0319             nj >PrMsgQuit  (Lookup failed)
+                                 101 0320  
+                                 101 0321          O[PrMsgFound]
+                                 101 0322  
+25.21:  83 7F                    101 0323             nd LOXBASE
+25.23:  80 F8                    101 0324             no LOXBASE.POS
+25.25:  90                       101 0325             mo         (Get current printing POS)
+25.26:  7B                       101 0326             o3
+                                 101 0327  
+                                 101 0328          O[PrMsgCpy]
                                  101 0329  
-                                 101 0330  O[PrMsgQuit]
-                                 101 0331  
-25.3E:  56                       101 0332             6i
-25.3F:  05                       101 0333             RET
-                                 101 0334  
-                                 101 0335  O[PrMsg0]
-25.40:  00                       101 0336              0
-25.41:  52                       101 0337             'R'
-25.42:  65                       101 0338             'e'
-25.43:  61                       101 0339             'a'
-25.44:  64                       101 0340             'd'
-25.45:  79                       101 0341             'y'
-25.46:  00                       101 0342             'NUL'
-25.47:  01                       101 0343             1
-25.48:  4E                       101 0344             'N'
-25.49:  6F                       101 0345             'o'
-25.4A:  74                       101 0346             't'
-25.4B:  20                       101 0347             'SP'
-25.4C:  66                       101 0348             'f'
-25.4D:  6F                       101 0349             'o'
-25.4E:  75                       101 0350             'u'
-25.4F:  6E                       101 0351             'n'
-25.50:  64                       101 0352             'd'
-25.51:  00                       101 0353             'NUL'
-25.52:  02                       101 0354             2
-25.53:  4E                       101 0355             'N'
-25.54:  6F                       101 0356             'o'
-25.55:  74                       101 0357             't'
-25.56:  20                       101 0358             'SP'
-25.57:  61                       101 0359             'a'
-25.58:  20                       101 0360             'SP'
-25.59:  63                       101 0361             'c'
-25.5A:  6D                       101 0362             'm'
-25.5B:  64                       101 0363             'd'
-25.5C:  00                       101 0364             'NUL'
-25.5D:  03                       101 0365             3
-25.5E:  43                       101 0366             'C'
-25.5F:  72                       101 0367             'r'
-25.60:  61                       101 0368             'a'
-25.61:  74                       101 0369             't'
-25.62:  65                       101 0370             'e'
-25.63:  72                       101 0371             'r'
-25.64:  00                       101 0372             'NUL'
-                                 007 0373  
-                                 007 0374  P[ready]
-                                 007 0375  
-26.00:  10                       007 0376             CLR
-26.01:  84                       007 0377             nr
-26.02:  03                       007 0378             3
-26.03:  8F 25                    007 0379             nc PrMsg
-26.05:  56                       007 0380             6i
-26.06:  05                       007 0381             RET
-                                 017 0382  
-                                 017 0383  P[NextArg]
-                                 017 0384  
-27.00:  07                       017 0385             OWN        (********** Advance LOX ARG PTR to next string ****************)
-27.01:  5E                       017 0386             i6
-27.02:  83 28                    017 0387             nd LOXBASE
-27.04:  80 F7                    017 0388             no LOXBASE.ARG
-27.06:  90                       017 0389             mo
-27.07:  8F 23                    017 0390             nc SkipToNULL  (DO points to char following NULL)
-27.09:  83                       017 0391             nd         (Ignore updated page index in D)
-27.0A:  28                       017 0392             LOXBASE
-27.0B:  11                       017 0393             IDO
-27.0C:  80 F7                    017 0394             no LOXBASE.ARG
-27.0E:  C1                       017 0395             rm         (Store updated offset in ARG variable)
-27.0F:  56                       017 0396             6i
-27.10:  05                       017 0397             RET
-                                 020 0398  
-                                 020 0399  P[LOXBASE]
-28.00:  48                       020 0400             'H'
-28.01:  65                       020 0401             'e'
-28.02:  6C                       020 0402             'l'
-28.03:  6C                       020 0403             'l'
-28.04:  20                       020 0404             'SP'
-28.05:  57                       020 0405             'W'
-28.06:  6F                       020 0406             'o'
-28.07:  72                       020 0407             'r'
-28.08:  6C                       020 0408             'l'
-28.09:  64                       020 0409             'd'
-28.0A:  00                       020 0410             00h
-                                 054 0411  
-                                 054 0412  O[SYSVARS]F7h
-                                 054 0413  
-                                 054 0414  O[ARG]        80h        (Offset in LOXBASE of current cmd line argument str)
-                                 054 0415  O[POS]        00h        (Current position in output text buffer - offset in LOXBASE)
-                                 054 0416  O[VTP]        VTOPPAGE   (Hardcoded! Page index of final entry in symtab )
-                                 054 0417  O[VTO]        VTOPOFFSET (Hardcoded! Check lox.c source-code. Offset of final entry)
-                                 054 0418  O[DESTP]      FFh
-                                 054 0419  O[DESTO]      00h
-                                 054 0420  O[SRCP]       FFh
-                                 054 0421  O[SRCO]       00h
-                                 054 0422  O[ECODE]      00h
-                                 054 0423  
-                                 054 0424  P[BASEVOCAB]40h
-                                 054 0425  
-40.00:  30 22 00 81 00 00        054 0426      "0", 'NUL', 81h, 0, 00h
-40.06:  31 22 00 81 00 01        054 0427      "1", 'NUL', 81h, 0, 01h
-40.0C:  32 22 00 81 00 02        054 0428      "2", 'NUL', 81h, 0, 02h
-40.12:  33 22 00 81 00 03        054 0429      "3", 'NUL', 81h, 0, 03h
-40.18:  34 22 00 81 00 04        054 0430      "4", 'NUL', 81h, 0, 04h
-40.1E:  35 22 00 81 00 05        054 0431      "5", 'NUL', 81h, 0, 05h
-40.24:  36 22 00 81 00 06        054 0432      "6", 'NUL', 81h, 0, 06h
-40.2A:  37 22 00 81 00 07        054 0433      "7", 'NUL', 81h, 0, 07h
-40.30:  38 22 00 81 00 08        054 0434      "8", 'NUL', 81h, 0, 08h
+25.27:  41                       101 0330             1d         (Page of src char ptr)
+25.28:  72                       101 0331             2o         (Offset of src char ptr)
+25.29:  89 01                    101 0332             na 1        (Advance to next char)
+25.2B:  7A                       101 0333             o2
+25.2C:  94                       101 0334             mr         (Char to print)
+25.2D:  8E                       101 0335             nf         (Finished if NULL terminator)
+25.2E:  38                       101 0336             >PrMsgDone
+25.2F:  83                       101 0337             nd
+25.30:  7F                       101 0338             LOXBASE
+25.31:  73                       101 0339             3o
+25.32:  C1                       101 0340             rm         (Store character in output buffer at POS)
+25.33:  89                       101 0341             na
+25.34:  01                       101 0342             1
+25.35:  7B                       101 0343             o3         (Advance printing pos)
+25.36:  8B 27                    101 0344             nj <PrMsgCpy
+                                 101 0345  
+                                 101 0346          O[PrMsgDone]
+                                 101 0347  
+25.38:  83                       101 0348             nd         (Update POS)
+25.39:  7F                       101 0349             LOXBASE
+25.3A:  80 F8                    101 0350             no LOXBASE.POS
+25.3C:  63                       101 0351             3r
+25.3D:  C1                       101 0352             rm
+                                 101 0353  
+                                 101 0354          O[PrMsgQuit]
+                                 101 0355  
+25.3E:  56                       101 0356             6i
+25.3F:  05                       101 0357             RET
+                                 101 0358  
+                                 101 0359          O[PrMsg0]
+                                 101 0360  
+25.40:  00                       101 0361              0
+25.41:  52                       101 0362             'R'
+25.42:  65                       101 0363             'e'
+25.43:  61                       101 0364             'a'
+25.44:  64                       101 0365             'd'
+25.45:  79                       101 0366             'y'
+25.46:  00                       101 0367             'NUL'
+25.47:  01                       101 0368             1
+25.48:  4E                       101 0369             'N'
+25.49:  6F                       101 0370             'o'
+25.4A:  74                       101 0371             't'
+25.4B:  20                       101 0372             'SP'
+25.4C:  66                       101 0373             'f'
+25.4D:  6F                       101 0374             'o'
+25.4E:  75                       101 0375             'u'
+25.4F:  6E                       101 0376             'n'
+25.50:  64                       101 0377             'd'
+25.51:  00                       101 0378             'NUL'
+25.52:  02                       101 0379             2
+25.53:  4E                       101 0380             'N'
+25.54:  6F                       101 0381             'o'
+25.55:  74                       101 0382             't'
+25.56:  20                       101 0383             'SP'
+25.57:  61                       101 0384             'a'
+25.58:  20                       101 0385             'SP'
+25.59:  63                       101 0386             'c'
+25.5A:  6D                       101 0387             'm'
+25.5B:  64                       101 0388             'd'
+25.5C:  00                       101 0389             'NUL'
+25.5D:  03                       101 0390             3
+25.5E:  43                       101 0391             'C'
+25.5F:  72                       101 0392             'r'
+25.60:  61                       101 0393             'a'
+25.61:  74                       101 0394             't'
+25.62:  65                       101 0395             'e'
+25.63:  72                       101 0396             'r'
+25.64:  00                       101 0397             'NUL'
+                                 101 0398  
+                                 101 0399  ;******* ********************************************************************
+                                 101 0400  P[ready]+
+                                 101 0401  ;******* ********************************************************************
+                                 101 0402  
+26.00:  10                       007 0403             CLR
+26.01:  84                       007 0404             nr
+26.02:  03                       007 0405             3
+26.03:  8F 25                    007 0406             nc PrMsg
+26.05:  56                       007 0407             6i
+26.06:  05                       007 0408             RET
+                                 007 0409  
+                                 007 0410  ;********* ******************************************************************
+                                 007 0411  P[NextArg]+
+                                 007 0412  ;********* ******************************************************************
+                                 007 0413  
+27.00:  07                       017 0414             OWN        (********** Advance LOX ARG PTR to next string ****************)
+27.01:  5E                       017 0415             i6
+27.02:  83 7F                    017 0416             nd LOXBASE
+27.04:  80 F7                    017 0417             no LOXBASE.ARG
+27.06:  90                       017 0418             mo
+27.07:  8F 23                    017 0419             nc SkipToNULL  (DO points to char following NULL)
+27.09:  83                       017 0420             nd         (Ignore updated page index in D)
+27.0A:  7F                       017 0421             LOXBASE
+27.0B:  11                       017 0422             IDO
+27.0C:  80 F7                    017 0423             no LOXBASE.ARG
+27.0E:  C1                       017 0424             rm         (Store updated offset in ARG variable)
+27.0F:  56                       017 0425             6i
+27.10:  05                       017 0426             RET
+                                 017 0427  
+                                 017 0428  
+                                 017 0429  ;************** *************************************************************
+                                 017 0430  P[BASEVOCAB]40h
+                                 017 0431  ;************** *************************************************************
+                                 017 0432  
+                                 017 0433    (Predefined string literals
+                                 017 0434       This is a linear search list
+                                 017 0435       in the format:
+                                 017 0436       Z-Terminated string
+                                 017 0437       Type byte: 81h
+                                 017 0438       Unused: 0
+                                 017 0439       Numeric value)
+                                 017 0440  
+                                 017 0441      (Positive Decimal Numbers)
+                                 017 0442  
+40.00:  30 22 00 81 00 00        255 0443      "0", 'NUL', 81h, 0, 00h
+40.06:  31 22 00 81 00 01        255 0444      "1", 'NUL', 81h, 0, 01h
+40.0C:  32 22 00 81 00 02        255 0445      "2", 'NUL', 81h, 0, 02h
+40.12:  33 22 00 81 00 03        255 0446      "3", 'NUL', 81h, 0, 03h
+40.18:  34 22 00 81 00 04        255 0447      "4", 'NUL', 81h, 0, 04h
+40.1E:  35 22 00 81 00 05        255 0448      "5", 'NUL', 81h, 0, 05h
+40.24:  36 22 00 81 00 06        255 0449      "6", 'NUL', 81h, 0, 06h
+40.2A:  37 22 00 81 00 07        255 0450      "7", 'NUL', 81h, 0, 07h
+40.30:  38 22 00 81 00 08        255 0451      "8", 'NUL', 81h, 0, 08h
+40.36:  39 22 00 81 00 09        255 0452      "9", 'NUL', 81h, 0, 09h
+40.3C:  31 30 22 00 81 00 0A     255 0453      "10", 'NUL', 81h, 0, 0Ah
+40.43:  31 31 22 00 81 00 0B     255 0454      "11", 'NUL', 81h, 0, 0Bh
+40.4A:  31 32 22 00 81 00 0C     255 0455      "12", 'NUL', 81h, 0, 0Ch
+40.51:  31 33 22 00 81 00 0D     255 0456      "13", 'NUL', 81h, 0, 0Dh
+40.58:  31 34 22 00 81 00 0E     255 0457      "14", 'NUL', 81h, 0, 0Eh
+40.5F:  31 35 22 00 81 00 0F     255 0458      "15", 'NUL', 81h, 0, 0Fh
+40.66:  31 36 22 00 81 00 10     255 0459      "16", 'NUL', 81h, 0, 10h
+40.6D:  31 37 22 00 81 00 11     255 0460      "17", 'NUL', 81h, 0, 11h
+40.74:  31 38 22 00 81 00 12     255 0461      "18", 'NUL', 81h, 0, 12h
+40.7B:  31 39 22 00 81 00 13     255 0462      "19", 'NUL', 81h, 0, 13h
+40.82:  32 30 22 00 81 00 14     255 0463      "20", 'NUL', 81h, 0, 14h
+40.89:  32 31 22 00 81 00 15     255 0464      "21", 'NUL', 81h, 0, 15h
+40.90:  32 32 22 00 81 00 16     255 0465      "22", 'NUL', 81h, 0, 16h
+40.97:  32 33 22 00 81 00 17     255 0466      "23", 'NUL', 81h, 0, 17h
+40.9E:  32 34 22 00 81 00 18     255 0467      "24", 'NUL', 81h, 0, 18h
+40.A5:  32 35 22 00 81 00 19     255 0468      "25", 'NUL', 81h, 0, 19h
+40.AC:  32 36 22 00 81 00 1A     255 0469      "26", 'NUL', 81h, 0, 1Ah
+40.B3:  32 37 22 00 81 00 1B     255 0470      "27", 'NUL', 81h, 0, 1Bh
+40.BA:  32 38 22 00 81 00 1C     255 0471      "28", 'NUL', 81h, 0, 1Ch
+40.C1:  32 39 22 00 81 00 1D     255 0472      "29", 'NUL', 81h, 0, 1Dh
+40.C8:  33 30 22 00 81 00 1E     255 0473      "30", 'NUL', 81h, 0, 1Eh
+40.CF:  33 31 22 00 81 00 1F     255 0474      "31", 'NUL', 81h, 0, 1Fh
+40.D6:  33 32 22 00 81 00 20     255 0475      "32", 'NUL', 81h, 0, 20h
+40.DD:  33 33 22 00 81 00 21     255 0476      "33", 'NUL', 81h, 0, 21h
+40.E4:  33 34 22 00 81 00 22     255 0477      "34", 'NUL', 81h, 0, 22h
+40.EB:  33 35 22 00 81 00 23     255 0478      "35", 'NUL', 81h, 0, 23h
+40.F2:  33 36 22 00 81 00 24     255 0479      "36", 'NUL', 81h, 0, 24h
+40.F9:  33 37 22 00 81 00 25     255 0480      "37", 'NUL', 81h, 0, 25h
+41.00:  33 38 22 00 81 00 26     255 0481      "38", 'NUL', 81h, 0, 26h
+41.07:  33 39 22 00 81 00 27     255 0482      "39", 'NUL', 81h, 0, 27h
+41.0E:  34 30 22 00 81 00 28     255 0483      "40", 'NUL', 81h, 0, 28h
+41.15:  34 31 22 00 81 00 29     255 0484      "41", 'NUL', 81h, 0, 29h
+41.1C:  34 32 22 00 81 00 2A     255 0485      "42", 'NUL', 81h, 0, 2Ah
+41.23:  34 33 22 00 81 00 2B     255 0486      "43", 'NUL', 81h, 0, 2Bh
+41.2A:  34 34 22 00 81 00 2C     255 0487      "44", 'NUL', 81h, 0, 2Ch
+41.31:  34 35 22 00 81 00 2D     255 0488      "45", 'NUL', 81h, 0, 2Dh
+41.38:  34 36 22 00 81 00 2E     255 0489      "46", 'NUL', 81h, 0, 2Eh
+41.3F:  34 37 22 00 81 00 2F     255 0490      "47", 'NUL', 81h, 0, 2Fh
+41.46:  34 38 22 00 81 00 30     255 0491      "48", 'NUL', 81h, 0, 30h
+41.4D:  34 39 22 00 81 00 31     255 0492      "49", 'NUL', 81h, 0, 31h
+41.54:  35 30 22 00 81 00 32     255 0493      "50", 'NUL', 81h, 0, 32h
+41.5B:  35 31 22 00 81 00 33     255 0494      "51", 'NUL', 81h, 0, 33h
+41.62:  35 32 22 00 81 00 34     255 0495      "52", 'NUL', 81h, 0, 34h
+41.69:  35 33 22 00 81 00 35     255 0496      "53", 'NUL', 81h, 0, 35h
+41.70:  35 34 22 00 81 00 36     255 0497      "54", 'NUL', 81h, 0, 36h
+41.77:  35 35 22 00 81 00 37     255 0498      "55", 'NUL', 81h, 0, 37h
+41.7E:  35 36 22 00 81 00 38     255 0499      "56", 'NUL', 81h, 0, 38h
+41.85:  35 37 22 00 81 00 39     255 0500      "57", 'NUL', 81h, 0, 39h
+41.8C:  35 38 22 00 81 00 3A     255 0501      "58", 'NUL', 81h, 0, 3Ah
+41.93:  35 39 22 00 81 00 3B     255 0502      "59", 'NUL', 81h, 0, 3Bh
+41.9A:  36 30 22 00 81 00 3C     255 0503      "60", 'NUL', 81h, 0, 3Ch
+41.A1:  36 31 22 00 81 00 3D     255 0504      "61", 'NUL', 81h, 0, 3Dh
+41.A8:  36 32 22 00 81 00 3E     255 0505      "62", 'NUL', 81h, 0, 3Eh
+41.AF:  36 33 22 00 81 00 3F     255 0506      "63", 'NUL', 81h, 0, 3Fh
+41.B6:  36 34 22 00 81 00 40     255 0507      "64", 'NUL', 81h, 0, 40h
+41.BD:  36 35 22 00 81 00 41     255 0508      "65", 'NUL', 81h, 0, 41h
+41.C4:  36 36 22 00 81 00 42     255 0509      "66", 'NUL', 81h, 0, 42h
+41.CB:  36 37 22 00 81 00 43     255 0510      "67", 'NUL', 81h, 0, 43h
+41.D2:  36 38 22 00 81 00 44     255 0511      "68", 'NUL', 81h, 0, 44h
+41.D9:  36 39 22 00 81 00 45     255 0512      "69", 'NUL', 81h, 0, 45h
+41.E0:  37 30 22 00 81 00 46     255 0513      "70", 'NUL', 81h, 0, 46h
+41.E7:  37 31 22 00 81 00 47     255 0514      "71", 'NUL', 81h, 0, 47h
+41.EE:  37 32 22 00 81 00 48     255 0515      "72", 'NUL', 81h, 0, 48h
+41.F5:  37 33 22 00 81 00 49     255 0516      "73", 'NUL', 81h, 0, 49h
+41.FC:  37 34 22 00 81 00 4A     255 0517      "74", 'NUL', 81h, 0, 4Ah
+42.03:  37 35 22 00 81 00 4B     255 0518      "75", 'NUL', 81h, 0, 4Bh
+42.0A:  37 36 22 00 81 00 4C     255 0519      "76", 'NUL', 81h, 0, 4Ch
+42.11:  37 37 22 00 81 00 4D     255 0520      "77", 'NUL', 81h, 0, 4Dh
+42.18:  37 38 22 00 81 00 4E     255 0521      "78", 'NUL', 81h, 0, 4Eh
+42.1F:  37 39 22 00 81 00 4F     255 0522      "79", 'NUL', 81h, 0, 4Fh
+42.26:  38 30 22 00 81 00 50     255 0523      "80", 'NUL', 81h, 0, 50h
+42.2D:  38 31 22 00 81 00 51     255 0524      "81", 'NUL', 81h, 0, 51h
+42.34:  38 32 22 00 81 00 52     255 0525      "82", 'NUL', 81h, 0, 52h
+42.3B:  38 33 22 00 81 00 53     255 0526      "83", 'NUL', 81h, 0, 53h
+42.42:  38 34 22 00 81 00 54     255 0527      "84", 'NUL', 81h, 0, 54h
+42.49:  38 35 22 00 81 00 55     255 0528      "85", 'NUL', 81h, 0, 55h
+42.50:  38 36 22 00 81 00 56     255 0529      "86", 'NUL', 81h, 0, 56h
+42.57:  38 37 22 00 81 00 57     255 0530      "87", 'NUL', 81h, 0, 57h
+42.5E:  38 38 22 00 81 00 58     255 0531      "88", 'NUL', 81h, 0, 58h
+42.65:  38 39 22 00 81 00 59     255 0532      "89", 'NUL', 81h, 0, 59h
+42.6C:  39 30 22 00 81 00 5A     255 0533      "90", 'NUL', 81h, 0, 5Ah
+42.73:  39 31 22 00 81 00 5B     255 0534      "91", 'NUL', 81h, 0, 5Bh
+42.7A:  39 32 22 00 81 00 5C     255 0535      "92", 'NUL', 81h, 0, 5Ch
+42.81:  39 33 22 00 81 00 5D     255 0536      "93", 'NUL', 81h, 0, 5Dh
+42.88:  39 34 22 00 81 00 5E     255 0537      "94", 'NUL', 81h, 0, 5Eh
+42.8F:  39 35 22 00 81 00 5F     255 0538      "95", 'NUL', 81h, 0, 5Fh
+42.96:  39 36 22 00 81 00 60     255 0539      "96", 'NUL', 81h, 0, 60h
+42.9D:  39 37 22 00 81 00 61     255 0540      "97", 'NUL', 81h, 0, 61h
+42.A4:  39 38 22 00 81 00 62     255 0541      "98", 'NUL', 81h, 0, 62h
+42.AB:  39 39 22 00 81 00 63     255 0542      "99", 'NUL', 81h, 0, 63h
+42.B2:  31 30 30 22 00 81 00 64  255 0543      "100", 'NUL', 81h, 0, 64h
+42.BA:  31 30 31 22 00 81 00 65  255 0544      "101", 'NUL', 81h, 0, 65h
+42.C2:  31 30 32 22 00 81 00 66  255 0545      "102", 'NUL', 81h, 0, 66h
+42.CA:  31 30 33 22 00 81 00 67  255 0546      "103", 'NUL', 81h, 0, 67h
+42.D2:  31 30 34 22 00 81 00 68  255 0547      "104", 'NUL', 81h, 0, 68h
+42.DA:  31 30 35 22 00 81 00 69  255 0548      "105", 'NUL', 81h, 0, 69h
+42.E2:  31 30 36 22 00 81 00 6A  255 0549      "106", 'NUL', 81h, 0, 6Ah
+42.EA:  31 30 37 22 00 81 00 6B  255 0550      "107", 'NUL', 81h, 0, 6Bh
+42.F2:  31 30 38 22 00 81 00 6C  255 0551      "108", 'NUL', 81h, 0, 6Ch
+42.FA:  31 30 39 22 00 81 00 6D  255 0552      "109", 'NUL', 81h, 0, 6Dh
+43.02:  31 31 30 22 00 81 00 6E  255 0553      "110", 'NUL', 81h, 0, 6Eh
+43.0A:  31 31 31 22 00 81 00 6F  255 0554      "111", 'NUL', 81h, 0, 6Fh
+43.12:  31 31 32 22 00 81 00 70  255 0555      "112", 'NUL', 81h, 0, 70h
+43.1A:  31 31 33 22 00 81 00 71  255 0556      "113", 'NUL', 81h, 0, 71h
+43.22:  31 31 34 22 00 81 00 72  255 0557      "114", 'NUL', 81h, 0, 72h
+43.2A:  31 31 35 22 00 81 00 73  255 0558      "115", 'NUL', 81h, 0, 73h
+43.32:  31 31 36 22 00 81 00 74  255 0559      "116", 'NUL', 81h, 0, 74h
+43.3A:  31 31 37 22 00 81 00 75  255 0560      "117", 'NUL', 81h, 0, 75h
+43.42:  31 31 38 22 00 81 00 76  255 0561      "118", 'NUL', 81h, 0, 76h
+43.4A:  31 31 39 22 00 81 00 77  255 0562      "119", 'NUL', 81h, 0, 77h
+43.52:  31 32 30 22 00 81 00 78  255 0563      "120", 'NUL', 81h, 0, 78h
+43.5A:  31 32 31 22 00 81 00 79  255 0564      "121", 'NUL', 81h, 0, 79h
+43.62:  31 32 32 22 00 81 00 7A  255 0565      "122", 'NUL', 81h, 0, 7Ah
+43.6A:  31 32 33 22 00 81 00 7B  255 0566      "123", 'NUL', 81h, 0, 7Bh
+43.72:  31 32 34 22 00 81 00 7C  255 0567      "124", 'NUL', 81h, 0, 7Ch
+43.7A:  31 32 35 22 00 81 00 7D  255 0568      "125", 'NUL', 81h, 0, 7Dh
+43.82:  31 32 36 22 00 81 00 7E  255 0569      "126", 'NUL', 81h, 0, 7Eh
+43.8A:  31 32 37 22 00 81 00 7F  255 0570      "127", 'NUL', 81h, 0, 7Fh
+43.92:  31 32 38 22 00 81 00 80  255 0571      "128", 'NUL', 81h, 0, 80h
+43.9A:  31 32 39 22 00 81 00 81  255 0572      "129", 'NUL', 81h, 0, 81h
+43.A2:  31 33 30 22 00 81 00 82  255 0573      "130", 'NUL', 81h, 0, 82h
+43.AA:  31 33 31 22 00 81 00 83  255 0574      "131", 'NUL', 81h, 0, 83h
+43.B2:  31 33 32 22 00 81 00 84  255 0575      "132", 'NUL', 81h, 0, 84h
+43.BA:  31 33 33 22 00 81 00 85  255 0576      "133", 'NUL', 81h, 0, 85h
+43.C2:  31 33 34 22 00 81 00 86  255 0577      "134", 'NUL', 81h, 0, 86h
+43.CA:  31 33 35 22 00 81 00 87  255 0578      "135", 'NUL', 81h, 0, 87h
+43.D2:  31 33 36 22 00 81 00 88  255 0579      "136", 'NUL', 81h, 0, 88h
+43.DA:  31 33 37 22 00 81 00 89  255 0580      "137", 'NUL', 81h, 0, 89h
+43.E2:  31 33 38 22 00 81 00 8A  255 0581      "138", 'NUL', 81h, 0, 8Ah
+43.EA:  31 33 39 22 00 81 00 8B  255 0582      "139", 'NUL', 81h, 0, 8Bh
+43.F2:  31 34 30 22 00 81 00 8C  255 0583      "140", 'NUL', 81h, 0, 8Ch
+43.FA:  31 34 31 22 00 81 00 8D  255 0584      "141", 'NUL', 81h, 0, 8Dh
+44.02:  31 34 32 22 00 81 00 8E  255 0585      "142", 'NUL', 81h, 0, 8Eh
+44.0A:  31 34 33 22 00 81 00 8F  255 0586      "143", 'NUL', 81h, 0, 8Fh
+44.12:  31 34 34 22 00 81 00 90  255 0587      "144", 'NUL', 81h, 0, 90h
+44.1A:  31 34 35 22 00 81 00 91  255 0588      "145", 'NUL', 81h, 0, 91h
+44.22:  31 34 36 22 00 81 00 92  255 0589      "146", 'NUL', 81h, 0, 92h
+44.2A:  31 34 37 22 00 81 00 93  255 0590      "147", 'NUL', 81h, 0, 93h
+44.32:  31 34 38 22 00 81 00 94  255 0591      "148", 'NUL', 81h, 0, 94h
+44.3A:  31 34 39 22 00 81 00 95  255 0592      "149", 'NUL', 81h, 0, 95h
+44.42:  31 35 30 22 00 81 00 96  255 0593      "150", 'NUL', 81h, 0, 96h
+44.4A:  31 35 31 22 00 81 00 97  255 0594      "151", 'NUL', 81h, 0, 97h
+44.52:  31 35 32 22 00 81 00 98  255 0595      "152", 'NUL', 81h, 0, 98h
+44.5A:  31 35 33 22 00 81 00 99  255 0596      "153", 'NUL', 81h, 0, 99h
+44.62:  31 35 34 22 00 81 00 9A  255 0597      "154", 'NUL', 81h, 0, 9Ah
+44.6A:  31 35 35 22 00 81 00 9B  255 0598      "155", 'NUL', 81h, 0, 9Bh
+44.72:  31 35 36 22 00 81 00 9C  255 0599      "156", 'NUL', 81h, 0, 9Ch
+44.7A:  31 35 37 22 00 81 00 9D  255 0600      "157", 'NUL', 81h, 0, 9Dh
+44.82:  31 35 38 22 00 81 00 9E  255 0601      "158", 'NUL', 81h, 0, 9Eh
+44.8A:  31 35 39 22 00 81 00 9F  255 0602      "159", 'NUL', 81h, 0, 9Fh
+44.92:  31 36 30 22 00 81 00 A0  255 0603      "160", 'NUL', 81h, 0, A0h
+44.9A:  31 36 31 22 00 81 00 A1  255 0604      "161", 'NUL', 81h, 0, A1h
+44.A2:  31 36 32 22 00 81 00 A2  255 0605      "162", 'NUL', 81h, 0, A2h
+44.AA:  31 36 33 22 00 81 00 A3  255 0606      "163", 'NUL', 81h, 0, A3h
+44.B2:  31 36 34 22 00 81 00 A4  255 0607      "164", 'NUL', 81h, 0, A4h
+44.BA:  31 36 35 22 00 81 00 A5  255 0608      "165", 'NUL', 81h, 0, A5h
+44.C2:  31 36 36 22 00 81 00 A6  255 0609      "166", 'NUL', 81h, 0, A6h
+44.CA:  31 36 37 22 00 81 00 A7  255 0610      "167", 'NUL', 81h, 0, A7h
+44.D2:  31 36 38 22 00 81 00 A8  255 0611      "168", 'NUL', 81h, 0, A8h
+44.DA:  31 36 39 22 00 81 00 A9  255 0612      "169", 'NUL', 81h, 0, A9h
+44.E2:  31 37 30 22 00 81 00 AA  255 0613      "170", 'NUL', 81h, 0, AAh
+44.EA:  31 37 31 22 00 81 00 AB  255 0614      "171", 'NUL', 81h, 0, ABh
+44.F2:  31 37 32 22 00 81 00 AC  255 0615      "172", 'NUL', 81h, 0, ACh
+44.FA:  31 37 33 22 00 81 00 AD  255 0616      "173", 'NUL', 81h, 0, ADh
+45.02:  31 37 34 22 00 81 00 AE  255 0617      "174", 'NUL', 81h, 0, AEh
+45.0A:  31 37 35 22 00 81 00 AF  255 0618      "175", 'NUL', 81h, 0, AFh
+45.12:  31 37 36 22 00 81 00 B0  255 0619      "176", 'NUL', 81h, 0, B0h
+45.1A:  31 37 37 22 00 81 00 B1  255 0620      "177", 'NUL', 81h, 0, B1h
+45.22:  31 37 38 22 00 81 00 B2  255 0621      "178", 'NUL', 81h, 0, B2h
+45.2A:  31 37 39 22 00 81 00 B3  255 0622      "179", 'NUL', 81h, 0, B3h
+45.32:  31 38 30 22 00 81 00 B4  255 0623      "180", 'NUL', 81h, 0, B4h
+45.3A:  31 38 31 22 00 81 00 B5  255 0624      "181", 'NUL', 81h, 0, B5h
+45.42:  31 38 32 22 00 81 00 B6  255 0625      "182", 'NUL', 81h, 0, B6h
+45.4A:  31 38 33 22 00 81 00 B7  255 0626      "183", 'NUL', 81h, 0, B7h
+45.52:  31 38 34 22 00 81 00 B8  255 0627      "184", 'NUL', 81h, 0, B8h
+45.5A:  31 38 35 22 00 81 00 B9  255 0628      "185", 'NUL', 81h, 0, B9h
+45.62:  31 38 36 22 00 81 00 BA  255 0629      "186", 'NUL', 81h, 0, BAh
+45.6A:  31 38 37 22 00 81 00 BB  255 0630      "187", 'NUL', 81h, 0, BBh
+45.72:  31 38 38 22 00 81 00 BC  255 0631      "188", 'NUL', 81h, 0, BCh
+45.7A:  31 38 39 22 00 81 00 BD  255 0632      "189", 'NUL', 81h, 0, BDh
+45.82:  31 39 30 22 00 81 00 BE  255 0633      "190", 'NUL', 81h, 0, BEh
+45.8A:  31 39 31 22 00 81 00 BF  255 0634      "191", 'NUL', 81h, 0, BFh
+45.92:  31 39 32 22 00 81 00 C0  255 0635      "192", 'NUL', 81h, 0, C0h
+45.9A:  31 39 33 22 00 81 00 C1  255 0636      "193", 'NUL', 81h, 0, C1h
+45.A2:  31 39 34 22 00 81 00 C2  255 0637      "194", 'NUL', 81h, 0, C2h
+45.AA:  31 39 35 22 00 81 00 C3  255 0638      "195", 'NUL', 81h, 0, C3h
+45.B2:  31 39 36 22 00 81 00 C4  255 0639      "196", 'NUL', 81h, 0, C4h
+45.BA:  31 39 37 22 00 81 00 C5  255 0640      "197", 'NUL', 81h, 0, C5h
+45.C2:  31 39 38 22 00 81 00 C6  255 0641      "198", 'NUL', 81h, 0, C6h
+45.CA:  31 39 39 22 00 81 00 C7  255 0642      "199", 'NUL', 81h, 0, C7h
+45.D2:  32 30 30 22 00 81 00 C8  255 0643      "200", 'NUL', 81h, 0, C8h
+45.DA:  32 30 31 22 00 81 00 C9  255 0644      "201", 'NUL', 81h, 0, C9h
+45.E2:  32 30 32 22 00 81 00 CA  255 0645      "202", 'NUL', 81h, 0, CAh
+45.EA:  32 30 33 22 00 81 00 CB  255 0646      "203", 'NUL', 81h, 0, CBh
+45.F2:  32 30 34 22 00 81 00 CC  255 0647      "204", 'NUL', 81h, 0, CCh
+45.FA:  32 30 35 22 00 81 00 CD  255 0648      "205", 'NUL', 81h, 0, CDh
+46.02:  32 30 36 22 00 81 00 CE  255 0649      "206", 'NUL', 81h, 0, CEh
+46.0A:  32 30 37 22 00 81 00 CF  255 0650      "207", 'NUL', 81h, 0, CFh
+46.12:  32 30 38 22 00 81 00 D0  255 0651      "208", 'NUL', 81h, 0, D0h
+46.1A:  32 30 39 22 00 81 00 D1  255 0652      "209", 'NUL', 81h, 0, D1h
+46.22:  32 31 30 22 00 81 00 D2  255 0653      "210", 'NUL', 81h, 0, D2h
+46.2A:  32 31 31 22 00 81 00 D3  255 0654      "211", 'NUL', 81h, 0, D3h
+46.32:  32 31 32 22 00 81 00 D4  255 0655      "212", 'NUL', 81h, 0, D4h
+46.3A:  32 31 33 22 00 81 00 D5  255 0656      "213", 'NUL', 81h, 0, D5h
+46.42:  32 31 34 22 00 81 00 D6  255 0657      "214", 'NUL', 81h, 0, D6h
+46.4A:  32 31 35 22 00 81 00 D7  255 0658      "215", 'NUL', 81h, 0, D7h
+46.52:  32 31 36 22 00 81 00 D8  255 0659      "216", 'NUL', 81h, 0, D8h
+46.5A:  32 31 37 22 00 81 00 D9  255 0660      "217", 'NUL', 81h, 0, D9h
+46.62:  32 31 38 22 00 81 00 DA  255 0661      "218", 'NUL', 81h, 0, DAh
+46.6A:  32 31 39 22 00 81 00 DB  255 0662      "219", 'NUL', 81h, 0, DBh
+46.72:  32 32 30 22 00 81 00 DC  255 0663      "220", 'NUL', 81h, 0, DCh
+46.7A:  32 32 31 22 00 81 00 DD  255 0664      "221", 'NUL', 81h, 0, DDh
+46.82:  32 32 32 22 00 81 00 DE  255 0665      "222", 'NUL', 81h, 0, DEh
+46.8A:  32 32 33 22 00 81 00 DF  255 0666      "223", 'NUL', 81h, 0, DFh
+46.92:  32 32 34 22 00 81 00 E0  255 0667      "224", 'NUL', 81h, 0, E0h
+46.9A:  32 32 35 22 00 81 00 E1  255 0668      "225", 'NUL', 81h, 0, E1h
+46.A2:  32 32 36 22 00 81 00 E2  255 0669      "226", 'NUL', 81h, 0, E2h
+46.AA:  32 32 37 22 00 81 00 E3  255 0670      "227", 'NUL', 81h, 0, E3h
+46.B2:  32 32 38 22 00 81 00 E4  255 0671      "228", 'NUL', 81h, 0, E4h
+46.BA:  32 32 39 22 00 81 00 E5  255 0672      "229", 'NUL', 81h, 0, E5h
+46.C2:  32 33 30 22 00 81 00 E6  255 0673      "230", 'NUL', 81h, 0, E6h
+46.CA:  32 33 31 22 00 81 00 E7  255 0674      "231", 'NUL', 81h, 0, E7h
+46.D2:  32 33 32 22 00 81 00 E8  255 0675      "232", 'NUL', 81h, 0, E8h
+46.DA:  32 33 33 22 00 81 00 E9  255 0676      "233", 'NUL', 81h, 0, E9h
+46.E2:  32 33 34 22 00 81 00 EA  255 0677      "234", 'NUL', 81h, 0, EAh
+46.EA:  32 33 35 22 00 81 00 EB  255 0678      "235", 'NUL', 81h, 0, EBh
+46.F2:  32 33 36 22 00 81 00 EC  255 0679      "236", 'NUL', 81h, 0, ECh
+46.FA:  32 33 37 22 00 81 00 ED  255 0680      "237", 'NUL', 81h, 0, EDh
+47.02:  32 33 38 22 00 81 00 EE  255 0681      "238", 'NUL', 81h, 0, EEh
+47.0A:  32 33 39 22 00 81 00 EF  255 0682      "239", 'NUL', 81h, 0, EFh
+47.12:  32 34 30 22 00 81 00 F0  255 0683      "240", 'NUL', 81h, 0, F0h
+47.1A:  32 34 31 22 00 81 00 F1  255 0684      "241", 'NUL', 81h, 0, F1h
+47.22:  32 34 32 22 00 81 00 F2  255 0685      "242", 'NUL', 81h, 0, F2h
+47.2A:  32 34 33 22 00 81 00 F3  255 0686      "243", 'NUL', 81h, 0, F3h
+47.32:  32 34 34 22 00 81 00 F4  255 0687      "244", 'NUL', 81h, 0, F4h
+47.3A:  32 34 35 22 00 81 00 F5  255 0688      "245", 'NUL', 81h, 0, F5h
+47.42:  32 34 36 22 00 81 00 F6  255 0689      "246", 'NUL', 81h, 0, F6h
+47.4A:  32 34 37 22 00 81 00 F7  255 0690      "247", 'NUL', 81h, 0, F7h
+47.52:  32 34 38 22 00 81 00 F8  255 0691      "248", 'NUL', 81h, 0, F8h
+47.5A:  32 34 39 22 00 81 00 F9  255 0692      "249", 'NUL', 81h, 0, F9h
+47.62:  32 35 30 22 00 81 00 FA  255 0693      "250", 'NUL', 81h, 0, FAh
+47.6A:  32 35 31 22 00 81 00 FB  255 0694      "251", 'NUL', 81h, 0, FBh
+47.72:  32 35 32 22 00 81 00 FC  255 0695      "252", 'NUL', 81h, 0, FCh
+47.7A:  32 35 33 22 00 81 00 FD  255 0696      "253", 'NUL', 81h, 0, FDh
+47.82:  32 35 34 22 00 81 00 FE  255 0697      "254", 'NUL', 81h, 0, FEh
+47.8A:  32 35 35 22 00 81 00 FF  255 0698      "255", 'NUL', 81h, 0, FFh
+                                 255 0699  
+                                 255 0700      (Negative Decimal Numbers)
+                                 255 0701  
+47.92:  2D 31 22 00 81 00 FF     255 0702      "-1", 'NUL', 81h, 0, FFh
+47.99:  2D 32 22 00 81 00 FE     255 0703      "-2", 'NUL', 81h, 0, FEh
+47.A0:  2D 33 22 00 81 00 FD     255 0704      "-3", 'NUL', 81h, 0, FDh
+47.A7:  2D 34 22 00 81 00 FC     255 0705      "-4", 'NUL', 81h, 0, FCh
+47.AE:  2D 35 22 00 81 00 FB     255 0706      "-5", 'NUL', 81h, 0, FBh
+47.B5:  2D 36 22 00 81 00 FA     255 0707      "-6", 'NUL', 81h, 0, FAh
+47.BC:  2D 37 22 00 81 00 F9     255 0708      "-7", 'NUL', 81h, 0, F9h
+47.C3:  2D 38 22 00 81 00 F8     255 0709      "-8", 'NUL', 81h, 0, F8h
+47.CA:  2D 39 22 00 81 00 F7     255 0710      "-9", 'NUL', 81h, 0, F7h
+47.D1:  2D 31 30 22 00 81 00 F6  255 0711      "-10", 'NUL', 81h, 0, F6h
+47.D9:  2D 31 31 22 00 81 00 F5  255 0712      "-11", 'NUL', 81h, 0, F5h
+47.E1:  2D 31 32 22 00 81 00 F4  255 0713      "-12", 'NUL', 81h, 0, F4h
+47.E9:  2D 31 33 22 00 81 00 F3  255 0714      "-13", 'NUL', 81h, 0, F3h
+47.F1:  2D 31 34 22 00 81 00 F2  255 0715      "-14", 'NUL', 81h, 0, F2h
+47.F9:  2D 31 35 22 00 81 00 F1  255 0716      "-15", 'NUL', 81h, 0, F1h
+48.01:  2D 31 36 22 00 81 00 F0  255 0717      "-16", 'NUL', 81h, 0, F0h
+48.09:  2D 31 37 22 00 81 00 EF  255 0718      "-17", 'NUL', 81h, 0, EFh
+48.11:  2D 31 38 22 00 81 00 EE  255 0719      "-18", 'NUL', 81h, 0, EEh
+48.19:  2D 31 39 22 00 81 00 ED  255 0720      "-19", 'NUL', 81h, 0, EDh
+48.21:  2D 32 30 22 00 81 00 EC  255 0721      "-20", 'NUL', 81h, 0, ECh
+48.29:  2D 32 31 22 00 81 00 EB  255 0722      "-21", 'NUL', 81h, 0, EBh
+48.31:  2D 32 32 22 00 81 00 EA  255 0723      "-22", 'NUL', 81h, 0, EAh
+48.39:  2D 32 33 22 00 81 00 E9  255 0724      "-23", 'NUL', 81h, 0, E9h
+48.41:  2D 32 34 22 00 81 00 E8  255 0725      "-24", 'NUL', 81h, 0, E8h
+48.49:  2D 32 35 22 00 81 00 E7  255 0726      "-25", 'NUL', 81h, 0, E7h
+48.51:  2D 32 36 22 00 81 00 E6  255 0727      "-26", 'NUL', 81h, 0, E6h
+48.59:  2D 32 37 22 00 81 00 E5  255 0728      "-27", 'NUL', 81h, 0, E5h
+48.61:  2D 32 38 22 00 81 00 E4  255 0729      "-28", 'NUL', 81h, 0, E4h
+48.69:  2D 32 39 22 00 81 00 E3  255 0730      "-29", 'NUL', 81h, 0, E3h
+48.71:  2D 33 30 22 00 81 00 E2  255 0731      "-30", 'NUL', 81h, 0, E2h
+48.79:  2D 33 31 22 00 81 00 E1  255 0732      "-31", 'NUL', 81h, 0, E1h
+48.81:  2D 33 32 22 00 81 00 E0  255 0733      "-32", 'NUL', 81h, 0, E0h
+48.89:  2D 33 33 22 00 81 00 DF  255 0734      "-33", 'NUL', 81h, 0, DFh
+48.91:  2D 33 34 22 00 81 00 DE  255 0735      "-34", 'NUL', 81h, 0, DEh
+48.99:  2D 33 35 22 00 81 00 DD  255 0736      "-35", 'NUL', 81h, 0, DDh
+48.A1:  2D 33 36 22 00 81 00 DC  255 0737      "-36", 'NUL', 81h, 0, DCh
+48.A9:  2D 33 37 22 00 81 00 DB  255 0738      "-37", 'NUL', 81h, 0, DBh
+48.B1:  2D 33 38 22 00 81 00 DA  255 0739      "-38", 'NUL', 81h, 0, DAh
+48.B9:  2D 33 39 22 00 81 00 D9  255 0740      "-39", 'NUL', 81h, 0, D9h
+48.C1:  2D 34 30 22 00 81 00 D8  255 0741      "-40", 'NUL', 81h, 0, D8h
+48.C9:  2D 34 31 22 00 81 00 D7  255 0742      "-41", 'NUL', 81h, 0, D7h
+48.D1:  2D 34 32 22 00 81 00 D6  255 0743      "-42", 'NUL', 81h, 0, D6h
+48.D9:  2D 34 33 22 00 81 00 D5  255 0744      "-43", 'NUL', 81h, 0, D5h
+48.E1:  2D 34 34 22 00 81 00 D4  255 0745      "-44", 'NUL', 81h, 0, D4h
+48.E9:  2D 34 35 22 00 81 00 D3  255 0746      "-45", 'NUL', 81h, 0, D3h
+48.F1:  2D 34 36 22 00 81 00 D2  255 0747      "-46", 'NUL', 81h, 0, D2h
+48.F9:  2D 34 37 22 00 81 00 D1  255 0748      "-47", 'NUL', 81h, 0, D1h
+49.01:  2D 34 38 22 00 81 00 D0  255 0749      "-48", 'NUL', 81h, 0, D0h
+49.09:  2D 34 39 22 00 81 00 CF  255 0750      "-49", 'NUL', 81h, 0, CFh
+49.11:  2D 35 30 22 00 81 00 CE  255 0751      "-50", 'NUL', 81h, 0, CEh
+49.19:  2D 35 31 22 00 81 00 CD  255 0752      "-51", 'NUL', 81h, 0, CDh
+49.21:  2D 35 32 22 00 81 00 CC  255 0753      "-52", 'NUL', 81h, 0, CCh
+49.29:  2D 35 33 22 00 81 00 CB  255 0754      "-53", 'NUL', 81h, 0, CBh
+49.31:  2D 35 34 22 00 81 00 CA  255 0755      "-54", 'NUL', 81h, 0, CAh
+49.39:  2D 35 35 22 00 81 00 C9  255 0756      "-55", 'NUL', 81h, 0, C9h
+49.41:  2D 35 36 22 00 81 00 C8  255 0757      "-56", 'NUL', 81h, 0, C8h
+49.49:  2D 35 37 22 00 81 00 C7  255 0758      "-57", 'NUL', 81h, 0, C7h
+49.51:  2D 35 38 22 00 81 00 C6  255 0759      "-58", 'NUL', 81h, 0, C6h
+49.59:  2D 35 39 22 00 81 00 C5  255 0760      "-59", 'NUL', 81h, 0, C5h
+49.61:  2D 36 30 22 00 81 00 C4  255 0761      "-60", 'NUL', 81h, 0, C4h
+49.69:  2D 36 31 22 00 81 00 C3  255 0762      "-61", 'NUL', 81h, 0, C3h
+49.71:  2D 36 32 22 00 81 00 C2  255 0763      "-62", 'NUL', 81h, 0, C2h
+49.79:  2D 36 33 22 00 81 00 C1  255 0764      "-63", 'NUL', 81h, 0, C1h
+49.81:  2D 36 34 22 00 81 00 C0  255 0765      "-64", 'NUL', 81h, 0, C0h
+49.89:  2D 36 35 22 00 81 00 BF  255 0766      "-65", 'NUL', 81h, 0, BFh
+49.91:  2D 36 36 22 00 81 00 BE  255 0767      "-66", 'NUL', 81h, 0, BEh
+49.99:  2D 36 37 22 00 81 00 BD  255 0768      "-67", 'NUL', 81h, 0, BDh
+49.A1:  2D 36 38 22 00 81 00 BC  255 0769      "-68", 'NUL', 81h, 0, BCh
+49.A9:  2D 36 39 22 00 81 00 BB  255 0770      "-69", 'NUL', 81h, 0, BBh
+49.B1:  2D 37 30 22 00 81 00 BA  255 0771      "-70", 'NUL', 81h, 0, BAh
+49.B9:  2D 37 31 22 00 81 00 B9  255 0772      "-71", 'NUL', 81h, 0, B9h
+49.C1:  2D 37 32 22 00 81 00 B8  255 0773      "-72", 'NUL', 81h, 0, B8h
+49.C9:  2D 37 33 22 00 81 00 B7  255 0774      "-73", 'NUL', 81h, 0, B7h
+49.D1:  2D 37 34 22 00 81 00 B6  255 0775      "-74", 'NUL', 81h, 0, B6h
+49.D9:  2D 37 35 22 00 81 00 B5  255 0776      "-75", 'NUL', 81h, 0, B5h
+49.E1:  2D 37 36 22 00 81 00 B4  255 0777      "-76", 'NUL', 81h, 0, B4h
+49.E9:  2D 37 37 22 00 81 00 B3  255 0778      "-77", 'NUL', 81h, 0, B3h
+49.F1:  2D 37 38 22 00 81 00 B2  255 0779      "-78", 'NUL', 81h, 0, B2h
+49.F9:  2D 37 39 22 00 81 00 B1  255 0780      "-79", 'NUL', 81h, 0, B1h
+4A.01:  2D 38 30 22 00 81 00 B0  255 0781      "-80", 'NUL', 81h, 0, B0h
+4A.09:  2D 38 31 22 00 81 00 AF  255 0782      "-81", 'NUL', 81h, 0, AFh
+4A.11:  2D 38 32 22 00 81 00 AE  255 0783      "-82", 'NUL', 81h, 0, AEh
+4A.19:  2D 38 33 22 00 81 00 AD  255 0784      "-83", 'NUL', 81h, 0, ADh
+4A.21:  2D 38 34 22 00 81 00 AC  255 0785      "-84", 'NUL', 81h, 0, ACh
+4A.29:  2D 38 35 22 00 81 00 AB  255 0786      "-85", 'NUL', 81h, 0, ABh
+4A.31:  2D 38 36 22 00 81 00 AA  255 0787      "-86", 'NUL', 81h, 0, AAh
+4A.39:  2D 38 37 22 00 81 00 A9  255 0788      "-87", 'NUL', 81h, 0, A9h
+4A.41:  2D 38 38 22 00 81 00 A8  255 0789      "-88", 'NUL', 81h, 0, A8h
+4A.49:  2D 38 39 22 00 81 00 A7  255 0790      "-89", 'NUL', 81h, 0, A7h
+4A.51:  2D 39 30 22 00 81 00 A6  255 0791      "-90", 'NUL', 81h, 0, A6h
+4A.59:  2D 39 31 22 00 81 00 A5  255 0792      "-91", 'NUL', 81h, 0, A5h
+4A.61:  2D 39 32 22 00 81 00 A4  255 0793      "-92", 'NUL', 81h, 0, A4h
+4A.69:  2D 39 33 22 00 81 00 A3  255 0794      "-93", 'NUL', 81h, 0, A3h
+4A.71:  2D 39 34 22 00 81 00 A2  255 0795      "-94", 'NUL', 81h, 0, A2h
+4A.79:  2D 39 35 22 00 81 00 A1  255 0796      "-95", 'NUL', 81h, 0, A1h
+4A.81:  2D 39 36 22 00 81 00 A0  255 0797      "-96", 'NUL', 81h, 0, A0h
+4A.89:  2D 39 37 22 00 81 00 9F  255 0798      "-97", 'NUL', 81h, 0, 9Fh
+4A.91:  2D 39 38 22 00 81 00 9E  255 0799      "-98", 'NUL', 81h, 0, 9Eh
+4A.99:  2D 39 39 22 00 81 00 9D  255 0800      "-99", 'NUL', 81h, 0, 9Dh
+4A.A1:  2D 31 30 30 22 00 81 00 
+        9C                       255 0801      "-100", 'NUL', 81h, 0, 9Ch
+4A.AA:  2D 31 30 31 22 00 81 00 
+        9B                       255 0802      "-101", 'NUL', 81h, 0, 9Bh
+4A.B3:  2D 31 30 32 22 00 81 00 
+        9A                       255 0803      "-102", 'NUL', 81h, 0, 9Ah
+4A.BC:  2D 31 30 33 22 00 81 00 
+        99                       255 0804      "-103", 'NUL', 81h, 0, 99h
+4A.C5:  2D 31 30 34 22 00 81 00 
+        98                       255 0805      "-104", 'NUL', 81h, 0, 98h
+4A.CE:  2D 31 30 35 22 00 81 00 
+        97                       255 0806      "-105", 'NUL', 81h, 0, 97h
+4A.D7:  2D 31 30 36 22 00 81 00 
+        96                       255 0807      "-106", 'NUL', 81h, 0, 96h
+4A.E0:  2D 31 30 37 22 00 81 00 
+        95                       255 0808      "-107", 'NUL', 81h, 0, 95h
+4A.E9:  2D 31 30 38 22 00 81 00 
+        94                       255 0809      "-108", 'NUL', 81h, 0, 94h
+4A.F2:  2D 31 30 39 22 00 81 00 
+        93                       255 0810      "-109", 'NUL', 81h, 0, 93h
+4A.FB:  2D 31 31 30 22 00 81 00 
+        92                       255 0811      "-110", 'NUL', 81h, 0, 92h
+4B.04:  2D 31 31 31 22 00 81 00 
+        91                       255 0812      "-111", 'NUL', 81h, 0, 91h
+4B.0D:  2D 31 31 32 22 00 81 00 
+        90                       255 0813      "-112", 'NUL', 81h, 0, 90h
+4B.16:  2D 31 31 33 22 00 81 00 
+        8F                       255 0814      "-113", 'NUL', 81h, 0, 8Fh
+4B.1F:  2D 31 31 34 22 00 81 00 
+        8E                       255 0815      "-114", 'NUL', 81h, 0, 8Eh
+4B.28:  2D 31 31 35 22 00 81 00 
+        8D                       255 0816      "-115", 'NUL', 81h, 0, 8Dh
+4B.31:  2D 31 31 36 22 00 81 00 
+        8C                       255 0817      "-116", 'NUL', 81h, 0, 8Ch
+4B.3A:  2D 31 31 37 22 00 81 00 
+        8B                       255 0818      "-117", 'NUL', 81h, 0, 8Bh
+4B.43:  2D 31 31 38 22 00 81 00 
+        8A                       255 0819      "-118", 'NUL', 81h, 0, 8Ah
+4B.4C:  2D 31 31 39 22 00 81 00 
+        89                       255 0820      "-119", 'NUL', 81h, 0, 89h
+4B.55:  2D 31 32 30 22 00 81 00 
+        88                       255 0821      "-120", 'NUL', 81h, 0, 88h
+4B.5E:  2D 31 32 31 22 00 81 00 
+        87                       255 0822      "-121", 'NUL', 81h, 0, 87h
+4B.67:  2D 31 32 32 22 00 81 00 
+        86                       255 0823      "-122", 'NUL', 81h, 0, 86h
+4B.70:  2D 31 32 33 22 00 81 00 
+        85                       255 0824      "-123", 'NUL', 81h, 0, 85h
+4B.79:  2D 31 32 34 22 00 81 00 
+        84                       255 0825      "-124", 'NUL', 81h, 0, 84h
+4B.82:  2D 31 32 35 22 00 81 00 
+        83                       255 0826      "-125", 'NUL', 81h, 0, 83h
+4B.8B:  2D 31 32 36 22 00 81 00 
+        82                       255 0827      "-126", 'NUL', 81h, 0, 82h
+4B.94:  2D 31 32 37 22 00 81 00 
+        81                       255 0828      "-127", 'NUL', 81h, 0, 81h
+4B.9D:  2D 31 32 38 22 00 81 00 
+        80                       255 0829      "-128", 'NUL', 81h, 0, 80h
+                                 255 0830  
+                                 255 0831      (Hexadecimal Numbers)
+                                 255 0832  
+4B.A6:  30 30 68 22 00 81 00 00  255 0833      "00h", 'NUL', 81h, 0, 00h
+4B.AE:  30 31 68 22 00 81 00 01  255 0834      "01h", 'NUL', 81h, 0, 01h
+4B.B6:  30 32 68 22 00 81 00 02  255 0835      "02h", 'NUL', 81h, 0, 02h
+4B.BE:  30 33 68 22 00 81 00 03  255 0836      "03h", 'NUL', 81h, 0, 03h
+4B.C6:  30 34 68 22 00 81 00 04  255 0837      "04h", 'NUL', 81h, 0, 04h
+4B.CE:  30 35 68 22 00 81 00 05  255 0838      "05h", 'NUL', 81h, 0, 05h
+4B.D6:  30 36 68 22 00 81 00 06  255 0839      "06h", 'NUL', 81h, 0, 06h
+4B.DE:  30 37 68 22 00 81 00 07  255 0840      "07h", 'NUL', 81h, 0, 07h
+4B.E6:  30 38 68 22 00 81 00 08  255 0841      "08h", 'NUL', 81h, 0, 08h
+4B.EE:  30 39 68 22 00 81 00 09  255 0842      "09h", 'NUL', 81h, 0, 09h
+4B.F6:  30 41 68 22 00 81 00 0A  255 0843      "0Ah", 'NUL', 81h, 0, 0Ah
+4B.FE:  30 42 68 22 00 81 00 0B  255 0844      "0Bh", 'NUL', 81h, 0, 0Bh
+4C.06:  30 43 68 22 00 81 00 0C  255 0845      "0Ch", 'NUL', 81h, 0, 0Ch
+4C.0E:  30 44 68 22 00 81 00 0D  255 0846      "0Dh", 'NUL', 81h, 0, 0Dh
+4C.16:  30 45 68 22 00 81 00 0E  255 0847      "0Eh", 'NUL', 81h, 0, 0Eh
+4C.1E:  30 46 68 22 00 81 00 0F  255 0848      "0Fh", 'NUL', 81h, 0, 0Fh
+4C.26:  31 30 68 22 00 81 00 10  255 0849      "10h", 'NUL', 81h, 0, 10h
+4C.2E:  31 31 68 22 00 81 00 11  255 0850      "11h", 'NUL', 81h, 0, 11h
+4C.36:  31 32 68 22 00 81 00 12  255 0851      "12h", 'NUL', 81h, 0, 12h
+4C.3E:  31 33 68 22 00 81 00 13  255 0852      "13h", 'NUL', 81h, 0, 13h
+4C.46:  31 34 68 22 00 81 00 14  255 0853      "14h", 'NUL', 81h, 0, 14h
+4C.4E:  31 35 68 22 00 81 00 15  255 0854      "15h", 'NUL', 81h, 0, 15h
+4C.56:  31 36 68 22 00 81 00 16  255 0855      "16h", 'NUL', 81h, 0, 16h
+4C.5E:  31 37 68 22 00 81 00 17  255 0856      "17h", 'NUL', 81h, 0, 17h
+4C.66:  31 38 68 22 00 81 00 18  255 0857      "18h", 'NUL', 81h, 0, 18h
+4C.6E:  31 39 68 22 00 81 00 19  255 0858      "19h", 'NUL', 81h, 0, 19h
+4C.76:  31 41 68 22 00 81 00 1A  255 0859      "1Ah", 'NUL', 81h, 0, 1Ah
+4C.7E:  31 42 68 22 00 81 00 1B  255 0860      "1Bh", 'NUL', 81h, 0, 1Bh
+4C.86:  31 43 68 22 00 81 00 1C  255 0861      "1Ch", 'NUL', 81h, 0, 1Ch
+4C.8E:  31 44 68 22 00 81 00 1D  255 0862      "1Dh", 'NUL', 81h, 0, 1Dh
+4C.96:  31 45 68 22 00 81 00 1E  255 0863      "1Eh", 'NUL', 81h, 0, 1Eh
+4C.9E:  31 46 68 22 00 81 00 1F  255 0864      "1Fh", 'NUL', 81h, 0, 1Fh
+4C.A6:  32 30 68 22 00 81 00 20  255 0865      "20h", 'NUL', 81h, 0, 20h
+4C.AE:  32 31 68 22 00 81 00 21  255 0866      "21h", 'NUL', 81h, 0, 21h
+4C.B6:  32 32 68 22 00 81 00 22  255 0867      "22h", 'NUL', 81h, 0, 22h
+4C.BE:  32 33 68 22 00 81 00 23  255 0868      "23h", 'NUL', 81h, 0, 23h
+4C.C6:  32 34 68 22 00 81 00 24  255 0869      "24h", 'NUL', 81h, 0, 24h
+4C.CE:  32 35 68 22 00 81 00 25  255 0870      "25h", 'NUL', 81h, 0, 25h
+4C.D6:  32 36 68 22 00 81 00 26  255 0871      "26h", 'NUL', 81h, 0, 26h
+4C.DE:  32 37 68 22 00 81 00 27  255 0872      "27h", 'NUL', 81h, 0, 27h
+4C.E6:  32 38 68 22 00 81 00 28  255 0873      "28h", 'NUL', 81h, 0, 28h
+4C.EE:  32 39 68 22 00 81 00 29  255 0874      "29h", 'NUL', 81h, 0, 29h
+4C.F6:  32 41 68 22 00 81 00 2A  255 0875      "2Ah", 'NUL', 81h, 0, 2Ah
+4C.FE:  32 42 68 22 00 81 00 2B  255 0876      "2Bh", 'NUL', 81h, 0, 2Bh
+4D.06:  32 43 68 22 00 81 00 2C  255 0877      "2Ch", 'NUL', 81h, 0, 2Ch
+4D.0E:  32 44 68 22 00 81 00 2D  255 0878      "2Dh", 'NUL', 81h, 0, 2Dh
+4D.16:  32 45 68 22 00 81 00 2E  255 0879      "2Eh", 'NUL', 81h, 0, 2Eh
+4D.1E:  32 46 68 22 00 81 00 2F  255 0880      "2Fh", 'NUL', 81h, 0, 2Fh
+4D.26:  33 30 68 22 00 81 00 30  255 0881      "30h", 'NUL', 81h, 0, 30h
+4D.2E:  33 31 68 22 00 81 00 31  255 0882      "31h", 'NUL', 81h, 0, 31h
+4D.36:  33 32 68 22 00 81 00 32  255 0883      "32h", 'NUL', 81h, 0, 32h
+4D.3E:  33 33 68 22 00 81 00 33  255 0884      "33h", 'NUL', 81h, 0, 33h
+4D.46:  33 34 68 22 00 81 00 34  255 0885      "34h", 'NUL', 81h, 0, 34h
+4D.4E:  33 35 68 22 00 81 00 35  255 0886      "35h", 'NUL', 81h, 0, 35h
+4D.56:  33 36 68 22 00 81 00 36  255 0887      "36h", 'NUL', 81h, 0, 36h
+4D.5E:  33 37 68 22 00 81 00 37  255 0888      "37h", 'NUL', 81h, 0, 37h
+4D.66:  33 38 68 22 00 81 00 38  255 0889      "38h", 'NUL', 81h, 0, 38h
+4D.6E:  33 39 68 22 00 81 00 39  255 0890      "39h", 'NUL', 81h, 0, 39h
+4D.76:  33 41 68 22 00 81 00 3A  255 0891      "3Ah", 'NUL', 81h, 0, 3Ah
+4D.7E:  33 42 68 22 00 81 00 3B  255 0892      "3Bh", 'NUL', 81h, 0, 3Bh
+4D.86:  33 43 68 22 00 81 00 3C  255 0893      "3Ch", 'NUL', 81h, 0, 3Ch
+4D.8E:  33 44 68 22 00 81 00 3D  255 0894      "3Dh", 'NUL', 81h, 0, 3Dh
+4D.96:  33 45 68 22 00 81 00 3E  255 0895      "3Eh", 'NUL', 81h, 0, 3Eh
+4D.9E:  33 46 68 22 00 81 00 3F  255 0896      "3Fh", 'NUL', 81h, 0, 3Fh
+4D.A6:  34 30 68 22 00 81 00 40  255 0897      "40h", 'NUL', 81h, 0, 40h
+4D.AE:  34 31 68 22 00 81 00 41  255 0898      "41h", 'NUL', 81h, 0, 41h
+4D.B6:  34 32 68 22 00 81 00 42  255 0899      "42h", 'NUL', 81h, 0, 42h
+4D.BE:  34 33 68 22 00 81 00 43  255 0900      "43h", 'NUL', 81h, 0, 43h
+4D.C6:  34 34 68 22 00 81 00 44  255 0901      "44h", 'NUL', 81h, 0, 44h
+4D.CE:  34 35 68 22 00 81 00 45  255 0902      "45h", 'NUL', 81h, 0, 45h
+4D.D6:  34 36 68 22 00 81 00 46  255 0903      "46h", 'NUL', 81h, 0, 46h
+4D.DE:  34 37 68 22 00 81 00 47  255 0904      "47h", 'NUL', 81h, 0, 47h
+4D.E6:  34 38 68 22 00 81 00 48  255 0905      "48h", 'NUL', 81h, 0, 48h
+4D.EE:  34 39 68 22 00 81 00 49  255 0906      "49h", 'NUL', 81h, 0, 49h
+4D.F6:  34 41 68 22 00 81 00 4A  255 0907      "4Ah", 'NUL', 81h, 0, 4Ah
+4D.FE:  34 42 68 22 00 81 00 4B  255 0908      "4Bh", 'NUL', 81h, 0, 4Bh
+4E.06:  34 43 68 22 00 81 00 4C  255 0909      "4Ch", 'NUL', 81h, 0, 4Ch
+4E.0E:  34 44 68 22 00 81 00 4D  255 0910      "4Dh", 'NUL', 81h, 0, 4Dh
+4E.16:  34 45 68 22 00 81 00 4E  255 0911      "4Eh", 'NUL', 81h, 0, 4Eh
+4E.1E:  34 46 68 22 00 81 00 4F  255 0912      "4Fh", 'NUL', 81h, 0, 4Fh
+4E.26:  35 30 68 22 00 81 00 50  255 0913      "50h", 'NUL', 81h, 0, 50h
+4E.2E:  35 31 68 22 00 81 00 51  255 0914      "51h", 'NUL', 81h, 0, 51h
+4E.36:  35 32 68 22 00 81 00 52  255 0915      "52h", 'NUL', 81h, 0, 52h
+4E.3E:  35 33 68 22 00 81 00 53  255 0916      "53h", 'NUL', 81h, 0, 53h
+4E.46:  35 34 68 22 00 81 00 54  255 0917      "54h", 'NUL', 81h, 0, 54h
+4E.4E:  35 35 68 22 00 81 00 55  255 0918      "55h", 'NUL', 81h, 0, 55h
+4E.56:  35 36 68 22 00 81 00 56  255 0919      "56h", 'NUL', 81h, 0, 56h
+4E.5E:  35 37 68 22 00 81 00 57  255 0920      "57h", 'NUL', 81h, 0, 57h
+4E.66:  35 38 68 22 00 81 00 58  255 0921      "58h", 'NUL', 81h, 0, 58h
+4E.6E:  35 39 68 22 00 81 00 59  255 0922      "59h", 'NUL', 81h, 0, 59h
+4E.76:  35 41 68 22 00 81 00 5A  255 0923      "5Ah", 'NUL', 81h, 0, 5Ah
+4E.7E:  35 42 68 22 00 81 00 5B  255 0924      "5Bh", 'NUL', 81h, 0, 5Bh
+4E.86:  35 43 68 22 00 81 00 5C  255 0925      "5Ch", 'NUL', 81h, 0, 5Ch
+4E.8E:  35 44 68 22 00 81 00 5D  255 0926      "5Dh", 'NUL', 81h, 0, 5Dh
+4E.96:  35 45 68 22 00 81 00 5E  255 0927      "5Eh", 'NUL', 81h, 0, 5Eh
+4E.9E:  35 46 68 22 00 81 00 5F  255 0928      "5Fh", 'NUL', 81h, 0, 5Fh
+4E.A6:  36 30 68 22 00 81 00 60  255 0929      "60h", 'NUL', 81h, 0, 60h
+4E.AE:  36 31 68 22 00 81 00 61  255 0930      "61h", 'NUL', 81h, 0, 61h
+4E.B6:  36 32 68 22 00 81 00 62  255 0931      "62h", 'NUL', 81h, 0, 62h
+4E.BE:  36 33 68 22 00 81 00 63  255 0932      "63h", 'NUL', 81h, 0, 63h
+4E.C6:  36 34 68 22 00 81 00 64  255 0933      "64h", 'NUL', 81h, 0, 64h
+4E.CE:  36 35 68 22 00 81 00 65  255 0934      "65h", 'NUL', 81h, 0, 65h
+4E.D6:  36 36 68 22 00 81 00 66  255 0935      "66h", 'NUL', 81h, 0, 66h
+4E.DE:  36 37 68 22 00 81 00 67  255 0936      "67h", 'NUL', 81h, 0, 67h
+4E.E6:  36 38 68 22 00 81 00 68  255 0937      "68h", 'NUL', 81h, 0, 68h
+4E.EE:  36 39 68 22 00 81 00 69  255 0938      "69h", 'NUL', 81h, 0, 69h
+4E.F6:  36 41 68 22 00 81 00 6A  255 0939      "6Ah", 'NUL', 81h, 0, 6Ah
+4E.FE:  36 42 68 22 00 81 00 6B  255 0940      "6Bh", 'NUL', 81h, 0, 6Bh
+4F.06:  36 43 68 22 00 81 00 6C  255 0941      "6Ch", 'NUL', 81h, 0, 6Ch
+4F.0E:  36 44 68 22 00 81 00 6D  255 0942      "6Dh", 'NUL', 81h, 0, 6Dh
+4F.16:  36 45 68 22 00 81 00 6E  255 0943      "6Eh", 'NUL', 81h, 0, 6Eh
+4F.1E:  36 46 68 22 00 81 00 6F  255 0944      "6Fh", 'NUL', 81h, 0, 6Fh
+4F.26:  37 30 68 22 00 81 00 70  255 0945      "70h", 'NUL', 81h, 0, 70h
+4F.2E:  37 31 68 22 00 81 00 71  255 0946      "71h", 'NUL', 81h, 0, 71h
+4F.36:  37 32 68 22 00 81 00 72  255 0947      "72h", 'NUL', 81h, 0, 72h
+4F.3E:  37 33 68 22 00 81 00 73  255 0948      "73h", 'NUL', 81h, 0, 73h
+4F.46:  37 34 68 22 00 81 00 74  255 0949      "74h", 'NUL', 81h, 0, 74h
+4F.4E:  37 35 68 22 00 81 00 75  255 0950      "75h", 'NUL', 81h, 0, 75h
+4F.56:  37 36 68 22 00 81 00 76  255 0951      "76h", 'NUL', 81h, 0, 76h
+4F.5E:  37 37 68 22 00 81 00 77  255 0952      "77h", 'NUL', 81h, 0, 77h
+4F.66:  37 38 68 22 00 81 00 78  255 0953      "78h", 'NUL', 81h, 0, 78h
+4F.6E:  37 39 68 22 00 81 00 79  255 0954      "79h", 'NUL', 81h, 0, 79h
+4F.76:  37 41 68 22 00 81 00 7A  255 0955      "7Ah", 'NUL', 81h, 0, 7Ah
+4F.7E:  37 42 68 22 00 81 00 7B  255 0956      "7Bh", 'NUL', 81h, 0, 7Bh
+4F.86:  37 43 68 22 00 81 00 7C  255 0957      "7Ch", 'NUL', 81h, 0, 7Ch
+4F.8E:  37 44 68 22 00 81 00 7D  255 0958      "7Dh", 'NUL', 81h, 0, 7Dh
+4F.96:  37 45 68 22 00 81 00 7E  255 0959      "7Eh", 'NUL', 81h, 0, 7Eh
+4F.9E:  37 46 68 22 00 81 00 7F  255 0960      "7Fh", 'NUL', 81h, 0, 7Fh
+4F.A6:  38 30 68 22 00 81 00 80  255 0961      "80h", 'NUL', 81h, 0, 80h
+4F.AE:  38 31 68 22 00 81 00 81  255 0962      "81h", 'NUL', 81h, 0, 81h
+4F.B6:  38 32 68 22 00 81 00 82  255 0963      "82h", 'NUL', 81h, 0, 82h
+4F.BE:  38 33 68 22 00 81 00 83  255 0964      "83h", 'NUL', 81h, 0, 83h
+4F.C6:  38 34 68 22 00 81 00 84  255 0965      "84h", 'NUL', 81h, 0, 84h
+4F.CE:  38 35 68 22 00 81 00 85  255 0966      "85h", 'NUL', 81h, 0, 85h
+4F.D6:  38 36 68 22 00 81 00 86  255 0967      "86h", 'NUL', 81h, 0, 86h
+4F.DE:  38 37 68 22 00 81 00 87  255 0968      "87h", 'NUL', 81h, 0, 87h
+4F.E6:  38 38 68 22 00 81 00 88  255 0969      "88h", 'NUL', 81h, 0, 88h
+4F.EE:  38 39 68 22 00 81 00 89  255 0970      "89h", 'NUL', 81h, 0, 89h
+4F.F6:  38 41 68 22 00 81 00 8A  255 0971      "8Ah", 'NUL', 81h, 0, 8Ah
+4F.FE:  38 42 68 22 00 81 00 8B  255 0972      "8Bh", 'NUL', 81h, 0, 8Bh
+50.06:  38 43 68 22 00 81 00 8C  255 0973      "8Ch", 'NUL', 81h, 0, 8Ch
+50.0E:  38 44 68 22 00 81 00 8D  255 0974      "8Dh", 'NUL', 81h, 0, 8Dh
+50.16:  38 45 68 22 00 81 00 8E  255 0975      "8Eh", 'NUL', 81h, 0, 8Eh
+50.1E:  38 46 68 22 00 81 00 8F  255 0976      "8Fh", 'NUL', 81h, 0, 8Fh
+50.26:  39 30 68 22 00 81 00 90  255 0977      "90h", 'NUL', 81h, 0, 90h
+50.2E:  39 31 68 22 00 81 00 91  255 0978      "91h", 'NUL', 81h, 0, 91h
+50.36:  39 32 68 22 00 81 00 92  255 0979      "92h", 'NUL', 81h, 0, 92h
+50.3E:  39 33 68 22 00 81 00 93  255 0980      "93h", 'NUL', 81h, 0, 93h
+50.46:  39 34 68 22 00 81 00 94  255 0981      "94h", 'NUL', 81h, 0, 94h
+50.4E:  39 35 68 22 00 81 00 95  255 0982      "95h", 'NUL', 81h, 0, 95h
+50.56:  39 36 68 22 00 81 00 96  255 0983      "96h", 'NUL', 81h, 0, 96h
+50.5E:  39 37 68 22 00 81 00 97  255 0984      "97h", 'NUL', 81h, 0, 97h
+50.66:  39 38 68 22 00 81 00 98  255 0985      "98h", 'NUL', 81h, 0, 98h
+50.6E:  39 39 68 22 00 81 00 99  255 0986      "99h", 'NUL', 81h, 0, 99h
+50.76:  39 41 68 22 00 81 00 9A  255 0987      "9Ah", 'NUL', 81h, 0, 9Ah
+50.7E:  39 42 68 22 00 81 00 9B  255 0988      "9Bh", 'NUL', 81h, 0, 9Bh
+50.86:  39 43 68 22 00 81 00 9C  255 0989      "9Ch", 'NUL', 81h, 0, 9Ch
+50.8E:  39 44 68 22 00 81 00 9D  255 0990      "9Dh", 'NUL', 81h, 0, 9Dh
+50.96:  39 45 68 22 00 81 00 9E  255 0991      "9Eh", 'NUL', 81h, 0, 9Eh
+50.9E:  39 46 68 22 00 81 00 9F  255 0992      "9Fh", 'NUL', 81h, 0, 9Fh
+50.A6:  41 30 68 22 00 81 00 A0  255 0993      "A0h", 'NUL', 81h, 0, A0h
+50.AE:  41 31 68 22 00 81 00 A1  255 0994      "A1h", 'NUL', 81h, 0, A1h
+50.B6:  41 32 68 22 00 81 00 A2  255 0995      "A2h", 'NUL', 81h, 0, A2h
+50.BE:  41 33 68 22 00 81 00 A3  255 0996      "A3h", 'NUL', 81h, 0, A3h
+50.C6:  41 34 68 22 00 81 00 A4  255 0997      "A4h", 'NUL', 81h, 0, A4h
+50.CE:  41 35 68 22 00 81 00 A5  255 0998      "A5h", 'NUL', 81h, 0, A5h
+50.D6:  41 36 68 22 00 81 00 A6  255 0999      "A6h", 'NUL', 81h, 0, A6h
+50.DE:  41 37 68 22 00 81 00 A7  255 1000      "A7h", 'NUL', 81h, 0, A7h
+50.E6:  41 38 68 22 00 81 00 A8  255 1001      "A8h", 'NUL', 81h, 0, A8h
+50.EE:  41 39 68 22 00 81 00 A9  255 1002      "A9h", 'NUL', 81h, 0, A9h
+50.F6:  41 41 68 22 00 81 00 AA  255 1003      "AAh", 'NUL', 81h, 0, AAh
+50.FE:  41 42 68 22 00 81 00 AB  255 1004      "ABh", 'NUL', 81h, 0, ABh
+51.06:  41 43 68 22 00 81 00 AC  255 1005      "ACh", 'NUL', 81h, 0, ACh
+51.0E:  41 44 68 22 00 81 00 AD  255 1006      "ADh", 'NUL', 81h, 0, ADh
+51.16:  41 45 68 22 00 81 00 AE  255 1007      "AEh", 'NUL', 81h, 0, AEh
+51.1E:  41 46 68 22 00 81 00 AF  255 1008      "AFh", 'NUL', 81h, 0, AFh
+51.26:  42 30 68 22 00 81 00 B0  255 1009      "B0h", 'NUL', 81h, 0, B0h
+51.2E:  42 31 68 22 00 81 00 B1  255 1010      "B1h", 'NUL', 81h, 0, B1h
+51.36:  42 32 68 22 00 81 00 B2  255 1011      "B2h", 'NUL', 81h, 0, B2h
+51.3E:  42 33 68 22 00 81 00 B3  255 1012      "B3h", 'NUL', 81h, 0, B3h
+51.46:  42 34 68 22 00 81 00 B4  255 1013      "B4h", 'NUL', 81h, 0, B4h
+51.4E:  42 35 68 22 00 81 00 B5  255 1014      "B5h", 'NUL', 81h, 0, B5h
+51.56:  42 36 68 22 00 81 00 B6  255 1015      "B6h", 'NUL', 81h, 0, B6h
+51.5E:  42 37 68 22 00 81 00 B7  255 1016      "B7h", 'NUL', 81h, 0, B7h
+51.66:  42 38 68 22 00 81 00 B8  255 1017      "B8h", 'NUL', 81h, 0, B8h
+51.6E:  42 39 68 22 00 81 00 B9  255 1018      "B9h", 'NUL', 81h, 0, B9h
+51.76:  42 41 68 22 00 81 00 BA  255 1019      "BAh", 'NUL', 81h, 0, BAh
+51.7E:  42 42 68 22 00 81 00 BB  255 1020      "BBh", 'NUL', 81h, 0, BBh
+51.86:  42 43 68 22 00 81 00 BC  255 1021      "BCh", 'NUL', 81h, 0, BCh
+51.8E:  42 44 68 22 00 81 00 BD  255 1022      "BDh", 'NUL', 81h, 0, BDh
+51.96:  42 45 68 22 00 81 00 BE  255 1023      "BEh", 'NUL', 81h, 0, BEh
+51.9E:  42 46 68 22 00 81 00 BF  255 1024      "BFh", 'NUL', 81h, 0, BFh
+51.A6:  43 30 68 22 00 81 00 C0  255 1025      "C0h", 'NUL', 81h, 0, C0h
+51.AE:  43 31 68 22 00 81 00 C1  255 1026      "C1h", 'NUL', 81h, 0, C1h
+51.B6:  43 32 68 22 00 81 00 C2  255 1027      "C2h", 'NUL', 81h, 0, C2h
+51.BE:  43 33 68 22 00 81 00 C3  255 1028      "C3h", 'NUL', 81h, 0, C3h
+51.C6:  43 34 68 22 00 81 00 C4  255 1029      "C4h", 'NUL', 81h, 0, C4h
+51.CE:  43 35 68 22 00 81 00 C5  255 1030      "C5h", 'NUL', 81h, 0, C5h
+51.D6:  43 36 68 22 00 81 00 C6  255 1031      "C6h", 'NUL', 81h, 0, C6h
+51.DE:  43 37 68 22 00 81 00 C7  255 1032      "C7h", 'NUL', 81h, 0, C7h
+51.E6:  43 38 68 22 00 81 00 C8  255 1033      "C8h", 'NUL', 81h, 0, C8h
+51.EE:  43 39 68 22 00 81 00 C9  255 1034      "C9h", 'NUL', 81h, 0, C9h
+51.F6:  43 41 68 22 00 81 00 CA  255 1035      "CAh", 'NUL', 81h, 0, CAh
+51.FE:  43 42 68 22 00 81 00 CB  255 1036      "CBh", 'NUL', 81h, 0, CBh
+52.06:  43 43 68 22 00 81 00 CC  255 1037      "CCh", 'NUL', 81h, 0, CCh
+52.0E:  43 44 68 22 00 81 00 CD  255 1038      "CDh", 'NUL', 81h, 0, CDh
+52.16:  43 45 68 22 00 81 00 CE  255 1039      "CEh", 'NUL', 81h, 0, CEh
+52.1E:  43 46 68 22 00 81 00 CF  255 1040      "CFh", 'NUL', 81h, 0, CFh
+52.26:  44 30 68 22 00 81 00 D0  255 1041      "D0h", 'NUL', 81h, 0, D0h
+52.2E:  44 31 68 22 00 81 00 D1  255 1042      "D1h", 'NUL', 81h, 0, D1h
+52.36:  44 32 68 22 00 81 00 D2  255 1043      "D2h", 'NUL', 81h, 0, D2h
+52.3E:  44 33 68 22 00 81 00 D3  255 1044      "D3h", 'NUL', 81h, 0, D3h
+52.46:  44 34 68 22 00 81 00 D4  255 1045      "D4h", 'NUL', 81h, 0, D4h
+52.4E:  44 35 68 22 00 81 00 D5  255 1046      "D5h", 'NUL', 81h, 0, D5h
+52.56:  44 36 68 22 00 81 00 D6  255 1047      "D6h", 'NUL', 81h, 0, D6h
+52.5E:  44 37 68 22 00 81 00 D7  255 1048      "D7h", 'NUL', 81h, 0, D7h
+52.66:  44 38 68 22 00 81 00 D8  255 1049      "D8h", 'NUL', 81h, 0, D8h
+52.6E:  44 39 68 22 00 81 00 D9  255 1050      "D9h", 'NUL', 81h, 0, D9h
+52.76:  44 41 68 22 00 81 00 DA  255 1051      "DAh", 'NUL', 81h, 0, DAh
+52.7E:  44 42 68 22 00 81 00 DB  255 1052      "DBh", 'NUL', 81h, 0, DBh
+52.86:  44 43 68 22 00 81 00 DC  255 1053      "DCh", 'NUL', 81h, 0, DCh
+52.8E:  44 44 68 22 00 81 00 DD  255 1054      "DDh", 'NUL', 81h, 0, DDh
+52.96:  44 45 68 22 00 81 00 DE  255 1055      "DEh", 'NUL', 81h, 0, DEh
+52.9E:  44 46 68 22 00 81 00 DF  255 1056      "DFh", 'NUL', 81h, 0, DFh
+52.A6:  45 30 68 22 00 81 00 E0  255 1057      "E0h", 'NUL', 81h, 0, E0h
+52.AE:  45 31 68 22 00 81 00 E1  255 1058      "E1h", 'NUL', 81h, 0, E1h
+52.B6:  45 32 68 22 00 81 00 E2  255 1059      "E2h", 'NUL', 81h, 0, E2h
+52.BE:  45 33 68 22 00 81 00 E3  255 1060      "E3h", 'NUL', 81h, 0, E3h
+52.C6:  45 34 68 22 00 81 00 E4  255 1061      "E4h", 'NUL', 81h, 0, E4h
+52.CE:  45 35 68 22 00 81 00 E5  255 1062      "E5h", 'NUL', 81h, 0, E5h
+52.D6:  45 36 68 22 00 81 00 E6  255 1063      "E6h", 'NUL', 81h, 0, E6h
+52.DE:  45 37 68 22 00 81 00 E7  255 1064      "E7h", 'NUL', 81h, 0, E7h
+52.E6:  45 38 68 22 00 81 00 E8  255 1065      "E8h", 'NUL', 81h, 0, E8h
+52.EE:  45 39 68 22 00 81 00 E9  255 1066      "E9h", 'NUL', 81h, 0, E9h
+52.F6:  45 41 68 22 00 81 00 EA  255 1067      "EAh", 'NUL', 81h, 0, EAh
+52.FE:  45 42 68 22 00 81 00 EB  255 1068      "EBh", 'NUL', 81h, 0, EBh
+53.06:  45 43 68 22 00 81 00 EC  255 1069      "ECh", 'NUL', 81h, 0, ECh
+53.0E:  45 44 68 22 00 81 00 ED  255 1070      "EDh", 'NUL', 81h, 0, EDh
+53.16:  45 45 68 22 00 81 00 EE  255 1071      "EEh", 'NUL', 81h, 0, EEh
+53.1E:  45 46 68 22 00 81 00 EF  255 1072      "EFh", 'NUL', 81h, 0, EFh
+53.26:  46 30 68 22 00 81 00 F0  255 1073      "F0h", 'NUL', 81h, 0, F0h
+53.2E:  46 31 68 22 00 81 00 F1  255 1074      "F1h", 'NUL', 81h, 0, F1h
+53.36:  46 32 68 22 00 81 00 F2  255 1075      "F2h", 'NUL', 81h, 0, F2h
+53.3E:  46 33 68 22 00 81 00 F3  255 1076      "F3h", 'NUL', 81h, 0, F3h
+53.46:  46 34 68 22 00 81 00 F4  255 1077      "F4h", 'NUL', 81h, 0, F4h
+53.4E:  46 35 68 22 00 81 00 F5  255 1078      "F5h", 'NUL', 81h, 0, F5h
+53.56:  46 36 68 22 00 81 00 F6  255 1079      "F6h", 'NUL', 81h, 0, F6h
+53.5E:  46 37 68 22 00 81 00 F7  255 1080      "F7h", 'NUL', 81h, 0, F7h
+53.66:  46 38 68 22 00 81 00 F8  255 1081      "F8h", 'NUL', 81h, 0, F8h
+53.6E:  46 39 68 22 00 81 00 F9  255 1082      "F9h", 'NUL', 81h, 0, F9h
+53.76:  46 41 68 22 00 81 00 FA  255 1083      "FAh", 'NUL', 81h, 0, FAh
+53.7E:  46 42 68 22 00 81 00 FB  255 1084      "FBh", 'NUL', 81h, 0, FBh
+53.86:  46 43 68 22 00 81 00 FC  255 1085      "FCh", 'NUL', 81h, 0, FCh
+53.8E:  46 44 68 22 00 81 00 FD  255 1086      "FDh", 'NUL', 81h, 0, FDh
+53.96:  46 45 68 22 00 81 00 FE  255 1087      "FEh", 'NUL', 81h, 0, FEh
+53.9E:  46 46 68 22 00 81 00 FF  255 1088      "FFh", 'NUL', 81h, 0, FFh
+                                 255 1089  
+                                 255 1090      (Single Digit Hex Numbers)
+                                 255 1091  
+53.A6:  30 68 22 00 81 00 00     255 1092      "0h", 'NUL', 81h, 0, 00h
+53.AD:  31 68 22 00 81 00 01     255 1093      "1h", 'NUL', 81h, 0, 01h
+53.B4:  32 68 22 00 81 00 02     255 1094      "2h", 'NUL', 81h, 0, 02h
+53.BB:  33 68 22 00 81 00 03     255 1095      "3h", 'NUL', 81h, 0, 03h
+53.C2:  34 68 22 00 81 00 04     255 1096      "4h", 'NUL', 81h, 0, 04h
+53.C9:  35 68 22 00 81 00 05     255 1097      "5h", 'NUL', 81h, 0, 05h
+53.D0:  36 68 22 00 81 00 06     255 1098      "6h", 'NUL', 81h, 0, 06h
+53.D7:  37 68 22 00 81 00 07     255 1099      "7h", 'NUL', 81h, 0, 07h
+53.DE:  38 68 22 00 81 00 08     255 1100      "8h", 'NUL', 81h, 0, 08h
+53.E5:  39 68 22 00 81 00 09     255 1101      "9h", 'NUL', 81h, 0, 09h
+53.EC:  41 68 22 00 81 00 0A     255 1102      "Ah", 'NUL', 81h, 0, 0Ah
+53.F3:  42 68 22 00 81 00 0B     255 1103      "Bh", 'NUL', 81h, 0, 0Bh
+53.FA:  43 68 22 00 81 00 0C     255 1104      "Ch", 'NUL', 81h, 0, 0Ch
+54.01:  44 68 22 00 81 00 0D     255 1105      "Dh", 'NUL', 81h, 0, 0Dh
+54.08:  45 68 22 00 81 00 0E     255 1106      "Eh", 'NUL', 81h, 0, 0Eh
+54.0F:  46 68 22 00 81 00 0F     255 1107      "Fh", 'NUL', 81h, 0, 0Fh
+                                 255 1108  
+                                 255 1109      (Eight-Bit Binary Numbers)
+                                 255 1110  
+54.16:  30 30 30 30 5F 30 30 30 
+        30 62 22 00 81 00 00     255 1111      "0000_0000b", 'NUL', 81h, 0, 00h
+54.25:  30 30 30 30 5F 30 30 30 
+        31 62 22 00 81 00 01     255 1112      "0000_0001b", 'NUL', 81h, 0, 01h
+54.34:  30 30 30 30 5F 30 30 31 
+        30 62 22 00 81 00 02     255 1113      "0000_0010b", 'NUL', 81h, 0, 02h
+54.43:  30 30 30 30 5F 30 30 31 
+        31 62 22 00 81 00 03     255 1114      "0000_0011b", 'NUL', 81h, 0, 03h
+54.52:  30 30 30 30 5F 30 31 30 
+        30 62 22 00 81 00 04     255 1115      "0000_0100b", 'NUL', 81h, 0, 04h
+54.61:  30 30 30 30 5F 30 31 30 
+        31 62 22 00 81 00 05     255 1116      "0000_0101b", 'NUL', 81h, 0, 05h
+54.70:  30 30 30 30 5F 30 31 31 
+        30 62 22 00 81 00 06     255 1117      "0000_0110b", 'NUL', 81h, 0, 06h
+54.7F:  30 30 30 30 5F 30 31 31 
+        31 62 22 00 81 00 07     255 1118      "0000_0111b", 'NUL', 81h, 0, 07h
+54.8E:  30 30 30 30 5F 31 30 30 
+        30 62 22 00 81 00 08     255 1119      "0000_1000b", 'NUL', 81h, 0, 08h
+54.9D:  30 30 30 30 5F 31 30 30 
+        31 62 22 00 81 00 09     255 1120      "0000_1001b", 'NUL', 81h, 0, 09h
+54.AC:  30 30 30 30 5F 31 30 31 
+        30 62 22 00 81 00 0A     255 1121      "0000_1010b", 'NUL', 81h, 0, 0Ah
+54.BB:  30 30 30 30 5F 31 30 31 
+        31 62 22 00 81 00 0B     255 1122      "0000_1011b", 'NUL', 81h, 0, 0Bh
+54.CA:  30 30 30 30 5F 31 31 30 
+        30 62 22 00 81 00 0C     255 1123      "0000_1100b", 'NUL', 81h, 0, 0Ch
+54.D9:  30 30 30 30 5F 31 31 30 
+        31 62 22 00 81 00 0D     255 1124      "0000_1101b", 'NUL', 81h, 0, 0Dh
+54.E8:  30 30 30 30 5F 31 31 31 
+        30 62 22 00 81 00 0E     255 1125      "0000_1110b", 'NUL', 81h, 0, 0Eh
+54.F7:  30 30 30 30 5F 31 31 31 
+        31 62 22 00 81 00 0F     255 1126      "0000_1111b", 'NUL', 81h, 0, 0Fh
+55.06:  30 30 30 31 5F 30 30 30 
+        30 62 22 00 81 00 10     255 1127      "0001_0000b", 'NUL', 81h, 0, 10h
+55.15:  30 30 30 31 5F 30 30 30 
+        31 62 22 00 81 00 11     255 1128      "0001_0001b", 'NUL', 81h, 0, 11h
+55.24:  30 30 30 31 5F 30 30 31 
+        30 62 22 00 81 00 12     255 1129      "0001_0010b", 'NUL', 81h, 0, 12h
+55.33:  30 30 30 31 5F 30 30 31 
+        31 62 22 00 81 00 13     255 1130      "0001_0011b", 'NUL', 81h, 0, 13h
+55.42:  30 30 30 31 5F 30 31 30 
+        30 62 22 00 81 00 14     255 1131      "0001_0100b", 'NUL', 81h, 0, 14h
+55.51:  30 30 30 31 5F 30 31 30 
+        31 62 22 00 81 00 15     255 1132      "0001_0101b", 'NUL', 81h, 0, 15h
+55.60:  30 30 30 31 5F 30 31 31 
+        30 62 22 00 81 00 16     255 1133      "0001_0110b", 'NUL', 81h, 0, 16h
+55.6F:  30 30 30 31 5F 30 31 31 
+        31 62 22 00 81 00 17     255 1134      "0001_0111b", 'NUL', 81h, 0, 17h
+55.7E:  30 30 30 31 5F 31 30 30 
+        30 62 22 00 81 00 18     255 1135      "0001_1000b", 'NUL', 81h, 0, 18h
+55.8D:  30 30 30 31 5F 31 30 30 
+        31 62 22 00 81 00 19     255 1136      "0001_1001b", 'NUL', 81h, 0, 19h
+55.9C:  30 30 30 31 5F 31 30 31 
+        30 62 22 00 81 00 1A     255 1137      "0001_1010b", 'NUL', 81h, 0, 1Ah
+55.AB:  30 30 30 31 5F 31 30 31 
+        31 62 22 00 81 00 1B     255 1138      "0001_1011b", 'NUL', 81h, 0, 1Bh
+55.BA:  30 30 30 31 5F 31 31 30 
+        30 62 22 00 81 00 1C     255 1139      "0001_1100b", 'NUL', 81h, 0, 1Ch
+55.C9:  30 30 30 31 5F 31 31 30 
+        31 62 22 00 81 00 1D     255 1140      "0001_1101b", 'NUL', 81h, 0, 1Dh
+55.D8:  30 30 30 31 5F 31 31 31 
+        30 62 22 00 81 00 1E     255 1141      "0001_1110b", 'NUL', 81h, 0, 1Eh
+55.E7:  30 30 30 31 5F 31 31 31 
+        31 62 22 00 81 00 1F     255 1142      "0001_1111b", 'NUL', 81h, 0, 1Fh
+55.F6:  30 30 31 30 5F 30 30 30 
+        30 62 22 00 81 00 20     255 1143      "0010_0000b", 'NUL', 81h, 0, 20h
+56.05:  30 30 31 30 5F 30 30 30 
+        31 62 22 00 81 00 21     255 1144      "0010_0001b", 'NUL', 81h, 0, 21h
+56.14:  30 30 31 30 5F 30 30 31 
+        30 62 22 00 81 00 22     255 1145      "0010_0010b", 'NUL', 81h, 0, 22h
+56.23:  30 30 31 30 5F 30 30 31 
+        31 62 22 00 81 00 23     255 1146      "0010_0011b", 'NUL', 81h, 0, 23h
+56.32:  30 30 31 30 5F 30 31 30 
+        30 62 22 00 81 00 24     255 1147      "0010_0100b", 'NUL', 81h, 0, 24h
+56.41:  30 30 31 30 5F 30 31 30 
+        31 62 22 00 81 00 25     255 1148      "0010_0101b", 'NUL', 81h, 0, 25h
+56.50:  30 30 31 30 5F 30 31 31 
+        30 62 22 00 81 00 26     255 1149      "0010_0110b", 'NUL', 81h, 0, 26h
+56.5F:  30 30 31 30 5F 30 31 31 
+        31 62 22 00 81 00 27     255 1150      "0010_0111b", 'NUL', 81h, 0, 27h
+56.6E:  30 30 31 30 5F 31 30 30 
+        30 62 22 00 81 00 28     255 1151      "0010_1000b", 'NUL', 81h, 0, 28h
+56.7D:  30 30 31 30 5F 31 30 30 
+        31 62 22 00 81 00 29     255 1152      "0010_1001b", 'NUL', 81h, 0, 29h
+56.8C:  30 30 31 30 5F 31 30 31 
+        30 62 22 00 81 00 2A     255 1153      "0010_1010b", 'NUL', 81h, 0, 2Ah
+56.9B:  30 30 31 30 5F 31 30 31 
+        31 62 22 00 81 00 2B     255 1154      "0010_1011b", 'NUL', 81h, 0, 2Bh
+56.AA:  30 30 31 30 5F 31 31 30 
+        30 62 22 00 81 00 2C     255 1155      "0010_1100b", 'NUL', 81h, 0, 2Ch
+56.B9:  30 30 31 30 5F 31 31 30 
+        31 62 22 00 81 00 2D     255 1156      "0010_1101b", 'NUL', 81h, 0, 2Dh
+56.C8:  30 30 31 30 5F 31 31 31 
+        30 62 22 00 81 00 2E     255 1157      "0010_1110b", 'NUL', 81h, 0, 2Eh
+56.D7:  30 30 31 30 5F 31 31 31 
+        31 62 22 00 81 00 2F     255 1158      "0010_1111b", 'NUL', 81h, 0, 2Fh
+56.E6:  30 30 31 31 5F 30 30 30 
+        30 62 22 00 81 00 30     255 1159      "0011_0000b", 'NUL', 81h, 0, 30h
+56.F5:  30 30 31 31 5F 30 30 30 
+        31 62 22 00 81 00 31     255 1160      "0011_0001b", 'NUL', 81h, 0, 31h
+57.04:  30 30 31 31 5F 30 30 31 
+        30 62 22 00 81 00 32     255 1161      "0011_0010b", 'NUL', 81h, 0, 32h
+57.13:  30 30 31 31 5F 30 30 31 
+        31 62 22 00 81 00 33     255 1162      "0011_0011b", 'NUL', 81h, 0, 33h
+57.22:  30 30 31 31 5F 30 31 30 
+        30 62 22 00 81 00 34     255 1163      "0011_0100b", 'NUL', 81h, 0, 34h
+57.31:  30 30 31 31 5F 30 31 30 
+        31 62 22 00 81 00 35     255 1164      "0011_0101b", 'NUL', 81h, 0, 35h
+57.40:  30 30 31 31 5F 30 31 31 
+        30 62 22 00 81 00 36     255 1165      "0011_0110b", 'NUL', 81h, 0, 36h
+57.4F:  30 30 31 31 5F 30 31 31 
+        31 62 22 00 81 00 37     255 1166      "0011_0111b", 'NUL', 81h, 0, 37h
+57.5E:  30 30 31 31 5F 31 30 30 
+        30 62 22 00 81 00 38     255 1167      "0011_1000b", 'NUL', 81h, 0, 38h
+57.6D:  30 30 31 31 5F 31 30 30 
+        31 62 22 00 81 00 39     255 1168      "0011_1001b", 'NUL', 81h, 0, 39h
+57.7C:  30 30 31 31 5F 31 30 31 
+        30 62 22 00 81 00 3A     255 1169      "0011_1010b", 'NUL', 81h, 0, 3Ah
+57.8B:  30 30 31 31 5F 31 30 31 
+        31 62 22 00 81 00 3B     255 1170      "0011_1011b", 'NUL', 81h, 0, 3Bh
+57.9A:  30 30 31 31 5F 31 31 30 
+        30 62 22 00 81 00 3C     255 1171      "0011_1100b", 'NUL', 81h, 0, 3Ch
+57.A9:  30 30 31 31 5F 31 31 30 
+        31 62 22 00 81 00 3D     255 1172      "0011_1101b", 'NUL', 81h, 0, 3Dh
+57.B8:  30 30 31 31 5F 31 31 31 
+        30 62 22 00 81 00 3E     255 1173      "0011_1110b", 'NUL', 81h, 0, 3Eh
+57.C7:  30 30 31 31 5F 31 31 31 
+        31 62 22 00 81 00 3F     255 1174      "0011_1111b", 'NUL', 81h, 0, 3Fh
+57.D6:  30 31 30 30 5F 30 30 30 
+        30 62 22 00 81 00 40     255 1175      "0100_0000b", 'NUL', 81h, 0, 40h
+57.E5:  30 31 30 30 5F 30 30 30 
+        31 62 22 00 81 00 41     255 1176      "0100_0001b", 'NUL', 81h, 0, 41h
+57.F4:  30 31 30 30 5F 30 30 31 
+        30 62 22 00 81 00 42     255 1177      "0100_0010b", 'NUL', 81h, 0, 42h
+58.03:  30 31 30 30 5F 30 30 31 
+        31 62 22 00 81 00 43     255 1178      "0100_0011b", 'NUL', 81h, 0, 43h
+58.12:  30 31 30 30 5F 30 31 30 
+        30 62 22 00 81 00 44     255 1179      "0100_0100b", 'NUL', 81h, 0, 44h
+58.21:  30 31 30 30 5F 30 31 30 
+        31 62 22 00 81 00 45     255 1180      "0100_0101b", 'NUL', 81h, 0, 45h
+58.30:  30 31 30 30 5F 30 31 31 
+        30 62 22 00 81 00 46     255 1181      "0100_0110b", 'NUL', 81h, 0, 46h
+58.3F:  30 31 30 30 5F 30 31 31 
+        31 62 22 00 81 00 47     255 1182      "0100_0111b", 'NUL', 81h, 0, 47h
+58.4E:  30 31 30 30 5F 31 30 30 
+        30 62 22 00 81 00 48     255 1183      "0100_1000b", 'NUL', 81h, 0, 48h
+58.5D:  30 31 30 30 5F 31 30 30 
+        31 62 22 00 81 00 49     255 1184      "0100_1001b", 'NUL', 81h, 0, 49h
+58.6C:  30 31 30 30 5F 31 30 31 
+        30 62 22 00 81 00 4A     255 1185      "0100_1010b", 'NUL', 81h, 0, 4Ah
+58.7B:  30 31 30 30 5F 31 30 31 
+        31 62 22 00 81 00 4B     255 1186      "0100_1011b", 'NUL', 81h, 0, 4Bh
+58.8A:  30 31 30 30 5F 31 31 30 
+        30 62 22 00 81 00 4C     255 1187      "0100_1100b", 'NUL', 81h, 0, 4Ch
+58.99:  30 31 30 30 5F 31 31 30 
+        31 62 22 00 81 00 4D     255 1188      "0100_1101b", 'NUL', 81h, 0, 4Dh
+58.A8:  30 31 30 30 5F 31 31 31 
+        30 62 22 00 81 00 4E     255 1189      "0100_1110b", 'NUL', 81h, 0, 4Eh
+58.B7:  30 31 30 30 5F 31 31 31 
+        31 62 22 00 81 00 4F     255 1190      "0100_1111b", 'NUL', 81h, 0, 4Fh
+58.C6:  30 31 30 31 5F 30 30 30 
+        30 62 22 00 81 00 50     255 1191      "0101_0000b", 'NUL', 81h, 0, 50h
+58.D5:  30 31 30 31 5F 30 30 30 
+        31 62 22 00 81 00 51     255 1192      "0101_0001b", 'NUL', 81h, 0, 51h
+58.E4:  30 31 30 31 5F 30 30 31 
+        30 62 22 00 81 00 52     255 1193      "0101_0010b", 'NUL', 81h, 0, 52h
+58.F3:  30 31 30 31 5F 30 30 31 
+        31 62 22 00 81 00 53     255 1194      "0101_0011b", 'NUL', 81h, 0, 53h
+59.02:  30 31 30 31 5F 30 31 30 
+        30 62 22 00 81 00 54     255 1195      "0101_0100b", 'NUL', 81h, 0, 54h
+59.11:  30 31 30 31 5F 30 31 30 
+        31 62 22 00 81 00 55     255 1196      "0101_0101b", 'NUL', 81h, 0, 55h
+59.20:  30 31 30 31 5F 30 31 31 
+        30 62 22 00 81 00 56     255 1197      "0101_0110b", 'NUL', 81h, 0, 56h
+59.2F:  30 31 30 31 5F 30 31 31 
+        31 62 22 00 81 00 57     255 1198      "0101_0111b", 'NUL', 81h, 0, 57h
+59.3E:  30 31 30 31 5F 31 30 30 
+        30 62 22 00 81 00 58     255 1199      "0101_1000b", 'NUL', 81h, 0, 58h
+59.4D:  30 31 30 31 5F 31 30 30 
+        31 62 22 00 81 00 59     255 1200      "0101_1001b", 'NUL', 81h, 0, 59h
+59.5C:  30 31 30 31 5F 31 30 31 
+        30 62 22 00 81 00 5A     255 1201      "0101_1010b", 'NUL', 81h, 0, 5Ah
+59.6B:  30 31 30 31 5F 31 30 31 
+        31 62 22 00 81 00 5B     255 1202      "0101_1011b", 'NUL', 81h, 0, 5Bh
+59.7A:  30 31 30 31 5F 31 31 30 
+        30 62 22 00 81 00 5C     255 1203      "0101_1100b", 'NUL', 81h, 0, 5Ch
+59.89:  30 31 30 31 5F 31 31 30 
+        31 62 22 00 81 00 5D     255 1204      "0101_1101b", 'NUL', 81h, 0, 5Dh
+59.98:  30 31 30 31 5F 31 31 31 
+        30 62 22 00 81 00 5E     255 1205      "0101_1110b", 'NUL', 81h, 0, 5Eh
+59.A7:  30 31 30 31 5F 31 31 31 
+        31 62 22 00 81 00 5F     255 1206      "0101_1111b", 'NUL', 81h, 0, 5Fh
+59.B6:  30 31 31 30 5F 30 30 30 
+        30 62 22 00 81 00 60     255 1207      "0110_0000b", 'NUL', 81h, 0, 60h
+59.C5:  30 31 31 30 5F 30 30 30 
+        31 62 22 00 81 00 61     255 1208      "0110_0001b", 'NUL', 81h, 0, 61h
+59.D4:  30 31 31 30 5F 30 30 31 
+        30 62 22 00 81 00 62     255 1209      "0110_0010b", 'NUL', 81h, 0, 62h
+59.E3:  30 31 31 30 5F 30 30 31 
+        31 62 22 00 81 00 63     255 1210      "0110_0011b", 'NUL', 81h, 0, 63h
+59.F2:  30 31 31 30 5F 30 31 30 
+        30 62 22 00 81 00 64     255 1211      "0110_0100b", 'NUL', 81h, 0, 64h
+5A.01:  30 31 31 30 5F 30 31 30 
+        31 62 22 00 81 00 65     255 1212      "0110_0101b", 'NUL', 81h, 0, 65h
+5A.10:  30 31 31 30 5F 30 31 31 
+        30 62 22 00 81 00 66     255 1213      "0110_0110b", 'NUL', 81h, 0, 66h
+5A.1F:  30 31 31 30 5F 30 31 31 
+        31 62 22 00 81 00 67     255 1214      "0110_0111b", 'NUL', 81h, 0, 67h
+5A.2E:  30 31 31 30 5F 31 30 30 
+        30 62 22 00 81 00 68     255 1215      "0110_1000b", 'NUL', 81h, 0, 68h
+5A.3D:  30 31 31 30 5F 31 30 30 
+        31 62 22 00 81 00 69     255 1216      "0110_1001b", 'NUL', 81h, 0, 69h
+5A.4C:  30 31 31 30 5F 31 30 31 
+        30 62 22 00 81 00 6A     255 1217      "0110_1010b", 'NUL', 81h, 0, 6Ah
+5A.5B:  30 31 31 30 5F 31 30 31 
+        31 62 22 00 81 00 6B     255 1218      "0110_1011b", 'NUL', 81h, 0, 6Bh
+5A.6A:  30 31 31 30 5F 31 31 30 
+        30 62 22 00 81 00 6C     255 1219      "0110_1100b", 'NUL', 81h, 0, 6Ch
+5A.79:  30 31 31 30 5F 31 31 30 
+        31 62 22 00 81 00 6D     255 1220      "0110_1101b", 'NUL', 81h, 0, 6Dh
+5A.88:  30 31 31 30 5F 31 31 31 
+        30 62 22 00 81 00 6E     255 1221      "0110_1110b", 'NUL', 81h, 0, 6Eh
+5A.97:  30 31 31 30 5F 31 31 31 
+        31 62 22 00 81 00 6F     255 1222      "0110_1111b", 'NUL', 81h, 0, 6Fh
+5A.A6:  30 31 31 31 5F 30 30 30 
+        30 62 22 00 81 00 70     255 1223      "0111_0000b", 'NUL', 81h, 0, 70h
+5A.B5:  30 31 31 31 5F 30 30 30 
+        31 62 22 00 81 00 71     255 1224      "0111_0001b", 'NUL', 81h, 0, 71h
+5A.C4:  30 31 31 31 5F 30 30 31 
+        30 62 22 00 81 00 72     255 1225      "0111_0010b", 'NUL', 81h, 0, 72h
+5A.D3:  30 31 31 31 5F 30 30 31 
+        31 62 22 00 81 00 73     255 1226      "0111_0011b", 'NUL', 81h, 0, 73h
+5A.E2:  30 31 31 31 5F 30 31 30 
+        30 62 22 00 81 00 74     255 1227      "0111_0100b", 'NUL', 81h, 0, 74h
+5A.F1:  30 31 31 31 5F 30 31 30 
+        31 62 22 00 81 00 75     255 1228      "0111_0101b", 'NUL', 81h, 0, 75h
+5B.00:  30 31 31 31 5F 30 31 31 
+        30 62 22 00 81 00 76     255 1229      "0111_0110b", 'NUL', 81h, 0, 76h
+5B.0F:  30 31 31 31 5F 30 31 31 
+        31 62 22 00 81 00 77     255 1230      "0111_0111b", 'NUL', 81h, 0, 77h
+5B.1E:  30 31 31 31 5F 31 30 30 
+        30 62 22 00 81 00 78     255 1231      "0111_1000b", 'NUL', 81h, 0, 78h
+5B.2D:  30 31 31 31 5F 31 30 30 
+        31 62 22 00 81 00 79     255 1232      "0111_1001b", 'NUL', 81h, 0, 79h
+5B.3C:  30 31 31 31 5F 31 30 31 
+        30 62 22 00 81 00 7A     255 1233      "0111_1010b", 'NUL', 81h, 0, 7Ah
+5B.4B:  30 31 31 31 5F 31 30 31 
+        31 62 22 00 81 00 7B     255 1234      "0111_1011b", 'NUL', 81h, 0, 7Bh
+5B.5A:  30 31 31 31 5F 31 31 30 
+        30 62 22 00 81 00 7C     255 1235      "0111_1100b", 'NUL', 81h, 0, 7Ch
+5B.69:  30 31 31 31 5F 31 31 30 
+        31 62 22 00 81 00 7D     255 1236      "0111_1101b", 'NUL', 81h, 0, 7Dh
+5B.78:  30 31 31 31 5F 31 31 31 
+        30 62 22 00 81 00 7E     255 1237      "0111_1110b", 'NUL', 81h, 0, 7Eh
+5B.87:  30 31 31 31 5F 31 31 31 
+        31 62 22 00 81 00 7F     255 1238      "0111_1111b", 'NUL', 81h, 0, 7Fh
+5B.96:  31 30 30 30 5F 30 30 30 
+        30 62 22 00 81 00 80     255 1239      "1000_0000b", 'NUL', 81h, 0, 80h
+5B.A5:  31 30 30 30 5F 30 30 30 
+        31 62 22 00 81 00 81     255 1240      "1000_0001b", 'NUL', 81h, 0, 81h
+5B.B4:  31 30 30 30 5F 30 30 31 
+        30 62 22 00 81 00 82     255 1241      "1000_0010b", 'NUL', 81h, 0, 82h
+5B.C3:  31 30 30 30 5F 30 30 31 
+        31 62 22 00 81 00 83     255 1242      "1000_0011b", 'NUL', 81h, 0, 83h
+5B.D2:  31 30 30 30 5F 30 31 30 
+        30 62 22 00 81 00 84     255 1243      "1000_0100b", 'NUL', 81h, 0, 84h
+5B.E1:  31 30 30 30 5F 30 31 30 
+        31 62 22 00 81 00 85     255 1244      "1000_0101b", 'NUL', 81h, 0, 85h
+5B.F0:  31 30 30 30 5F 30 31 31 
+        30 62 22 00 81 00 86     255 1245      "1000_0110b", 'NUL', 81h, 0, 86h
+5B.FF:  31 30 30 30 5F 30 31 31 
+        31 62 22 00 81 00 87     255 1246      "1000_0111b", 'NUL', 81h, 0, 87h
+5C.0E:  31 30 30 30 5F 31 30 30 
+        30 62 22 00 81 00 88     255 1247      "1000_1000b", 'NUL', 81h, 0, 88h
+5C.1D:  31 30 30 30 5F 31 30 30 
+        31 62 22 00 81 00 89     255 1248      "1000_1001b", 'NUL', 81h, 0, 89h
+5C.2C:  31 30 30 30 5F 31 30 31 
+        30 62 22 00 81 00 8A     255 1249      "1000_1010b", 'NUL', 81h, 0, 8Ah
+5C.3B:  31 30 30 30 5F 31 30 31 
+        31 62 22 00 81 00 8B     255 1250      "1000_1011b", 'NUL', 81h, 0, 8Bh
+5C.4A:  31 30 30 30 5F 31 31 30 
+        30 62 22 00 81 00 8C     255 1251      "1000_1100b", 'NUL', 81h, 0, 8Ch
+5C.59:  31 30 30 30 5F 31 31 30 
+        31 62 22 00 81 00 8D     255 1252      "1000_1101b", 'NUL', 81h, 0, 8Dh
+5C.68:  31 30 30 30 5F 31 31 31 
+        30 62 22 00 81 00 8E     255 1253      "1000_1110b", 'NUL', 81h, 0, 8Eh
+5C.77:  31 30 30 30 5F 31 31 31 
+        31 62 22 00 81 00 8F     255 1254      "1000_1111b", 'NUL', 81h, 0, 8Fh
+5C.86:  31 30 30 31 5F 30 30 30 
+        30 62 22 00 81 00 90     255 1255      "1001_0000b", 'NUL', 81h, 0, 90h
+5C.95:  31 30 30 31 5F 30 30 30 
+        31 62 22 00 81 00 91     255 1256      "1001_0001b", 'NUL', 81h, 0, 91h
+5C.A4:  31 30 30 31 5F 30 30 31 
+        30 62 22 00 81 00 92     255 1257      "1001_0010b", 'NUL', 81h, 0, 92h
+5C.B3:  31 30 30 31 5F 30 30 31 
+        31 62 22 00 81 00 93     255 1258      "1001_0011b", 'NUL', 81h, 0, 93h
+5C.C2:  31 30 30 31 5F 30 31 30 
+        30 62 22 00 81 00 94     255 1259      "1001_0100b", 'NUL', 81h, 0, 94h
+5C.D1:  31 30 30 31 5F 30 31 30 
+        31 62 22 00 81 00 95     255 1260      "1001_0101b", 'NUL', 81h, 0, 95h
+5C.E0:  31 30 30 31 5F 30 31 31 
+        30 62 22 00 81 00 96     255 1261      "1001_0110b", 'NUL', 81h, 0, 96h
+5C.EF:  31 30 30 31 5F 30 31 31 
+        31 62 22 00 81 00 97     255 1262      "1001_0111b", 'NUL', 81h, 0, 97h
+5C.FE:  31 30 30 31 5F 31 30 30 
+        30 62 22 00 81 00 98     255 1263      "1001_1000b", 'NUL', 81h, 0, 98h
+5D.0D:  31 30 30 31 5F 31 30 30 
+        31 62 22 00 81 00 99     255 1264      "1001_1001b", 'NUL', 81h, 0, 99h
+5D.1C:  31 30 30 31 5F 31 30 31 
+        30 62 22 00 81 00 9A     255 1265      "1001_1010b", 'NUL', 81h, 0, 9Ah
+5D.2B:  31 30 30 31 5F 31 30 31 
+        31 62 22 00 81 00 9B     255 1266      "1001_1011b", 'NUL', 81h, 0, 9Bh
+5D.3A:  31 30 30 31 5F 31 31 30 
+        30 62 22 00 81 00 9C     255 1267      "1001_1100b", 'NUL', 81h, 0, 9Ch
+5D.49:  31 30 30 31 5F 31 31 30 
+        31 62 22 00 81 00 9D     255 1268      "1001_1101b", 'NUL', 81h, 0, 9Dh
+5D.58:  31 30 30 31 5F 31 31 31 
+        30 62 22 00 81 00 9E     255 1269      "1001_1110b", 'NUL', 81h, 0, 9Eh
+5D.67:  31 30 30 31 5F 31 31 31 
+        31 62 22 00 81 00 9F     255 1270      "1001_1111b", 'NUL', 81h, 0, 9Fh
+5D.76:  31 30 31 30 5F 30 30 30 
+        30 62 22 00 81 00 A0     255 1271      "1010_0000b", 'NUL', 81h, 0, A0h
+5D.85:  31 30 31 30 5F 30 30 30 
+        31 62 22 00 81 00 A1     255 1272      "1010_0001b", 'NUL', 81h, 0, A1h
+5D.94:  31 30 31 30 5F 30 30 31 
+        30 62 22 00 81 00 A2     255 1273      "1010_0010b", 'NUL', 81h, 0, A2h
+5D.A3:  31 30 31 30 5F 30 30 31 
+        31 62 22 00 81 00 A3     255 1274      "1010_0011b", 'NUL', 81h, 0, A3h
+5D.B2:  31 30 31 30 5F 30 31 30 
+        30 62 22 00 81 00 A4     255 1275      "1010_0100b", 'NUL', 81h, 0, A4h
+5D.C1:  31 30 31 30 5F 30 31 30 
+        31 62 22 00 81 00 A5     255 1276      "1010_0101b", 'NUL', 81h, 0, A5h
+5D.D0:  31 30 31 30 5F 30 31 31 
+        30 62 22 00 81 00 A6     255 1277      "1010_0110b", 'NUL', 81h, 0, A6h
+5D.DF:  31 30 31 30 5F 30 31 31 
+        31 62 22 00 81 00 A7     255 1278      "1010_0111b", 'NUL', 81h, 0, A7h
+5D.EE:  31 30 31 30 5F 31 30 30 
+        30 62 22 00 81 00 A8     255 1279      "1010_1000b", 'NUL', 81h, 0, A8h
+5D.FD:  31 30 31 30 5F 31 30 30 
+        31 62 22 00 81 00 A9     255 1280      "1010_1001b", 'NUL', 81h, 0, A9h
+5E.0C:  31 30 31 30 5F 31 30 31 
+        30 62 22 00 81 00 AA     255 1281      "1010_1010b", 'NUL', 81h, 0, AAh
+5E.1B:  31 30 31 30 5F 31 30 31 
+        31 62 22 00 81 00 AB     255 1282      "1010_1011b", 'NUL', 81h, 0, ABh
+5E.2A:  31 30 31 30 5F 31 31 30 
+        30 62 22 00 81 00 AC     255 1283      "1010_1100b", 'NUL', 81h, 0, ACh
+5E.39:  31 30 31 30 5F 31 31 30 
+        31 62 22 00 81 00 AD     255 1284      "1010_1101b", 'NUL', 81h, 0, ADh
+5E.48:  31 30 31 30 5F 31 31 31 
+        30 62 22 00 81 00 AE     255 1285      "1010_1110b", 'NUL', 81h, 0, AEh
+5E.57:  31 30 31 30 5F 31 31 31 
+        31 62 22 00 81 00 AF     255 1286      "1010_1111b", 'NUL', 81h, 0, AFh
+5E.66:  31 30 31 31 5F 30 30 30 
+        30 62 22 00 81 00 B0     255 1287      "1011_0000b", 'NUL', 81h, 0, B0h
+5E.75:  31 30 31 31 5F 30 30 30 
+        31 62 22 00 81 00 B1     255 1288      "1011_0001b", 'NUL', 81h, 0, B1h
+5E.84:  31 30 31 31 5F 30 30 31 
+        30 62 22 00 81 00 B2     255 1289      "1011_0010b", 'NUL', 81h, 0, B2h
+5E.93:  31 30 31 31 5F 30 30 31 
+        31 62 22 00 81 00 B3     255 1290      "1011_0011b", 'NUL', 81h, 0, B3h
+5E.A2:  31 30 31 31 5F 30 31 30 
+        30 62 22 00 81 00 B4     255 1291      "1011_0100b", 'NUL', 81h, 0, B4h
+5E.B1:  31 30 31 31 5F 30 31 30 
+        31 62 22 00 81 00 B5     255 1292      "1011_0101b", 'NUL', 81h, 0, B5h
+5E.C0:  31 30 31 31 5F 30 31 31 
+        30 62 22 00 81 00 B6     255 1293      "1011_0110b", 'NUL', 81h, 0, B6h
+5E.CF:  31 30 31 31 5F 30 31 31 
+        31 62 22 00 81 00 B7     255 1294      "1011_0111b", 'NUL', 81h, 0, B7h
+5E.DE:  31 30 31 31 5F 31 30 30 
+        30 62 22 00 81 00 B8     255 1295      "1011_1000b", 'NUL', 81h, 0, B8h
+5E.ED:  31 30 31 31 5F 31 30 30 
+        31 62 22 00 81 00 B9     255 1296      "1011_1001b", 'NUL', 81h, 0, B9h
+5E.FC:  31 30 31 31 5F 31 30 31 
+        30 62 22 00 81 00 BA     255 1297      "1011_1010b", 'NUL', 81h, 0, BAh
+5F.0B:  31 30 31 31 5F 31 30 31 
+        31 62 22 00 81 00 BB     255 1298      "1011_1011b", 'NUL', 81h, 0, BBh
+5F.1A:  31 30 31 31 5F 31 31 30 
+        30 62 22 00 81 00 BC     255 1299      "1011_1100b", 'NUL', 81h, 0, BCh
+5F.29:  31 30 31 31 5F 31 31 30 
+        31 62 22 00 81 00 BD     255 1300      "1011_1101b", 'NUL', 81h, 0, BDh
+5F.38:  31 30 31 31 5F 31 31 31 
+        30 62 22 00 81 00 BE     255 1301      "1011_1110b", 'NUL', 81h, 0, BEh
+5F.47:  31 30 31 31 5F 31 31 31 
+        31 62 22 00 81 00 BF     255 1302      "1011_1111b", 'NUL', 81h, 0, BFh
+5F.56:  31 31 30 30 5F 30 30 30 
+        30 62 22 00 81 00 C0     255 1303      "1100_0000b", 'NUL', 81h, 0, C0h
+5F.65:  31 31 30 30 5F 30 30 30 
+        31 62 22 00 81 00 C1     255 1304      "1100_0001b", 'NUL', 81h, 0, C1h
+5F.74:  31 31 30 30 5F 30 30 31 
+        30 62 22 00 81 00 C2     255 1305      "1100_0010b", 'NUL', 81h, 0, C2h
+5F.83:  31 31 30 30 5F 30 30 31 
+        31 62 22 00 81 00 C3     255 1306      "1100_0011b", 'NUL', 81h, 0, C3h
+5F.92:  31 31 30 30 5F 30 31 30 
+        30 62 22 00 81 00 C4     255 1307      "1100_0100b", 'NUL', 81h, 0, C4h
+5F.A1:  31 31 30 30 5F 30 31 30 
+        31 62 22 00 81 00 C5     255 1308      "1100_0101b", 'NUL', 81h, 0, C5h
+5F.B0:  31 31 30 30 5F 30 31 31 
+        30 62 22 00 81 00 C6     255 1309      "1100_0110b", 'NUL', 81h, 0, C6h
+5F.BF:  31 31 30 30 5F 30 31 31 
+        31 62 22 00 81 00 C7     255 1310      "1100_0111b", 'NUL', 81h, 0, C7h
+5F.CE:  31 31 30 30 5F 31 30 30 
+        30 62 22 00 81 00 C8     255 1311      "1100_1000b", 'NUL', 81h, 0, C8h
+5F.DD:  31 31 30 30 5F 31 30 30 
+        31 62 22 00 81 00 C9     255 1312      "1100_1001b", 'NUL', 81h, 0, C9h
+5F.EC:  31 31 30 30 5F 31 30 31 
+        30 62 22 00 81 00 CA     255 1313      "1100_1010b", 'NUL', 81h, 0, CAh
+5F.FB:  31 31 30 30 5F 31 30 31 
+        31 62 22 00 81 00 CB     255 1314      "1100_1011b", 'NUL', 81h, 0, CBh
+60.0A:  31 31 30 30 5F 31 31 30 
+        30 62 22 00 81 00 CC     255 1315      "1100_1100b", 'NUL', 81h, 0, CCh
+60.19:  31 31 30 30 5F 31 31 30 
+        31 62 22 00 81 00 CD     255 1316      "1100_1101b", 'NUL', 81h, 0, CDh
+60.28:  31 31 30 30 5F 31 31 31 
+        30 62 22 00 81 00 CE     255 1317      "1100_1110b", 'NUL', 81h, 0, CEh
+60.37:  31 31 30 30 5F 31 31 31 
+        31 62 22 00 81 00 CF     255 1318      "1100_1111b", 'NUL', 81h, 0, CFh
+60.46:  31 31 30 31 5F 30 30 30 
+        30 62 22 00 81 00 D0     255 1319      "1101_0000b", 'NUL', 81h, 0, D0h
+60.55:  31 31 30 31 5F 30 30 30 
+        31 62 22 00 81 00 D1     255 1320      "1101_0001b", 'NUL', 81h, 0, D1h
+60.64:  31 31 30 31 5F 30 30 31 
+        30 62 22 00 81 00 D2     255 1321      "1101_0010b", 'NUL', 81h, 0, D2h
+60.73:  31 31 30 31 5F 30 30 31 
+        31 62 22 00 81 00 D3     255 1322      "1101_0011b", 'NUL', 81h, 0, D3h
+60.82:  31 31 30 31 5F 30 31 30 
+        30 62 22 00 81 00 D4     255 1323      "1101_0100b", 'NUL', 81h, 0, D4h
+60.91:  31 31 30 31 5F 30 31 30 
+        31 62 22 00 81 00 D5     255 1324      "1101_0101b", 'NUL', 81h, 0, D5h
+60.A0:  31 31 30 31 5F 30 31 31 
+        30 62 22 00 81 00 D6     255 1325      "1101_0110b", 'NUL', 81h, 0, D6h
+60.AF:  31 31 30 31 5F 30 31 31 
+        31 62 22 00 81 00 D7     255 1326      "1101_0111b", 'NUL', 81h, 0, D7h
+60.BE:  31 31 30 31 5F 31 30 30 
+        30 62 22 00 81 00 D8     255 1327      "1101_1000b", 'NUL', 81h, 0, D8h
+60.CD:  31 31 30 31 5F 31 30 30 
+        31 62 22 00 81 00 D9     255 1328      "1101_1001b", 'NUL', 81h, 0, D9h
+60.DC:  31 31 30 31 5F 31 30 31 
+        30 62 22 00 81 00 DA     255 1329      "1101_1010b", 'NUL', 81h, 0, DAh
+60.EB:  31 31 30 31 5F 31 30 31 
+        31 62 22 00 81 00 DB     255 1330      "1101_1011b", 'NUL', 81h, 0, DBh
+60.FA:  31 31 30 31 5F 31 31 30 
+        30 62 22 00 81 00 DC     255 1331      "1101_1100b", 'NUL', 81h, 0, DCh
+61.09:  31 31 30 31 5F 31 31 30 
+        31 62 22 00 81 00 DD     255 1332      "1101_1101b", 'NUL', 81h, 0, DDh
+61.18:  31 31 30 31 5F 31 31 31 
+        30 62 22 00 81 00 DE     255 1333      "1101_1110b", 'NUL', 81h, 0, DEh
+61.27:  31 31 30 31 5F 31 31 31 
+        31 62 22 00 81 00 DF     255 1334      "1101_1111b", 'NUL', 81h, 0, DFh
+61.36:  31 31 31 30 5F 30 30 30 
+        30 62 22 00 81 00 E0     255 1335      "1110_0000b", 'NUL', 81h, 0, E0h
+61.45:  31 31 31 30 5F 30 30 30 
+        31 62 22 00 81 00 E1     255 1336      "1110_0001b", 'NUL', 81h, 0, E1h
+61.54:  31 31 31 30 5F 30 30 31 
+        30 62 22 00 81 00 E2     255 1337      "1110_0010b", 'NUL', 81h, 0, E2h
+61.63:  31 31 31 30 5F 30 30 31 
+        31 62 22 00 81 00 E3     255 1338      "1110_0011b", 'NUL', 81h, 0, E3h
+61.72:  31 31 31 30 5F 30 31 30 
+        30 62 22 00 81 00 E4     255 1339      "1110_0100b", 'NUL', 81h, 0, E4h
+61.81:  31 31 31 30 5F 30 31 30 
+        31 62 22 00 81 00 E5     255 1340      "1110_0101b", 'NUL', 81h, 0, E5h
+61.90:  31 31 31 30 5F 30 31 31 
+        30 62 22 00 81 00 E6     255 1341      "1110_0110b", 'NUL', 81h, 0, E6h
+61.9F:  31 31 31 30 5F 30 31 31 
+        31 62 22 00 81 00 E7     255 1342      "1110_0111b", 'NUL', 81h, 0, E7h
+61.AE:  31 31 31 30 5F 31 30 30 
+        30 62 22 00 81 00 E8     255 1343      "1110_1000b", 'NUL', 81h, 0, E8h
+61.BD:  31 31 31 30 5F 31 30 30 
+        31 62 22 00 81 00 E9     255 1344      "1110_1001b", 'NUL', 81h, 0, E9h
+61.CC:  31 31 31 30 5F 31 30 31 
+        30 62 22 00 81 00 EA     255 1345      "1110_1010b", 'NUL', 81h, 0, EAh
+61.DB:  31 31 31 30 5F 31 30 31 
+        31 62 22 00 81 00 EB     255 1346      "1110_1011b", 'NUL', 81h, 0, EBh
+61.EA:  31 31 31 30 5F 31 31 30 
+        30 62 22 00 81 00 EC     255 1347      "1110_1100b", 'NUL', 81h, 0, ECh
+61.F9:  31 31 31 30 5F 31 31 30 
+        31 62 22 00 81 00 ED     255 1348      "1110_1101b", 'NUL', 81h, 0, EDh
+62.08:  31 31 31 30 5F 31 31 31 
+        30 62 22 00 81 00 EE     255 1349      "1110_1110b", 'NUL', 81h, 0, EEh
+62.17:  31 31 31 30 5F 31 31 31 
+        31 62 22 00 81 00 EF     255 1350      "1110_1111b", 'NUL', 81h, 0, EFh
+62.26:  31 31 31 31 5F 30 30 30 
+        30 62 22 00 81 00 F0     255 1351      "1111_0000b", 'NUL', 81h, 0, F0h
+62.35:  31 31 31 31 5F 30 30 30 
+        31 62 22 00 81 00 F1     255 1352      "1111_0001b", 'NUL', 81h, 0, F1h
+62.44:  31 31 31 31 5F 30 30 31 
+        30 62 22 00 81 00 F2     255 1353      "1111_0010b", 'NUL', 81h, 0, F2h
+62.53:  31 31 31 31 5F 30 30 31 
+        31 62 22 00 81 00 F3     255 1354      "1111_0011b", 'NUL', 81h, 0, F3h
+62.62:  31 31 31 31 5F 30 31 30 
+        30 62 22 00 81 00 F4     255 1355      "1111_0100b", 'NUL', 81h, 0, F4h
+62.71:  31 31 31 31 5F 30 31 30 
+        31 62 22 00 81 00 F5     255 1356      "1111_0101b", 'NUL', 81h, 0, F5h
+62.80:  31 31 31 31 5F 30 31 31 
+        30 62 22 00 81 00 F6     255 1357      "1111_0110b", 'NUL', 81h, 0, F6h
+62.8F:  31 31 31 31 5F 30 31 31 
+        31 62 22 00 81 00 F7     255 1358      "1111_0111b", 'NUL', 81h, 0, F7h
+62.9E:  31 31 31 31 5F 31 30 30 
+        30 62 22 00 81 00 F8     255 1359      "1111_1000b", 'NUL', 81h, 0, F8h
+62.AD:  31 31 31 31 5F 31 30 30 
+        31 62 22 00 81 00 F9     255 1360      "1111_1001b", 'NUL', 81h, 0, F9h
+62.BC:  31 31 31 31 5F 31 30 31 
+        30 62 22 00 81 00 FA     255 1361      "1111_1010b", 'NUL', 81h, 0, FAh
+62.CB:  31 31 31 31 5F 31 30 31 
+        31 62 22 00 81 00 FB     255 1362      "1111_1011b", 'NUL', 81h, 0, FBh
+62.DA:  31 31 31 31 5F 31 31 30 
+        30 62 22 00 81 00 FC     255 1363      "1111_1100b", 'NUL', 81h, 0, FCh
+62.E9:  31 31 31 31 5F 31 31 30 
+        31 62 22 00 81 00 FD     255 1364      "1111_1101b", 'NUL', 81h, 0, FDh
+62.F8:  31 31 31 31 5F 31 31 31 
+        30 62 22 00 81 00 FE     255 1365      "1111_1110b", 'NUL', 81h, 0, FEh
+63.07:  31 31 31 31 5F 31 31 31 
+        31 62 22 00 81 00 FF     255 1366      "1111_1111b", 'NUL', 81h, 0, FFh
+                                 255 1367  
+                                 255 1368      (Four-Bit Binary Numbers)
+                                 255 1369  
+63.16:  30 30 30 30 62 22 00 81 
+        00 00                    255 1370      "0000b", 'NUL', 81h, 0, 00h
+63.20:  30 30 30 31 62 22 00 81 
+        00 01                    255 1371      "0001b", 'NUL', 81h, 0, 01h
+63.2A:  30 30 31 30 62 22 00 81 
+        00 02                    255 1372      "0010b", 'NUL', 81h, 0, 02h
+63.34:  30 30 31 31 62 22 00 81 
+        00 03                    255 1373      "0011b", 'NUL', 81h, 0, 03h
+63.3E:  30 31 30 30 62 22 00 81 
+        00 04                    255 1374      "0100b", 'NUL', 81h, 0, 04h
+63.48:  30 31 30 31 62 22 00 81 
+        00 05                    255 1375      "0101b", 'NUL', 81h, 0, 05h
+63.52:  30 31 31 30 62 22 00 81 
+        00 06                    255 1376      "0110b", 'NUL', 81h, 0, 06h
+63.5C:  30 31 31 31 62 22 00 81 
+        00 07                    255 1377      "0111b", 'NUL', 81h, 0, 07h
+63.66:  31 30 30 30 62 22 00 81 
+        00 08                    255 1378      "1000b", 'NUL', 81h, 0, 08h
+63.70:  31 30 30 31 62 22 00 81 
+        00 09                    255 1379      "1001b", 'NUL', 81h, 0, 09h
+63.7A:  31 30 31 30 62 22 00 81 
+        00 0A                    255 1380      "1010b", 'NUL', 81h, 0, 0Ah
+63.84:  31 30 31 31 62 22 00 81 
+        00 0B                    255 1381      "1011b", 'NUL', 81h, 0, 0Bh
+63.8E:  31 31 30 30 62 22 00 81 
+        00 0C                    255 1382      "1100b", 'NUL', 81h, 0, 0Ch
+63.98:  31 31 30 31 62 22 00 81 
+        00 0D                    255 1383      "1101b", 'NUL', 81h, 0, 0Dh
+63.A2:  31 31 31 30 62 22 00 81 
+        00 0E                    255 1384      "1110b", 'NUL', 81h, 0, 0Eh
+63.AC:  31 31 31 31 62 22 00 81 
+        00 0F                    255 1385      "1111b", 'NUL', 81h, 0, 0Fh
+                                 255 1386  
+                                 255 1387      (Printable ASCII Characters)
+                                 255 1388  
+63.B6:  27 53 50 27 22 00 81 00 
+        20                       255 1389      "'SP'", 'NUL', 81h, 0, 20h
+63.BF:  27 21 27 22 00 81 00 21  255 1390      "'!'", 'NUL', 81h, 0, 21h
+63.C7:  27 22 27 22 00 81 00 22  255 1391      "'"'", 'NUL', 81h, 0, 22h
+63.CF:  27 23 27 22 00 81 00 23  255 1392      "'#'", 'NUL', 81h, 0, 23h
+63.D7:  27 24 27 22 00 81 00 24  255 1393      "'$'", 'NUL', 81h, 0, 24h
+63.DF:  27 25 27 22 00 81 00 25  255 1394      "'%'", 'NUL', 81h, 0, 25h
+63.E7:  27 26 27 22 00 81 00 26  255 1395      "'&'", 'NUL', 81h, 0, 26h
+63.EF:  27 27 27 22 00 81 00 27  255 1396      "'''", 'NUL', 81h, 0, 27h
+                                 255 1397      "'('", 'NUL', 81h, 0, 28h
+63.F7:  00 81 00 29              255 1398      "')'", 'NUL', 81h, 0, 29h
+63.FB:  27 2A 27 22 00 81 00 2A  255 1399      "'*'", 'NUL', 81h, 0, 2Ah
+64.03:  27 2B 27 22 00 81 00 2B  255 1400      "'+'", 'NUL', 81h, 0, 2Bh
+64.0B:  27 2C 27 22 00 81 00 2C  255 1401      "','", 'NUL', 81h, 0, 2Ch
+64.13:  27 2D 27 22 00 81 00 2D  255 1402      "'-'", 'NUL', 81h, 0, 2Dh
+64.1B:  27 2E 27 22 00 81 00 2E  255 1403      "'.'", 'NUL', 81h, 0, 2Eh
+64.23:  27 2F 27 22 00 81 00 2F  255 1404      "'/'", 'NUL', 81h, 0, 2Fh
+64.2B:  27 30 27 22 00 81 00 30  255 1405      "'0'", 'NUL', 81h, 0, 30h
+64.33:  27 31 27 22 00 81 00 31  255 1406      "'1'", 'NUL', 81h, 0, 31h
+64.3B:  27 32 27 22 00 81 00 32  255 1407      "'2'", 'NUL', 81h, 0, 32h
+64.43:  27 33 27 22 00 81 00 33  255 1408      "'3'", 'NUL', 81h, 0, 33h
+64.4B:  27 34 27 22 00 81 00 34  255 1409      "'4'", 'NUL', 81h, 0, 34h
+64.53:  27 35 27 22 00 81 00 35  255 1410      "'5'", 'NUL', 81h, 0, 35h
+64.5B:  27 36 27 22 00 81 00 36  255 1411      "'6'", 'NUL', 81h, 0, 36h
+64.63:  27 37 27 22 00 81 00 37  255 1412      "'7'", 'NUL', 81h, 0, 37h
+64.6B:  27 38 27 22 00 81 00 38  255 1413      "'8'", 'NUL', 81h, 0, 38h
+64.73:  27 39 27 22 00 81 00 39  255 1414      "'9'", 'NUL', 81h, 0, 39h
+64.7B:  27 3A 27 22 00 81 00 3A  255 1415      "':'", 'NUL', 81h, 0, 3Ah
+64.83:  27 3B 27 22 00 81 00 3B  255 1416      "';'", 'NUL', 81h, 0, 3Bh
+64.8B:  27 3C 27 22 00 81 00 3C  255 1417      "'<'", 'NUL', 81h, 0, 3Ch
+64.93:  27 3D 27 22 00 81 00 3D  255 1418      "'='", 'NUL', 81h, 0, 3Dh
+64.9B:  27 3E 27 22 00 81 00 3E  255 1419      "'>'", 'NUL', 81h, 0, 3Eh
+64.A3:  27 3F 27 22 00 81 00 3F  255 1420      "'?'", 'NUL', 81h, 0, 3Fh
+64.AB:  27 40 27 22 00 81 00 40  255 1421      "'@'", 'NUL', 81h, 0, 40h
+64.B3:  27 41 27 22 00 81 00 41  255 1422      "'A'", 'NUL', 81h, 0, 41h
+64.BB:  27 42 27 22 00 81 00 42  255 1423      "'B'", 'NUL', 81h, 0, 42h
+64.C3:  27 43 27 22 00 81 00 43  255 1424      "'C'", 'NUL', 81h, 0, 43h
+64.CB:  27 44 27 22 00 81 00 44  255 1425      "'D'", 'NUL', 81h, 0, 44h
+64.D3:  27 45 27 22 00 81 00 45  255 1426      "'E'", 'NUL', 81h, 0, 45h
+64.DB:  27 46 27 22 00 81 00 46  255 1427      "'F'", 'NUL', 81h, 0, 46h
+64.E3:  27 47 27 22 00 81 00 47  255 1428      "'G'", 'NUL', 81h, 0, 47h
+64.EB:  27 48 27 22 00 81 00 48  255 1429      "'H'", 'NUL', 81h, 0, 48h
+64.F3:  27 49 27 22 00 81 00 49  255 1430      "'I'", 'NUL', 81h, 0, 49h
+64.FB:  27 4A 27 22 00 81 00 4A  255 1431      "'J'", 'NUL', 81h, 0, 4Ah
+65.03:  27 4B 27 22 00 81 00 4B  255 1432      "'K'", 'NUL', 81h, 0, 4Bh
+65.0B:  27 4C 27 22 00 81 00 4C  255 1433      "'L'", 'NUL', 81h, 0, 4Ch
+65.13:  27 4D 27 22 00 81 00 4D  255 1434      "'M'", 'NUL', 81h, 0, 4Dh
+65.1B:  27 4E 27 22 00 81 00 4E  255 1435      "'N'", 'NUL', 81h, 0, 4Eh
+65.23:  27 4F 27 22 00 81 00 4F  255 1436      "'O'", 'NUL', 81h, 0, 4Fh
+65.2B:  27 50 27 22 00 81 00 50  255 1437      "'P'", 'NUL', 81h, 0, 50h
+65.33:  27 51 27 22 00 81 00 51  255 1438      "'Q'", 'NUL', 81h, 0, 51h
+65.3B:  27 52 27 22 00 81 00 52  255 1439      "'R'", 'NUL', 81h, 0, 52h
+65.43:  27 53 27 22 00 81 00 53  255 1440      "'S'", 'NUL', 81h, 0, 53h
+65.4B:  27 54 27 22 00 81 00 54  255 1441      "'T'", 'NUL', 81h, 0, 54h
+65.53:  27 55 27 22 00 81 00 55  255 1442      "'U'", 'NUL', 81h, 0, 55h
+65.5B:  27 56 27 22 00 81 00 56  255 1443      "'V'", 'NUL', 81h, 0, 56h
+65.63:  27 57 27 22 00 81 00 57  255 1444      "'W'", 'NUL', 81h, 0, 57h
+65.6B:  27 58 27 22 00 81 00 58  255 1445      "'X'", 'NUL', 81h, 0, 58h
+65.73:  27 59 27 22 00 81 00 59  255 1446      "'Y'", 'NUL', 81h, 0, 59h
+65.7B:  27 5A 27 22 00 81 00 5A  255 1447      "'Z'", 'NUL', 81h, 0, 5Ah
+65.83:  27 5B 27 22 00 81 00 5B  255 1448      "'['", 'NUL', 81h, 0, 5Bh
+65.8B:  27 5C 27 22 00 81 00 5C  255 1449      "'\'", 'NUL', 81h, 0, 5Ch
+65.93:  27 5D 27 22 00 81 00 5D  255 1450      "']'", 'NUL', 81h, 0, 5Dh
+65.9B:  27 5E 27 22 00 81 00 5E  255 1451      "'^'", 'NUL', 81h, 0, 5Eh
+65.A3:  27 5F 27 22 00 81 00 5F  255 1452      "'_'", 'NUL', 81h, 0, 5Fh
+65.AB:  27 60 27 22 00 81 00 60  255 1453      "'`'", 'NUL', 81h, 0, 60h
+65.B3:  27 61 27 22 00 81 00 61  255 1454      "'a'", 'NUL', 81h, 0, 61h
+65.BB:  27 62 27 22 00 81 00 62  255 1455      "'b'", 'NUL', 81h, 0, 62h
+65.C3:  27 63 27 22 00 81 00 63  255 1456      "'c'", 'NUL', 81h, 0, 63h
+65.CB:  27 64 27 22 00 81 00 64  255 1457      "'d'", 'NUL', 81h, 0, 64h
+65.D3:  27 65 27 22 00 81 00 65  255 1458      "'e'", 'NUL', 81h, 0, 65h
+65.DB:  27 66 27 22 00 81 00 66  255 1459      "'f'", 'NUL', 81h, 0, 66h
+65.E3:  27 67 27 22 00 81 00 67  255 1460      "'g'", 'NUL', 81h, 0, 67h
+65.EB:  27 68 27 22 00 81 00 68  255 1461      "'h'", 'NUL', 81h, 0, 68h
+65.F3:  27 69 27 22 00 81 00 69  255 1462      "'i'", 'NUL', 81h, 0, 69h
+65.FB:  27 6A 27 22 00 81 00 6A  255 1463      "'j'", 'NUL', 81h, 0, 6Ah
+66.03:  27 6B 27 22 00 81 00 6B  255 1464      "'k'", 'NUL', 81h, 0, 6Bh
+66.0B:  27 6C 27 22 00 81 00 6C  255 1465      "'l'", 'NUL', 81h, 0, 6Ch
+66.13:  27 6D 27 22 00 81 00 6D  255 1466      "'m'", 'NUL', 81h, 0, 6Dh
+66.1B:  27 6E 27 22 00 81 00 6E  255 1467      "'n'", 'NUL', 81h, 0, 6Eh
+66.23:  27 6F 27 22 00 81 00 6F  255 1468      "'o'", 'NUL', 81h, 0, 6Fh
+66.2B:  27 70 27 22 00 81 00 70  255 1469      "'p'", 'NUL', 81h, 0, 70h
+66.33:  27 71 27 22 00 81 00 71  255 1470      "'q'", 'NUL', 81h, 0, 71h
+66.3B:  27 72 27 22 00 81 00 72  255 1471      "'r'", 'NUL', 81h, 0, 72h
+66.43:  27 73 27 22 00 81 00 73  255 1472      "'s'", 'NUL', 81h, 0, 73h
+66.4B:  27 74 27 22 00 81 00 74  255 1473      "'t'", 'NUL', 81h, 0, 74h
+66.53:  27 75 27 22 00 81 00 75  255 1474      "'u'", 'NUL', 81h, 0, 75h
+66.5B:  27 76 27 22 00 81 00 76  255 1475      "'v'", 'NUL', 81h, 0, 76h
+66.63:  27 77 27 22 00 81 00 77  255 1476      "'w'", 'NUL', 81h, 0, 77h
+66.6B:  27 78 27 22 00 81 00 78  255 1477      "'x'", 'NUL', 81h, 0, 78h
+66.73:  27 79 27 22 00 81 00 79  255 1478      "'y'", 'NUL', 81h, 0, 79h
+66.7B:  27 7A 27 22 00 81 00 7A  255 1479      "'z'", 'NUL', 81h, 0, 7Ah
+66.83:  27 7B 27 22 00 81 00 7B  255 1480      "'{'", 'NUL', 81h, 0, 7Bh
+66.8B:  27 7C 27 22 00 81 00 7C  255 1481      "'|'", 'NUL', 81h, 0, 7Ch
+66.93:  27 7D 27 22 00 81 00 7D  255 1482      "'}'", 'NUL', 81h, 0, 7Dh
+66.9B:  27 7E 27 22 00 81 00 7E  255 1483      "'~'", 'NUL', 81h, 0, 7Eh
+                                 255 1484  
+                                 255 1485      (ASCII Constants)
+                                 255 1486  
+66.A3:  27 4E 55 4C 27 22 00 81 
+        00 00                    255 1487      "'NUL'", 'NUL', 81h, 0, 00h
+66.AD:  27 43 52 27 22 00 81 00 
+        0D                       255 1488      "'CR'", 'NUL', 81h, 0, 0Dh
+66.B6:  27 4C 46 27 22 00 81 00 
+        0A                       255 1489      "'LF'", 'NUL', 81h, 0, 0Ah
+                                 255 1490  
+                                 255 1491      (SYS Instructions)
+                                 255 1492  
+66.BF:  4E 4F 50 22 00 81 00 00  255 1493      "NOP", 'NUL', 81h, 0, 00h
+66.C7:  53 53 49 22 00 81 00 01  255 1494      "SSI", 'NUL', 81h, 0, 01h
+66.CF:  53 53 4F 22 00 81 00 02  255 1495      "SSO", 'NUL', 81h, 0, 02h
+66.D7:  53 43 4C 22 00 81 00 03  255 1496      "SCL", 'NUL', 81h, 0, 03h
+66.DF:  53 43 48 22 00 81 00 04  255 1497      "SCH", 'NUL', 81h, 0, 04h
+66.E7:  52 45 54 22 00 81 00 05  255 1498      "RET", 'NUL', 81h, 0, 05h
+66.EF:  43 4F 52 22 00 81 00 06  255 1499      "COR", 'NUL', 81h, 0, 06h
+66.F7:  4F 57 4E 22 00 81 00 07  255 1500      "OWN", 'NUL', 81h, 0, 07h
+                                 255 1501  
+                                 255 1502      (FIX Instructions)
+                                 255 1503  
+66.FF:  50 34 22 00 81 00 08     255 1504      "P4", 'NUL', 81h, 0, 08h
+67.06:  50 31 22 00 81 00 09     255 1505      "P1", 'NUL', 81h, 0, 09h
+67.0D:  50 32 22 00 81 00 0A     255 1506      "P2", 'NUL', 81h, 0, 0Ah
+67.14:  50 33 22 00 81 00 0B     255 1507      "P3", 'NUL', 81h, 0, 0Bh
+67.1B:  4D 34 22 00 81 00 0C     255 1508      "M4", 'NUL', 81h, 0, 0Ch
+67.22:  4D 33 22 00 81 00 0D     255 1509      "M3", 'NUL', 81h, 0, 0Dh
+67.29:  4D 32 22 00 81 00 0E     255 1510      "M2", 'NUL', 81h, 0, 0Eh
+67.30:  4D 31 22 00 81 00 0F     255 1511      "M1", 'NUL', 81h, 0, 0Fh
+                                 255 1512  
+                                 255 1513      (ALU Instructions)
+                                 255 1514  
+67.37:  43 4C 52 22 00 81 00 10  255 1515      "CLR", 'NUL', 81h, 0, 10h
+67.3F:  49 44 4F 22 00 81 00 11  255 1516      "IDO", 'NUL', 81h, 0, 11h
+67.47:  4F 43 52 22 00 81 00 12  255 1517      "OCR", 'NUL', 81h, 0, 12h
+67.4F:  4F 43 4F 22 00 81 00 13  255 1518      "OCO", 'NUL', 81h, 0, 13h
+67.57:  53 4C 52 22 00 81 00 14  255 1519      "SLR", 'NUL', 81h, 0, 14h
+67.5F:  53 4C 4F 22 00 81 00 15  255 1520      "SLO", 'NUL', 81h, 0, 15h
+67.67:  53 52 52 22 00 81 00 16  255 1521      "SRR", 'NUL', 81h, 0, 16h
+67.6F:  53 52 4F 22 00 81 00 17  255 1522      "SRO", 'NUL', 81h, 0, 17h
+67.77:  41 4E 44 22 00 81 00 18  255 1523      "AND", 'NUL', 81h, 0, 18h
+67.7F:  49 4F 52 22 00 81 00 19  255 1524      "IOR", 'NUL', 81h, 0, 19h
+67.87:  45 4F 52 22 00 81 00 1A  255 1525      "EOR", 'NUL', 81h, 0, 1Ah
+67.8F:  41 44 44 22 00 81 00 1B  255 1526      "ADD", 'NUL', 81h, 0, 1Bh
+67.97:  43 41 52 22 00 81 00 1C  255 1527      "CAR", 'NUL', 81h, 0, 1Ch
+67.9F:  52 4C 4F 22 00 81 00 1D  255 1528      "RLO", 'NUL', 81h, 0, 1Dh
+67.A7:  52 45 4F 22 00 81 00 1E  255 1529      "REO", 'NUL', 81h, 0, 1Eh
+67.AF:  52 47 4F 22 00 81 00 1F  255 1530      "RGO", 'NUL', 81h, 0, 1Fh
+                                 255 1531  
+                                 255 1532      (TRAP Instructions)
+                                 255 1533  
+67.B7:  2A 30 22 00 81 00 20     255 1534      "*0", 'NUL', 81h, 0, 20h
+67.BE:  2A 31 22 00 81 00 21     255 1535      "*1", 'NUL', 81h, 0, 21h
+67.C5:  2A 32 22 00 81 00 22     255 1536      "*2", 'NUL', 81h, 0, 22h
+67.CC:  2A 33 22 00 81 00 23     255 1537      "*3", 'NUL', 81h, 0, 23h
+67.D3:  2A 34 22 00 81 00 24     255 1538      "*4", 'NUL', 81h, 0, 24h
+67.DA:  2A 35 22 00 81 00 25     255 1539      "*5", 'NUL', 81h, 0, 25h
+67.E1:  2A 36 22 00 81 00 26     255 1540      "*6", 'NUL', 81h, 0, 26h
+67.E8:  2A 37 22 00 81 00 27     255 1541      "*7", 'NUL', 81h, 0, 27h
+67.EF:  2A 38 22 00 81 00 28     255 1542      "*8", 'NUL', 81h, 0, 28h
+67.F6:  2A 39 22 00 81 00 29     255 1543      "*9", 'NUL', 81h, 0, 29h
+67.FD:  2A 31 30 22 00 81 00 2A  255 1544      "*10", 'NUL', 81h, 0, 2Ah
+68.05:  2A 31 31 22 00 81 00 2B  255 1545      "*11", 'NUL', 81h, 0, 2Bh
+68.0D:  2A 31 32 22 00 81 00 2C  255 1546      "*12", 'NUL', 81h, 0, 2Ch
+68.15:  2A 31 33 22 00 81 00 2D  255 1547      "*13", 'NUL', 81h, 0, 2Dh
+68.1D:  2A 31 34 22 00 81 00 2E  255 1548      "*14", 'NUL', 81h, 0, 2Eh
+68.25:  2A 31 35 22 00 81 00 2F  255 1549      "*15", 'NUL', 81h, 0, 2Fh
+68.2D:  2A 31 36 22 00 81 00 30  255 1550      "*16", 'NUL', 81h, 0, 30h
+68.35:  2A 31 37 22 00 81 00 31  255 1551      "*17", 'NUL', 81h, 0, 31h
+68.3D:  2A 31 38 22 00 81 00 32  255 1552      "*18", 'NUL', 81h, 0, 32h
+68.45:  2A 31 39 22 00 81 00 33  255 1553      "*19", 'NUL', 81h, 0, 33h
+68.4D:  2A 32 30 22 00 81 00 34  255 1554      "*20", 'NUL', 81h, 0, 34h
+68.55:  2A 32 31 22 00 81 00 35  255 1555      "*21", 'NUL', 81h, 0, 35h
+68.5D:  2A 32 32 22 00 81 00 36  255 1556      "*22", 'NUL', 81h, 0, 36h
+68.65:  2A 32 33 22 00 81 00 37  255 1557      "*23", 'NUL', 81h, 0, 37h
+68.6D:  2A 32 34 22 00 81 00 38  255 1558      "*24", 'NUL', 81h, 0, 38h
+68.75:  2A 32 35 22 00 81 00 39  255 1559      "*25", 'NUL', 81h, 0, 39h
+68.7D:  2A 32 36 22 00 81 00 3A  255 1560      "*26", 'NUL', 81h, 0, 3Ah
+68.85:  2A 32 37 22 00 81 00 3B  255 1561      "*27", 'NUL', 81h, 0, 3Bh
+68.8D:  2A 32 38 22 00 81 00 3C  255 1562      "*28", 'NUL', 81h, 0, 3Ch
+68.95:  2A 32 39 22 00 81 00 3D  255 1563      "*29", 'NUL', 81h, 0, 3Dh
+68.9D:  2A 33 30 22 00 81 00 3E  255 1564      "*30", 'NUL', 81h, 0, 3Eh
+68.A5:  2A 33 31 22 00 81 00 3F  255 1565      "*31", 'NUL', 81h, 0, 3Fh
+                                 255 1566  
+                                 255 1567      (DIRO Instructions)
+                                 255 1568  
+68.AD:  30 64 22 00 81 00 40     255 1569      "0d", 'NUL', 81h, 0, 40h
+68.B4:  31 64 22 00 81 00 41     255 1570      "1d", 'NUL', 81h, 0, 41h
+68.BB:  32 64 22 00 81 00 42     255 1571      "2d", 'NUL', 81h, 0, 42h
+68.C2:  33 64 22 00 81 00 43     255 1572      "3d", 'NUL', 81h, 0, 43h
+68.C9:  34 64 22 00 81 00 44     255 1573      "4d", 'NUL', 81h, 0, 44h
+68.D0:  35 64 22 00 81 00 45     255 1574      "5d", 'NUL', 81h, 0, 45h
+68.D7:  36 64 22 00 81 00 46     255 1575      "6d", 'NUL', 81h, 0, 46h
+68.DE:  37 64 22 00 81 00 47     255 1576      "7d", 'NUL', 81h, 0, 47h
+68.E5:  64 30 22 00 81 00 48     255 1577      "d0", 'NUL', 81h, 0, 48h
+68.EC:  64 31 22 00 81 00 49     255 1578      "d1", 'NUL', 81h, 0, 49h
+68.F3:  64 32 22 00 81 00 4A     255 1579      "d2", 'NUL', 81h, 0, 4Ah
+68.FA:  64 33 22 00 81 00 4B     255 1580      "d3", 'NUL', 81h, 0, 4Bh
+69.01:  64 34 22 00 81 00 4C     255 1581      "d4", 'NUL', 81h, 0, 4Ch
+69.08:  64 35 22 00 81 00 4D     255 1582      "d5", 'NUL', 81h, 0, 4Dh
+69.0F:  64 36 22 00 81 00 4E     255 1583      "d6", 'NUL', 81h, 0, 4Eh
+69.16:  64 37 22 00 81 00 4F     255 1584      "d7", 'NUL', 81h, 0, 4Fh
+69.1D:  30 69 22 00 81 00 50     255 1585      "0i", 'NUL', 81h, 0, 50h
+69.24:  31 69 22 00 81 00 51     255 1586      "1i", 'NUL', 81h, 0, 51h
+69.2B:  32 69 22 00 81 00 52     255 1587      "2i", 'NUL', 81h, 0, 52h
+69.32:  33 69 22 00 81 00 53     255 1588      "3i", 'NUL', 81h, 0, 53h
+69.39:  34 69 22 00 81 00 54     255 1589      "4i", 'NUL', 81h, 0, 54h
+69.40:  35 69 22 00 81 00 55     255 1590      "5i", 'NUL', 81h, 0, 55h
+69.47:  36 69 22 00 81 00 56     255 1591      "6i", 'NUL', 81h, 0, 56h
+69.4E:  37 69 22 00 81 00 57     255 1592      "7i", 'NUL', 81h, 0, 57h
+69.55:  69 30 22 00 81 00 58     255 1593      "i0", 'NUL', 81h, 0, 58h
+69.5C:  69 31 22 00 81 00 59     255 1594      "i1", 'NUL', 81h, 0, 59h
+69.63:  69 32 22 00 81 00 5A     255 1595      "i2", 'NUL', 81h, 0, 5Ah
+69.6A:  69 33 22 00 81 00 5B     255 1596      "i3", 'NUL', 81h, 0, 5Bh
+69.71:  69 34 22 00 81 00 5C     255 1597      "i4", 'NUL', 81h, 0, 5Ch
+69.78:  69 35 22 00 81 00 5D     255 1598      "i5", 'NUL', 81h, 0, 5Dh
+69.7F:  69 36 22 00 81 00 5E     255 1599      "i6", 'NUL', 81h, 0, 5Eh
+69.86:  69 37 22 00 81 00 5F     255 1600      "i7", 'NUL', 81h, 0, 5Fh
+69.8D:  30 72 22 00 81 00 60     255 1601      "0r", 'NUL', 81h, 0, 60h
+69.94:  31 72 22 00 81 00 61     255 1602      "1r", 'NUL', 81h, 0, 61h
+69.9B:  32 72 22 00 81 00 62     255 1603      "2r", 'NUL', 81h, 0, 62h
+69.A2:  33 72 22 00 81 00 63     255 1604      "3r", 'NUL', 81h, 0, 63h
+69.A9:  34 72 22 00 81 00 64     255 1605      "4r", 'NUL', 81h, 0, 64h
+69.B0:  35 72 22 00 81 00 65     255 1606      "5r", 'NUL', 81h, 0, 65h
+69.B7:  36 72 22 00 81 00 66     255 1607      "6r", 'NUL', 81h, 0, 66h
+69.BE:  37 72 22 00 81 00 67     255 1608      "7r", 'NUL', 81h, 0, 67h
+69.C5:  72 30 22 00 81 00 68     255 1609      "r0", 'NUL', 81h, 0, 68h
+69.CC:  72 31 22 00 81 00 69     255 1610      "r1", 'NUL', 81h, 0, 69h
+69.D3:  72 32 22 00 81 00 6A     255 1611      "r2", 'NUL', 81h, 0, 6Ah
+69.DA:  72 33 22 00 81 00 6B     255 1612      "r3", 'NUL', 81h, 0, 6Bh
+69.E1:  72 34 22 00 81 00 6C     255 1613      "r4", 'NUL', 81h, 0, 6Ch
+69.E8:  72 35 22 00 81 00 6D     255 1614      "r5", 'NUL', 81h, 0, 6Dh
+69.EF:  72 36 22 00 81 00 6E     255 1615      "r6", 'NUL', 81h, 0, 6Eh
+69.F6:  72 37 22 00 81 00 6F     255 1616      "r7", 'NUL', 81h, 0, 6Fh
+69.FD:  30 6F 22 00 81 00 70     255 1617      "0o", 'NUL', 81h, 0, 70h
+6A.04:  31 6F 22 00 81 00 71     255 1618      "1o", 'NUL', 81h, 0, 71h
+6A.0B:  32 6F 22 00 81 00 72     255 1619      "2o", 'NUL', 81h, 0, 72h
+6A.12:  33 6F 22 00 81 00 73     255 1620      "3o", 'NUL', 81h, 0, 73h
+6A.19:  34 6F 22 00 81 00 74     255 1621      "4o", 'NUL', 81h, 0, 74h
+6A.20:  35 6F 22 00 81 00 75     255 1622      "5o", 'NUL', 81h, 0, 75h
+6A.27:  36 6F 22 00 81 00 76     255 1623      "6o", 'NUL', 81h, 0, 76h
+6A.2E:  37 6F 22 00 81 00 77     255 1624      "7o", 'NUL', 81h, 0, 77h
+6A.35:  6F 30 22 00 81 00 78     255 1625      "o0", 'NUL', 81h, 0, 78h
+6A.3C:  6F 31 22 00 81 00 79     255 1626      "o1", 'NUL', 81h, 0, 79h
+6A.43:  6F 32 22 00 81 00 7A     255 1627      "o2", 'NUL', 81h, 0, 7Ah
+6A.4A:  6F 33 22 00 81 00 7B     255 1628      "o3", 'NUL', 81h, 0, 7Bh
+6A.51:  6F 34 22 00 81 00 7C     255 1629      "o4", 'NUL', 81h, 0, 7Ch
+6A.58:  6F 35 22 00 81 00 7D     255 1630      "o5", 'NUL', 81h, 0, 7Dh
+6A.5F:  6F 36 22 00 81 00 7E     255 1631      "o6", 'NUL', 81h, 0, 7Eh
+6A.66:  6F 37 22 00 81 00 7F     255 1632      "o7", 'NUL', 81h, 0, 7Fh
+                                 255 1633  
+                                 255 1634      (PAIR Instructions)
+                                 255 1635  
+6A.6D:  6E 6F 22 00 81 00 80     255 1636      "no", 'NUL', 81h, 0, 80h
+6A.74:  45 4E 44 22 00 81 00 81  255 1637      "END", 'NUL', 81h, 0, 81h
+                                 255 1638  
+6A.7C:  53 43 52 4F 55 4E 47 45 
+        5F 4E 4C 22 00 81 00 82  255 1639      "SCROUNGE_NL", 'NUL', 81h, 0, 82h
+                                 255 1640  
+6A.8C:  6E 64 22 00 81 00 83     255 1641      "nd", 'NUL', 81h, 0, 83h
+6A.93:  6E 72 22 00 81 00 84     255 1642      "nr", 'NUL', 81h, 0, 84h
+6A.9A:  6E 69 22 00 81 00 85     255 1643      "ni", 'NUL', 81h, 0, 85h
+6A.A1:  6E 73 22 00 81 00 86     255 1644      "ns", 'NUL', 81h, 0, 86h
+6A.A8:  6E 70 22 00 81 00 87     255 1645      "np", 'NUL', 81h, 0, 87h
+6A.AF:  6E 65 22 00 81 00 88     255 1646      "ne", 'NUL', 81h, 0, 88h
+6A.B6:  6E 61 22 00 81 00 89     255 1647      "na", 'NUL', 81h, 0, 89h
+6A.BD:  6E 62 22 00 81 00 8A     255 1648      "nb", 'NUL', 81h, 0, 8Ah
+6A.C4:  6E 6A 22 00 81 00 8B     255 1649      "nj", 'NUL', 81h, 0, 8Bh
+6A.CB:  6E 77 22 00 81 00 8C     255 1650      "nw", 'NUL', 81h, 0, 8Ch
+6A.D2:  6E 74 22 00 81 00 8D     255 1651      "nt", 'NUL', 81h, 0, 8Dh
+6A.D9:  6E 66 22 00 81 00 8E     255 1652      "nf", 'NUL', 81h, 0, 8Eh
+6A.E0:  6E 63 22 00 81 00 8F     255 1653      "nc", 'NUL', 81h, 0, 8Fh
+6A.E7:  6D 6F 22 00 81 00 90     255 1654      "mo", 'NUL', 81h, 0, 90h
+                                 255 1655  
+6A.EE:  53 43 52 4F 55 4E 47 45 
+        5F 4D 4D 22 00 81 00 91  255 1656      "SCROUNGE_MM", 'NUL', 81h, 0, 91h
+6A.FE:  53 43 52 4F 55 4E 47 45 
+        5F 4D 4C 22 00 81 00 92  255 1657      "SCROUNGE_ML", 'NUL', 81h, 0, 92h
+                                 255 1658  
+6B.0E:  6D 64 22 00 81 00 93     255 1659      "md", 'NUL', 81h, 0, 93h
+6B.15:  6D 72 22 00 81 00 94     255 1660      "mr", 'NUL', 81h, 0, 94h
+6B.1C:  6D 69 22 00 81 00 95     255 1661      "mi", 'NUL', 81h, 0, 95h
+6B.23:  6D 73 22 00 81 00 96     255 1662      "ms", 'NUL', 81h, 0, 96h
+6B.2A:  6D 70 22 00 81 00 97     255 1663      "mp", 'NUL', 81h, 0, 97h
+6B.31:  6D 65 22 00 81 00 98     255 1664      "me", 'NUL', 81h, 0, 98h
+6B.38:  6D 61 22 00 81 00 99     255 1665      "ma", 'NUL', 81h, 0, 99h
+6B.3F:  6D 62 22 00 81 00 9A     255 1666      "mb", 'NUL', 81h, 0, 9Ah
+6B.46:  6D 6A 22 00 81 00 9B     255 1667      "mj", 'NUL', 81h, 0, 9Bh
+6B.4D:  6D 77 22 00 81 00 9C     255 1668      "mw", 'NUL', 81h, 0, 9Ch
+6B.54:  6D 74 22 00 81 00 9D     255 1669      "mt", 'NUL', 81h, 0, 9Dh
+6B.5B:  6D 66 22 00 81 00 9E     255 1670      "mf", 'NUL', 81h, 0, 9Eh
+6B.62:  6D 63 22 00 81 00 9F     255 1671      "mc", 'NUL', 81h, 0, 9Fh
+6B.69:  6C 6F 22 00 81 00 A0     255 1672      "lo", 'NUL', 81h, 0, A0h
+                                 255 1673  
+6B.70:  53 43 52 4F 55 4E 47 45 
+        5F 4C 4D 22 00 81 00 A1  255 1674      "SCROUNGE_LM", 'NUL', 81h, 0, A1h
+6B.80:  53 43 52 4F 55 4E 47 45 
+        5F 4C 4C 22 00 81 00 A2  255 1675      "SCROUNGE_LL", 'NUL', 81h, 0, A2h
+                                 255 1676  
+6B.90:  6C 64 22 00 81 00 A3     255 1677      "ld", 'NUL', 81h, 0, A3h
+6B.97:  6C 72 22 00 81 00 A4     255 1678      "lr", 'NUL', 81h, 0, A4h
+6B.9E:  6C 69 22 00 81 00 A5     255 1679      "li", 'NUL', 81h, 0, A5h
+6B.A5:  6C 73 22 00 81 00 A6     255 1680      "ls", 'NUL', 81h, 0, A6h
+6B.AC:  6C 70 22 00 81 00 A7     255 1681      "lp", 'NUL', 81h, 0, A7h
+6B.B3:  6C 65 22 00 81 00 A8     255 1682      "le", 'NUL', 81h, 0, A8h
+6B.BA:  6C 61 22 00 81 00 A9     255 1683      "la", 'NUL', 81h, 0, A9h
+6B.C1:  6C 62 22 00 81 00 AA     255 1684      "lb", 'NUL', 81h, 0, AAh
+6B.C8:  6C 6A 22 00 81 00 AB     255 1685      "lj", 'NUL', 81h, 0, ABh
+6B.CF:  6C 77 22 00 81 00 AC     255 1686      "lw", 'NUL', 81h, 0, ACh
+6B.D6:  6C 74 22 00 81 00 AD     255 1687      "lt", 'NUL', 81h, 0, ADh
+6B.DD:  6C 66 22 00 81 00 AE     255 1688      "lf", 'NUL', 81h, 0, AEh
+6B.E4:  6C 63 22 00 81 00 AF     255 1689      "lc", 'NUL', 81h, 0, AFh
+6B.EB:  64 6F 22 00 81 00 B0     255 1690      "do", 'NUL', 81h, 0, B0h
+6B.F2:  64 6D 22 00 81 00 B1     255 1691      "dm", 'NUL', 81h, 0, B1h
+6B.F9:  64 6C 22 00 81 00 B2     255 1692      "dl", 'NUL', 81h, 0, B2h
+                                 255 1693  
+6C.00:  53 43 52 4F 55 4E 47 45 
+        5F 44 44 22 00 81 00 B3  255 1694      "SCROUNGE_DD", 'NUL', 81h, 0, B3h
+                                 255 1695  
+6C.10:  64 72 22 00 81 00 B4     255 1696      "dr", 'NUL', 81h, 0, B4h
+6C.17:  64 69 22 00 81 00 B5     255 1697      "di", 'NUL', 81h, 0, B5h
+6C.1E:  64 73 22 00 81 00 B6     255 1698      "ds", 'NUL', 81h, 0, B6h
+6C.25:  64 70 22 00 81 00 B7     255 1699      "dp", 'NUL', 81h, 0, B7h
+6C.2C:  64 65 22 00 81 00 B8     255 1700      "de", 'NUL', 81h, 0, B8h
+6C.33:  64 61 22 00 81 00 B9     255 1701      "da", 'NUL', 81h, 0, B9h
+6C.3A:  64 62 22 00 81 00 BA     255 1702      "db", 'NUL', 81h, 0, BAh
+6C.41:  64 6A 22 00 81 00 BB     255 1703      "dj", 'NUL', 81h, 0, BBh
+6C.48:  64 77 22 00 81 00 BC     255 1704      "dw", 'NUL', 81h, 0, BCh
+6C.4F:  64 74 22 00 81 00 BD     255 1705      "dt", 'NUL', 81h, 0, BDh
+6C.56:  64 66 22 00 81 00 BE     255 1706      "df", 'NUL', 81h, 0, BEh
+6C.5D:  64 63 22 00 81 00 BF     255 1707      "dc", 'NUL', 81h, 0, BFh
+6C.64:  72 6F 22 00 81 00 C0     255 1708      "ro", 'NUL', 81h, 0, C0h
+6C.6B:  72 6D 22 00 81 00 C1     255 1709      "rm", 'NUL', 81h, 0, C1h
+6C.72:  72 6C 22 00 81 00 C2     255 1710      "rl", 'NUL', 81h, 0, C2h
+6C.79:  72 64 22 00 81 00 C3     255 1711      "rd", 'NUL', 81h, 0, C3h
+                                 255 1712  
+6C.80:  53 43 52 4F 55 4E 47 45 
+        5F 52 52 22 00 81 00 C4  255 1713      "SCROUNGE_RR", 'NUL', 81h, 0, C4h
+                                 255 1714  
+6C.90:  72 69 22 00 81 00 C5     255 1715      "ri", 'NUL', 81h, 0, C5h
+6C.97:  72 73 22 00 81 00 C6     255 1716      "rs", 'NUL', 81h, 0, C6h
+6C.9E:  72 70 22 00 81 00 C7     255 1717      "rp", 'NUL', 81h, 0, C7h
+6C.A5:  72 65 22 00 81 00 C8     255 1718      "re", 'NUL', 81h, 0, C8h
+6C.AC:  72 61 22 00 81 00 C9     255 1719      "ra", 'NUL', 81h, 0, C9h
+6C.B3:  72 62 22 00 81 00 CA     255 1720      "rb", 'NUL', 81h, 0, CAh
+6C.BA:  72 6A 22 00 81 00 CB     255 1721      "rj", 'NUL', 81h, 0, CBh
+6C.C1:  72 77 22 00 81 00 CC     255 1722      "rw", 'NUL', 81h, 0, CCh
+6C.C8:  72 74 22 00 81 00 CD     255 1723      "rt", 'NUL', 81h, 0, CDh
+6C.CF:  72 66 22 00 81 00 CE     255 1724      "rf", 'NUL', 81h, 0, CEh
+6C.D6:  72 63 22 00 81 00 CF     255 1725      "rc", 'NUL', 81h, 0, CFh
+6C.DD:  69 6F 22 00 81 00 D0     255 1726      "io", 'NUL', 81h, 0, D0h
+6C.E4:  69 6D 22 00 81 00 D1     255 1727      "im", 'NUL', 81h, 0, D1h
+6C.EB:  69 6C 22 00 81 00 D2     255 1728      "il", 'NUL', 81h, 0, D2h
+6C.F2:  69 64 22 00 81 00 D3     255 1729      "id", 'NUL', 81h, 0, D3h
+6C.F9:  69 72 22 00 81 00 D4     255 1730      "ir", 'NUL', 81h, 0, D4h
+                                 255 1731  
+6D.00:  53 43 52 4F 55 4E 47 45 
+        5F 49 49 22 00 81 00 D5  255 1732      "SCROUNGE_II", 'NUL', 81h, 0, D5h
+                                 255 1733  
+6D.10:  69 73 22 00 81 00 D6     255 1734      "is", 'NUL', 81h, 0, D6h
+6D.17:  69 70 22 00 81 00 D7     255 1735      "ip", 'NUL', 81h, 0, D7h
+6D.1E:  69 65 22 00 81 00 D8     255 1736      "ie", 'NUL', 81h, 0, D8h
+6D.25:  69 61 22 00 81 00 D9     255 1737      "ia", 'NUL', 81h, 0, D9h
+6D.2C:  69 62 22 00 81 00 DA     255 1738      "ib", 'NUL', 81h, 0, DAh
+6D.33:  69 6A 22 00 81 00 DB     255 1739      "ij", 'NUL', 81h, 0, DBh
+6D.3A:  69 77 22 00 81 00 DC     255 1740      "iw", 'NUL', 81h, 0, DCh
+6D.41:  69 74 22 00 81 00 DD     255 1741      "it", 'NUL', 81h, 0, DDh
+6D.48:  69 66 22 00 81 00 DE     255 1742      "if", 'NUL', 81h, 0, DEh
+6D.4F:  69 63 22 00 81 00 DF     255 1743      "ic", 'NUL', 81h, 0, DFh
+6D.56:  73 6F 22 00 81 00 E0     255 1744      "so", 'NUL', 81h, 0, E0h
+6D.5D:  73 6D 22 00 81 00 E1     255 1745      "sm", 'NUL', 81h, 0, E1h
+6D.64:  73 6C 22 00 81 00 E2     255 1746      "sl", 'NUL', 81h, 0, E2h
+6D.6B:  73 64 22 00 81 00 E3     255 1747      "sd", 'NUL', 81h, 0, E3h
+6D.72:  73 72 22 00 81 00 E4     255 1748      "sr", 'NUL', 81h, 0, E4h
+6D.79:  73 69 22 00 81 00 E5     255 1749      "si", 'NUL', 81h, 0, E5h
+6D.80:  73 73 22 00 81 00 E6     255 1750      "ss", 'NUL', 81h, 0, E6h
+6D.87:  73 70 22 00 81 00 E7     255 1751      "sp", 'NUL', 81h, 0, E7h
+6D.8E:  73 65 22 00 81 00 E8     255 1752      "se", 'NUL', 81h, 0, E8h
+6D.95:  73 61 22 00 81 00 E9     255 1753      "sa", 'NUL', 81h, 0, E9h
+6D.9C:  73 62 22 00 81 00 EA     255 1754      "sb", 'NUL', 81h, 0, EAh
+6D.A3:  73 6A 22 00 81 00 EB     255 1755      "sj", 'NUL', 81h, 0, EBh
+6D.AA:  73 77 22 00 81 00 EC     255 1756      "sw", 'NUL', 81h, 0, ECh
+6D.B1:  73 74 22 00 81 00 ED     255 1757      "st", 'NUL', 81h, 0, EDh
+6D.B8:  73 66 22 00 81 00 EE     255 1758      "sf", 'NUL', 81h, 0, EEh
+6D.BF:  73 63 22 00 81 00 EF     255 1759      "sc", 'NUL', 81h, 0, EFh
+6D.C6:  70 6F 22 00 81 00 F0     255 1760      "po", 'NUL', 81h, 0, F0h
+6D.CD:  70 6D 22 00 81 00 F1     255 1761      "pm", 'NUL', 81h, 0, F1h
+6D.D4:  70 6C 22 00 81 00 F2     255 1762      "pl", 'NUL', 81h, 0, F2h
+6D.DB:  70 64 22 00 81 00 F3     255 1763      "pd", 'NUL', 81h, 0, F3h
+6D.E2:  70 72 22 00 81 00 F4     255 1764      "pr", 'NUL', 81h, 0, F4h
+6D.E9:  70 69 22 00 81 00 F5     255 1765      "pi", 'NUL', 81h, 0, F5h
+6D.F0:  70 73 22 00 81 00 F6     255 1766      "ps", 'NUL', 81h, 0, F6h
+6D.F7:  70 70 22 00 81 00 F7     255 1767      "pp", 'NUL', 81h, 0, F7h
+6D.FE:  70 65 22 00 81 00 F8     255 1768      "pe", 'NUL', 81h, 0, F8h
+6E.05:  70 61 22 00 81 00 F9     170 1769      "pa", 'NUL', 81h, 0, F9h
+6E.0C:  70 62 22 00 81 00 FA     170 1770      "pb", 'NUL', 81h, 0, FAh
+6E.13:  70 6A 22 00 81 00 FB     170 1771      "pj", 'NUL', 81h, 0, FBh
+6E.1A:  70 77 22 00 81 00 FC     170 1772      "pw", 'NUL', 81h, 0, FCh
+6E.21:  70 74 22 00 81 00 FD     170 1773      "pt", 'NUL', 81h, 0, FDh
+6E.28:  70 66 22 00 81 00 FE     170 1774      "pf", 'NUL', 81h, 0, FEh
+6E.2F:  70 63 22 00 81 00 FF     170 1775      "pc", 'NUL', 81h, 0, FFh
+                                 170 1776  
+6E.36:  49                       170 1777      'I'
+6E.37:  6E                       170 1778      'n'
+6E.38:  74                       170 1779      't'
+6E.39:  65                       170 1780      'e'
+6E.3A:  72                       170 1781      'r'
+6E.3B:  70                       170 1782      'p'
+6E.3C:  72                       170 1783      'r'
+6E.3D:  65                       170 1784      'e'
+6E.3E:  74                       170 1785      't'
+6E.3F:  00                       170 1786      'NUL'
+6E.40:  01                       170 1787      1
+6E.41:  20                       170 1788      20h
+6E.42:  00                       170 1789      00h
+6E.43:  4D                       170 1790      'M'
+6E.44:  75                       170 1791      'u'
+6E.45:  6C                       170 1792      'l'
+6E.46:  38                       170 1793      '8'
+6E.47:  00                       170 1794      'NUL'
+6E.48:  01                       170 1795      1
+6E.49:  21                       170 1796      21h
+6E.4A:  00                       170 1797      00h
+6E.4B:  44                       170 1798      'D'
+6E.4C:  69                       170 1799      'i'
+6E.4D:  76                       170 1800      'v'
+6E.4E:  4D                       170 1801      'M'
+6E.4F:  6F                       170 1802      'o'
+6E.50:  64                       170 1803      'd'
+6E.51:  38                       170 1804      '8'
+6E.52:  00                       170 1805      'NUL'
+6E.53:  01                       170 1806      1
+6E.54:  22                       170 1807      22h
+6E.55:  00                       170 1808      00h
+6E.56:  44                       170 1809      'D'
+6E.57:  4C                       170 1810      'L'
+6E.58:  55                       170 1811      'U'
+6E.59:  50                       170 1812      'P'
+6E.5A:  00                       170 1813      'NUL'
+6E.5B:  01                       170 1814      1
+6E.5C:  23                       170 1815      23h
+6E.5D:  00                       170 1816      00h
+6E.5E:  56                       170 1817      'V'
+6E.5F:  53                       170 1818      'S'
+6E.60:  72                       170 1819      'r'
+6E.61:  63                       170 1820      'c'
+6E.62:  68                       170 1821      'h'
+6E.63:  00                       170 1822      'NUL'
+6E.64:  01                       170 1823      1
+6E.65:  24                       170 1824      24h
+6E.66:  00                       170 1825      00h
+6E.67:  50                       170 1826      'P'
+6E.68:  72                       170 1827      'r'
+6E.69:  4D                       170 1828      'M'
+6E.6A:  73                       170 1829      's'
+6E.6B:  67                       170 1830      'g'
+6E.6C:  00                       170 1831      'NUL'
+6E.6D:  01                       170 1832      1
+6E.6E:  25                       170 1833      25h
+6E.6F:  00                       170 1834      00h
+6E.70:  72                       170 1835      'r'
+6E.71:  65                       170 1836      'e'
+6E.72:  61                       170 1837      'a'
+6E.73:  64                       170 1838      'd'
+6E.74:  79                       170 1839      'y'
+6E.75:  00                       170 1840      'NUL'
+6E.76:  02                       170 1841      2
+6E.77:  26                       170 1842      26h
+6E.78:  00                       170 1843      00h
+6E.79:  73                       170 1844      's'
+6E.7A:  72                       170 1845      'r'
+6E.7B:  63                       170 1846      'c'
+6E.7C:  00                       170 1847      'NUL'
+6E.7D:  02                       170 1848      2
+6E.7E:  27                       170 1849      27h
+6E.7F:  00                       170 1850      00h
+6E.80:  64                       170 1851      'd'
+6E.81:  73                       170 1852      's'
+6E.82:  74                       170 1853      't'
+6E.83:  00                       170 1854      'NUL'
+6E.84:  02                       170 1855      2
+6E.85:  28                       170 1856      28h
+6E.86:  00                       170 1857      00h
+6E.87:  69                       170 1858      'i'
+6E.88:  6E                       170 1859      'n'
+6E.89:  73                       170 1860      's'
+6E.8A:  00                       170 1861      'NUL'
+6E.8B:  02                       170 1862      2
+6E.8C:  29                       170 1863      29h
+6E.8D:  00                       170 1864      00h
+6E.8E:  64                       170 1865      'd'
+6E.8F:  65                       170 1866      'e'
+6E.90:  6C                       170 1867      'l'
+6E.91:  00                       170 1868      'NUL'
+6E.92:  02                       170 1869      2
+6E.93:  2A                       170 1870      2Ah
+6E.94:  00                       170 1871      00h
+6E.95:  61                       170 1872      'a'
+6E.96:  64                       170 1873      'd'
+6E.97:  64                       170 1874      'd'
+6E.98:  00                       170 1875      'NUL'
+6E.99:  02                       170 1876      2
+6E.9A:  2B                       170 1877      2Bh
+6E.9B:  00                       170 1878      00h
+6E.9C:  6C                       170 1879      'l'
+6E.9D:  73                       170 1880      's'
+6E.9E:  00                       170 1881      'NUL'
+6E.9F:  02                       170 1882      2
+6E.A0:  2C                       170 1883      2Ch
+6E.A1:  00                       170 1884      00h
+6E.A2:  61                       170 1885      'a'
+6E.A3:  73                       170 1886      's'
+6E.A4:  6D                       170 1887      'm'
+6E.A5:  00                       170 1888      'NUL'
+6E.A6:  02                       170 1889      2
+6E.A7:  2D                       170 1890      2Dh
+6E.A8:  00                       170 1891      00h
+                                 170 1892  
+                                 170 1893  P[VTOPPAGE]
+6E.A9:  00                       170 1894  O[VTOPOFFSET] 'NUL'
+                                 170 1895  
+                                 170 1896  
+                                 170 1897  ;********* ******************************************************************
+                                 170 1898  P[LOXBASE]7Fh
+                                 170 1899  ;********* ******************************************************************
+                                 170 1900  
+7F.00:  48 65 6C 6C 6F 57 6F 72 
+        6D 21 47 6F 6F 64 62 79 
+        74 65 77 6F 72 6C 00     255 1901  "Hello Worm! Good byte, world" 00h
+                                 255 1902  
+7F.F7:  80                       255 1903  O[ARG]F7h     80h        (Offset in LOXBASE of current cmd line argument str)
+7F.F8:  00                       255 1904  O[POS]        00h        (Current position in output text buffer)
+7F.F9:  6E                       255 1905  O[VTP]        VTOPPAGE
+7F.FA:  A9                       255 1906  O[VTO]        VTOPPAGE.VTOPOFFSET
+7F.FB:  FF                       255 1907  O[DESTP]      FFh
+7F.FC:  00                       255 1908  O[DESTO]      00h
+7F.FD:  FF                       255 1909  O[SRCP]       FFh
+7F.FE:  00                       255 1910  O[SRCO]       00h
+7F.FF:  00                       255 1911  O[ECODE]      00h
