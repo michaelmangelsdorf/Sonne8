@@ -11,381 +11,280 @@ P[COLD]0
         nc Interpret
         END (Application specific opcode END exits LOX.)
 
+
 ;************** *************************************************************
 P[Interpret]20h (Look up a word in the dictionary)
 ;************** *************************************************************
 
-        OWN, i6
-        nd LOXBASE, no LOXBASE.ARG, mo
-        nc VSrch
-        nt >InterpSucc (Branch if result non-zero)
+         OWN, i6
+         nd LOXBASE, no LOXBASE.ARG, mo
+         nc VSrch
+         nt >InterpSucc (Branch if result non-zero)
 
-            (Look-up failed)
-            nr 1, nc PrMsg
-            6i, RET
+         (Look-up failed)
+         nr 1, nc PrMsg
+         6i, RET
 
-        O[InterpSucc]
+      O[InterpSucc]
 
-            (Look-up succeeded, check correct type of entry)
-            o0    (Save target offset)
-            no 2  (Compare to type 2 - CMD)
-            REO   (Target type still in R)
+         (Look-up succeeded, check correct type of entry)
+         o0    (Save target offset)
+         no 2  (Compare to type 2 - CMD)
+         REO   (Target type still in R)
 
-            nf >InterpRFail
+         nf >InterpRFail
 
-            (Jump to CMD)
-            0i    (Restore target offset)
-            COR   (Target page still in G)
+         (Jump to CMD)
+         0i    (Restore target offset)
+         COR   (Target page still in G)
 
       O[InterpRFail]
 
-            nr 2, nc PrMsg
-            6i, RET
+         nr 2, nc PrMsg
+         6i, RET
 
 ;*****************
         O[NextArg]
 ;*****************
 
-           OWN        (Advance LOX ARG PTR to next string)
-           i6
-           nd LOXBASE
-           no LOXBASE.ARG
-           mo
-           nc SkipToNULL (DO points to char following NULL)
-           nd LOXBASE      (Ignore updated page index in D)
-           IDO
-           no LOXBASE.ARG
-           rm         (Store updated offset in ARG variable)
-           6i
-           RET
+         OWN i6          (Advance LOX ARG PTR to next string)
+         nd LOXBASE
+         no LOXBASE.ARG
+         mo
+         nc SkipToNULL   (DO points to char following NULL)
+         nd LOXBASE      (Ignore updated page index in D)
+         IDO
+         no LOXBASE.ARG
+         rm              (Store updated offset in ARG variable)
+         6i RET
+
 
 ;****** *********************************************************************
 P[Mul8]+  (Multiplies R by O result in R and O)
 ;****** *********************************************************************
 
-           OWN i6        (Save return pointer in L7/L6)
-           o1            (Multiplicand into L1, turns into low order result)
-           r0            (Multiplier into L0)
-           CLR r2        (Clear high-order result, copy to L2)
-           ni 07h        (Initilise loop counter, 8 bits)
+         OWN i6        (Save return pointer in L7/L6)
+         o1            (Multiplicand into L1, turns into low order result)
+         r0            (Multiplier into L0)
+         CLR r2        (Clear high-order result, copy to L2)
+         ni 07h        (Initilise loop counter, 8 bits)
 
-         O[Mul8Loop]
+      O[Mul8Loop]
       
-           no 01h        (Bit mask for LSB)
-           1r AND        (Check if multiplicand has LSB set)
-           nf >Mul8Skip  (Skip if not)
-           0r 2o ADD r2  (Add multiplier to high order result)
+         no 01h        (Bit mask for LSB)
+         1r AND        (Check if multiplicand has LSB set)
+         nf >Mul8Skip  (Skip if not)
+         0r 2o ADD r2  (Add multiplier to high order result)
 
-         O[Mul8Skip]
+      O[Mul8Skip]
 
-           no 01h        (Bit mask for LSB)
-           2r AND r3     (Flag whether high order LSB is set)
-           1r SRR r1      (Shift low-order result right)
-           2r SRR r2       (Shift high-order result right)
+         no 01h        (Bit mask for LSB)
+         2r AND r3     (Flag whether high order LSB is set)
+         1r SRR r1      (Shift low-order result right)
+         2r SRR r2       (Shift high-order result right)
 
-           3r nf >Mul8Done  (Check flag from earlier - HO LSB set?)
-           nr 80h          (Bit mask for MSB)
-           1o IOR r1     (Handle shift-result carry bit into MSB)
+         3r nf >Mul8Done  (Check flag from earlier - HO LSB set?)
+         nr 80h          (Bit mask for MSB)
+         1o IOR r1     (Handle shift-result carry bit into MSB)
 
-         O[Mul8Done]
+      O[Mul8Done]
 
-           nw <Mul8Loop
-           1o            (Result low-order)
-           2r            (Result high-order)
-           6i RET        (Restore return pointer from L7/L6)
+         nw <Mul8Loop
+         1o            (Result low-order)
+         2r            (Result high-order)
+         6i RET        (Restore return pointer from L7/L6)
 
 
 ;********* ******************************************************************
-P[DivMod8]+
+P[DivMod8]+  (Divide R by G, return quotient in R, remainder in G)
 ;********* ******************************************************************
 
-           OWN        (Divide R by G, return quotient in R, remainder in G)
-           i6
-           r0         (Save dividend)
-           o1         (Save divisor)
-           ni 00h        (Initialise shift counter to number of positions)
-                        (of first 1-bit)
-           nr 00h        (Initialise quotient to zero)
-           r3
-           1r         (Skip if divisor is zero)
-           nf >DivMod8Quit
-           nr         (Set MSB mask)
-           80h
-           r5
+         OWN i6
+         r0         (Save dividend)
+         o1         (Save divisor)
+         ni 00h     (Initialise shift counter to number of positions
+                     of first 1-bit)
 
-        O[DivMod8Sh]
+         nr 00h r3          (Initialise quotient to zero)
+         1r nf >DivMod8Quit (Skip if divisor is zero)
+      
+         nr 80h r5        (Set MSB mask)
 
-           5r         (Shift divisor left until first 1 bit at MSB position)
-           1o
-           AND        (Compare to mask)
-           nt >DivMod8Div (Exit shift loop once MSB set)
-           SLO        (Shift divisor)
-           r1         (Store result)
-           ir         (Increment shift counter)
-           P1
-           ri
-           nj <DivMod8Sh
+      O[DivMod8Sh]
 
-        O[DivMod8Div]
+         5r      (Shift divisor left until first 1 bit at MSB position)
+         1o AND          (Compare to mask)
+         nt >DivMod8Div  (Exit shift loop once MSB set)
+         SLO             (Shift divisor)
+         r1              (Store result)
+         ir P1 ri        (Increment shift counter)
+         nj <DivMod8Sh
 
-           3o         (Shift quotient left)
-           SLO
-           r3         (Store shifted quotient for latter)
-           1r         (Negate divisor)
-           OCR        (Do this by getting the ones'complement)
-           P1         (and adding 1 to it)
-           r4         (Save this)
-           0o         (Get the dividend and see if adding the negated divisor)
-           CAR        (produces a borrow bit)
-           nf         (If not, don't accept the subtraction)
-           >DivMod8Rep
-           4r         (Accept subtraction result)
-           ADD        (Dividend still in O)
-           r0         (Store new dividend)
-           3r         (Increment quotient)
-           P1
-           r3
+      O[DivMod8Div]
 
-        O[DivMod8Rep]
+         3o SLO     (Shift quotient left)
+         r3         (Store shifted quotient for latter)
+         1r OCR P1  (Negate divisor)
+         r4         (Save this)
+         0o CAR     (Get dividend and see if adding the negated divisor
+                     produces a borrow bit)
+         
+         nf >DivMod8Rep  (If not, don't accept the subtraction)
+         
+         4r ADD     (Accept subtraction result to dividend in O)
+         r0         (Store new dividend)
+         3r P1 r3   (Increment quotient)
 
-           1r
-           SRR        (Shift divisor right for next subtraction)
-           r1
-           nw         (Decrement counter)
-           <DivMod8Div (Branch back if not zero)
+      O[DivMod8Rep]
 
-        O[DivMod8Quit]
+         1r SRR r1 (Shift divisor right for next subtraction)
+         
+         nw <DivMod8Div (Branch back if not zero, decrement I counter)
 
-           3r
-           0o
-           6i
-           RET
+      O[DivMod8Quit]
+
+         3r 0o  (Save quotient and remainder)
+         6i RET
+
 
 ;************ ***************************************************************
 P[SkipToNULL]+
 ;************ ***************************************************************
 
-           OWN        (Advance string pointer to next NULL char)
-           i6
+         OWN i6  (Advance string pointer to next NULL char)
 
-        O[SkipNFind0] mr         (DO points to char)
+      O[SkipNFind0]
+      
+         mr              (D:O points to char)
+         nf >SkipNAt0    (If char zero, done)
+         na 1            (Else increment D:O and check again)
+         nj <SkipNFind0
 
-           nf         (If char zero, done)
-           >SkipNAt0
-           na         (Else increment DO and check again)
-           1
-           nj <SkipNFind0
+      O[SkipNAt0] 6i RET
 
-        O[SkipNAt0]
-           6i
-           RET
 
 ;******* ********************************************************************
 P[VSrch]+
 ;******* ********************************************************************
 
-           OWN        (VOCAB Look-UP, search string address in D/O)
-           i6
-           d0         (Search zero terminated string in this page)
-           o1         (at this offset)
-           d4         (Create working copies)
-           o5
-           nd         (Set Data Pointer to first entry)
-           BASEVOCAB
-           no
-           00h
-           d2         (Current dict base ptr)
-           o3         (and offs)
+         OWN, i6     (VOCAB Look-UP, search string address in D/O)
+         d0         (Search zero terminated string in this page)
+         o1          (at this offset)
+         d4 o5        (Create working copies)
+         nd BASEVOCAB (Set Data Pointer to first entry)
+         no 00h
+         d2 o3      (Current dict base ptr)
+ 
+      O[VSrchNxtCh]
 
-        O[VSrchNxtCh]
+         4d 5o, mr   (Compare current char in dict to char in search str)
+         2d 3o, mo   (Char in dict)
+         
+         REO nf >VSrchMismat
+         IDO nf >VSrchFound  (Matching chars, success if both NUL)
+         
+         4d 5o na 1 d4 o5  (Advance sstring ptr)
+         2d 3o na 1 d2 o3  (Advance dict ptr)
 
-           4d         (Compare current char in dict to char in search str)
-           5o
-           mr         (Char in sstr)
-           2d
-           3o
-           mo         (Char in dict)
-           REO
-           nf >VSrchMismat
-           IDO
-           nf         (Matching chars, success if both NUL)
-           >VSrchFound
-           4d
-           5o
-           na         (Advance sstring ptr)
-           1
-           d4
-           o5
-           2d
-           3o
-           na 1        (Advance dict ptr)
-           d2
-           o3
-           nj <VSrchNxtCh (Branch back, check next character)
+         nj <VSrchNxtCh  (Branch back, check next character)
 
-        O[VSrchMismat]
+      O[VSrchMismat]
 
-           0r         (Reset sstring ptr)
-           r4
-           1r
-           r5
-           2d         (Find next NULL byte)
-           3o
-           nc SkipToNULL
-           d2
-           o3
-           na 4        (Skip NUL char and Data Bytes - Type+Page+Offs)
-           d2
-           o3
-           mr         (Check if first byte of next data entry is NUL - End of list)
-           nf >VSrchFail
-           nj <VSrchNxtCh
+         0r r4  (Reset sstring ptr)
+         1r r5
+         2d 3o  (Find next NULL byte)
 
-        O[VSrchFound]
+         nc SkipToNULL
+         d2 o3 na 4 (Skip NUL char and Data Bytes - Type+Page+Offs)
+         d2 o3 mr   (Check if first byte of next data entry is NUL - End of list)
+         
+         nf >VSrchFail
+         nj <VSrchNxtCh
 
-           2d
-           3o
-           na         (Advance vocab ptr to type byte)
-           1
-           mr         (Type)
-           r2
-           na
-           1
-           mr         (Page)
-           r3
-           na
-           1
-           mo         (Offs)
-           3d
-           2r
-           6i
-           RET
+      O[VSrchFound]
 
-        O[VSrchFail]
+         2d 3o na 1  (Advance vocab ptr to type byte)
+         mr r2 na 1  (Type)
+         mr r3 na 1  (Page)
+         mo 3d 2r    (Offs)
 
-           CLR        (Not found if result type = 0)
-           6i
-           RET
+         6i RET
+
+      O[VSrchFail]
+
+         CLR  (Not found: type result = 0)
+         6i RET
+
 
 ;******* ********************************************************************
 P[PrMsg]+
 ;******* ********************************************************************
 
-           OWN
-           i6
-           r0
-           nd PrMsg
-           d1
-           no >PrMsg0
-           o2
+         OWN i6
+         r0 nd PrMsg, d1
+         no >PrMsg0, o2
 
-        O[PrMsgNxtCh]
+      O[PrMsgNxtCh]
 
-           1d
-           2o
+         1d 2o mr
+         0o (Compare message IDs)
+         REO
+         nt >PrMsgFound
+
+      O[PrMsgSkip]
+
+           2o na 1 o2     (Increment to next msg char)
            mr
-           0o         (Compare message IDs)
-           REO
-           nt
-           >PrMsgFound
+           
+           nf >PrMsgChk0
+           nj <PrMsgSkip  (This wasn't a NULL, keep incrementing)
 
-        O[PrMsgSkip]
 
-           2o
-           na         (Increment to next msg char)
-           1
+      O[PrMsgChk0]
+
+           na 1 (Skip over the NULL char)
            o2
-           mr
-           nf
-           >PrMsgChk0
-           nj         (This wasn't a NULL, keep incrementing)
-           <PrMsgSkip
-
-        O[PrMsgChk0]
-
-           na 1       (Skip over the NULL char)
-           o2
-           mr         (Check double NULL)
+           mr  (Check double NULL)
+           
            nt <PrMsgNxtCh (If it was not NULL, check next entry - then it's an ID)
            nj >PrMsgQuit  (Lookup failed)
 
-        O[PrMsgFound]
+      O[PrMsgFound]
 
            nd LOXBASE
            no LOXBASE.POS
-           mo         (Get current printing POS)
-           o3
+           mo o3 (Get current printing POS)
 
-        O[PrMsgCpy]
+      O[PrMsgCpy]
 
-           1d         (Page of src char ptr)
-           2o         (Offset of src char ptr)
-           na 1        (Advance to next char)
-           o2
-           mr         (Char to print)
-           nf         (Finished if NULL terminator)
-           >PrMsgDone
-           nd
-           LOXBASE
-           3o
-           rm         (Store character in output buffer at POS)
-           na
-           1
-           o3         (Advance printing pos)
+           1d 2o  (Pointer to src char)
+           na 1   (Advance to next char)
+           o2 mr  (Char to print)
+           
+           nf >PrMsgDone (Finished if NULL terminator)
+           nd LOXBASE, 3o
+           rm (Store character in output buffer at POS)
+           na 1 o3 (Advance printing pos)
+           
            nj <PrMsgCpy
 
-        O[PrMsgDone]
+      O[PrMsgDone]
 
-           nd         (Update POS)
-           LOXBASE
+           nd LOXBASE (Update POS)
            no LOXBASE.POS
-           3r
-           rm
+           3r rm
 
-        O[PrMsgQuit]
+      O[PrMsgQuit] 6i RET
 
-           6i
-           RET
+***************
+      O[PrMsg0]
+***************
 
-        O[PrMsg0]
+           0, "Ready",     'NUL'
+           1, "Not found", 'NUL'
+           2, "Not a cmd", 'NUL'
+           3, "Crater",    'NUL'
 
-            0
-           'R'
-           'e'
-           'a'
-           'd'
-           'y'
-           'NUL'
-           1
-           'N'
-           'o'
-           't'
-           'SP'
-           'f'
-           'o'
-           'u'
-           'n'
-           'd'
-           'NUL'
-           2
-           'N'
-           'o'
-           't'
-           'SP'
-           'a'
-           'SP'
-           'c'
-           'm'
-           'd'
-           'NUL'
-           3
-           'C'
-           'r'
-           'a'
-           't'
-           'e'
-           'r'
-           'NUL'
 
 ;******* ********************************************************************
 P[ready]+
