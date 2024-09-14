@@ -23,7 +23,7 @@ Goldie/LOX assembly log
 Page.Offset  Object code  Lid Line# Source text
 
                            048 0062  ;****** ***************************************************************
-                           048 0063  P[Mul8]+  (Multiplies R by O result in R and O)
+                           048 0063  P[Mul8]+  (Multiplies R by O, result in R and O)
                            048 0064  ;****** ***************************************************************
                            048 0065  
 21.00:  07 5E              043 0066        OWN i6        (Save return pointer in L7/L6)
