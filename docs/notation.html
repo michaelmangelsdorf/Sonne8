@@ -28,7 +28,7 @@
           </p>
           <h2>Comments</h2>
           <p>
-            Comments are introduced by a semicolon (";"). Everything on the same line after the semicolon is ignored.
+            Place comments into parentheses (nesting is not implemented). A semicolon (";") as the first character of a line works as a line comment.
           </p>
           <h2>Phrasing</h2>
           <p>
@@ -46,13 +46,15 @@
           <p>Characters enclosed in double quotation marks such as "Hello World" are assembled to strings of characters.</p>
           <h2>Page Labels</h2>
           <p>
-            Page labels are alphanumeric identifiers with an at-sign prefix ("@xyz").
-            Page labels mark the beginning of pages (offset=0), and only one page label is allowed per page.
-            Only page labels can be targets of CALL and TRAP instructions. They can be used as literals anywhere in the code.
+            P[label] defines a label with the page index of the object code pointer as its value.
+            P[label]index does the same, but also sets the page index of the pointer to 'index'.
+            P[label]+ defines label, and advances the page index of the pointer by 1.
+            Page indices can be targets of CALL and TRAP instructions. They can be used as literals anywhere in the code.
           </p>
           <h2>Offset Labels</h2>
           <p>
-            Offset labels are identifiers *ending* with an at-sign ("xyz@").
+            O[label] defines a label with the offset of the object code pointer as its value.
+            O[label]offset does the same, but also sets the offset of the pointer to 'offset'.
             Offset labels can be jumped to, or they can represent address offsets within a page.
           </p>
           <h2>Trap Labels</h2>
@@ -60,6 +62,8 @@
             An asterisk placed before a page label encodes a trap call instruction to that address.
             Such label references will generate an opcode that will trigger a TRAP and call the handler function referenced by the label.
           </p>
+          <h2>Constants</h2>
+          <p>P[label]value defines a constant.</p>
           <h2>Label References</h2>
           <p>
             Page and offset labels are referenced by prefixing their identifier with "&lt;" (for backward references, i.e. the label is defined earlier in the source code than the reference to it), or with "&gt;" (forward reference, i.e. the label is defined later than the reference to it in the source code). If a label is not unique, the reference goes to the nearest occurrence of it in the given direction. A label reference is just a numerical value and can be used as a literal anywhere in the code.
