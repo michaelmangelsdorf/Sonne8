@@ -481,19 +481,22 @@ func wrDebugTxt() {
 
 	w := bufio.NewWriter(f)
 
-	fmt.Fprintf(w, "Goldie/LOX assembly log\n\n")
-	fmt.Fprintf(w, "Frame.Offset     Object code        Lid Line# Source text\n\n")
+	fmt.Fprintf(w, "Goldie/LOX assembly log\n")
+	fmt.Fprintf(w, "Frame.Offset     Object code     Lid Line# Source text\n\n")
 
 	var fill int
 	var i byte
 	var j byte
 	var pos int
 	var firstLine bool
+	var overline bool
 	var lid0 byte
+
 	for line := 1; line <= len(srcLine); line++ {
 
 		fill = 0
 		pos = 0
+		overline = false
 		if line == blameLine[i][j] {
 			lid0 = lid[i]
 			fmt.Fprintf(w, "%.02X.%.02X:  ", i, j)
@@ -504,6 +507,7 @@ func wrDebugTxt() {
 				if (pos%8) == 0 && !firstLine {
 					fmt.Fprintf(w, "\n        ")
 					fill = 8
+					overline = true
 				}
 				firstLine = false
 				fmt.Fprintf(w, "%.02X ", vm.ram[i][j])
@@ -521,6 +525,9 @@ func wrDebugTxt() {
 		}
 
 		fmt.Fprintf(w, "%.3d %.04d  %s\n", lid0, line, srcLine[line-1])
+		if overline {
+			fmt.Fprintf(w, "\n")
+		}
 		w.Flush()
 
 		//fmt.Printf("p%d o%d l%d bl%d\n", i, j, line, blameLine[i][j])

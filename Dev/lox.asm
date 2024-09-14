@@ -19,20 +19,20 @@ P[Interpret]20h (Look up a word in the dictionary)
         nd LOXBASE, no LOXBASE.ARG, mo
         nc VSrch
         nt >InterpSucc (Branch if result non-zero)
-        
+
             (Look-up failed)
             nr 1, nc PrMsg
             6i, RET
 
         O[InterpSucc]
-        
+
             (Look-up succeeded, check correct type of entry)
             o0    (Save target offset)
             no 2  (Compare to type 2 - CMD)
             REO   (Target type still in R)
-            
+
             nf >InterpRFail
-        
+
             (Jump to CMD)
             0i    (Restore target offset)
             COR   (Target page still in G)
@@ -60,7 +60,7 @@ P[Interpret]20h (Look up a word in the dictionary)
            RET
 
 ;****** *********************************************************************
-P[Mul8]
+P[Mul8]+
 ;****** *********************************************************************
 
            OWN        (Multiplies R by O result in R and O)
@@ -105,7 +105,7 @@ O[Mul8Done]
            RET
 
 ;********* ******************************************************************
-P[DivMod8]
+P[DivMod8]+
 ;********* ******************************************************************
 
            OWN        (Divide R by G, return quotient in R, remainder in G)
@@ -171,7 +171,7 @@ P[DivMod8]
            RET
 
 ;************ ***************************************************************
-P[SkipToNULL]
+P[SkipToNULL]+
 ;************ ***************************************************************
 
            OWN        (Advance string pointer to next NULL char)
@@ -190,7 +190,7 @@ P[SkipToNULL]
            RET
 
 ;******* ********************************************************************
-P[VSrch]
+P[VSrch]+
 ;******* ********************************************************************
 
            OWN        (VOCAB Look-UP, search string address in D/O)
@@ -277,7 +277,7 @@ P[VSrch]
            RET
 
 ;******* ********************************************************************
-P[PrMsg]
+P[PrMsg]+
 ;******* ********************************************************************
 
            OWN
@@ -357,7 +357,7 @@ P[PrMsg]
            RET
 
         O[PrMsg0]
-        
+
             0
            'R'
            'e'
@@ -397,7 +397,7 @@ P[PrMsg]
            'NUL'
 
 ;******* ********************************************************************
-P[ready]
+P[ready]+
 ;******* ********************************************************************
 
            CLR
@@ -408,7 +408,7 @@ P[ready]
            RET
 
 ;********* ******************************************************************
-P[NextArg]
+P[NextArg]+
 ;********* ******************************************************************
 
            OWN        (********** Advance LOX ARG PTR to next string ****************)
@@ -425,31 +425,6 @@ P[NextArg]
            6i
            RET
 
-;********* ******************************************************************
-P[LOXBASE]
-;********* ******************************************************************
-
-           'H'
-           'e'
-           'l'
-           'l'
-           'SP'
-           'W'
-           'o'
-           'r'
-           'l'
-           'd'
-           00h
-
-        O[ARG]7Fh     80h        (Offset in LOXBASE of current cmd line argument str)
-        O[POS]        00h        (Current position in output text buffer - offset in LOXBASE)
-        O[VTP]        VTOPPAGE   (Hardcoded! Page index of final entry in symtab )
-        O[VTO]        VTOPOFFSET (Hardcoded! Check lox.c source-code. Offset of final entry)
-        O[DESTP]      FFh
-        O[DESTO]      00h
-        O[SRCP]       FFh
-        O[SRCO]       00h
-        O[ECODE]      00h
 
 ;************** *************************************************************
 P[BASEVOCAB]40h
@@ -1662,7 +1637,7 @@ P[BASEVOCAB]40h
     "END", 'NUL', 81h, 0, 81h
 
     "SCROUNGE_NL", 'NUL', 81h, 0, 82h
-    
+
     "nd", 'NUL', 81h, 0, 83h
     "nr", 'NUL', 81h, 0, 84h
     "ni", 'NUL', 81h, 0, 85h
@@ -1680,7 +1655,7 @@ P[BASEVOCAB]40h
 
     "SCROUNGE_MM", 'NUL', 81h, 0, 91h
     "SCROUNGE_ML", 'NUL', 81h, 0, 92h
-    
+
     "md", 'NUL', 81h, 0, 93h
     "mr", 'NUL', 81h, 0, 94h
     "mi", 'NUL', 81h, 0, 95h
@@ -1698,7 +1673,7 @@ P[BASEVOCAB]40h
 
     "SCROUNGE_LM", 'NUL', 81h, 0, A1h
     "SCROUNGE_LL", 'NUL', 81h, 0, A2h
-    
+
     "ld", 'NUL', 81h, 0, A3h
     "lr", 'NUL', 81h, 0, A4h
     "li", 'NUL', 81h, 0, A5h
@@ -1717,7 +1692,7 @@ P[BASEVOCAB]40h
     "dl", 'NUL', 81h, 0, B2h
 
     "SCROUNGE_DD", 'NUL', 81h, 0, B3h
-    
+
     "dr", 'NUL', 81h, 0, B4h
     "di", 'NUL', 81h, 0, B5h
     "ds", 'NUL', 81h, 0, B6h
@@ -1736,7 +1711,7 @@ P[BASEVOCAB]40h
     "rd", 'NUL', 81h, 0, C3h
 
     "SCROUNGE_RR", 'NUL', 81h, 0, C4h
-    
+
     "ri", 'NUL', 81h, 0, C5h
     "rs", 'NUL', 81h, 0, C6h
     "rp", 'NUL', 81h, 0, C7h
@@ -1755,7 +1730,7 @@ P[BASEVOCAB]40h
     "ir", 'NUL', 81h, 0, D4h
 
     "SCROUNGE_II", 'NUL', 81h, 0, D5h
-    
+
     "is", 'NUL', 81h, 0, D6h
     "ip", 'NUL', 81h, 0, D7h
     "ie", 'NUL', 81h, 0, D8h
@@ -1799,5 +1774,40 @@ P[BASEVOCAB]40h
     "pf", 'NUL', 81h, 0, FEh
     "pc", 'NUL', 81h, 0, FFh
 
-    'NUL' (End of Table)
+    "Interpret", 'NUL', 1, Interpret, 00h
+    "Mul8",      'NUL', 1, Mul8,      00h
+    "DivMod8",   'NUL', 1, DivMod8,   00h
+    "VSrch",     'NUL', 1, VSrch,     00h
+    "PrMsg",     'NUL', 1, PrMsg,     00h
+    "ready",     'NUL', 2, ready,     00h
+
+P[VTOPPAGE]
+O[VTOPOFFSET] 'NUL'
+
+
+;********* ******************************************************************
+P[LOXBASE]7Fh
+;********* ******************************************************************
+
+    (The region from 00h to 7Fh of this page is the LOX output buffer.
+    The VM when executing puts text here, which gets output when
+    'lox' is run from the command line.)
+
+    "Hello Worm! Good byte, world" 00h
+
+    (The region from 80h to EFh is populated with 'lox' command line
+     arguments, null separated.)
+
+    (F0h to end of page are LOX system variables - don't relocate!)
+
+    O[UNUSED]F0h  0h 0h 0h 0h 0h 0h 0h 
+    O[ARG]        80h   (Offset in LOXBASE of current cmd line argument str)
+    O[POS]        00h        (Current position in output text buffer)
+    O[VTP]        VTOPPAGE
+    O[VTO]        VTOPPAGE.VTOPOFFSET
+    O[DESTP]      FFh
+    O[DESTO]      00h
+    O[SRCP]       FFh
+    O[SRCO]       00h
+    O[ECODE]      00h
 
