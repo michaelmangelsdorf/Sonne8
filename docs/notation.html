@@ -26,6 +26,14 @@
             Bit positions are numbered starting from 0 (LSB - least significant bit) to 7 (MSB), usually with the letter 'b' for 'bit' prefixed.
             Single uppercase letters refer to registers when used in the text. Instruction mnemonics use lowercase.
           </p>
+          <h2>Page, Offset, Pointer</h2>
+          <p>The word 'Page' refers to the high-order address byte,
+            an 'Offset' is the low-order byte, and a full 16-bit address
+            is a 'Pointer' in this project.
+            The word pointer is mostly used in the context of a register
+            pair in which one register holds a page index, and
+            the other one a byte offset, such as D:O, C:PC, or L:O, or D:I.
+          </p>
           <h2>Comments</h2>
           <p>
             Place comments into parentheses (nesting is not implemented). A semicolon (";") as the first character of a line works as a line comment.
