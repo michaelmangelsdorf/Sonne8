@@ -87,9 +87,10 @@
             by fully qualifying it with the pagelabel of the page where it is defined,
             for example: PAGELABEL.offslabel.
           </p>
-          <h2>Local page and L-Notation</h2>
+          <h2>Local page and L-variables</h2>
           <p>The local page is the one whose page index is stored in the L register.
-          Subroutine calls and traps decrement L, the RET instructions increments L.
+          Subroutine calls and traps decrement L, the RET instruction increments L.
+          This essentially creates and resumes 255-byte call-stack frames.
           The high-order 8 bytes of the local page are named, and work in a special way.
           They are referred to as L0 (local page offset F8h) to L7 (offset FFh).
           The RET instruction expects the page index of the caller-code to be in L7.
