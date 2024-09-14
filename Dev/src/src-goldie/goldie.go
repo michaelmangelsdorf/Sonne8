@@ -709,7 +709,9 @@ func tryStringRelated(word string) bool {
 
 func tryCommentRelated(word string) bool {
 	if strings.Contains(word, "(") {
-		insideComment = true
+		if word[len(word)-1] != ')' {
+			insideComment = true
+		}
 		return true
 	}
 
