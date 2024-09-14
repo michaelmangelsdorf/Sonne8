@@ -291,29 +291,27 @@ P[ready]+
 ;******* ********************************************************************
 
            CLR
-           nr
-           3
+           nr 3
            nc PrMsg
-           6i
-           RET
+           6i RET
 
 ;********* ******************************************************************
 P[NextArg]+
 ;********* ******************************************************************
 
-           OWN        (********** Advance LOX ARG PTR to next string ****************)
-           i6
+           OWN i6  (Advance LOX ARG PTR to next string)
+
            nd LOXBASE
            no LOXBASE.ARG
            mo
+
            nc SkipToNULL  (DO points to char following NULL)
-           nd         (Ignore updated page index in D)
-           LOXBASE
-           IDO
-           no LOXBASE.ARG
-           rm         (Store updated offset in ARG variable)
-           6i
-           RET
+           nd LOXBASE     (Ignore updated page index in D)
+           
+           IDO, no LOXBASE.ARG
+           rm  (Store updated offset in ARG variable)
+           
+           6i RET
 
 
 ;************** *************************************************************
