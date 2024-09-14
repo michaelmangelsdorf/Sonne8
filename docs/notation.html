@@ -74,7 +74,18 @@
           <p>P[label]value defines a constant.</p>
           <h2>Label References</h2>
           <p>
-            Page and offset labels are referenced by prefixing their identifier with "&lt;" (for backward references, i.e. the label is defined earlier in the source code than the reference to it), or with "&gt;" (forward reference, i.e. the label is defined later than the reference to it in the source code). If a label is not unique, the reference goes to the nearest occurrence of it in the given direction. A label reference is just a numerical value and can be used as a literal anywhere in the code.
+            Page and offset labels are referenced by prefixing their identifier
+            with "&lt;" (for backward references, i.e. the label is defined earlier 
+            in the source code than the reference to it),
+            or with "&gt;" (forward reference,
+            i.e. the label is defined later than the reference to it in the source code).
+            If a label is not unique, the reference goes to the nearest
+            occurrence of it in the given direction. 
+            A label reference is just a numerical value and can be used 
+            as a literal anywhere in the code.
+            An offset label can be referenced without the directional prefix,
+            by fully qualifying it with the pagelabel of the page where it is defined,
+            for example: PAGELABEL.offslabel.
           </p>
           <h2>Local variable shortcuts (DIRO)</h2>
           <p>
