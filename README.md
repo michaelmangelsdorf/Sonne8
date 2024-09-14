@@ -16,7 +16,7 @@ Probably the quickest way to understand what this little CPU does is by reading 
 
 I've produced [some documentation](https://dosflange.github.io/Myth/) on GitHub pages, including auto-generated html pages for each instruction, but documentation will take time.
 
-I've written a new assembler for this machine in Go(lang). The following is a native multiplication routine.
+I've written a new assembler for this machine in Go(lang). The following is a native multiplication routine. It multiplies two unsigned 8-bit numbers and returns a 16-bit result.
 
 ```
 Goldie/LOX assembly log
