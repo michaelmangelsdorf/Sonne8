@@ -29,7 +29,7 @@ P[DemoCode]1Fh (User code, invoke with command line argument 'demo')
          The 'Interpret' function called at the top of the file
          matches the 'dictionary' entries against the command line
          arguments received from 'lox'.
-         When it find a matching entry, it jumps to the address
+         When it finds a matching entry, it jumps to the address
          encoded in the dictionary.)
 
 ; Your code here
