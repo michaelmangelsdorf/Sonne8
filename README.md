@@ -32,7 +32,7 @@ Page.Offset  Object code  Lid Line# Source text
 21.02:  79                 043 0067        o1            (Multiplicand into L1, turns into low order result)
 21.03:  68                 043 0068        r0            (Multiplier into L0)
 21.04:  10 6A              043 0069        CLR r2        (Clear high-order result, copy to L2)
-21.06:  85 07              043 0070        ni 07h        (Initilise loop counter, 8 bits)
+21.06:  85 07              043 0070        ni 07h        (Initialise loop counter, 8 bits)
                            043 0071  
                            043 0072      O[Mul8Loop]
                            043 0073   
