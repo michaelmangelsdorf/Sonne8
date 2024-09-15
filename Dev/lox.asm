@@ -1691,6 +1691,7 @@ P[BASEVOCAB]40h
     "VSrch",     'NUL', 1, VSrch,     00h
     "PrMsg",     'NUL', 1, PrMsg,     00h
     "ready",     'NUL', 2, ready,     00h
+    "demo",      'NUL', 2, DemoCode,  00h
 
 P[VTOPPAGE]
 O[VTOPOFFSET] 'NUL'
