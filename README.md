@@ -44,7 +44,7 @@ Page.Offset  Object code  Lid Line# Source text
                            043 0079      O[Mul8Skip]
                            043 0080  
 21.12:  80 01              043 0081        no 01h        (Bit mask for LSB)
-21.14:  62 18 6B           043 0082        2r AND r3     (Flag whether high order LSB is set)
+21.14:  62 18 6B           043 0082        2r AND r3     (Prepare flag of whether high order LSB is set)
 21.17:  61 16 69           043 0083        1r SRR r1      (Shift low-order result right)
 21.1A:  62 16 6A           043 0084        2r SRR r2       (Shift high-order result right)
                            043 0085  
