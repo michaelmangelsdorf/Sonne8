@@ -26,7 +26,7 @@ In order to develop with the current system, do the following.
     code of the firmware, assembled from lox.asm).
 
     During execution, the firmware can write ASCII text into a
-    dedicated buffer area (output buffer) from 0x7F80 to 0x7FEF.
+    dedicated buffer area (output buffer) from 0x7F00 to 0x7F7F.
 
     Then at some point, the machine executes the application-specific
     instruction END, to signal that it wants to quit and return to
