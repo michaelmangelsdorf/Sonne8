@@ -1,5 +1,4 @@
 sh ./build.sh
-./nettle
+./src/src-goldie/goldie lox.asm sym.asm
 ./lox
 ./regs
-./src/src-goldie/goldie lox.asm sym.asm

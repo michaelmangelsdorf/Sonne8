@@ -10,14 +10,6 @@ rm myst.o
 git add myst.c
 git add myth.h
 
-ls nettle.c
-9c nettle.c
-ls nettle.o
-9l nettle.o
-mv a.out ../nettle
-rm nettle.o
-git add nettle.c
-
 ls lox.c
 9c lox.c
 ls lox.o
@@ -36,11 +28,14 @@ rm regs.o
 git add regs.c
 
 cd src-goldie
+ls goldie.go
 git add goldie.go
 go build goldie.go
 cd ..
 
 cd ..
+src/src-goldie/goldie lox.asm
 git add lox.asm
 git add build.sh
 git add run.sh
+
