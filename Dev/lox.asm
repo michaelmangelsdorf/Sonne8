@@ -12,6 +12,31 @@ P[COLD]0
         END (Application specific opcode END exits LOX.)
 
 
+
+;************** *************************************************************
+P[DemoCode]1Fh (User code, invoke with command line argument 'demo')
+;************** *************************************************************
+
+        (Write your code below here, assemble this file as described
+         in the README.1st, and then run 'lox demo' at the
+         command line.)
+
+        (How does this code get invoked?
+         In your editor, search this file for 'VTOPPAGE'. This will
+         take you to the last entry of the 'dictionary'. You will
+         see that the last entry contains the string 'demo' and a
+         pointer to this code here.
+         The Interpret function called at the top of the file
+         matches the 'dictionary' entries against the command line
+         arguments received from 'lox'.
+         When it find a matching entry, it jumps to the address
+         encoded in the dictionary.)
+
+; Your code here
+
+
+         END (Don't delete this line)
+
 ;************** *************************************************************
 P[Interpret]20h (Look up a word in the dictionary)
 ;************** *************************************************************
