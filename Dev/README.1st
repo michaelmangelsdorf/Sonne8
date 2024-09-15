@@ -20,8 +20,8 @@ In order to develop with the current system, do the following.
 *   LOX
     
     The 'lox' tool does the following: it copies its command line
-    arguments as zero-terminated strings into the machine image
-    at address 0x7F80.
+    arguments into the machine's memory, concatenating them into
+    a list of zero-terminated strings starting at address 0x7F80.
     It then runs the machine image file (populated with the object
     code of the firmware, assembled from lox.asm).
 
