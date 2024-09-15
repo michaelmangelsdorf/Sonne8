@@ -17,30 +17,32 @@ P[Interpret]20h (Look up a word in the dictionary)
 ;************** *************************************************************
 
          OWN, i6
-         nd LOXBASE, no LOXBASE.ARG, mo
-         nc VSrch
-         nt >InterpSucc (Branch if result non-zero)
+         nd LOXBASE     (Page where the search string is located)
+         no LOXBASE.ARG (Offset of variable with offset is stored)
+         mo nc VSrch    (Load offset of search string and look it up)
+         nt >InterpSucc
 
          (Look-up failed)
-         nr 1, nc PrMsg
+         nr 1, nc PrMsg   (Prints 'not found')
          6i, RET
 
       O[InterpSucc]
 
          (Look-up succeeded, check correct type of entry)
+
          o0    (Save target offset)
          no 2  (Compare to type 2 - CMD)
          REO   (Target type still in R)
 
-         nf >InterpRFail
+         nf >InterpRFail (Skip if type byte didn't match)
 
          (Jump to CMD)
          0i    (Restore target offset)
-         COR   (Target page still in G)
+         COR   (Target page still in D)
 
       O[InterpRFail]
 
-         nr 2, nc PrMsg
+         nr 2, nc PrMsg  (Prints 'not a command')
          6i, RET
 
 ;*****************
@@ -151,63 +153,61 @@ P[DivMod8]+  (Divide R by G, return quotient in R, remainder in G)
 P[SkipToNULL]+
 ;************ ***************************************************************
 
-         OWN i6  (Advance string pointer to next NULL char)
+         OWN i6  (Advance string pointer D/O to next NULL char)
 
       O[SkipNFind0]
       
-         mr              (D:O points to char)
+         mr              (D:O points to char, load it into R)
          nf >SkipNAt0    (If char zero, done)
-         na 1            (Else increment D:O and check again)
+         na 1            (Else increment D/O and check again)
          nj <SkipNFind0
 
       O[SkipNAt0] 6i RET
 
 
 ;******* ********************************************************************
-P[VSrch]+
+P[VSrch]+  (Look-up a zero terminated string at pointer D/O)
 ;******* ********************************************************************
 
-         OWN, i6     (VOCAB Look-UP, search string address in D/O)
-         d0         (Search zero terminated string in this page)
-         o1          (at this offset)
-         d4 o5        (Create working copies)
-         nd BASEVOCAB (Set Data Pointer to first entry)
+         OWN, i6
+         d0 o1        (String pointer)
+         d4 o5        (Create a copy of it)
+         nd BASEVOCAB (Pointer to first entry in look-up table)
          no 00h
-         d2 o3      (Current dict base ptr)
+         d2 o3        (Create a copy of it)
  
       O[VSrchNxtCh]
 
-         4d 5o, mr   (Compare current char in dict to char in search str)
-         2d 3o, mo   (Char in dict)
+         4d 5o, mr   (Current character in string)
+         2d 3o, mo   (Current character in table entry)
          
-         REO nf >VSrchMismat
-         IDO nf >VSrchFound  (Matching chars, success if both NUL)
+         REO nf >VSrchMismat (Compare the characters, skip if not equal)
+         IDO nf >VSrchFound  (Characters match, we're done if both are NULL)
          
-         4d 5o na 1 d4 o5  (Advance sstring ptr)
-         2d 3o na 1 d2 o3  (Advance dict ptr)
+         4d 5o, na 1, d4 o5  (Advance sstring ptr)
+         2d 3o, na 1, d2 o3  (Advance dict ptr)
 
          nj <VSrchNxtCh  (Branch back, check next character)
 
       O[VSrchMismat]
 
-         0r r4  (Reset sstring ptr)
-         1r r5
-         2d 3o  (Find next NULL byte)
+         0r r4, 1r r5  (Reset string ptr for another round of matching)
 
+         2d 3o         (Seek to the NULL terminator of the current entry)
          nc SkipToNULL
-         d2 o3 na 4 (Skip NUL char and Data Bytes - Type+Page+Offs)
-         d2 o3 mr   (Check if first byte of next data entry is NUL - End of list)
+         na 4          (Entirely skip the current entry which didn't match)
+         d2 o3 mr      (Check if there is another entry - mustn't be NULL)
          
-         nf >VSrchFail
-         nj <VSrchNxtCh
+         nf >VSrchFail   (None of the entries matched)
+         nj <VSrchNxtCh  (Else match this entry against the string)
 
       O[VSrchFound]
 
-         2d 3o na 1  (Advance vocab ptr to type byte)
-         mr r2 na 1  (Type)
-         mr r3 na 1  (Page)
-         mo 3d 2r    (Offs)
-
+         2d 3o, na 1  (Advance table pointer to type byte)
+         mr r2, na 1  (Load type data)
+         mr r3, na 1  (load page index data)
+         mo           (load offset data)
+         3d 2r        (Return page index in D, type in R, offset in O)
          6i RET
 
       O[VSrchFail]
@@ -217,60 +217,55 @@ P[VSrch]+
 
 
 ;******* ********************************************************************
-P[PrMsg]+
+P[PrMsg]+  (Receives a message index in R, print the corresponding message)
 ;******* ********************************************************************
 
          OWN i6
-         r0 nd PrMsg, d1
-         no >PrMsg0, o2
+         r0, nd PrMsg d1  (Pointer to string table in L1/L2)
+         no >PrMsg0 o2
 
       O[PrMsgNxtCh]
 
-         1d 2o mr
-         0o (Compare message IDs)
+         1d 2o mr   (Load message ID of table entry)
+         0o         (Compare with requested message ID)
          REO
-         nt >PrMsgFound
+         nt >PrMsgFound   (If both numbers match)
 
-      O[PrMsgSkip]
+      O[PrMsgSkip]  (Skip the current message string, not the one we want)
 
-           2o na 1 o2     (Increment to next msg char)
+           2o na 1 o2     (Increment to next msg char and see if NULL)
            mr
-           
-           nf >PrMsgChk0
-           nj <PrMsgSkip  (This wasn't a NULL, keep incrementing)
+           nf >PrMsgAt0   (Yes, it's the end of this message string)
+           nj <PrMsgSkip  (This wasn't a NULL yet, keep looking)
 
+      O[PrMsgAt0]
 
-      O[PrMsgChk0]
-
-           na 1 (Skip over the NULL char)
-           o2
-           mr  (Check double NULL)
-           
-           nt <PrMsgNxtCh (If it was not NULL, check next entry - then it's an ID)
-           nj >PrMsgQuit  (Lookup failed)
+           na 1 o2        (Skip over the NULL character)
+           mr             (load next character)
+           nt <PrMsgNxtCh (If it wasn't NULL, it's an ID: check next entry)
+           nj >PrMsgQuit  (It was the last message string, lookup failed)
 
       O[PrMsgFound]
 
            nd LOXBASE
            no LOXBASE.POS
-           mo o3 (Get current printing POS)
+           mo o3 (Load current printing position)
 
       O[PrMsgCpy]
 
-           1d 2o  (Pointer to src char)
-           na 1   (Advance to next char)
-           o2 mr  (Char to print)
-           
-           nf >PrMsgDone (Finished if NULL terminator)
-           nd LOXBASE, 3o
-           rm (Store character in output buffer at POS)
-           na 1 o3 (Advance printing pos)
-           
-           nj <PrMsgCpy
+           1d 2o    (Pointer to character)
+           mr       (Put character into R for printing)
+
+           nf >PrMsgDone  (It's the NULL byte, stop printing)
+           na 1 o2        (Advance to next char) 
+
+           nd LOXBASE 3o, rm  (Store character)
+           na 1 o3            (Increment and save the printing position)
+           nj <PrMsgCpy       (Print the next character)
 
       O[PrMsgDone]
 
-           nd LOXBASE (Update POS)
+           nd LOXBASE (Update POS variable)
            no LOXBASE.POS
            3r rm
 

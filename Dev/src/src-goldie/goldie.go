@@ -707,6 +707,7 @@ func tryOffsLabelRef(word string) bool {
 }
 
 func tryStringRelated(word string) bool {
+
 	if len(word) > 0 && word[0] == '"' && !insideString {
 		if insideComment {
 			return false
@@ -715,7 +716,11 @@ func tryStringRelated(word string) bool {
 		//fmt.Printf("Strings on: %s final char:%c\n", word, word[len(word)-1])
 		//Assemble part after ""
 		if len(word) > 1 {
-			putStr(word[1:])
+			if word[len(word)-1] == '"' {
+				putStr(word[1 : len(word)-1])
+			} else {
+				putStr(word[1:])
+			}
 		} else {
 			panic("Single double quote")
 		}
@@ -725,6 +730,7 @@ func tryStringRelated(word string) bool {
 		}
 		return true
 	}
+
 	if len(word) > 0 && word[len(word)-1] == '"' && insideString {
 		if insideComment {
 			return false
@@ -733,15 +739,17 @@ func tryStringRelated(word string) bool {
 		//fmt.Printf("Strings off: %s\n", word)
 		//Assemble part before ""
 		if len(word) > 1 {
-			putStr(word[:len(word)-2])
+			putStr(" " + word[:len(word)-1])
 		}
 		return true
 	}
+
 	if insideString {
 		//Assemble whole word
-		putStr(word)
+		putStr(" " + word)
 		return true
 	}
+
 	return false
 }
 
