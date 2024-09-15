@@ -6,7 +6,7 @@
 	(paper "A0")
 	(title_block
 		(title "Sonne-8 Micro-Controller")
-		(date "2024-09-08")
+		(date "2024-09-15")
 		(rev "Myth")
 		(company "Contact: mim@ok-schalter.de")
 		(comment 1 "Author: Michael Mangelsdorf")
@@ -32717,7 +32717,7 @@
 		)
 		(uuid "5e8d2a9d-7fc0-4273-bcd1-00c323430272")
 	)
-	(text "                Instruction byte:\nall0: OPC_SYS       00000 xxx    See table @ SYS decoder\nelse: OPC_FIX       00001 xxx    b2:extended sign bit b1-0 LSB\n      OPC_ALU       0001x xxx    See table @ ALU\n      OPC_TRAP      001xx xxx    b4:MSB b3-0:LSB (remaining bits set 1)\n      OPC_DIRO      01xxx xxx    b0-2 OFFS b3:GET/PUT B4-5:REG(GIRO)\n      OPC_PAIR      1xxxx xxx    DEST SRC"
+	(text "                Instruction byte:\nall0: OPC_SYS       00000   xxx    See table @ SYS decoder\nelse: OPC_FIX       00001  x xx    b2: Extended sign bit b1-0 LSB\n      OPC_ALU       0001   xxxx    See table @ ALU\n      OPC_TRAP      001  xx xxx    b4-0: DEST PAGE\n      OPC_DIRO      01 xx x xxx    b0-2 OFFS b3:GET/PUT B4-5:REG(GIRO)\n      OPC_PAIR      1  xxx xxxx    DEST SRC"
 		(exclude_from_sim no)
 		(at 145.9388 571.5103 0)
 		(effects
@@ -33392,7 +33392,7 @@
 	)
 	(text "ALU"
 		(exclude_from_sim no)
-		(at 1094.3615 260.7928 0)
+		(at 1106.7998 325.2678 0)
 		(effects
 			(font
 				(size 15 15)
@@ -33599,12 +33599,12 @@
 		)
 		(uuid "f95581e2-8e7f-4b57-83f1-fd1887573d48")
 	)
-	(text "(OFFSET)\nOperand Register"
+	(text "(OFFSET)\nRegister"
 		(exclude_from_sim no)
 		(at 935.2792 318.6162 0)
 		(effects
 			(font
-				(size 5 5)
+				(size 4 4)
 			)
 			(justify left bottom)
 		)
@@ -34269,6 +34269,17 @@
 			(justify right bottom)
 		)
 		(uuid "0f72ff82-86dd-4254-9ea7-39a1ce565369")
+	)
+	(label "R6"
+		(at 1004.0646 294.1686 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "0f73a675-eb36-4ad3-a1fb-875ddcadc533")
 	)
 	(label "~{OWN}"
 		(at 749.6363 161.9153 180)
@@ -37570,6 +37581,17 @@
 		)
 		(uuid "536ce369-1e33-4b76-9955-c070e23df8f9")
 	)
+	(label "R3"
+		(at 1004.0646 286.5486 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "537a481e-d87e-488b-88e2-f3f824372add")
+	)
 	(label "xA"
 		(at 889.0279 374.9924 180)
 		(fields_autoplaced yes)
@@ -40859,6 +40881,17 @@
 		)
 		(uuid "9c5f1bdb-69b6-48e3-acd1-31bb9b35d5a5")
 	)
+	(label "R1"
+		(at 1004.0646 281.4686 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "9c9023f0-48d9-42e9-9d77-d2fe09dbb5dd")
+	)
 	(label "CLOSE"
 		(at 996.7953 363.8499 180)
 		(fields_autoplaced yes)
@@ -41210,6 +41243,17 @@
 			(justify right bottom)
 		)
 		(uuid "a5146e30-3b57-4618-91d2-2bbf108afb1c")
+	)
+	(label "R4"
+		(at 1004.0646 289.0886 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "a51d7510-81da-43f4-9e39-a20cb9c739da")
 	)
 	(label "+5V"
 		(at 173.8354 75.5506 180)
@@ -41826,6 +41870,17 @@
 			(justify left bottom)
 		)
 		(uuid "b2de1057-44b4-4b1a-b3d7-c19d3cd25553")
+	)
+	(label "R5"
+		(at 1004.0646 291.6286 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "b2e573ab-2907-48aa-b45f-13847c4d13ae")
 	)
 	(label "FREE"
 		(at 629.345 645.0779 0)
@@ -43301,6 +43356,17 @@
 		)
 		(uuid "d323d858-76cc-4697-bf72-f03c1f1e2bdf")
 	)
+	(label "R7"
+		(at 1004.0646 296.7086 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "d331559f-d6df-4ff7-8e63-58ab42a91d39")
+	)
 	(label "xW"
 		(at 364.9218 312.0898 0)
 		(fields_autoplaced yes)
@@ -44346,6 +44412,17 @@
 		)
 		(uuid "e923e48d-f81c-4da2-9137-d8a5a8c33450")
 	)
+	(label "R2"
+		(at 1004.0646 284.0086 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "e9621fa1-1513-4a76-95b5-1e9f5364deda")
+	)
 	(label "~{RCOPY}"
 		(at 310.7182 250.1392 0)
 		(fields_autoplaced yes)
@@ -44983,6 +45060,17 @@
 			(justify right bottom)
 		)
 		(uuid "f6a71a2d-33f4-4e41-8080-a11ad5eaa889")
+	)
+	(label "R0"
+		(at 1004.0646 278.9286 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "f71cd02d-cbea-43b1-a9cf-2cafcfaea841")
 	)
 	(label "PC2"
 		(at 838.3299 605.7854 180)
