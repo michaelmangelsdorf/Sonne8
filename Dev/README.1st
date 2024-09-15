@@ -34,7 +34,7 @@ In order to develop with the current system, do the following.
     Before exiting, 'lox' persists the machine state into the
     machine image file.
 
-    In conclusion, 'lox' turns the firmware into a command line tool:
+    In effect, 'lox' turns the firmware into a command line tool:
     Arguments are passed over to native code by copying them into the
     input buffer, and the output buffer is copied to the terminal
     when the code exits.
