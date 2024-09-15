@@ -2,7 +2,7 @@ Ongoing project around an 8-bit microcontroller I've designed.
 
 I've put [some documentation](https://dosflange.github.io/Myth/) on GitHub pages, but proper documentation will take a bit of time.
 
-In the prototype folder, there are production files and the legacy repo for a working PCB. I've had it manufactured by JLCPCB and it works fine at around 8 MHz clock, which corresponds to around 1 million instructions per second. The components are all 74HC-series CMOS chips. I basically wanted to design a CPU I could actually build, not an FPGA fantasy like
+In the prototype folder, there are production files and the legacy repo for a working PCB. I've had it manufactured by JLCPCB and it works fine with an 8 MHz system clock, which corresponds to around 1 million instructions per second. The components are all 74HC-series CMOS chips. I basically wanted to design a CPU I could actually build, not an FPGA fantasy like
 [my previous](https://github.com/Dosflange/Paver)
 one (which I still like and it works fine).
 
