@@ -38,6 +38,9 @@ In order to develop with the current system, do the following.
     Arguments are passed over to native code by copying them into the
     input buffer, and the output buffer is copied to the terminal
     when the code exits.
+    In addition, data structures created or any other modifications
+    are preserved in 'corestate_myst' and can be continued by running
+    'lox' again, or stepping the image with 'myst' etc.
 
 Note:
 The emulation code used to simulate the Myth CPU is in 'myth.h'.
