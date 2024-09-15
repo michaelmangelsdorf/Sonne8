@@ -32717,7 +32717,7 @@
 		)
 		(uuid "5e8d2a9d-7fc0-4273-bcd1-00c323430272")
 	)
-	(text "                Instruction byte:\nall0: OPC_SYS       00000   xxx    See table @ SYS decoder\nelse: OPC_FIX       00001  x xx    b2: Extended sign bit b1-0 LSB\n      OPC_ALU       0001   xxxx    See table @ ALU\n      OPC_TRAP      001  xx xxx    b4-0: DEST PAGE\n      OPC_DIRO      01 xx x xxx    b0-2 OFFS b3:GET/PUT B4-5:REG(GIRO)\n      OPC_PAIR      1  xxx xxxx    DEST SRC"
+	(text "                Instruction byte:\nall0: OPC_SYS       00000   xxx    See table @ SYS decoder\nelse: OPC_FIX       00001  x xx    b0-1 LSB, b2: Extended sign bit\n      OPC_ALU       0001   xxxx    See table @ ALU\n      OPC_TRAP      001   xxxxx    b0-4: DEST PAGE\n      OPC_DIRO      01 xx x xxx    b0-2 OFFS, b3:GET/PUT, B4-5:REG(DIRO)\n      OPC_PAIR      1  xxx xxxx    b0-3 DST, b4-6 SRC"
 		(exclude_from_sim no)
 		(at 145.9388 571.5103 0)
 		(effects

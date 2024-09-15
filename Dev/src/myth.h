@@ -27,7 +27,7 @@ struct myth_vm /*Complete machine state including all ram*/
         uchar por;  /*Parallel output register - set by VM*/
 
         uchar r;    /*Result*/
-        uchar o;    /*Operand*/
+        uchar o;    /*Offset*/
 
         uchar i;    /*Inner Counter*/
         uchar pc;   /*Program Counter*/
@@ -209,7 +209,7 @@ fetch(struct myth_vm *vm)
 
 
 /* TRAP has identical operation, but with an
-   immediate destination page operand
+   immediate destination page Offset
 */
 
 void

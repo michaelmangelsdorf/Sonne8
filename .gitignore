@@ -1,10 +1,14 @@
 # For PCBs designed using KiCad: http://www.kicad-pcb.org/
 # Format documentation: http://kicad-pcb.org/help/file-formats/
 
+#Mac
+*.DS_Store
+
 # Temporary files
 *.000
 *.bak
 *.bck
+*myth-backups
 *.kicad_pcb-bak
 *.sch-bak
 *~
