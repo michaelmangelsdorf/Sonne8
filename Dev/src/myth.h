@@ -73,7 +73,7 @@ static void call(struct myth_vm *vm, uchar dstpage);
    i.e. REG is a destination
 */
 
-#define xO 0 /*to ORIGIN register*/
+#define xO 0 /*to OFFSET register*/
 #define xM 1 /*to MEMORY via DATA page index*/
 #define xL 2 /*to MEMORY via LOCAL page index*/
 #define xD 3 /*to GLOBAL register*/
