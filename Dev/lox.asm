@@ -32,10 +32,13 @@ P[DemoCode]1Fh (User code, invoke with command line argument 'demo')
          When it finds a matching entry, it jumps to the address
          encoded in the dictionary.)
 
+
 ; Your code here
 
-
-         END (Don't delete this line)
+         END (Don't delete this line.
+              This returns you to the command line, where you can
+              inspect registers using the 'regs' tool, or single-step
+              the machine by typing 'myst' + enter.)
 
 ;************** *************************************************************
 P[Interpret]20h (Look up a word in the dictionary)
