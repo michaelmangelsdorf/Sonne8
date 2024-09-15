@@ -16,6 +16,7 @@ The work in the "Schematics" folder is based on the KiCad files I used for PCB p
 Probably the quickest way to understand what this little CPU does is by reading the C emulator
 [header file](https://github.com/Dosflange/Myth/blob/main/Dev/src/myth.h).
 
+Update Sep.24:
 I've written a new assembler for this machine in Go(lang). The following is a native multiplication routine. It multiplies two unsigned 8-bit numbers and returns a 16-bit result.
 
 ```
