@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8">
     <title>
-      Instruction Set
+      Encoding of Instructions
     </title>
   </head>
   <body>
@@ -20,10 +20,29 @@
       </ul>
     </header>
     <div class="main">
+      <h2>Encoding of Instructions </h2>
         <p>
-          
+          Each instruction maps to a unique byte value which
+          is called the operation code ('opcode') of the instruction.
+          Operation codes conform to certain bit patterns
+          that generate electric signals that drive the
+          coordinates operations of the CPU during each
+          instruction cycle.</p>
+          <p>
+          There are six distinct ways of encoding these bit-patterns
+          called format groups.
+          All instructions and the opcodes they map to
+          are documented under <a href="groups.html">Groups.
         </p>
-
+        <h3>Hardware Implementation</h3>
+        <h4>Format Groups</h2>
+        <p>
+          The five high-order bits (IB3-7) of the instruction
+          word register feed into the encoder chip.
+          The encoder generates 6 mutually exclusive enable signals
+          for downstream decoders as listed in the table.
+        </p>
+        <img src="static/images/pencoder.png">
 
 
     </div>

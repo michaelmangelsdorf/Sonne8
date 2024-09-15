@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="styles.css">
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>
+      ALU Instructions - Overview
+    </title>
+  </head>
+  <body>
+    <header>
+      <h1>
+        Myth Microcontroller Documentation
+      </h1>
+      <ul class="nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="architecture.html">Architecture</a></li>
+        <li><a href="instructions.html">Instructions</a></li>
+        <li><a href="groups.html">Groups</a></li>
+      </ul>
+    </header>
+    <div class="main">
+        <h2>
+          This page explains the Arithmetic-Logic Unit (ALU).
+        </h2>
+        <p>
+            Conceptually, the Myth ALU is a device inside the CPU
+            that takes the values of the two accumulator registers
+            (R and O) as inputs, and computes one of
+            <a href="alu.html">16 functions</a> from them.
+            The function result is then stored in the R register,
+            overwriting its previous value.
+        </p>
+        <h3>Hardware Implementation</h3>
+        <p>In the KiCad project, the ALU is
+           replaced by a large ROM chip (Binary Look-Up Rom) which contains
+           look-up tables for each function.
+         </p>
+         <p>The R and O register values are fed into the ROM
+            address lines, together with the four-bit function
+            index. The ROM contents are laid out in such a way
+            that the memory output corresponds to the ALU result.</p>
+
+         <p class="footnote">
+         In the schematics, the R register latches its
+         input value on CLOSE (after the instruction terminates).
+         This is because the ALU result is stored back into R
+         via the data bus (DB0-7), which would otherwise cause a
+         feedback loop (since the ROM used is asynchronous and would
+         update its output based on the new value in R).
+         </p>
+        <img src="static/images/alu.png">
+
+    </div>
+    <footer>
+      <ul>
+        <li class="copyr">©Dosflange 2024</li>
+        <li class="tou"><a href="tou.html">Terms of Use (Impressum)</a></li>
+      </ul>
+    </footer>
+  </body>
+</html>
