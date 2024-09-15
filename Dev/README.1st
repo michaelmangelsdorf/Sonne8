@@ -1,0 +1,44 @@
+
+In order to develop with the current system, do the following.
+
+*   Edit the file lox.asm.
+
+*   Run 'goldie lox.asm' to assemble this file into a machine image
+    file ('corestate.myst') which contains the resulting object code.
+    This image is created in the current folder and contains
+    the complete state of the machine, including the registers, flags,
+    64k of memory, etc.
+
+    The assembler also creates the file 'lox_debug.txt' with
+    an ASCII concordance of object code vs. source code.
+
+*   You can single-step the machine with the 'myst' command,
+    and you can dump/visualize its registers using 'regs'.
+    Both commands read the 'corestate.myst' file, and
+    'myst' updates the file to reflect the new CPU state.
+
+*   LOX
+    
+    The 'lox' tool does the following: it copies its command line
+    arguments as zero-terminated strings into the machine image
+    at address 0x7F80.
+    It then runs the machine image file (populated with the object
+    code of the firmware, assembled from lox.asm).
+
+    During execution, the firmware can write ASCII text into a
+    dedicated buffer area (output buffer) from 0x7F80 to 0x7FEF.
+
+    Then at some point, the machine executes the application-specific
+    instruction END, to signal that it wants to quit and return to
+    the command line.
+    Before exiting, 'lox' persists the machine state into the
+    machine image file.
+
+    In conclusion, 'lox' turns the firmware into a command line tool:
+    Arguments are passed over to native code by copying them into the
+    input buffer, and the output buffer is copied to the terminal
+    when the code exits.
+
+Note:
+The emulation code used to simulate the Myth CPU is in 'myth.h'.
+
