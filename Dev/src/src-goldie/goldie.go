@@ -755,7 +755,7 @@ func tryStringRelated(word string) bool {
 
 func tryCommentRelated(word string) bool {
 	if strings.Contains(word, "(") {
-		if insideString {
+		if insideString || word[0] == '"' {
 			return false
 		}
 		if word[len(word)-1] != ')' {
@@ -765,7 +765,7 @@ func tryCommentRelated(word string) bool {
 	}
 
 	if strings.Contains(word, ")") {
-		if insideString {
+		if insideString || word[len(word)-1] == '"' {
 			return false
 		}
 		insideComment = false

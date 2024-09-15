@@ -19,7 +19,8 @@ P[Interpret]20h (Look up a word in the dictionary)
          OWN, i6
          nd LOXBASE     (Page where the search string is located)
          no LOXBASE.ARG (Offset of variable with offset is stored)
-         mo nc VSrch    (Load offset of search string and look it up)
+         mo
+         nc VSrch    (Load offset of search string and look it up)
          nt >InterpSucc
 
          (Look-up failed)
@@ -170,36 +171,36 @@ P[VSrch]+  (Look-up a zero terminated string at pointer D/O)
 ;******* ********************************************************************
 
          OWN, i6
-         d0 o1        (String pointer)
-         d4 o5        (Create a copy of it)
-         nd BASEVOCAB (Pointer to first entry in look-up table)
-         no 00h
-         d2 o3        (Create a copy of it)
+         d0 o1               (String pointer)
+         d4 o5               (Create a copy of it)
+         nd BASEVOCAB, no 0  (Pointer to first entry in look-up table)
+         d2 o3               (Create a copy of it)
  
       O[VSrchNxtCh]
 
-         4d 5o, mr   (Current character in string)
-         2d 3o, mo   (Current character in table entry)
+         4d 5o, mr           (Current character in string)
+         2d 3o, mo           (Current character in table entry)
          
          REO nf >VSrchMismat (Compare the characters, skip if not equal)
          IDO nf >VSrchFound  (Characters match, we're done if both are NULL)
          
-         4d 5o, na 1, d4 o5  (Advance sstring ptr)
-         2d 3o, na 1, d2 o3  (Advance dict ptr)
+         4d 5o, na 1, d4 o5  (Advance string ptr)
+         2d 3o, na 1, d2 o3  (Advance table entry ptr)
 
-         nj <VSrchNxtCh  (Branch back, check next character)
+         nj <VSrchNxtCh      (Branch back, check next character)
 
       O[VSrchMismat]
 
-         0r r4, 1r r5  (Reset string ptr for another round of matching)
+         0r r4, 1r r5    (Reset string ptr for another round of matching)
 
-         2d 3o         (Seek to the NULL terminator of the current entry)
+         2d 3o           (Seek to the NULL terminator of the current entry)
          nc SkipToNULL
-         na 4          (Entirely skip the current entry which didn't match)
-         d2 o3 mr      (Check if there is another entry - mustn't be NULL)
+
+         na 4, d2 o3     (Skip the current entry which didn't match)
+         mr              (Check if there's another entry - mustn't be NULL)
          
          nf >VSrchFail   (None of the entries matched)
-         nj <VSrchNxtCh  (Else match this entry against the string)
+         nj <VSrchNxtCh  (Else match this new entry against the string)
 
       O[VSrchFound]
 
@@ -580,7 +581,7 @@ P[BASEVOCAB]40h
     "254", 'NUL', 81h, 0, FEh
     "255", 'NUL', 81h, 0, FFh
 
-    (Negative Decimal Numbers)
+     (Negative Decimal Numbers)
 
     "-1", 'NUL', 81h, 0, FFh
     "-2", 'NUL', 81h, 0, FEh
@@ -1279,7 +1280,7 @@ P[BASEVOCAB]40h
     "'''", 'NUL', 81h, 0, 27h
     "'('", 'NUL', 81h, 0, 28h
     "')'", 'NUL', 81h, 0, 29h
-    "'*'", 'NUL', 81h, 0, 2Ah
+    "'*'", 'NUL', 81h, 0, 2Ah  
     "'+'", 'NUL', 81h, 0, 2Bh
     "','", 'NUL', 81h, 0, 2Ch
     "'-'", 'NUL', 81h, 0, 2Dh
