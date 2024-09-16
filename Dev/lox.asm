@@ -49,14 +49,14 @@ P[DemoCode]1Fh (User code, invoke with command line argument 'demo')
 
 
 ;************** *************************************************************
-P[Interpret]20h (Look up a word in the dictionary)
+P[Interpret]20h (Look up a command name string in the dictionary and run it)
 ;************** *************************************************************
 
          OWN, i6
-         nd LOXBASE     (Page where the search string is located)
-         no LOXBASE.ARG (Offset of variable with offset is stored)
+         nd LOXBASE     (Page where the argument strings are stored)
+         no LOXBASE.ARG (Offset of variable which points to the current one)
          mo
-         nc VSrch    (Load offset of search string and look it up)
+         nc VSrch       (Load offset of search string and look it up)
          nt >InterpSucc
 
          (Look-up failed)
