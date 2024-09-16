@@ -1,6 +1,8 @@
 
+
 (LOX Bootstrap Firmware for Myth micro-controller)
 (Author: mim@ok-schalter.de - Michael/Dosflange@github)
+
 
 ;******* ********************************************************************
 P[COLD]0 (Instruction-fetch on RESET and on IRQ begins here)
@@ -36,16 +38,13 @@ P[DemoCode]1Fh (User code, invoke with command line argument 'demo')
          When it finds a matching entry, it jumps to the address
          encoded in the dictionary.)
 
+
          nr 6      (Print message 6 - 'Demo')
          nc PrMsg
 
          ; Your code here
 
-         6i RET (This links your code in with other commands)
-
-;         END (This returns you to the command line, where you can
-;              inspect registers using the 'regs' tool, or single-step
-;              the machine by typing 'myst' + enter.)
+         6i RET
 
 
 ;************** *************************************************************
@@ -95,28 +94,28 @@ P[Mul8]+  (Multiplies R by O result in R and O)
 
       O[Mul8Loop]
       
-         no 01h        (Bit mask for LSB)
-         1r AND        (Check if multiplicand has LSB set)
-         nf >Mul8Skip  (Skip if not)
-         0r 2o ADD r2  (Add multiplier to high order result)
+         no 01h           (Bit mask for LSB)
+         1r AND           (Check if multiplicand has LSB set)
+         nf >Mul8Skip     (Skip if not)
+         0r 2o ADD r2     (Add multiplier to high order result)
 
       O[Mul8Skip]
 
-         no 01h        (Bit mask for LSB)
-         2r AND r3     (Flag whether high order LSB is set)
-         1r SRR r1      (Shift low-order result right)
-         2r SRR r2       (Shift high-order result right)
+         no 01h           (Bit mask for LSB)
+         2r AND r3        (Flag whether high order LSB is set)
+         1r SRR r1        (Shift low-order result right)
+         2r SRR r2        (Shift high-order result right)
 
          3r nf >Mul8Done  (Check flag from earlier - HO LSB set?)
-         nr 80h          (Bit mask for MSB)
-         1o IOR r1     (Handle shift-result carry bit into MSB)
+         nr 80h           (Bit mask for MSB)
+         1o IOR r1        (Handle shift-result carry bit into MSB)
 
       O[Mul8Done]
 
          nw <Mul8Loop
-         1o            (Result low-order)
-         2r            (Result high-order)
-         6i RET        (Restore return pointer from L7/L6)
+         1o               (Result low-order)
+         2r               (Result high-order)
+         6i RET           (Restore return pointer from L7/L6)
 
 
 ;********* ******************************************************************
@@ -124,50 +123,50 @@ P[DivMod8]+  (Divide R by G, return quotient in R, remainder in G)
 ;********* ******************************************************************
 
          OWN i6
-         r0         (Save dividend)
-         o1         (Save divisor)
-         ni 00h     (Initialise shift counter to number of positions
-                     of first 1-bit)
+         r0                  (Save dividend)
+         o1                  (Save divisor)
+         ni 00h              (Initialise shift counter to number of positions
+                              of first 1-bit)
 
-         nr 00h r3          (Initialise quotient to zero)
-         1r nf >DivMod8Quit (Skip if divisor is zero)
+         nr 00h r3           (Initialise quotient to zero)
+         1r nf >DivMod8Quit  (Skip if divisor is zero)
       
-         nr 80h r5        (Set MSB mask)
+         nr 80h r5           (Set MSB mask)
 
       O[DivMod8Sh]
 
-         5r      (Shift divisor left until first 1 bit at MSB position)
-         1o AND          (Compare to mask)
-         nt >DivMod8Div  (Exit shift loop once MSB set)
-         SLO             (Shift divisor)
-         r1              (Store result)
-         ir P1 ri        (Increment shift counter)
+         5r                  (Shift divisor left until
+                              first 1 bit at MSB position)
+         1o AND              (Compare to mask)
+         nt >DivMod8Div      (Exit shift loop once MSB set)
+         SLO                 (Shift divisor)
+         r1                  (Store result)
+         ir P1 ri            (Increment shift counter)
          nj <DivMod8Sh
 
       O[DivMod8Div]
 
-         3o SLO     (Shift quotient left)
-         r3         (Store shifted quotient for latter)
-         1r OCR P1  (Negate divisor)
-         r4         (Save this)
-         0o CAR     (Get dividend and see if adding the negated divisor
-                     produces a borrow bit)
+         3o SLO              (Shift quotient left)
+         r3                  (Store shifted quotient for latter)
+         1r OCR P1           (Negate divisor)
+         r4                  (Save this)
+         0o CAR              (Get dividend and see if adding
+                              the negated divisor produces a borrow bit)
          
-         nf >DivMod8Rep  (If not, don't accept the subtraction)
+         nf >DivMod8Rep      (If not, don't accept the subtraction)
          
-         4r ADD     (Accept subtraction result to dividend in O)
-         r0         (Store new dividend)
-         3r P1 r3   (Increment quotient)
+         4r ADD              (Accept subtraction result to dividend in O)
+         r0                  (Store new dividend)
+         3r P1 r3            (Increment quotient)
 
       O[DivMod8Rep]
 
-         1r SRR r1 (Shift divisor right for next subtraction)
-         
-         nw <DivMod8Div (Branch back if not zero, decrement I counter)
+         1r SRR r1           (Shift divisor right for next subtraction)
+         nw <DivMod8Div      (Branch back if not zero, decrement I counter)
 
       O[DivMod8Quit]
 
-         3r 0o  (Save quotient and remainder)
+         3r 0o           (Save quotient and remainder)
          6i RET
 
 
@@ -243,43 +242,44 @@ P[PrMsg]+  (Receives a message index in R, print the corresponding message)
 ;******* ********************************************************************
 
          OWN i6
-         r0, nd PrMsg d1  (Pointer to string table in L1/L2)
-         no >PrMsg0 o2
+         r0, nd PrMsg d1      (Pointer to string table in L1/L2)
+         no >PrMsgTable o2
 
       O[PrMsgNxtCh]
 
-         1d 2o mr   (Load message ID of table entry)
-         0o         (Compare with requested message ID)
+         1d 2o mr             (Load message ID of table entry)
+         0o                   (Compare with requested message ID)
          REO
-         nt >PrMsgFound   (If both numbers match)
+         nt >PrMsgFound       (If both numbers match)
 
-      O[PrMsgSkip]  (Skip the current message string, not the one we want)
+      O[PrMsgSkip]            (Skip the current message string,
+                               not the one we want)
 
-           2o na 1 o2     (Increment to next msg char and see if NULL)
+           2o na 1 o2         (Increment to next msg char and see if NULL)
            mr
-           nf >PrMsgAt0   (Yes, it's the end of this message string)
-           nj <PrMsgSkip  (This wasn't a NULL yet, keep looking)
+           nf >PrMsgAt0       (Yes, it's the end of this message string)
+           nj <PrMsgSkip      (This wasn't a NULL yet, keep looking)
 
       O[PrMsgAt0]
 
-           na 1 o2        (Skip over the NULL character)
-           mr             (load next character)
-           nt <PrMsgNxtCh (If it wasn't NULL, it's an ID: check next entry)
-           nj >PrMsgQuit  (It was the last message string, lookup failed)
+           na 1 o2            (Skip over the NULL character)
+           mr                 (load next character)
+           nt <PrMsgNxtCh     (If not NULL, it's an ID: check next entry)
+           nj >PrMsgQuit      (It's the last message string, lookup failed)
 
       O[PrMsgFound]
 
            nd LOXBASE
            no LOXBASE.POS
-           mo o3 (Load and save current printing position)
+           mo o3              (Load and save current printing position)
 
       O[PrMsgCpy]
 
-           1d 2o    (Pointer to character)
-           mr       (Put character into R for printing)
+           1d 2o              (Pointer to character)
+           mr                 (Put character into R for printing)
 
-           nf >PrMsgDone  (It's the NULL byte, stop printing)
-           na 1 o2        (Advance to next char) 
+           nf >PrMsgDone      (It's the NULL byte, stop printing)
+           na 1 o2            (Advance to next char) 
 
            nd LOXBASE 3o, rm  (Store character)
            na 1 o3            (Increment and save the printing position)
@@ -287,15 +287,15 @@ P[PrMsg]+  (Receives a message index in R, print the corresponding message)
 
       O[PrMsgDone]
 
-           nd LOXBASE (Update POS variable)
+           nd LOXBASE         (Update POS variable)
            no LOXBASE.POS
            3r rm
 
       O[PrMsgQuit] 6i RET
 
-;**************
-      O[PrMsg0]
-;**************
+;******************
+      O[PrMsgTable]
+;******************
 
            0, "Ready",            'NUL'
            1, "Not found",        'NUL'
@@ -313,6 +313,7 @@ P[ready]+
            nr 3
            nc PrMsg
            6i RET
+
 
 ;********* ******************************************************************
 P[NextArg]+
@@ -332,6 +333,7 @@ P[NextArg]+
            ro, mr               (Return first character of this argstr in R.
                                  If zero, end of argument list)
            6i RET
+
 
 ;************** *************************************************************
 P[BASEVOCAB]40h
