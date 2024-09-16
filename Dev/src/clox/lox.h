@@ -27,4 +27,13 @@
 #define END 0x81 /*0x80 + 16 * Nx + xM // scrounge NM*/
 
 
+/* Attached virtual SMEM (synchronous memory) device:
+*/
+
+#define SH2_SMEMA0 2<<4 /* SMEM address bit latch 0-7 */
+#define SH3_SMEMA1 3<<4 /* SMEM address bit latch 8-15 */
+#define SH4_SMEMA2 4<<4 /* SMEM address bit latch 16-23 */
+#define SL2_SMEMOE 2    /* SMEM data byte output enable */
+
+
 #endif

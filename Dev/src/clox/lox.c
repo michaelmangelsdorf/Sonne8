@@ -165,6 +165,7 @@ main(int argc, char *argv[])
                 if (vm.scrounge == END) break;
                 if (vm.e != 0) {
                         /*Handle virtual IO operation*/
+                        /* SH2.3.4_SRAMA0_CP SL2_SRAMOE*/
                 }
         }
 
