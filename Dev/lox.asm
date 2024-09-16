@@ -3,7 +3,6 @@
 (LOX Bootstrap Firmware for Myth micro-controller)
 (Author: mim@ok-schalter.de - Michael/Dosflange@github)
 
-
 ;******* ********************************************************************
 P[COLD]0 (Instruction-fetch on RESET and on IRQ begins here)
 ;******* ********************************************************************
@@ -38,8 +37,9 @@ P[DemoCode]1Fh (User code, invoke with command line argument 'demo')
          When it finds a matching entry, it jumps to the address
          encoded in the dictionary.)
 
-
-         nr 6      (Print message 6 - 'Demo')
+         C[StrDemo]6  (Example of a defined constant)
+   
+         nr StrDemo   (Print message 6 - 'Demo')
          nc PrMsg
 
          ; Your code here
