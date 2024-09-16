@@ -561,6 +561,10 @@ func wrVM() {
 	}
 }
 
+// Generate one byte of object code
+// Increment lid (number of bytes of code assembled into a given page)
+// Go to next page once current page is full
+
 func putCode(b byte) {
 	blameLine[page][offs] = lineNum
 	vm.ram[page][offs] = b
@@ -571,6 +575,10 @@ func putCode(b byte) {
 	}
 	offs++
 }
+
+// Helper function to POC (Page label, Offset label, Constant label)
+// Argument 'word' was checked to start with 'P[', 'O[', or 'C['
+// Format is either x[label]value, or no value
 
 func extractLabel(word string) (hasVal bool, label string, value byte) {
 
@@ -599,6 +607,11 @@ func extractLabel(word string) (hasVal bool, label string, value byte) {
 	return hasVal, label, value
 }
 
+// Helper function which resolves the label 'str'
+// to the offset it refers to, searching for its
+// definition towards lower offsets
+// (i.e. defined earlier in the source code)
+
 func backRef(str string) bool {
 	for j := offs; j >= 0; j-- {
 		if str == offsLabel[page][j] {
@@ -608,6 +621,11 @@ func backRef(str string) bool {
 	}
 	return false
 }
+
+// Helper function which resolves the label 'str'
+// to the offset it refers to, searching for its
+// definition towards higher offsets
+// (i.e. defined later in the source code)
 
 func fwdRef(str string) bool {
 	var j int
@@ -620,11 +638,18 @@ func fwdRef(str string) bool {
 	return false
 }
 
+// Helper function that generates object code
+// in the form of ASCII character from a
+// string literal
+
 func putStr(str string) {
 	for i := 0; i < len(str); i++ {
 		putCode(str[i])
 	}
 }
+
+// Checks the search string in 'word'
+// against the array of predefined string literals
 
 func tryPredefined(word string) bool {
 	for j := 0; j < len(symTab); j++ { // Predefined
@@ -642,6 +667,9 @@ func tryPredefined(word string) bool {
 	return false
 }
 
+// Checks the search string in 'word'
+// against the array of source code defined constants
+
 func tryConstDefined(word string) bool {
 	for j := 0; j < constTopIndex; j++ { // Defined consts
 		var searchStr string
@@ -658,6 +686,8 @@ func tryConstDefined(word string) bool {
 	return false
 }
 
+// Matches 'word' against the array of page labels
+
 func tryPageLabelRef(word string) bool {
 	for j := 0; j < 256; j++ { // Page labels refs
 		var searchStr string
@@ -673,6 +703,8 @@ func tryPageLabelRef(word string) bool {
 	}
 	return false
 }
+
+// Matches 'word' against the array of offset labels
 
 func tryOffsLabelRef(word string) bool {
 	// References: three cases: < > .
@@ -705,6 +737,8 @@ func tryOffsLabelRef(word string) bool {
 	}
 	return false
 }
+
+// See of 'word' is related to string literals ("a b c")
 
 func tryStringRelated(word string) bool {
 
@@ -752,6 +786,8 @@ func tryStringRelated(word string) bool {
 
 	return false
 }
+
+// See if 'word' is related to comments (a b c)
 
 func tryCommentRelated(word string) bool {
 	if strings.Contains(word, "(") {
