@@ -86,7 +86,7 @@ printregs()
         print( "i:%.02Xh(%d)(%b)\n", vm.i, vm.i, vm.i);
         print( "d:%.02Xh(%d)(%b) ", vm.d, vm.d, vm.d);
 
-        print( "\te:%.02Xh(%d)(%b) ", vm.e, vm.e, vm.e);
+        print( "\te:%.02Xh(%d)(%b) ", vm.e_new, vm.e_new, vm.e_new);
         print( "sclk:%d ", vm.sclk ? 1:0);
         print( "miso:%d ", vm.miso ? 1:0);
         print( "mosi:%d ", vm.mosi ? 1:0);
@@ -163,9 +163,11 @@ main(int argc, char *argv[])
         for( cyc=1; cyc<999*1000; cyc++){
                 myth_step( &vm);
                 if (vm.scrounge == END) break;
-                if (vm.e != 0) {
+                if (vm.e_old != vm.e_new) {
                         /*Handle virtual IO operation*/
-                        /* SH2.3.4_SRAMA0_CP SL2_SRAMOE*/
+                       // switch(e) {
+                       //         case SH2_SMEMA0 & SL1_PAROE:
+                       // }
                 }
         }
 

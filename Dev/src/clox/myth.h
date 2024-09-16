@@ -14,7 +14,8 @@ struct myth_vm /*Complete machine state including all ram*/
 {
         uchar ram[256][256]; /*MemoryByte[page][offset]*/
 
-        uchar e;    /*Device ENABLE register - set by VM */
+        uchar e_old; /*Device ENABLE register previous value - set by VM */
+        uchar e_new; /*Device ENABLE register current value - set by VM */
 
         uchar irq;  /*Interrupt request bit - set by PERIPHERY*/
         uchar sclk; /*Serial clock state bit - set by VM*/
@@ -145,7 +146,8 @@ myth_reset(struct myth_vm *vm) /*Initialise machine state*/
 {
         memset(vm->ram, 0, 256*256);
 
-        vm->e = 0; /*Deselect any device*/
+        vm->e_old = 0; /*Clear signal edges*/
+        vm->e_new = 0; /*Deselect any device*/
 
         vm->irq = 0;
         vm->sclk = 0;
@@ -306,7 +308,9 @@ pair(struct myth_vm *vm, uchar opcode)
                 case xI: vm->i = v; break;
                 case xS: vm->sor = v; break;
                 case xP: vm->por = v; break;
-                case xE: vm->e = v; break;
+                case xE: vm->e_old = vm->e_new;
+                         vm->e_new = v;
+                         break;
                 case xA:
                         temp = vm->o + v;
                         vm->o = (uchar) (temp & 0xFF);
