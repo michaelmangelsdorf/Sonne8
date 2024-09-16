@@ -600,7 +600,7 @@ func extractLabel(word string) (hasVal bool, label string, value byte) {
 }
 
 func backRef(str string) bool {
-	for j := offs; j != 0; j-- {
+	for j := offs; j >= 0; j-- {
 		if str == offsLabel[page][j] {
 			putCode(j)
 			return true

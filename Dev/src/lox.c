@@ -94,6 +94,7 @@ main(int argc, char *argv[])
                 vm.c = 0;
                 vm.pc = 0;
                 vm.ram[0x7F][POS] = 0;
+                vm.ram[0x7F][ARG] = 0x80;
                 // vm.l++; /* Fix L */
         }
 

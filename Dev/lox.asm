@@ -3,14 +3,18 @@
 (Author: mim@ok-schalter.de - Michael/Dosflange@github)
 
 ;******* ********************************************************************
-P[COLD]0
+P[COLD]0 (Instruction-fetch on RESET and on IRQ begins here)
 ;******* ********************************************************************
 
  (Lox has copied its null-separated command line arguments into 7F80h-7FEFh.)
 
-        nc Interpret
-        END (Application specific opcode END exits LOX.)
+      O[callArgs]
 
+        nc Interpret
+        nc NextArg
+        nt <callArgs  (Repeat until R zero - end of list)
+
+        END (Application specific opcode END exits LOX.)
 
 
 ;************** *************************************************************
@@ -32,13 +36,17 @@ P[DemoCode]1Fh (User code, invoke with command line argument 'demo')
          When it finds a matching entry, it jumps to the address
          encoded in the dictionary.)
 
+         nr 6      (Print message 6 - 'Demo')
+         nc PrMsg
 
-; Your code here
+         ; Your code here
 
-         END (Don't delete this line.
-              This returns you to the command line, where you can
-              inspect registers using the 'regs' tool, or single-step
-              the machine by typing 'myst' + enter.)
+         6i RET (This links your code in with other commands)
+
+;         END (This returns you to the command line, where you can
+;              inspect registers using the 'regs' tool, or single-step
+;              the machine by typing 'myst' + enter.)
+
 
 ;************** *************************************************************
 P[Interpret]20h (Look up a word in the dictionary)
@@ -73,21 +81,6 @@ P[Interpret]20h (Look up a word in the dictionary)
 
          nr 2, nc PrMsg  (Prints 'not a command')
          6i, RET
-
-;*****************
-        O[NextArg]
-;*****************
-
-         OWN i6          (Advance LOX ARG PTR to next string)
-         nd LOXBASE
-         no LOXBASE.ARG
-         mo
-         nc SkipToNULL   (DO points to char following NULL)
-         nd LOXBASE      (Ignore updated page index in D)
-         IDO
-         no LOXBASE.ARG
-         rm              (Store updated offset in ARG variable)
-         6i RET
 
 
 ;****** *********************************************************************
@@ -278,7 +271,7 @@ P[PrMsg]+  (Receives a message index in R, print the corresponding message)
 
            nd LOXBASE
            no LOXBASE.POS
-           mo o3 (Load current printing position)
+           mo o3 (Load and save current printing position)
 
       O[PrMsgCpy]
 
@@ -304,17 +297,19 @@ P[PrMsg]+  (Receives a message index in R, print the corresponding message)
       O[PrMsg0]
 ;**************
 
-           0, "Ready",     'NUL'
-           1, "Not found", 'NUL'
-           2, "Not a cmd", 'NUL'
-           3, "Crater",    'NUL'
+           0, "Ready",            'NUL'
+           1, "Not found",        'NUL'
+           2, "Not a cmd",        'NUL'
+           3, "Crater",           'NUL'
+           4, "Hello Worm!",      'NUL'
+           5, "Good byte, world", 'NUL'
+           6, "Demo",             'NUL'
 
 
 ;******* ********************************************************************
 P[ready]+
 ;******* ********************************************************************
 
-           CLR
            nr 3
            nc PrMsg
            6i RET
@@ -327,16 +322,16 @@ P[NextArg]+
 
            nd LOXBASE
            no LOXBASE.ARG
-           mo
+           mo                   (O: byte offset of the current argstr)
 
-           nc SkipToNULL  (DO points to char following NULL)
-           nd LOXBASE     (Ignore updated page index in D)
-           
-           IDO, no LOXBASE.ARG
-           rm  (Store updated offset in ARG variable)
-           
+           nc SkipToNULL        (D/O points to NULL character)
+           na 1                 (Advance by 1)
+
+           IDO, no LOXBASE.ARG  (Offset of new argstr in R, D still LOXBASE)
+           rm                   (Store updated offset in ARG variable)
+           ro, mr               (Return first character of this argstr in R.
+                                 If zero, end of argument list)
            6i RET
-
 
 ;************** *************************************************************
 P[BASEVOCAB]40h
@@ -1708,15 +1703,14 @@ P[LOXBASE]7Fh
     The VM when executing puts text here, which gets output when
     'lox' is run from the command line.)
 
-    "Hello Worm! Good byte, world" 00h
-
     (The region from 80h to EFh is populated with 'lox' command line
      arguments, null separated.)
 
     (F0h to end of page are LOX system variables - don't relocate!)
 
     O[UNUSED]F0h  0h 0h 0h 0h 0h 0h 0h 
-    O[ARG]        80h   (Offset in LOXBASE of current cmd line argument str)
+
+    O[ARG]        80h        (LOXBASE offs: current cmd line argument str)
     O[POS]        00h        (Current position in output text buffer)
     O[VTP]        VTOPPAGE
     O[VTO]        VTOPPAGE.VTOPOFFSET
