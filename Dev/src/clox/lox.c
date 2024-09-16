@@ -57,9 +57,9 @@ void
 usage()
 {
         print("Usage:\n");
-        print("\t-s\tsingle step\n");
-        print("\t-r\tprint regs\n");
-        print("\t<args> run with args\n\n");
+        print("Single step\t-s\n");
+        print("Print regs\t-r\n");
+        print("Run with args\t[-f file] <args>\n\n");
         exits("Show usage completed");
 }
 
@@ -107,18 +107,37 @@ printregs()
 
 
 void
+loadfile(char* fname)
+{
+
+}
+
+
+void
 main(int argc, char *argv[])
 {
         int cyc;
         int offs, chpos;
         char ch;
+        int withfile;
 
-        
+        withfile = 0;
         if (argc==1) usage();
 
         load(&vm, fname);
         if (argc==2 && !strcmp("-s", argv[1])) singlestep();
         if (argc==2 && !strcmp("-r", argv[1])) printregs();
+        if (!strcmp("-f", argv[1])){
+        
+                if (argc>3){
+                        withfile = 1;
+                        loadfile(argv[2]);
+                }
+                else{
+                        print("Too few arguments...\n");
+                        usage();
+                }
+        }
 
         /* Clear LOX arg buffer, output text buffer and return code
         */
@@ -128,8 +147,7 @@ main(int argc, char *argv[])
         /* Collect CLI parameters, concatenate at 0x7F80
         */
         offs = 0x80;
-        for( i=0; i<argc; i++){
-                if( i==0) continue;
+        for( i = withfile ? 3:1; i<argc; i++){
                 chpos = 0;
                 while( (ch=argv[i][chpos++]) != 0){
                         vm.ram[0x7F][offs] = ch;
@@ -144,8 +162,12 @@ main(int argc, char *argv[])
         */
         for( cyc=1; cyc<999*1000; cyc++){
                 myth_step( &vm);
-                if ( vm.scrounge == END) break;
+                if (vm.scrounge == END) break;
+                if (vm.e != 0) {
+                        /*Handle virtual IO operation*/
+                }
         }
+
         if( cyc==999*1000) {
                  print( "Error:\n");
                  print( "999k cycles elapsed without END (re-run?)\n!\n");
@@ -153,11 +175,19 @@ main(int argc, char *argv[])
         }
         else{
                 print("END after %d cycles: ", cyc);
+
+                /* Reset Program Counter for next run
+                   Reset pointers to arg buffer and output text buffer
+                   Reset ECODE
+                   Reset L
+                */
+                
                 vm.c = 0;
                 vm.pc = 0;
+                vm.l = 0;
                 vm.ram[0x7F][POS] = 0;
                 vm.ram[0x7F][ARG] = 0x80;
-                // vm.l++; /* Fix L */
+                vm.ram[0x7F][ECODE] = 0;
         }
 
         /* Output 0x7F00 to 0x7F7F as zero-terminated string
