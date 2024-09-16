@@ -9,11 +9,9 @@ P[COLD]0 (Instruction-fetch on RESET and on IRQ begins here)
 
  (Lox has copied its null-separated command line arguments into 7F80h-7FEFh.)
 
-      O[callArgs]
-
-        nc Interpret
-        nc NextArg
-        nt <callArgs  (Repeat until R zero - end of list)
+      O[callArgs] nc Interpret
+                  nc NextArg
+                  nt <callArgs  (Repeat until R zero - end of list)
 
         END (Application specific opcode END exits LOX.)
 
@@ -130,7 +128,6 @@ P[DivMod8]+  (Divide R by G, return quotient in R, remainder in G)
 
          nr 00h r3           (Initialise quotient to zero)
          1r nf >DivMod8Quit  (Skip if divisor is zero)
-      
          nr 80h r5           (Set MSB mask)
 
       O[DivMod8Sh]
@@ -148,15 +145,13 @@ P[DivMod8]+  (Divide R by G, return quotient in R, remainder in G)
 
          3o SLO              (Shift quotient left)
          r3                  (Store shifted quotient for latter)
-         1r OCR P1           (Negate divisor)
-         r4                  (Save this)
+         1r OCR P1 r4        (Negate divisor and save it)
          0o CAR              (Get dividend and see if adding
                               the negated divisor produces a borrow bit)
          
          nf >DivMod8Rep      (If not, don't accept the subtraction)
          
-         4r ADD              (Accept subtraction result to dividend in O)
-         r0                  (Store new dividend)
+         4r ADD r0           (Accept subtraction result, store to dividend)
          3r P1 r3            (Increment quotient)
 
       O[DivMod8Rep]
@@ -316,10 +311,10 @@ P[ready]+
 
 
 ;********* ******************************************************************
-P[NextArg]+
+P[NextArg]+  (Advance LOX ARG PTR to next string)
 ;********* ******************************************************************
 
-           OWN i6  (Advance LOX ARG PTR to next string)
+           OWN i6 
 
            nd LOXBASE
            no LOXBASE.ARG
@@ -336,11 +331,10 @@ P[NextArg]+
 
 
 ;************** *************************************************************
-P[BASEVOCAB]40h
+P[BASEVOCAB]40h (List of predefined string literals)
 ;************** *************************************************************
 
-  (Predefined string literals
-     This is a linear search list
+    (This is a linear search list
      in the format:
      Z-Terminated string
      Type byte: 81h

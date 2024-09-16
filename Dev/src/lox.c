@@ -9,10 +9,7 @@
     
     0x7F00-0x7F7F will be displayed as text on return.
     0x7F80-0x7FEF receives command line arguments (null-separated).
-    0x7FF0 - 
-    0x7FFF (See lox.h #defines)
-
-    Edit nettle, then run nettle, lox and regs in succession.
+    0x7FF0 - 0x7FFF (System variables, see lox.h #defines)
 
     Author: mim@ok-schalter.de (Michael/Dosflange@github)
 
@@ -33,9 +30,13 @@
 #include "myst.h"
 #include "lox.h"
 
+struct myth_vm vm;
 char* fname = "corestate.myst";
-int i;
+int i,n;
 
+
+/* This increments a string pointer, checking an upper bound
+*/
 void
 insertOrExitAt(int *offs)
 {
@@ -47,16 +48,77 @@ insertOrExitAt(int *offs)
 }
 
 void
+greet()
+{
+        print("CLI Lox C version Dosflange/2409\n");
+}
+
+void
+usage()
+{
+        print("Usage:\n");
+        print("\t-s\tsingle step\n");
+        print("\t-r\tprint regs\n");
+        print("\t<args> run with args\n\n");
+        exits("Show usage completed");
+}
+
+void
+singlestep()
+{
+        //myth_reset(&vm);
+        myth_step(&vm);
+        save(&vm, fname);
+        //print("myth\n");
+        exits("Single step completed");
+}
+
+void
+printregs()
+{
+        print( "LOX regs: ", vm.l);
+
+        print( "r:%.02Xh(%d)(%b) ", vm.r, vm.r, vm.r);
+        print( "o:%.02Xh(%d)(%b) ", vm.o, vm.o, vm.o);
+        print( "c:%.02Xh(%d)(%b) ", vm.c, vm.c, vm.c);
+        print( "co:%.02Xh(%d)(%b) ", vm.co, vm.co, vm.co);
+        print( "pc:%.02Xh(%d)(%b) ", vm.pc, vm.pc, vm.pc);
+        print( "i:%.02Xh(%d)(%b)\n", vm.i, vm.i, vm.i);
+        print( "d:%.02Xh(%d)(%b) ", vm.d, vm.d, vm.d);
+
+        print( "\te:%.02Xh(%d)(%b) ", vm.e, vm.e, vm.e);
+        print( "sclk:%d ", vm.sclk ? 1:0);
+        print( "miso:%d ", vm.miso ? 1:0);
+        print( "mosi:%d ", vm.mosi ? 1:0);
+        print( "sir:%.02Xh(%d)(%b) ", vm.sir, vm.sir, vm.sir);
+        print( "sor:%.02Xh(%d)(%b) ", vm.sor, vm.sor, vm.sor);
+        print( "pir:%.02Xh(%d)(%b) ", vm.pir, vm.pir, vm.pir);
+        print( "por:%.02Xh(%d)(%b)\n", vm.por, vm.por, vm.por);
+
+        print( "Locals @l%.02X: ", vm.l);
+        for( i=0; i<8; i++){
+                n = vm.ram[vm.l][DIRO_BASE_OFFSET +i];
+                print( "L%d:%X(%d)(%b) ", i, n, n, n);
+        }
+
+        print( "\n");
+        exits( "Register display completed");
+}
+
+
+void
 main(int argc, char *argv[])
 {
         int cyc;
         int offs, chpos;
         char ch;
 
-        print("Lox C version Dosflange/2409\n");
-        struct myth_vm vm;
-        load(&vm, fname);
+        
+        if (argc==1) usage();
 
+        load(&vm, fname);
+        if (argc==2 && !strcmp("-s", argv[1])) singlestep();
+        if (argc==2 && !strcmp("-r", argv[1])) printregs();
 
         /* Clear LOX arg buffer, output text buffer and return code
         */
@@ -86,7 +148,7 @@ main(int argc, char *argv[])
         }
         if( cyc==999*1000) {
                  print( "Error:\n");
-                 print( "999k cycles elapsed without output request (re-run to continue)\n!\n");
+                 print( "999k cycles elapsed without END (re-run?)\n!\n");
                  exits( "Elapsed");
         }
         else{
@@ -108,7 +170,7 @@ main(int argc, char *argv[])
 
         print("\n");
         save(&vm, fname);
-        exits("");
+        exits("Run completed");
 }
 
 

@@ -12,15 +12,12 @@ In order to develop with the current system, do the following.
     The assembler also creates the file 'lox_debug.txt' with
     an ASCII concordance of object code vs. source code.
 
-*   You can single-step the machine with the 'myst' command,
-    and you can dump/visualize its registers using 'regs'.
-    Both commands read the 'corestate.myst' file, and
-    'myst' updates the file to reflect the new CPU state.
+*   You can single-step the machine with the 'lox -s' command,
+    and you can dump/visualize its registers using 'lox -r'.
 
-*   LOX
-    
-    The 'lox' tool does the following: it copies its command line
-    arguments into the machine's memory, concatenating them into
+*   When run with any other input arguments, the 'lox' tool copies
+    its command line arguments into the machine's memory,
+    concatenating them into
     a list of zero-terminated strings starting at address 0x7F80.
     It then runs the machine image file (populated with the object
     code of the firmware, assembled from lox.asm).
@@ -40,7 +37,7 @@ In order to develop with the current system, do the following.
     when the code exits.
     In addition, data structures created or any other modifications
     are preserved in 'corestate_myst' and can be continued by running
-    'lox' again, or stepping the image with 'myst' etc.
+    'lox' again.
 
 Note:
 The emulation code used to simulate the Myth CPU is in 'myth.h'.
