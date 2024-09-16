@@ -1,0 +1,11 @@
+corestate.myst
+lox_debug.txt
+../.DS_Store
+.DS_Store
+.vscode/
+Dev.code-workspace
+goldie
+lox
+src/.DS_Store
+../Schematics/.DS_Store
+../Schematics/myth-backups/
