@@ -815,6 +815,10 @@ func tryCommentRelated(word string) bool {
 	return false
 }
 
+// Check if 'word' is a page label definition (P[label]val),
+// offset label definition (O[label]val), or a constant
+// label definition (C[label]val).
+
 func tryPOC(word string) bool {
 
 	var label string
@@ -863,6 +867,8 @@ func tryPOC(word string) bool {
 
 	return false
 }
+
+// Check if 'word' refers to a trap call / has a leading asterisk
 
 func tryTrapCall(word string) bool {
 	if len(word) > 0 && word[0] == '*' { //Trap call
