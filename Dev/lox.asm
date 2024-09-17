@@ -1695,18 +1695,22 @@ O[VTOPOFFSET] 'NUL'
 P[LOXBASE]7Fh
 ;********* ******************************************************************
 
-    (The region from 00h to 7Fh of this page is the LOX output buffer.
-    The VM when executing puts text here, which gets output when
-    'lox' is run from the command line.)
+    O[OUTBUF]
 
-    (The region from 80h to EFh is populated with 'lox' command line
-     arguments, null separated.)
+       (The region from 00h to 7Fh of this page is the LOX output buffer.
+        The VM when executing puts text here, which gets output when
+        'lox' is run from the command line.)
 
-    (F0h to end of page are LOX system variables - don't relocate!)
+    O[ARGBUF]80h
+
+       (The region from 80h to EFh is populated with 'lox' command line
+        arguments, null separated.)
 
     O[UNUSED]F0h  0h 0h 0h 0h 0h 0h 0h 
 
-    O[ARG]        80h        (LOXBASE offs: current cmd line argument str)
+       (F0h to end of page are LOX system variables)
+
+    O[ARG]F7h     80h        (LOXBASE offs: current cmd line argument str)
     O[POS]        00h        (Current position in output text buffer)
     O[VTP]        VTOPPAGE
     O[VTO]        VTOPPAGE.VTOPOFFSET
@@ -1716,3 +1720,19 @@ P[LOXBASE]7Fh
     O[SRCO]       00h
     O[ECODE]      00h
 
+    (System-wide constants)
+
+    C[SH0_NULL]0        (NULL device for SH)
+    C[SH1_PARLE]10h     (CPU parallel port latch enable)
+    C[SH2_SMEMA0LE]20h  (SMEM address bit latch 0-7)
+    C[SH3_SMEMA1LE]30h  (SMEM address bit latch 8-15)
+    C[SH4_SMEMA2LE]40h  (SMEM address bit latch 16-23)
+
+    C[SL0_NULL]0        (NULL device for SL)
+    C[SL1_PAROE]1       (CPU parallel port output enable)
+    C[SL2_SMEMOE]2      (SMEM data byte output enable)
+    C[SL3_SMEMWE]3      (SMEM data byte write enable)
+
+
+    0 ; This is required due to a bug in wrDebugTxt()
+    

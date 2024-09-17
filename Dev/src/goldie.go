@@ -546,6 +546,7 @@ func wrDebugTxt() {
 			j++
 			//fmt.Printf("Advancing: p%d o%d l%d bl%d\n", i, j, line, blameLine[i][j])
 		}
+
 	}
 }
 
