@@ -2,6 +2,10 @@
 #ifndef __IO_H__
 #define __IO_H__ 1
 
+/* Virtual IO routines for Sonne 8 micro-controller Rev. Myth/LOX
+   Author: mim@ok-schalter.de (Michael/Dosflange@github)
+    */
+
 #include <u.h>
 #include <libc.h>
 #include "myth.h"
@@ -10,10 +14,14 @@ extern struct myth_vm vm;
 
 static uchar lnybble_old, lnybble_new, hnybble_old, hnybble_new;
 
-struct {
-        char data[256*256*256];
-        uchar a0, a1, a2;
-} smem;
+struct SMem {
+        uchar data[256*256*256]; /*16MB*/
+        uchar a0, /*Address select bits 0-7*/
+              a1, /*Address select bits 8-15*/
+              a2; /*Address select bits 16-23*/
+};
+
+struct SMem smem;
 
 uchar bus; /*Byte value on parallel bus, assume pull-down*/
 

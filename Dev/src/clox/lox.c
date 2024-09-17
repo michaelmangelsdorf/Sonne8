@@ -30,9 +30,71 @@
 #include "lox.h"
 #include "io.h"
 
+
+void load( struct myth_vm*, char *);
+void save( struct myth_vm*, char *);
+void loadsmem( char* fname);
+void savesmem( char* fname);
+
+
+
 struct myth_vm vm;
-char* fname = "corestate.myst";
+char* fname_vm = "corestate.myst";
 int i,n;
+
+
+void
+save(struct myth_vm *vm, char *fname_vm)
+{   
+        int fdesc;
+        create(fname_vm, 0, 0666);
+        fdesc=open(fname_vm, OWRITE);
+        if (fdesc != -1) {
+             write(fdesc, vm, sizeof(struct myth_vm));
+             close(fdesc);
+        }
+        else print("Write error\n");
+}
+
+void
+load(struct myth_vm *vm, char *fname_vm)
+{
+        int fdesc;
+        fdesc=open(fname_vm, OREAD);
+        if(fdesc != -1) {
+                read(fdesc, vm, sizeof(struct myth_vm));
+                close(fdesc);
+        }
+        else save(vm, "corestate.myst");
+}
+
+void
+savesmem(char* fname)
+{
+        int fdesc;
+        create(fname, 0, 0666);
+        fdesc=open(fname, OWRITE);
+        if (fdesc != -1) {
+             write(fdesc, smem.data, sizeof(smem.data));
+             close(fdesc);
+       }
+        else print("Write error\n");
+}
+
+void
+loadsmem(char* fname)
+{
+        int fdesc;
+        fdesc=open(fname, OREAD);
+        if(fdesc != -1) {
+                read(fdesc, smem.data, sizeof(smem.data));
+                close(fdesc);
+        }
+        else {
+                print("Created LOX ramdisk file\n");
+                savesmem("ramdisk.myth");
+        }
+}
 
 
 /* This increments a string pointer, checking an upper bound
@@ -68,7 +130,7 @@ singlestep()
 {
         //myth_reset(&vm);
         myth_step(&vm);
-        save(&vm, fname);
+        save(&vm, fname_vm);
         //print("myth\n");
         exits("Single step completed");
 }
@@ -106,14 +168,6 @@ printregs()
 }
 
 
-
-
-void
-loadsmem(char* fname)
-{
-
-}
-
 void
 main(int argc, char *argv[])
 {
@@ -125,7 +179,7 @@ main(int argc, char *argv[])
         withfile = 0;
         if (argc==1) usage();
 
-        load(&vm, fname);
+        load(&vm, fname_vm);
         if (argc==2 && !strcmp("-s", argv[1])) singlestep();
         if (argc==2 && !strcmp("-r", argv[1])) printregs();
         if (!strcmp("-f", argv[1])){
@@ -199,7 +253,8 @@ main(int argc, char *argv[])
         }
 
         print("\n");
-        save(&vm, fname);
+        save(&vm, fname_vm);
+        if (withfile) savesmem(argv[2]);
         exits("Run completed");
 }
 
