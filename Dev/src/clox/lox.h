@@ -30,13 +30,15 @@
 /* Attached virtual devices:
 */
 
-#define SH1_PARLE  1<<4 /* CPU Parallel port latch enable */
-#define SH2_SMEMA0 2<<4 /* SMEM address bit latch 0-7 */
-#define SH3_SMEMA1 3<<4 /* SMEM address bit latch 8-15 */
-#define SH4_SMEMA2 4<<4 /* SMEM address bit latch 16-23 */
+#define SH0_NULL      0    /* NULL device for SH */        
+#define SH1_PARLE     1<<4 /* CPU Parallel port latch enable */
+#define SH2_SMEMA0LE  2<<4 /* SMEM address bit latch 0-7 */
+#define SH3_SMEMA1LE  3<<4 /* SMEM address bit latch 8-15 */
+#define SH4_SMEMA2LE  4<<4 /* SMEM address bit latch 16-23 */
 
-#define SL1_PAROE  1    /* CPU Parallel port output enable */
-#define SL2_SMEMOE 2    /* SMEM data byte output enable */
-
+#define SL0_NULL      0    /* NULL device for SL */
+#define SL1_PAROE     1    /* CPU Parallel port output enable */
+#define SL2_SMEMOE    2    /* SMEM data byte output enable */
+#define SL3_SMEMWE    3    /* SMEM data byte output enable */
 
 #endif

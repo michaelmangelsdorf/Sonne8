@@ -20852,7 +20852,7 @@
 		(uuid "6e6ff549-8895-4970-8f0b-2299d36a140f")
 	)
 	(no_connect
-		(at 261.9323 667.2944)
+		(at 257.6333 667.6626)
 		(uuid "70bed116-f7fb-4005-a6c5-02c20d395006")
 	)
 	(no_connect
@@ -21267,7 +21267,7 @@
 	)
 	(wire
 		(pts
-			(xy 248.2207 702.4907) (xy 254.5707 702.4907)
+			(xy 243.9217 702.8589) (xy 250.2717 702.8589)
 		)
 		(stroke
 			(width 0)
@@ -24027,7 +24027,7 @@
 	)
 	(wire
 		(pts
-			(xy 247.9623 663.6114) (xy 254.3123 663.6114)
+			(xy 243.6633 663.9796) (xy 250.0133 663.9796)
 		)
 		(stroke
 			(width 0)
@@ -30537,7 +30537,7 @@
 	)
 	(wire
 		(pts
-			(xy 247.9623 663.6114) (xy 247.9623 664.7544)
+			(xy 243.6633 663.9796) (xy 243.6633 665.1226)
 		)
 		(stroke
 			(width 0)
@@ -31567,7 +31567,7 @@
 	)
 	(wire
 		(pts
-			(xy 248.2207 702.4907) (xy 248.2207 703.6337)
+			(xy 243.9217 702.8589) (xy 243.9217 704.0019)
 		)
 		(stroke
 			(width 0)
@@ -32294,7 +32294,7 @@
 		(at 151.4197 731.6543 0)
 		(effects
 			(font
-				(size 6 6)
+				(size 5 5)
 			)
 			(justify left bottom)
 		)
@@ -32795,6 +32795,17 @@
 		)
 		(uuid "676c880c-2f02-44da-b10a-6428a4e2d783")
 	)
+	(text "LOX: SMEMA2LE"
+		(exclude_from_sim no)
+		(at 262.2741 677.9047 0)
+		(effects
+			(font
+				(size 1.2954 1.2954)
+			)
+			(justify left bottom)
+		)
+		(uuid "6ac6ee8a-00a2-4783-9aa3-22dcbb13624f")
+	)
 	(text "E"
 		(exclude_from_sim no)
 		(at 158.8494 663.2689 0)
@@ -32916,7 +32927,7 @@
 		)
 		(uuid "7ec2e5f2-63dc-4fef-b01c-562caf56e5ee")
 	)
-	(text "                   NL => NOP (reserved)\n                   NM => NOP (reserved)\n                   LL => NOP (reserved)\n                   LM => NOP (reserved)\n                   ML => NOP (reserved)\n                   MM => NOP (reserved)\n                   DD => NOP (reserved)\n                   RR => NOP (reserved)\n                   II => NOP (reserved)"
+	(text "                   NM => END (LOX)\n                   NL => NOP (reserved)\n                   LM => NOP (reserved)\n                   LL => NOP (reserved)\n                   MM => NOP (reserved)\n                   ML => NOP (reserved)\n                   DD => NOP (reserved)\n                   RR => NOP (reserved)\n                   II => NOP (reserved)"
 		(exclude_from_sim no)
 		(at 287.2079 222.0745 0)
 		(effects
@@ -32924,6 +32935,7 @@
 				(face "Monaco")
 				(size 1.27 1.27)
 			)
+			(justify left)
 		)
 		(uuid "7facaf60-6813-4a93-b91f-bdef6647b1e4")
 	)
@@ -32970,6 +32982,17 @@
 			(justify left bottom)
 		)
 		(uuid "84a0bd68-4e26-4b7f-945e-cd0c696a0a68")
+	)
+	(text "LOX: SMEMA1LE"
+		(exclude_from_sim no)
+		(at 262.3491 675.4295 0)
+		(effects
+			(font
+				(size 1.2954 1.2954)
+			)
+			(justify left bottom)
+		)
+		(uuid "88748fe3-b380-420c-a2fd-871f56511de2")
 	)
 	(text "Caps"
 		(exclude_from_sim no)
@@ -33018,7 +33041,7 @@
 	)
 	(text "SH0_NULL device"
 		(exclude_from_sim no)
-		(at 261.9323 667.2944 0)
+		(at 257.6333 667.6626 0)
 		(effects
 			(font
 				(size 1.2954 1.2954)
@@ -33172,7 +33195,7 @@
 	)
 	(text "ACTIVE HIGH\nENABLE"
 		(exclude_from_sim no)
-		(at 238.4997 650.2448 0)
+		(at 234.2007 650.613 0)
 		(effects
 			(font
 				(size 2 2)
@@ -33290,6 +33313,17 @@
 			(justify left bottom)
 		)
 		(uuid "c048a02e-ae09-4368-ae73-3397020a3351")
+	)
+	(text "LOX: SMEMOE"
+		(exclude_from_sim no)
+		(at 316.5302 674.8833 0)
+		(effects
+			(font
+				(size 1.2954 1.2954)
+			)
+			(justify left bottom)
+		)
+		(uuid "c0f9852d-fa4f-4441-a0b7-f9231915cdc7")
 	)
 	(text "Opcode Type\nDecoder"
 		(exclude_from_sim no)
@@ -33543,6 +33577,28 @@
 			(justify left bottom)
 		)
 		(uuid "e8878050-e5d5-4146-bc91-84808c5de4e5")
+	)
+	(text "LOX: SMEMA0LE"
+		(exclude_from_sim no)
+		(at 262.3707 672.8354 0)
+		(effects
+			(font
+				(size 1.2954 1.2954)
+			)
+			(justify left bottom)
+		)
+		(uuid "eb7ff378-11c3-4678-90f0-3292ed1bc34b")
+	)
+	(text "LOX: SMEMOE"
+		(exclude_from_sim no)
+		(at 316.5302 672.3584 0)
+		(effects
+			(font
+				(size 1.2954 1.2954)
+			)
+			(justify left bottom)
+		)
+		(uuid "ed9d8643-39c5-4033-ba56-b20d0d1b5039")
 	)
 	(text "Remap (\"scrounge\") GG, RR, II etc,\nand impracticable opcodes such as NM"
 		(exclude_from_sim no)
@@ -33820,7 +33876,7 @@
 		(uuid "03e12bdb-c3a3-4a9b-8c9b-e2a3c7a3ad83")
 	)
 	(label "GND"
-		(at 234.2507 709.9837 180)
+		(at 229.9517 710.3519 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -34469,7 +34525,7 @@
 		(uuid "14ec821a-2e22-411e-9413-d5f0b617ad1e")
 	)
 	(label "EH0"
-		(at 233.9923 681.2644 180)
+		(at 229.6933 681.6326 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -34645,7 +34701,7 @@
 		(uuid "184e3a4d-b368-480d-a6e4-2124243929f4")
 	)
 	(label "SH15"
-		(at 262.1907 723.9537 0)
+		(at 257.8917 724.3219 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -34667,7 +34723,7 @@
 		(uuid "18b8c410-20e8-417f-a53c-1379df6a1a28")
 	)
 	(label "EH0"
-		(at 234.2507 720.1437 180)
+		(at 229.9517 720.5119 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -35228,7 +35284,7 @@
 		(uuid "258fadfe-ba33-43db-8366-b3fdb2384138")
 	)
 	(label "SH7"
-		(at 261.9323 685.0744 0)
+		(at 257.6333 685.4426 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -35811,7 +35867,7 @@
 		(uuid "31d438b1-8cf1-4e8f-b064-ff0d2d604cae")
 	)
 	(label "EH2"
-		(at 234.2507 725.2237 180)
+		(at 229.9517 725.5919 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -35987,7 +36043,7 @@
 		(uuid "35e679eb-0bee-42a2-bb76-ec8f853e9478")
 	)
 	(label "SH3"
-		(at 261.9323 674.9144 0)
+		(at 257.6333 675.2826 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -35997,8 +36053,8 @@
 		)
 		(uuid "360fed5b-dd7a-4c36-81f2-cfc913ee4e40")
 	)
-	(label "SH1_PARCP"
-		(at 261.9323 669.8344 0)
+	(label "SH1_PARLE"
+		(at 257.6333 670.2026 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -36152,7 +36208,7 @@
 		(uuid "37edf515-53bf-4209-aa27-a3f7b92eb712")
 	)
 	(label "EH3"
-		(at 233.9923 667.2944 180)
+		(at 229.6933 667.6626 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -36515,7 +36571,7 @@
 		(uuid "3ec74270-640e-445f-bd4d-a71ab8af9284")
 	)
 	(label "GND"
-		(at 234.2507 706.1737 180)
+		(at 229.9517 706.5419 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -38099,7 +38155,7 @@
 		(uuid "5eba7701-51f4-41f5-bf22-efd8d291a20d")
 	)
 	(label "SH5"
-		(at 261.9323 679.9944 0)
+		(at 257.6333 680.3626 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -38264,7 +38320,7 @@
 		(uuid "6209d522-f8df-4398-a10c-a03879846eec")
 	)
 	(label "EH1"
-		(at 233.9923 683.8044 180)
+		(at 229.6933 684.1726 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -38440,7 +38496,7 @@
 		(uuid "673fe299-c660-4d07-992c-5062d01555d2")
 	)
 	(label "GND"
-		(at 233.9923 671.1044 180)
+		(at 229.6933 671.4726 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -38516,7 +38572,7 @@
 		)
 		(uuid "68d605b4-eeb2-48f8-aeae-c29c0f8157cf")
 	)
-	(label "SH1_PARCP"
+	(label "SH1_PARLE"
 		(at 423.8986 690.4996 180)
 		(fields_autoplaced yes)
 		(effects
@@ -38946,7 +39002,7 @@
 		(uuid "718ae273-96d1-4507-8b83-9259aea296d0")
 	)
 	(label "SH2"
-		(at 261.9323 672.3744 0)
+		(at 257.6333 672.7426 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -39309,7 +39365,7 @@
 		(uuid "7b796350-6026-486d-893d-c8c91e6a3d87")
 	)
 	(label "+5V"
-		(at 254.3123 663.6114 0)
+		(at 250.0133 663.9796 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -39452,7 +39508,7 @@
 		(uuid "80882adf-7d94-48ba-b796-4eec79d01375")
 	)
 	(label "SH8"
-		(at 262.1907 706.1737 0)
+		(at 257.8917 706.5419 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -39738,7 +39794,7 @@
 		(uuid "86b1650c-27f6-4516-8b60-2a6a434a183e")
 	)
 	(label "EH2"
-		(at 233.9923 686.3444 180)
+		(at 229.6933 686.7126 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -41091,7 +41147,7 @@
 		(uuid "a1e1eaff-eaf7-4590-a737-e257630cac4e")
 	)
 	(label "SH11"
-		(at 262.1907 713.7937 0)
+		(at 257.8917 714.1619 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -41146,7 +41202,7 @@
 		(uuid "a2d647b9-9975-4389-bb21-4435959e585f")
 	)
 	(label "EH3"
-		(at 234.2507 713.7937 180)
+		(at 229.9517 714.1619 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -41333,7 +41389,7 @@
 		(uuid "a63d6673-a8f9-4c3f-b778-6621f0a29f25")
 	)
 	(label "SH13"
-		(at 262.1907 718.8737 0)
+		(at 257.8917 719.2419 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -41520,7 +41576,7 @@
 		(uuid "a9d76dfc-52ba-46de-beb4-dab7b94ee663")
 	)
 	(label "+5V"
-		(at 254.5707 702.4907 0)
+		(at 250.2717 702.8589 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -41938,7 +41994,7 @@
 		(uuid "b42e72b1-60b0-4252-93fd-8a6a8124f313")
 	)
 	(label "EH1"
-		(at 234.2507 722.6837 180)
+		(at 229.9517 723.0519 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -42257,7 +42313,7 @@
 		(uuid "bae76221-9075-4a82-9950-ba7e55841f73")
 	)
 	(label "SH14"
-		(at 262.1907 721.4137 0)
+		(at 257.8917 721.7819 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -42279,7 +42335,7 @@
 		(uuid "baee820b-cbdc-4775-8b1c-1a598825818d")
 	)
 	(label "SH10"
-		(at 262.1907 711.2537 0)
+		(at 257.8917 711.6219 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -43280,7 +43336,7 @@
 		(uuid "d0f42cc3-e2d7-4f51-9d6f-0c2eaccb6ae7")
 	)
 	(label "SH12"
-		(at 262.1907 716.3337 0)
+		(at 257.8917 716.7019 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -43687,7 +43743,7 @@
 		(uuid "d9c89962-74c8-4645-8ce6-8ad5a88ede98")
 	)
 	(label "SH6"
-		(at 261.9323 682.5344 0)
+		(at 257.6333 682.9026 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -43786,7 +43842,7 @@
 		(uuid "ddc0999f-48c1-4a48-960f-30f430270283")
 	)
 	(label "+5V"
-		(at 233.9923 674.9144 180)
+		(at 229.6933 675.2826 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -44677,7 +44733,7 @@
 		(uuid "ef946b39-e01d-444c-948f-113f757488e9")
 	)
 	(label "SH9"
-		(at 262.1907 708.7137 0)
+		(at 257.8917 709.0819 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -44688,7 +44744,7 @@
 		(uuid "efbbe8cf-59bc-4538-8cfe-f1cbd7738f64")
 	)
 	(label "SH4"
-		(at 261.9323 677.4544 0)
+		(at 257.6333 677.8226 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -57311,7 +57367,7 @@
 	)
 	(symbol
 		(lib_id "74xx_IEEE:74HC238")
-		(at 247.9623 672.3744 0)
+		(at 243.6633 672.7426 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -57319,7 +57375,7 @@
 		(dnp no)
 		(uuid "147473da-5e06-4067-8782-2cf6cd9f6bd8")
 		(property "Reference" "U24"
-			(at 247.9623 659.268 0)
+			(at 243.6633 659.6362 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -57327,7 +57383,7 @@
 			)
 		)
 		(property "Value" "74HC238"
-			(at 247.9623 661.5794 0)
+			(at 243.6633 661.9476 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -57335,7 +57391,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-16_W7.62mm_Socket_LongPads"
-			(at 247.9623 672.3744 0)
+			(at 243.6633 672.7426 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -57344,7 +57400,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 247.9623 672.3744 0)
+			(at 243.6633 672.7426 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -57353,7 +57409,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 247.9623 672.3744 0)
+			(at 243.6633 672.7426 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -61835,7 +61891,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 248.2207 726.4937 0)
+		(at 243.9217 726.8619 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -61843,7 +61899,7 @@
 		(dnp no)
 		(uuid "54479260-2057-420a-b787-112cf13feaa3")
 		(property "Reference" "#PWR011"
-			(at 248.2207 732.8437 0)
+			(at 243.9217 733.2119 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -61852,7 +61908,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 248.3477 730.8879 0)
+			(at 244.0487 731.2561 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -61860,7 +61916,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 248.2207 726.4937 0)
+			(at 243.9217 726.8619 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -61869,7 +61925,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 248.2207 726.4937 0)
+			(at 243.9217 726.8619 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -61878,7 +61934,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 248.2207 726.4937 0)
+			(at 243.9217 726.8619 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -70028,7 +70084,7 @@
 	)
 	(symbol
 		(lib_id "74xx_IEEE:74HC238")
-		(at 248.2207 711.2537 0)
+		(at 243.9217 711.6219 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -70036,7 +70092,7 @@
 		(dnp no)
 		(uuid "c4ff5659-5689-4b77-9d0b-87591ea33485")
 		(property "Reference" "U25"
-			(at 248.2207 698.1473 0)
+			(at 243.9217 698.5155 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -70044,7 +70100,7 @@
 			)
 		)
 		(property "Value" "74HC238"
-			(at 248.2207 700.4587 0)
+			(at 243.9217 700.8269 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -70052,7 +70108,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-16_W7.62mm_Socket_LongPads"
-			(at 248.2207 711.2537 0)
+			(at 243.9217 711.6219 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -70061,7 +70117,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 248.2207 711.2537 0)
+			(at 243.9217 711.6219 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -70070,7 +70126,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 248.2207 711.2537 0)
+			(at 243.9217 711.6219 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -70821,7 +70877,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 247.9623 687.6144 0)
+		(at 243.6633 687.9826 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -70829,7 +70885,7 @@
 		(dnp no)
 		(uuid "d10ad3d5-77ba-451b-8ad7-4c8a3ed2aeaa")
 		(property "Reference" "#PWR010"
-			(at 247.9623 693.9644 0)
+			(at 243.6633 694.3326 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -70838,7 +70894,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 248.0893 692.0086 0)
+			(at 243.7903 692.3768 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -70846,7 +70902,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 247.9623 687.6144 0)
+			(at 243.6633 687.9826 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -70855,7 +70911,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 247.9623 687.6144 0)
+			(at 243.6633 687.9826 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -70864,7 +70920,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 247.9623 687.6144 0)
+			(at 243.6633 687.9826 0)
 			(effects
 				(font
 					(size 1.27 1.27)

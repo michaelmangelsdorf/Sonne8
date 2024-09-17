@@ -29,6 +29,7 @@
 #include "myth.h"
 #include "myst.h"
 #include "lox.h"
+#include "io.h"
 
 struct myth_vm vm;
 char* fname = "corestate.myst";
@@ -106,31 +107,12 @@ printregs()
 }
 
 
+
+
 void
 loadfile(char* fname)
 {
 
-}
-
-void
-falling_edge(uchar id)
-{
-
-}
-
-void
-rising_edge(uchar id)
-{
-}
-
-void
-active_high(uchar id)
-{
-}
-
-void
-active_low(uchar id)
-{
 }
 
 void
@@ -191,22 +173,22 @@ main(int argc, char *argv[])
 
                 /*Handle virtual IO operation*/
                 
-                lnybble_old = vm.e_old & 15;
-                lnybble_new = vm.e_new & 15;
-                hnybble_old = vm.e_old >> 4;
-                hnybble_new = vm.e_new >> 4;
+                lnybble_old = vm.e_old & 0x0F;
+                lnybble_new = vm.e_new & 0x0F;
+                hnybble_old = vm.e_old & 0xF0;
+                hnybble_new = vm.e_new & 0xF0;
 
                 /*Active-low device newly selected*/
                 if (lnybble_new != lnybble_old){
-                        rising_edge(vm.e_old&15);
-                        falling_edge(vm.e_new&15);
+                        rising_edge(lnybble_old);
+                        falling_edge(lnybble_new);
                 } /*When level triggered*/
                 else active_low(lnybble_new);
 
                 /*Active-high device newly selected*/
                 if (hnybble_new != hnybble_old){
-                        falling_edge(vm.e_old>>4);
-                        rising_edge(vm.e_new>>4);
+                        falling_edge(hnybble_old);
+                        rising_edge(hnybble_new);
                 } /*When level triggered*/
                 else active_high(hnybble_new);
         }
