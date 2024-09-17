@@ -112,6 +112,26 @@ loadfile(char* fname)
 
 }
 
+void
+falling_edge(uchar id)
+{
+
+}
+
+void
+rising_edge(uchar id)
+{
+}
+
+void
+active_high(uchar id)
+{
+}
+
+void
+active_low(uchar id)
+{
+}
 
 void
 main(int argc, char *argv[])
@@ -120,6 +140,7 @@ main(int argc, char *argv[])
         int offs, chpos;
         char ch;
         int withfile;
+        uchar lnybble_old, lnybble_new, hnybble_old, hnybble_new;
 
         withfile = 0;
         if (argc==1) usage();
@@ -158,17 +179,36 @@ main(int argc, char *argv[])
         }
 
         /* Cycle until VM executes END,
-           Max. 10.000 cycles
+           given max. number of cycles
         */
         for( cyc=1; cyc<999*1000; cyc++){
+
                 myth_step( &vm);
+
+                /*Handle application-specific opcodes*/
+
                 if (vm.scrounge == END) break;
-                if (vm.e_old != vm.e_new) {
-                        /*Handle virtual IO operation*/
-                       // switch(e) {
-                       //         case SH2_SMEMA0 & SL1_PAROE:
-                       // }
-                }
+
+                /*Handle virtual IO operation*/
+                
+                lnybble_old = vm.e_old & 15;
+                lnybble_new = vm.e_new & 15;
+                hnybble_old = vm.e_old >> 4;
+                hnybble_new = vm.e_new >> 4;
+
+                /*Active-low device newly selected*/
+                if (lnybble_new != lnybble_old){
+                        rising_edge(vm.e_old&15);
+                        falling_edge(vm.e_new&15);
+                } /*When level triggered*/
+                else active_low(lnybble_new);
+
+                /*Active-high device newly selected*/
+                if (hnybble_new != hnybble_old){
+                        falling_edge(vm.e_old>>4);
+                        rising_edge(vm.e_new>>4);
+                } /*When level triggered*/
+                else active_high(hnybble_new);
         }
 
         if( cyc==999*1000) {
