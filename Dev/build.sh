@@ -9,7 +9,6 @@ mv a.out ../../lox
 rm lox.o
 git add lox.c
 git add lox.h
-git add myst.h
 git add myth.h
 cd ..
 

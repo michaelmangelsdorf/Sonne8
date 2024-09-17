@@ -27,7 +27,6 @@
 #include <u.h>
 #include <libc.h>
 #include "myth.h"
-#include "myst.h"
 #include "lox.h"
 #include "io.h"
 
@@ -110,7 +109,7 @@ printregs()
 
 
 void
-loadfile(char* fname)
+loadsmem(char* fname)
 {
 
 }
@@ -122,7 +121,6 @@ main(int argc, char *argv[])
         int offs, chpos;
         char ch;
         int withfile;
-        uchar lnybble_old, lnybble_new, hnybble_old, hnybble_new;
 
         withfile = 0;
         if (argc==1) usage();
@@ -134,7 +132,7 @@ main(int argc, char *argv[])
         
                 if (argc>3){
                         withfile = 1;
-                        loadfile(argv[2]);
+                        loadsmem(argv[2]);
                 }
                 else{
                         print("Too few arguments...\n");
@@ -166,31 +164,8 @@ main(int argc, char *argv[])
         for( cyc=1; cyc<999*1000; cyc++){
 
                 myth_step( &vm);
-
-                /*Handle application-specific opcodes*/
-
                 if (vm.scrounge == END) break;
-
-                /*Handle virtual IO operation*/
-                
-                lnybble_old = vm.e_old & 0x0F;
-                lnybble_new = vm.e_new & 0x0F;
-                hnybble_old = vm.e_old & 0xF0;
-                hnybble_new = vm.e_new & 0xF0;
-
-                /*Active-low device newly selected*/
-                if (lnybble_new != lnybble_old){
-                        rising_edge(lnybble_old);
-                        falling_edge(lnybble_new);
-                } /*When level triggered*/
-                else active_low(lnybble_new);
-
-                /*Active-high device newly selected*/
-                if (hnybble_new != hnybble_old){
-                        falling_edge(hnybble_old);
-                        rising_edge(hnybble_new);
-                } /*When level triggered*/
-                else active_high(hnybble_new);
+                else virtualio();
         }
 
         if( cyc==999*1000) {

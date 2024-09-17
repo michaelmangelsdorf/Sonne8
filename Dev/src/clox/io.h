@@ -8,6 +8,8 @@
 
 extern struct myth_vm vm;
 
+static uchar lnybble_old, lnybble_new, hnybble_old, hnybble_new;
+
 struct {
         char data[256*256*256];
         uchar a0, a1, a2;
@@ -41,7 +43,7 @@ falling_edge(uchar id)
 {
         if (id<16) { /*Active-low on select*/
             switch(id){
-                    case SL0_NULL: bus = 0; break; /*Tri-state pull-down*/
+                    case SL0_NULL:;
                     case SL1_PAROE: bus = vm.por; break;
                     case SL2_SMEMOE: bus = get_smemdata(); break;
                     case SL3_SMEMWE: set_smemdata(bus); break;
@@ -66,6 +68,7 @@ rising_edge(uchar id)
         }
         else { /*Active-high on select*/
             switch(id>>4){
+                    case SH0_NULL:;
                     case SH1_PARLE:
                             vm.pir = bus;
                             break;
@@ -86,5 +89,31 @@ void
 active_low(uchar id)
 {
 }
+
+void
+virtualio() /*Run this after each CPU step for device emulation*/
+{
+        /*Handle virtual IO operation*/
+        
+        lnybble_old = vm.e_old & 0x0F;
+        lnybble_new = vm.e_new & 0x0F;
+        hnybble_old = vm.e_old & 0xF0;
+        hnybble_new = vm.e_new & 0xF0;
+
+        /*Active-low device newly selected*/
+        if (lnybble_new != lnybble_old){
+                rising_edge(lnybble_old);
+                falling_edge(lnybble_new);
+        } /*When level triggered*/
+        else active_low(lnybble_new);
+
+        /*Active-high device newly selected*/
+        if (hnybble_new != hnybble_old){
+                falling_edge(hnybble_old);
+                rising_edge(hnybble_new);
+        } /*When level triggered*/
+        else active_high(hnybble_new);
+}
+
 
 #endif
