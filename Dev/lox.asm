@@ -1734,5 +1734,7 @@ P[LOXBASE]7Fh
     C[SL3_SMEMWE]3      (SMEM data byte write enable)
 
 
-    0 ; This is required due to a bug in wrDebugTxt()
+    0 ; This is required due to some bug in wrDebugTxt()
+      ; Without an object code byte here, the C[] section
+      ; above won't be listed.
     
