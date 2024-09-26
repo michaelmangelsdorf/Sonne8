@@ -5515,6 +5515,16 @@
 		)
 		(uuid "048c4e17-747f-4cff-a3fe-2230402245ca")
 	)
+	(polyline
+		(pts
+			(xy 81.28 24.765) (xy 88.265 24.765)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "050e6676-0822-422e-9d0f-60ccf04a045a")
+	)
 	(wire
 		(pts
 			(xy 203.2 142.24) (xy 226.06 142.24)
@@ -5584,6 +5594,16 @@
 			(type default)
 		)
 		(uuid "1facbc5c-77c4-4af3-b76f-80507483cb84")
+	)
+	(polyline
+		(pts
+			(xy 81.28 14.605) (xy 87.63 14.605)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "20d91673-8cdc-4cbf-8248-8e58118f69b6")
 	)
 	(bus
 		(pts
@@ -5817,7 +5837,7 @@
 	)
 	(polyline
 		(pts
-			(xy 81.28 14.605) (xy 81.28 24.765)
+			(xy 88.265 14.605) (xy 88.265 24.765)
 		)
 		(stroke
 			(width 0)
@@ -6024,6 +6044,16 @@
 			(type default)
 		)
 		(uuid "a67df7ce-99f7-4e51-a00e-3c5bb57bdf95")
+	)
+	(polyline
+		(pts
+			(xy 87.63 14.605) (xy 88.265 14.605)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "aab65bcd-4291-4c04-a646-426586652f9c")
 	)
 	(bus
 		(pts
@@ -6360,7 +6390,7 @@
 		)
 		(uuid "aa72e4f5-af9a-4c8d-8982-9e7041bc5e1c")
 	)
-	(text "NOTE: After resetting annotations, redo an additional annotation\nstep in the \"Pin headers\" sheet, renumbering from 1000 onwards.\nThis assures that the Pin Headers sheet, which is shared between\nthe individual boards, has consistent unit labels in them."
+	(text "NOTE: After resetting annotations, redo an additional annotation step\nin the \"Pin headers\" sheet, renumbering (\"current sheet only\") from\n1000 onwards. This assures that the Pin Headers sheet, which is shared\nbetween the individual boards, has consistent unit-labels in them."
 		(exclude_from_sim no)
 		(at 15.367 23.622 0)
 		(effects

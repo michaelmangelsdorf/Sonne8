@@ -4520,16 +4520,6 @@
 		)
 		(uuid "08188919-7a6f-4e73-a5a6-231a5e7869d1")
 	)
-	(polyline
-		(pts
-			(xy 13.97 13.97) (xy 13.97 24.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "09b70c03-d8e6-41c9-b25a-5fb595c91eab")
-	)
 	(bus
 		(pts
 			(xy 151.13 50.8) (xy 151.13 90.17)
@@ -4800,6 +4790,16 @@
 		)
 		(uuid "451c924a-183e-4439-ac17-f1b09bc58a3f")
 	)
+	(polyline
+		(pts
+			(xy 80.645 24.13) (xy 87.63 24.13)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "45dfbac5-e07f-454e-a78a-45127bdfe1f2")
+	)
 	(wire
 		(pts
 			(xy 115.57 66.04) (xy 96.52 66.04)
@@ -4829,26 +4829,6 @@
 			(type default)
 		)
 		(uuid "4d57019c-eba7-4f45-bb3d-e4a958d3bcc1")
-	)
-	(polyline
-		(pts
-			(xy 13.97 24.13) (xy 80.645 24.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4f02cc4e-011c-400c-9657-5ded161590f9")
-	)
-	(polyline
-		(pts
-			(xy 80.645 13.97) (xy 80.645 24.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "529bcd17-1492-4c99-843a-6bae91c1f6cd")
 	)
 	(wire
 		(pts
@@ -5140,16 +5120,6 @@
 		)
 		(uuid "8c7c8c0b-a761-423a-a651-4c4229d72fce")
 	)
-	(polyline
-		(pts
-			(xy 13.97 13.97) (xy 80.645 13.97)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8cd03ba2-68ac-4be0-95ef-25c626c01273")
-	)
 	(wire
 		(pts
 			(xy 161.29 58.42) (xy 161.29 176.53)
@@ -5360,6 +5330,16 @@
 		)
 		(uuid "a87fffc7-fd8a-4fcc-85d9-c6d038df15e9")
 	)
+	(polyline
+		(pts
+			(xy 13.97 24.13) (xy 80.645 24.13)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a8a640bd-e1f1-4a84-befe-792516e0cce0")
+	)
 	(wire
 		(pts
 			(xy 143.51 102.87) (xy 148.59 102.87)
@@ -5429,6 +5409,16 @@
 			(type default)
 		)
 		(uuid "b9c96e2d-a94f-4969-89c2-1002332ac755")
+	)
+	(polyline
+		(pts
+			(xy 13.97 13.97) (xy 13.97 24.13)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bacc52b4-abd4-499b-93b4-a851ea9ffc3c")
 	)
 	(wire
 		(pts
@@ -5670,6 +5660,16 @@
 		)
 		(uuid "e1f8f313-f41d-45e8-a687-462e1b6b601e")
 	)
+	(polyline
+		(pts
+			(xy 80.645 13.97) (xy 86.995 13.97)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e3c74c56-cdb1-4909-a46c-e0da189934df")
+	)
 	(bus
 		(pts
 			(xy 151.13 105.41) (xy 151.13 107.95)
@@ -5760,6 +5760,26 @@
 		)
 		(uuid "f028e54d-f74a-40e1-8861-35c7e10ee0db")
 	)
+	(polyline
+		(pts
+			(xy 87.63 13.97) (xy 87.63 24.13)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f05c6558-e51b-4ee2-9fa3-d1bc0ffe37f0")
+	)
+	(polyline
+		(pts
+			(xy 86.995 13.97) (xy 87.63 13.97)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f167fcee-e98d-410c-9327-bcaf1ab08076")
+	)
 	(wire
 		(pts
 			(xy 93.98 63.5) (xy 93.98 120.65)
@@ -5819,6 +5839,16 @@
 			(type default)
 		)
 		(uuid "fe452a40-bc96-480f-a3ff-40aa4559e276")
+	)
+	(polyline
+		(pts
+			(xy 13.97 13.97) (xy 80.645 13.97)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fec7a1ce-48a8-403b-b563-d330f1dd80ae")
 	)
 	(wire
 		(pts
@@ -5895,6 +5925,20 @@
 		)
 		(uuid "6f02b522-c9dc-4579-a003-49c790fd5a91")
 	)
+	(text "NOTE: After resetting annotations, redo an additional annotation step\nin the \"Pin headers\" sheet, renumbering (\"current sheet only\") from\n1000 onwards. This assures that the Pin Headers sheet, which is shared\nbetween the individual boards, has consistent unit-labels in them."
+		(exclude_from_sim no)
+		(at 14.732 22.987 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+				(bold yes)
+				(color 230 34 29 1)
+			)
+			(justify left bottom)
+		)
+		(uuid "7acb0a82-e62f-4b24-96e9-94d6854dd1b9")
+	)
 	(text "(M)emory"
 		(exclude_from_sim no)
 		(at 170.942 93.98 0)
@@ -5915,20 +5959,6 @@
 			)
 		)
 		(uuid "cb4aca36-ad71-40d1-86e8-0ff4f7557397")
-	)
-	(text "NOTE: After resetting annotations, redo an additional annotation\nstep in the \"Pin headers\" sheet, renumbering from 1000 onwards.\nThis assures that the Pin Headers sheet, which is shared between\nthe individual boards, has consistent unit labels in them."
-		(exclude_from_sim no)
-		(at 14.732 22.987 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-				(thickness 0.254)
-				(bold yes)
-				(color 230 34 29 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "e5ce62cc-4675-4718-a6f2-a09bbfb4a761")
 	)
 	(label "LO6"
 		(at 80.01 107.95 180)

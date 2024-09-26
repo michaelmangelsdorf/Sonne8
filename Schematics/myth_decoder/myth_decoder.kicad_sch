@@ -4410,6 +4410,16 @@
 		)
 		(uuid "1fb17ced-fc8a-4c01-ba88-36f5aceece43")
 	)
+	(polyline
+		(pts
+			(xy 13.97 24.13) (xy 80.645 24.13)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2027cce2-3ce0-4723-8dd7-1808fb15bac2")
+	)
 	(bus
 		(pts
 			(xy 171.45 59.69) (xy 171.45 62.23)
@@ -4459,6 +4469,16 @@
 			(type default)
 		)
 		(uuid "2d321f59-d320-4eed-b606-5e3229815e10")
+	)
+	(polyline
+		(pts
+			(xy 86.995 13.97) (xy 87.63 13.97)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2d359c60-2641-4a1d-bc61-5851bbf8df5c")
 	)
 	(wire
 		(pts
@@ -4570,16 +4590,6 @@
 		)
 		(uuid "476623fb-1b57-4db9-b9e7-bd3256759593")
 	)
-	(polyline
-		(pts
-			(xy 13.97 14.605) (xy 13.97 24.765)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "48a76943-57ef-4445-b949-6f742251b257")
-	)
 	(bus
 		(pts
 			(xy 171.45 49.53) (xy 171.45 52.07)
@@ -4649,16 +4659,6 @@
 			(type default)
 		)
 		(uuid "55a73107-4585-4e07-95c1-b6d096bd6260")
-	)
-	(polyline
-		(pts
-			(xy 13.97 14.605) (xy 80.645 14.605)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "56a78119-c46a-4b98-bddc-3a59438ee4d2")
 	)
 	(bus
 		(pts
@@ -4749,16 +4749,6 @@
 			(type default)
 		)
 		(uuid "6414a9c1-6eb9-4fb9-a70d-e97c2b44594d")
-	)
-	(polyline
-		(pts
-			(xy 13.97 24.765) (xy 80.645 24.765)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "65f6e671-9cfb-4adf-9586-091dec71070d")
 	)
 	(bus
 		(pts
@@ -4860,6 +4850,16 @@
 		)
 		(uuid "86fc7469-6457-40c6-a674-9dccbe024456")
 	)
+	(polyline
+		(pts
+			(xy 80.645 24.13) (xy 87.63 24.13)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8a3f12c6-f40a-45b9-b431-9f6efc7b3269")
+	)
 	(wire
 		(pts
 			(xy 78.74 121.92) (xy 83.82 121.92)
@@ -4959,6 +4959,16 @@
 			(type default)
 		)
 		(uuid "a5230b1a-fd5a-49ad-ad5e-16b077d61887")
+	)
+	(polyline
+		(pts
+			(xy 13.97 13.97) (xy 80.645 13.97)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a59ec5ce-143b-4de9-9a69-732a90950670")
 	)
 	(wire
 		(pts
@@ -5080,6 +5090,16 @@
 		)
 		(uuid "baf481ac-ef8f-44ee-b160-21f470dd8597")
 	)
+	(polyline
+		(pts
+			(xy 13.97 13.97) (xy 13.97 24.13)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c3b8ad11-808a-4038-9af5-d5c43920e8e5")
+	)
 	(bus
 		(pts
 			(xy 116.84 134.62) (xy 116.84 127)
@@ -5170,6 +5190,16 @@
 		)
 		(uuid "ddf852a0-ea1a-44d6-9732-2a80d842a8e4")
 	)
+	(polyline
+		(pts
+			(xy 87.63 13.97) (xy 87.63 24.13)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e1d4120c-5d5f-40bb-842f-55f71a4bf0ce")
+	)
 	(bus
 		(pts
 			(xy 116.84 41.91) (xy 118.11 40.64)
@@ -5250,16 +5280,6 @@
 		)
 		(uuid "ee2fa34a-cb16-4cfd-9a32-4467750137d9")
 	)
-	(polyline
-		(pts
-			(xy 80.645 14.605) (xy 80.645 24.765)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "eeb52be4-6d14-407b-91de-55130ad97535")
-	)
 	(wire
 		(pts
 			(xy 138.43 49.53) (xy 133.35 49.53)
@@ -5299,6 +5319,16 @@
 			(type default)
 		)
 		(uuid "f41daa02-9d31-4f6c-b70b-7eae29c15ea6")
+	)
+	(polyline
+		(pts
+			(xy 80.645 13.97) (xy 86.995 13.97)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f662015a-a4ac-493f-aa8f-28b7365ab42c")
 	)
 	(bus
 		(pts
@@ -5372,6 +5402,20 @@
 		)
 		(uuid "0eab43ed-d59e-455d-b293-f8f841ab3cd4")
 	)
+	(text "NOTE: After resetting annotations, redo an additional annotation step\nin the \"Pin headers\" sheet, renumbering (\"current sheet only\") from\n1000 onwards. This assures that the Pin Headers sheet, which is shared\nbetween the individual boards, has consistent unit-labels in them."
+		(exclude_from_sim no)
+		(at 14.732 22.987 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+				(bold yes)
+				(color 230 34 29 1)
+			)
+			(justify left bottom)
+		)
+		(uuid "48de638c-ea75-45af-a874-ed5334c06d82")
+	)
 	(text "8:3 Priority\nEncoder"
 		(exclude_from_sim no)
 		(at 194.818 84.328 0)
@@ -5426,20 +5470,6 @@
 			(justify left bottom)
 		)
 		(uuid "98e8e1fc-0d06-4fa1-84b3-3b8dcfb73e08")
-	)
-	(text "NOTE: After resetting annotations, redo an additional annotation\nstep in the \"Pin headers\" sheet, renumbering from 1000 onwards.\nThis assures that the Pin Headers sheet, which is shared between\nthe individual boards, has consistent unit labels in them."
-		(exclude_from_sim no)
-		(at 14.732 23.622 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-				(thickness 0.254)
-				(bold yes)
-				(color 230 34 29 1)
-			)
-			(justify left bottom)
-		)
-		(uuid "9eca2132-c50e-413f-90a2-566805d06023")
 	)
 	(text "SET IRQ flip-flop\nwhich resets upon leaving\nthe TRAP region! (end of interrupt)"
 		(exclude_from_sim no)

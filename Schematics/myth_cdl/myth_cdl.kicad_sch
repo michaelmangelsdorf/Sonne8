@@ -4327,6 +4327,26 @@
 		)
 		(uuid "08f71fdc-9406-4234-8c61-f0909c266c91")
 	)
+	(polyline
+		(pts
+			(xy 13.97 13.97) (xy 13.97 24.13)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "09bb3f20-d9b5-4139-8627-e4573ffd5845")
+	)
+	(polyline
+		(pts
+			(xy 80.645 24.13) (xy 87.63 24.13)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0a3d1215-00d6-4138-b047-b99217277ac2")
+	)
 	(wire
 		(pts
 			(xy 156.21 69.85) (xy 156.21 72.39)
@@ -4346,16 +4366,6 @@
 			(type default)
 		)
 		(uuid "10b6b490-7147-4dbc-9271-a4a8d512d400")
-	)
-	(polyline
-		(pts
-			(xy 80.645 13.97) (xy 80.645 24.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "15445b9f-f9a1-4d5e-a31c-afecf0fd24b0")
 	)
 	(wire
 		(pts
@@ -4439,13 +4449,13 @@
 	)
 	(polyline
 		(pts
-			(xy 13.97 13.97) (xy 13.97 24.13)
+			(xy 87.63 13.97) (xy 87.63 24.13)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "32d5eac6-5de8-4879-a7e2-297ff01b8afb")
+		(uuid "318f163b-80aa-48f7-b274-acacf478ed0c")
 	)
 	(wire
 		(pts
@@ -4456,16 +4466,6 @@
 			(type default)
 		)
 		(uuid "331bf634-1416-40f3-ad62-2336593beaad")
-	)
-	(polyline
-		(pts
-			(xy 13.97 13.97) (xy 80.645 13.97)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "334801a6-9d82-4fe8-be4d-bd950dcb7add")
 	)
 	(wire
 		(pts
@@ -4587,6 +4587,16 @@
 		)
 		(uuid "72b21296-5c6b-4a65-badd-6b875c5a4bfa")
 	)
+	(polyline
+		(pts
+			(xy 80.645 13.97) (xy 86.995 13.97)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7574f7d9-1443-48ab-9655-59fb699cb828")
+	)
 	(wire
 		(pts
 			(xy 133.35 57.15) (xy 156.21 57.15)
@@ -4617,6 +4627,16 @@
 		)
 		(uuid "7e72d97f-8c68-47f2-a9eb-09c934fdba3d")
 	)
+	(polyline
+		(pts
+			(xy 86.995 13.97) (xy 87.63 13.97)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8641101c-6dc7-4ec3-adbe-396f1f278cd4")
+	)
 	(wire
 		(pts
 			(xy 175.26 101.6) (xy 181.61 101.6)
@@ -4636,16 +4656,6 @@
 			(type default)
 		)
 		(uuid "9ae9abbf-41cf-4f9e-9d7f-c0258ea0e106")
-	)
-	(polyline
-		(pts
-			(xy 13.97 24.13) (xy 80.645 24.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a19e0892-014d-450a-9c8c-f4c8a7b6e7c4")
 	)
 	(bus
 		(pts
@@ -4837,6 +4847,16 @@
 		)
 		(uuid "ead491a9-43a6-4c84-ad1e-96b24439f57d")
 	)
+	(polyline
+		(pts
+			(xy 13.97 24.13) (xy 80.645 24.13)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ed306716-47c2-4130-90a8-e90a3d43fac3")
+	)
 	(wire
 		(pts
 			(xy 168.91 36.83) (xy 171.45 36.83)
@@ -4857,6 +4877,16 @@
 		)
 		(uuid "ef17120f-9eb6-4fc3-921e-d63b41b59ebf")
 	)
+	(polyline
+		(pts
+			(xy 13.97 13.97) (xy 80.645 13.97)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fec60740-c99b-4947-bbf1-6298c1f1e7d8")
+	)
 	(text "L"
 		(exclude_from_sim no)
 		(at 146.304 147.828 0)
@@ -4868,18 +4898,7 @@
 		)
 		(uuid "10e2197a-e55d-48e2-8793-3ea45c27e398")
 	)
-	(text "(LOCAL)\nPage Index Register\n(Stack Pointer)"
-		(exclude_from_sim no)
-		(at 161.036 147.066 0)
-		(effects
-			(font
-				(size 4.064 4.064)
-			)
-			(justify left bottom)
-		)
-		(uuid "bbbb27ef-a803-48f6-ba8c-65a1958aad89")
-	)
-	(text "NOTE: After resetting annotations, redo an additional annotation\nstep in the \"Pin headers\" sheet, renumbering from 1000 onwards.\nThis assures that the Pin Headers sheet, which is shared between\nthe individual boards, has consistent unit labels in them."
+	(text "NOTE: After resetting annotations, redo an additional annotation step\nin the \"Pin headers\" sheet, renumbering (\"current sheet only\") from\n1000 onwards. This assures that the Pin Headers sheet, which is shared\nbetween the individual boards, has consistent unit-labels in them."
 		(exclude_from_sim no)
 		(at 14.732 22.987 0)
 		(effects
@@ -4891,7 +4910,18 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "ff211c16-bcde-4538-9caa-3483b6bd329a")
+		(uuid "7a8c5b7e-eb15-4d67-89ee-6eedc32021d3")
+	)
+	(text "(LOCAL)\nPage Index Register\n(Stack Pointer)"
+		(exclude_from_sim no)
+		(at 161.036 147.066 0)
+		(effects
+			(font
+				(size 4.064 4.064)
+			)
+			(justify left bottom)
+		)
+		(uuid "bbbb27ef-a803-48f6-ba8c-65a1958aad89")
 	)
 	(label "~{COL}"
 		(at 125.73 59.69 0)
