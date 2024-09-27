@@ -330,6 +330,39 @@ P[NextArg]+  (Advance LOX ARG PTR to next string)
            6i RET
 
 
+;************* **************************************************************
+P[SPI_RdByte]+  (Read one byte over SPI bus / 25LC EEPROM)
+;************* **************************************************************
+
+           SCH, SCL
+           SSI, SSO, SCH SCL
+           SSI, SSO, SCH SCL
+           SSI, SSO, SCH SCL
+           SSI, SSO, SCH SCL
+           SSI, SSO, SCH SCL
+           SSI, SSO, SCH SCL
+           SSI, SSO, SCH SCL
+           SSI, SSO
+
+           RET
+
+
+;************* **************************************************************
+P[SPI_WrByte]+ (Write one byte to SPI bus / 25LC EEPROM)
+;************* **************************************************************
+
+           SCH SCL,
+           SSO SCH SCL,
+           SSO SCH SCL,
+           SSO SCH SCL,
+           SSO SCH SCL,
+           SSO SCH SCL,
+           SSO SCH SCL,
+           SSO SCH SCL
+
+           RET
+
+
 ;************** *************************************************************
 P[BASEVOCAB]40h (List of predefined string literals)
 ;************** *************************************************************
