@@ -822,23 +822,23 @@
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
-			(property "Reference" "U"
-				(at -7.62 16.51 0)
+			(property "Reference" "U8"
+				(at 0 24.9174 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
 				)
 			)
-			(property "Value" "74HC273"
-				(at -7.62 -16.51 0)
+			(property "Value" "74AHC273"
+				(at 0 22.606 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
 				)
 			)
-			(property "Footprint" ""
+			(property "Footprint" "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
 				(at 0 0 0)
 				(effects
 					(font
@@ -856,7 +856,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "8-bit D Flip-Flop, reset"
+			(property "Description" ""
 				(at 0 0 0)
 				(effects
 					(font

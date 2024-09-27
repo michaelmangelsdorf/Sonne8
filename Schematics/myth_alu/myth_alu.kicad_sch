@@ -3619,7 +3619,7 @@
 		)
 		(uuid "8115307c-24b8-44b1-8237-4a913735c982")
 	)
-	(text "NOTE: After resetting annotations, redo an additional annotation step\nin the \"Pin headers\" sheet, renumbering (\"current sheet only\") from\n1000 onwards. This assures that the Pin Headers sheet, which is shared\nbetween the individual boards, has consistent unit-labels in them."
+	(text "NOTE: After resetting annotations, redo an additional annotation step\nin the \"Pin headers\" sheet, renumbering (\"current sheet only\") from\n1000 onwards. This ensures that the Pin Headers sheet, which is shared\nbetween the individual boards, has consistent unit-labels in them."
 		(exclude_from_sim no)
 		(at 14.097 22.352 0)
 		(effects
