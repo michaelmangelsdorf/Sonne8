@@ -1,4 +1,4 @@
-Ongoing project around an 8-bit microcontroller I've designed.
+Single-board computer project around an 8-bit microcontroller I've designed.
 
 I've put up [some documentation](https://dosflange.github.io/Myth/) on GitHub pages, but proper documentation will take a bit of time.
 
