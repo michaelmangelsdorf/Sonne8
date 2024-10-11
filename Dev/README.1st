@@ -19,8 +19,7 @@ In order to develop with the current system, do the following.
     its command line arguments into the machine's memory,
     concatenating them into
     a list of zero-terminated strings starting at address 0x7F80.
-    It then runs the machine image file (populated with the object
-    code of the firmware, assembled from lox.asm).
+    It then runs the machine image file.
 
     During execution, the firmware can write ASCII text into a
     dedicated buffer area (output buffer) from 0x7F00 to 0x7F7F.
@@ -31,7 +30,7 @@ In order to develop with the current system, do the following.
     Before exiting, 'lox' persists the machine state into the
     machine image file.
 
-    In effect, 'lox' turns the firmware into a command line tool:
+    In effect, 'lox' turns the machine into a command line tool:
     Arguments are passed over to native code by copying them into the
     input buffer, and the output buffer is copied to the terminal
     when the code exits.
