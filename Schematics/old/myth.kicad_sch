@@ -31912,7 +31912,7 @@
 		)
 		(uuid "001726ec-890b-4b93-bf1e-68c04452fb27")
 	)
-	(text "(DATA)\nPage Index"
+	(text "(Global)\nPage Index"
 		(exclude_from_sim no)
 		(at 886.46 523.24 0)
 		(effects
@@ -32110,7 +32110,7 @@
 		)
 		(uuid "303577eb-b499-4c01-b2e8-b8ae3331e5d8")
 	)
-	(text "D"
+	(text "G"
 		(exclude_from_sim no)
 		(at 871.22 525.78 0)
 		(effects
@@ -32384,7 +32384,7 @@
 		)
 		(uuid "5e8d2a9d-7fc0-4273-bcd1-00c323430272")
 	)
-	(text "                Instruction byte:\nall0: OPC_SYS       00000   xxx    See table @ SYS decoder\nelse: OPC_FIX       00001  x xx    b0-1 LSB, b2: Extended sign bit\n      OPC_ALU       0001   xxxx    See table @ ALU\n      OPC_TRAP      001   xxxxx    b0-4: DEST PAGE\n      OPC_DIRO      01 xx x xxx    b0-2 OFFS, b3:GET/PUT, B4-5:REG(DIRO)\n      OPC_PAIR      1  xxx xxxx    b0-3 DST, b4-6 SRC"
+	(text "                Instruction byte:\nall0: OPC_SYS       00000   xxx    See table @ SYS decoder\nelse: OPC_FIX       00001  x xx    b0-1 LSB, b2: Extended sign bit\n      OPC_ALU       0001   xxxx    See table @ ALU\n      OPC_TRAP      001   xxxxx    b0-4: DEST PAGE\n      OPC_GIRO      01 xx x xxx    b0-2 OFFS, b3:GET/PUT, B4-5:REG(GIRO)\n      OPC_PAIR      1  xxx xxxx    b0-3 DST, b4-6 SRC"
 		(exclude_from_sim no)
 		(at 146.05 571.5 0)
 		(effects
@@ -32440,7 +32440,7 @@
 		)
 		(uuid "65cc0a0e-0d7d-46d9-be28-c9c09aaa9c32")
 	)
-	(text "D/I/R/O"
+	(text "G/I/R/O"
 		(exclude_from_sim no)
 		(at 321.31 471.17 0)
 		(effects
@@ -34015,7 +34015,7 @@
 		)
 		(uuid "0fe449a9-efcd-4028-be69-9312053cd210")
 	)
-	(label "~{GETD}"
+	(label "~{GETG}"
 		(at 746.76 204.47 180)
 		(fields_autoplaced yes)
 		(effects
@@ -34114,7 +34114,7 @@
 		)
 		(uuid "13f77c7e-65ef-4dc6-83cb-136c1862b4f1")
 	)
-	(label "~{COD}"
+	(label "~{COG}"
 		(at 808.99 506.73 180)
 		(fields_autoplaced yes)
 		(effects
@@ -34796,7 +34796,7 @@
 		)
 		(uuid "2102c637-9f11-48f1-aae6-b4139dc22be2")
 	)
-	(label "~{GETD}"
+	(label "~{GETG}"
 		(at 353.06 469.9 0)
 		(fields_autoplaced yes)
 		(effects
@@ -34895,7 +34895,7 @@
 		)
 		(uuid "23aed7fa-1904-4377-9138-4331dd9ead14")
 	)
-	(label "~{opc_DIRO}"
+	(label "~{opc_GIRO}"
 		(at 254 504.19 0)
 		(fields_autoplaced yes)
 		(effects
@@ -35104,7 +35104,7 @@
 		)
 		(uuid "29aa786c-ac0a-422e-9f0b-215478686d41")
 	)
-	(label "~{BOD}"
+	(label "~{BOG}"
 		(at 834.39 453.39 0)
 		(fields_autoplaced yes)
 		(effects
@@ -36116,7 +36116,7 @@
 		)
 		(uuid "3bfc7f94-ec20-4d54-afb0-ec626bfb4a41")
 	)
-	(label "GETD"
+	(label "GETG"
 		(at 762 204.47 0)
 		(fields_autoplaced yes)
 		(effects
@@ -36490,7 +36490,7 @@
 		)
 		(uuid "449c4699-e347-44fb-8269-786c9c53abff")
 	)
-	(label "~{Dx}"
+	(label "~{Gx}"
 		(at 361.95 381 0)
 		(fields_autoplaced yes)
 		(effects
@@ -36798,7 +36798,7 @@
 		)
 		(uuid "4a514b38-f0b4-4787-bbda-b134b96c171c")
 	)
-	(label "~{opc_DIRO}"
+	(label "~{opc_GIRO}"
 		(at 304.8 480.06 180)
 		(fields_autoplaced yes)
 		(effects
@@ -36908,7 +36908,7 @@
 		)
 		(uuid "4cb28e2c-3094-4858-9502-9c2dfa38e41c")
 	)
-	(label "~{Dx}"
+	(label "~{Gx}"
 		(at 871.22 478.79 0)
 		(fields_autoplaced yes)
 		(effects
@@ -36952,7 +36952,7 @@
 		)
 		(uuid "4ce120b8-c100-4eef-a9d4-380bf0c9ffc8")
 	)
-	(label "~{PUTD}"
+	(label "~{PUTG}"
 		(at 886.46 481.33 0)
 		(fields_autoplaced yes)
 		(effects
@@ -37689,7 +37689,7 @@
 		)
 		(uuid "5bf88657-fc48-4169-b301-adcc8dd1e313")
 	)
-	(label "~{COD}"
+	(label "~{COG}"
 		(at 834.39 448.31 0)
 		(fields_autoplaced yes)
 		(effects
@@ -38041,7 +38041,7 @@
 		)
 		(uuid "63be503b-f085-4fb7-af86-cde25c40f15a")
 	)
-	(label "~{xD}"
+	(label "~{xG}"
 		(at 706.12 218.44 180)
 		(fields_autoplaced yes)
 		(effects
@@ -38789,7 +38789,7 @@
 		)
 		(uuid "7425717f-89a9-4580-b429-1728474d3310")
 	)
-	(label "xD"
+	(label "xG"
 		(at 721.36 218.44 0)
 		(fields_autoplaced yes)
 		(effects
@@ -39845,7 +39845,7 @@
 		)
 		(uuid "8e0e382f-7b33-4f89-92d2-e2b40bfad1e3")
 	)
-	(label "xD"
+	(label "xG"
 		(at 787.4 499.11 180)
 		(fields_autoplaced yes)
 		(effects
@@ -40230,7 +40230,7 @@
 		)
 		(uuid "95c2b754-c5aa-449e-ac14-865c2428614d")
 	)
-	(label "~{xD}"
+	(label "~{xG}"
 		(at 364.49 271.78 0)
 		(fields_autoplaced yes)
 		(effects
@@ -42320,7 +42320,7 @@
 		)
 		(uuid "c21bfc62-1a0d-4208-874e-f52deeac3e17")
 	)
-	(label "~{PUTD}"
+	(label "~{PUTG}"
 		(at 353.06 480.06 0)
 		(fields_autoplaced yes)
 		(effects
@@ -44278,7 +44278,7 @@
 		)
 		(uuid "ed0e0369-2748-4012-9ede-3654c36501f7")
 	)
-	(label "GETD"
+	(label "GETG"
 		(at 787.4 504.19 180)
 		(fields_autoplaced yes)
 		(effects
@@ -44685,7 +44685,7 @@
 		)
 		(uuid "f5a907f3-2cb8-4b38-9f33-c2111ea1d30e")
 	)
-	(label "~{BOD}"
+	(label "~{BOG}"
 		(at 808.99 509.27 180)
 		(fields_autoplaced yes)
 		(effects

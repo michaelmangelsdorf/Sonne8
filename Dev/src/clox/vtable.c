@@ -9,8 +9,9 @@
   for dereferencing LABELs als void*
 */
 
+#include <stdint.h>
 
-void
+int
 main()
 {
 
@@ -41,7 +42,7 @@ main()
 		&&TRAP_28, &&TRAP_29, &&TRAP_30, &&TRAP_31,
 
 		&&GIRO_0G, &&GIRO_1G, &&GIRO_2G, &&GIRO_3G,
-		&&GIRO_4G, &&GIRO_5G, &&GIRO_6G, &&GIRO_7G
+		&&GIRO_4G, &&GIRO_5G, &&GIRO_6G, &&GIRO_7G,
 		&&GIRO_G0, &&GIRO_G1, &&GIRO_G2, &&GIRO_G3,
 		&&GIRO_G4, &&GIRO_G5, &&GIRO_G6, &&GIRO_G7,
 		&&GIRO_0I, &&GIRO_1I, &&GIRO_2I, &&GIRO_3I,
@@ -109,7 +110,7 @@ main()
 
 	NEXT: PC++;
 	EXEC: goto *dispatch_table[RAM[C][PC]];
-	END: exit(0);
+	END: return 0;
 
 	/*
 	  The remaining lines define 256 instruction routines
@@ -117,15 +118,19 @@ main()
 	  Each one of them has a dispatch_table[] entry.
 	 */
 
+	#define GIRO 0xF8 /*Local-page offset used by DIRO instructions*/
+
+	unsigned TEMP;
+
 	/* SYS */
 	SYS_NOP: goto NEXT;
-	SYS_SSI: SIR = SIR << 1 + MISO; goto NEXT;
+	SYS_SSI: SIR = (SIR << 1) + MISO; goto NEXT;
 	SYS_SSO: MOSI = SOR & 0x80 ? 1 : 0; SOR <<= 1; goto NEXT;
 	SYS_SCL: SCLK = 0; goto NEXT;
 	SYS_SCH: SCLK = 1; goto NEXT;
 	SYS_RET: C = RAM[L][GIRO+7]; PC = I; L++; goto NEXT;
 	SYS_COR: C = G; PC = I; goto NEXT;
-	SYS_OWN: ram[L][GIRO+7] = CO; goto NEXT;
+	SYS_OWN: RAM[L][GIRO+7] = CO; goto NEXT;
 
 	/* FIX */
 	FIX_P4: R += 4; goto NEXT;
@@ -150,7 +155,7 @@ main()
 	ALU_IOR: R |= O; goto NEXT;
 	ALU_EOR: R ^= O; goto NEXT;
 	ALU_ADD: R += O; goto NEXT;
-	ALU_CAR: R = (uint) R + (uint) O > 255 ? 1 : 0; goto NEXT;
+	ALU_CAR: R = (uint8_t) R + (uint8_t) O > 255 ? 1 : 0; goto NEXT;
 	ALU_RLO: R = (R < O) ? 255 : 0; goto NEXT;
 	ALU_REO: R = (R == O) ? 255 : 0; goto NEXT;
 	ALU_RGO: R = (R > O) ? 255 : 0; goto NEXT;
@@ -214,14 +219,14 @@ main()
 	GIRO_5I: I = RAM[L][GIRO+5]; goto NEXT;
 	GIRO_6I: I = RAM[L][GIRO+6]; goto NEXT;
 	GIRO_7I: I = RAM[L][GIRO+7]; goto NEXT;
-	GIRO_I0: RAM[L][GIRO+0] = I; goto NEXT
-	GIRO_I1: RAM[L][GIRO+1] = I; goto NEXT
-	GIRO_I2: RAM[L][GIRO+2] = I; goto NEXT
-	GIRO_I3: RAM[L][GIRO+3] = I; goto NEXT
-	GIRO_I4: RAM[L][GIRO+4] = I; goto NEXT
-	GIRO_I5: RAM[L][GIRO+5] = I; goto NEXT
-	GIRO_I6: RAM[L][GIRO+6] = I; goto NEXT
-	GIRO_I7: RAM[L][GIRO+7] = I; goto NEXT
+	GIRO_I0: RAM[L][GIRO+0] = I; goto NEXT;
+	GIRO_I1: RAM[L][GIRO+1] = I; goto NEXT;
+	GIRO_I2: RAM[L][GIRO+2] = I; goto NEXT;
+	GIRO_I3: RAM[L][GIRO+3] = I; goto NEXT;
+	GIRO_I4: RAM[L][GIRO+4] = I; goto NEXT;
+	GIRO_I5: RAM[L][GIRO+5] = I; goto NEXT;
+	GIRO_I6: RAM[L][GIRO+6] = I; goto NEXT;
+	GIRO_I7: RAM[L][GIRO+7] = I; goto NEXT;
 	GIRO_0R: R = RAM[L][GIRO+0]; goto NEXT;
 	GIRO_1R: R = RAM[L][GIRO+1]; goto NEXT;
 	GIRO_2R: R = RAM[L][GIRO+2]; goto NEXT;
@@ -258,99 +263,99 @@ main()
 	/* PAIR */
 	PAIR_NO: O = RAM[C][PC++]; goto NEXT;
 	SCROUNGE_NM: goto NEXT;
-	SCROUNGE NL: goto NEXT;
+	SCROUNGE_NL: goto NEXT;
 	PAIR_NG: G = RAM[C][PC++]; goto NEXT;
 	PAIR_NR: R = RAM[C][PC++]; goto NEXT;
 	PAIR_NI: I = RAM[C][PC++]; goto NEXT;
 	PAIR_NS: SOR = RAM[C][PC++]; goto NEXT;
 	PAIR_NP: POR = RAM[C][PC++]; goto NEXT;
 	PAIR_NE: E = RAM[C][PC++]; goto NEXT;
-	PAIR_NA: (int)TEMP = O + RAM[C][PC++]; o = (uchar)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
-	PAIR_NB: PC += RAM[C][PC++]; goto EXEC;
-	PAIR_NJ: PC = RAM[C][PC++]; goto EXEC;
-	PAIR_NW: if (I--) PC = RAM[C][PC++]; goto EXEC; else goto NEXT;
-	PAIR_NT: if (R) PC = RAM[C][PC++]; goto EXEC; else goto NEXT;
-	PAIR_NF: if (!R) PC = RAM[C][PC++]; goto EXEC; else goto NEXT;
+	PAIR_NA: TEMP = O + RAM[C][PC++]; O = (uint8_t)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
+	PAIR_NB: PC += RAM[C][PC+1]; goto EXEC;
+	PAIR_NJ: PC = RAM[C][PC+1]; goto EXEC;
+	PAIR_NW: if (I--) {PC = RAM[C][PC+1]; goto EXEC;} else goto NEXT;
+	PAIR_NT: if (R) {PC = RAM[C][PC+1]; goto EXEC;} else goto NEXT;
+	PAIR_NF: if (!R) {PC = RAM[C][PC+1]; goto EXEC;} else goto NEXT;
 	PAIR_NC: I = PC; CO = C; L--; PC = 0; C = RAM[C][PC++]; goto EXEC;
 	PAIR_MO: O = RAM[G][O]; goto NEXT;
-	SCROUNGE MM: goto NEXT;
-	SCROUNGE ML: goto NEXT;
+	SCROUNGE_MM: goto NEXT;
+	SCROUNGE_ML: goto NEXT;
 	PAIR_MG: G = RAM[G][O]; goto NEXT;
 	PAIR_MR: R = RAM[G][O]; goto NEXT;
 	PAIR_MI: I = RAM[G][O]; goto NEXT;
 	PAIR_MS: SOR = RAM[G][O]; goto NEXT;
 	PAIR_MP: POR = RAM[G][O]; goto NEXT;
 	PAIR_ME: E = RAM[G][O]; goto NEXT;
-	PAIR_MA: (int)TEMP = O + RAM[G][O]; o = (uchar)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
+	PAIR_MA: TEMP = O + RAM[G][O]; O = (uint8_t)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
 	PAIR_MB: PC += RAM[G][O]; goto EXEC;
 	PAIR_MJ: PC = RAM[G][O]; goto EXEC;
-	PAIR_MW: if (I--) PC = RAM[G][O]; goto EXEC; else goto NEXT;
-	PAIR_MT: if (R) PC = RAM[G][O]; goto EXEC; else goto NEXT;
-	PAIR_MF: if (!R) PC = RAM[G][O]; goto EXEC; else goto NEXT;
+	PAIR_MW: if (I--) {PC = RAM[G][O]; goto EXEC;} else goto NEXT;
+	PAIR_MT: if (R) {PC = RAM[G][O]; goto EXEC;} else goto NEXT;
+	PAIR_MF: if (!R) {PC = RAM[G][O]; goto EXEC;} else goto NEXT;
 	PAIR_MC: I = PC; CO = C; L--; PC = 0; C = RAM[G][O]; goto EXEC;
 	PAIR_LO: O = RAM[L][O]; goto NEXT;
-	SCROUNGE LM: goto NEXT;
-	SCROUNGE LL: goto NEXT;
+	SCROUNGE_LM: goto NEXT;
+	SCROUNGE_LL: goto NEXT;
 	PAIR_LG: G = RAM[L][O]; goto NEXT;
 	PAIR_LR: R = RAM[L][O]; goto NEXT;
 	PAIR_LI: I = RAM[L][O]; goto NEXT;
 	PAIR_LS: SOR = RAM[L][O]; goto NEXT;
 	PAIR_LP: POR = RAM[L][O]; goto NEXT;
 	PAIR_LE: E = RAM[L][O]; goto NEXT;
-	PAIR_LA: (int)TEMP = O + RAM[L][O]; o = (uchar)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
+	PAIR_LA: TEMP = O + RAM[L][O]; O = (uint8_t)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
 	PAIR_LB: PC += RAM[L][O]; goto EXEC;
 	PAIR_LJ: PC = RAM[L][O]; goto EXEC;
-	PAIR_LW: if (I--) PC = RAM[L][O]; goto EXEC; else goto NEXT;
-	PAIR_LT: if (R) PC = RAM[L][O]; goto EXEC; else goto NEXT;
-	PAIR_LF: if (!R) PC = RAM[L][O]; goto EXEC; else goto NEXT;
+	PAIR_LW: if (I--) {PC = RAM[L][O]; goto EXEC;} else goto NEXT;
+	PAIR_LT: if (R) {PC = RAM[L][O]; goto EXEC;} else goto NEXT;
+	PAIR_LF: if (!R) {PC = RAM[L][O]; goto EXEC;} else goto NEXT;
 	PAIR_LC: I = PC; CO = C; L--; PC = 0; C = RAM[L][O]; goto EXEC;
 	PAIR_GO: O = G; goto NEXT;
 	PAIR_GM: RAM[G][O] = G; goto NEXT;
 	PAIR_GL: RAM[L][O] = G; goto NEXT;
-	SCROUNGE GG: goto NEXT;
+	SCROUNGE_GG: goto NEXT;
 	PAIR_GR: R = G; goto NEXT;
 	PAIR_GI: I = G; goto NEXT;
 	PAIR_GS: SOR = G; goto NEXT;
 	PAIR_GP: POR = G; goto NEXT;
 	PAIR_GE: E = G; goto NEXT;
-	PAIR_GA: (int)TEMP = O + G; o = (uchar)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
+	PAIR_GA: TEMP = O + G; O = (uint8_t)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
 	PAIR_GB: PC += G; goto EXEC;
 	PAIR_GJ: PC = G; goto EXEC;
-	PAIR_GW: if (I--) PC = G; goto EXEC; else goto NEXT;
-	PAIR_GT: if (R) PC = G; goto EXEC; else goto NEXT;
-	PAIR_GF: if (!R) PC = G; goto EXEC; else goto NEXT;
+	PAIR_GW: if (I--) {PC = G; goto EXEC;} else goto NEXT;
+	PAIR_GT: if (R) {PC = G; goto EXEC;} else goto NEXT;
+	PAIR_GF: if (!R) {PC = G; goto EXEC;} else goto NEXT;
 	PAIR_GC: I = PC; CO = C; L--; PC = 0; C = G; goto EXEC;
 	PAIR_RO: O = R; goto NEXT;
 	PAIR_RM: RAM[G][O] = R; goto NEXT;
 	PAIR_RL: RAM[L][O] = R; goto NEXT;
 	PAIR_RG: G = R; goto NEXT;
-	SCROUNGE RR: goto NEXT;
+	SCROUNGE_RR: goto NEXT;
 	PAIR_RI: I = R; goto NEXT;
 	PAIR_RS: SOR = R; goto NEXT;
 	PAIR_RP: POR = R; goto NEXT;
 	PAIR_RE: E = R; goto NEXT;
-	PAIR_RA: (int)TEMP = O + R; o = (uchar)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
+	PAIR_RA: TEMP = O + R; O = (uint8_t)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
 	PAIR_RB: PC += R; goto EXEC;
 	PAIR_RJ: PC = R; goto EXEC;
-	PAIR_RW: if (I--) PC = R; goto EXEC; else goto NEXT;
-	PAIR_RT: if (R) PC = R; goto EXEC; else goto NEXT;
-	PAIR_RF: if (!R) PC = R; goto EXEC; else goto NEXT;
+	PAIR_RW: if (I--) {PC = R; goto EXEC;} else goto NEXT;
+	PAIR_RT: if (R) {PC = R; goto EXEC;} else goto NEXT;
+	PAIR_RF: if (!R) {PC = R; goto EXEC;} else goto NEXT;
 	PAIR_RC: I = PC; CO = C; L--; PC = 0; C = R; goto EXEC;
 	PAIR_IO: O = I; goto NEXT;
 	PAIR_IM: RAM[G][O] = I; goto NEXT;
 	PAIR_IL: RAM[L][O] = I; goto NEXT;
 	PAIR_IG: G = I; goto NEXT;
 	PAIR_IR: R = I; goto NEXT;
-	SCROUNGE II: goto NEXT;
+	SCROUNGE_II: goto NEXT;
 	PAIR_IS: SOR = I; goto NEXT;
 	PAIR_IP: POR = I; goto NEXT;
 	PAIR_IE: E = I; goto NEXT;
-	PAIR_IA: (int)TEMP = O + I; o = (uchar)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
+	PAIR_IA: TEMP = O + I; O = (uint8_t)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
 	PAIR_IB: PC += I; goto EXEC;
 	PAIR_IJ: PC = I; goto EXEC;
-	PAIR_IW: if (I--) PC = I; goto EXEC; else goto NEXT;
-	PAIR_IT: if (R) PC = I; goto EXEC; else goto NEXT;
-	PAIR_IF: if (!R) PC = I; goto EXEC; else goto NEXT;
+	PAIR_IW: if (I--) {PC = I; goto EXEC;} else goto NEXT;
+	PAIR_IT: if (R) {PC = I; goto EXEC;} else goto NEXT;
+	PAIR_IF: if (!R) {PC = I; goto EXEC;} else goto NEXT;
 	PAIR_IC: I = PC; CO = C; L--; PC = 0; C = I; goto EXEC;
 	PAIR_SO: O = SIR; goto NEXT;
 	PAIR_SM: RAM[G][O] = SIR; goto NEXT;
@@ -361,12 +366,12 @@ main()
 	PAIR_SS: SOR = SIR; goto NEXT;
 	PAIR_SP: POR = SIR; goto NEXT;
 	PAIR_SE: E = SIR; goto NEXT;
-	PAIR_SA: (int)TEMP = O + SIR; o = (uchar)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
+	PAIR_SA: TEMP = O + SIR; O = (uint8_t)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
 	PAIR_SB: PC += SIR; goto EXEC;
 	PAIR_SJ: PC = SIR; goto EXEC;
-	PAIR_SW: if (I--) PC = SIR; goto EXEC; else goto NEXT;
-	PAIR_ST: if (R) PC = SIR; goto EXEC; else goto NEXT;
-	PAIR_SF: if (!R) PC = SIR; goto EXEC; else goto NEXT;
+	PAIR_SW: if (I--) {PC = SIR; goto EXEC;} else goto NEXT;
+	PAIR_ST: if (R) {PC = SIR; goto EXEC;} else goto NEXT;
+	PAIR_SF: if (!R) {PC = SIR; goto EXEC;} else goto NEXT;
 	PAIR_SC: I = PC; CO = C; L--; PC = 0; C = SIR; goto EXEC;
 	PAIR_PO: O = PIR; goto NEXT;
 	PAIR_PM: RAM[G][O] = PIR; goto NEXT;
@@ -377,12 +382,12 @@ main()
 	PAIR_PS: SOR = PIR; goto NEXT;
 	PAIR_PP: POR = PIR; goto NEXT;
 	PAIR_PE: E = PIR; goto NEXT;
-	PAIR_PA: (int)TEMP = O + PIR; o = (uchar)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
+	PAIR_PA: TEMP = O + PIR; O = (uint8_t)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
 	PAIR_PB: PC += PIR; goto EXEC;
 	PAIR_PJ: PC = PIR; goto EXEC;
-	PAIR_PW: if (I--) PC = PIR; goto EXEC; else goto NEXT;
-	PAIR_PT: if (R) PC = PIR; goto EXEC; else goto NEXT;
-	PAIR_PF: if (!R) PC = PIR; goto EXEC; else goto NEXT;
+	PAIR_PW: if (I--) {PC = PIR; goto EXEC;} else goto NEXT;
+	PAIR_PT: if (R) {PC = PIR; goto EXEC;} else goto NEXT;
+	PAIR_PF: if (!R) {PC = PIR; goto EXEC;} else goto NEXT;
 	PAIR_PC: I = PC; CO = C; L--; PC = 0; C = PIR; goto EXEC;
 
 }
