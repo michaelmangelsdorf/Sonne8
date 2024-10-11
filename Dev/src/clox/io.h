@@ -46,56 +46,65 @@ set_smemdata(uchar byteval)
     smem.data[addr] = byteval;
 }
 
+
 void
-falling_edge(uchar id)
+SL_enable(uchar id)
 {
-        if (id<16) { /*Active-low on select*/
-            switch(id){
-                    case SL0_NULL:;
-                    case SL1_PAROE: bus = vm.por; break;
-                    case SL2_SMEMOE: bus = get_smemdata(); break;
-                    case SL3_SMEMWE: set_smemdata(bus); break;
-                    default:;
-            }
-        }
-        else { /* Active-high on deselect*/
-            switch(id>>4){
-                    default:;
-            }
+        switch(id){
+                case SL0_NULL:;
+                case SL1_PAROE: bus = vm.por; break;
+                case SL2_SMEMOE: bus = get_smemdata(); break;
+                case SL3_SMEMWE: set_smemdata(bus); break;
+                default:;
         }
 }
 
 void
-rising_edge(uchar id)
+SL_disable(uchar id)
 {
-        if (id<16) { /*Active-low on deselect*/
-            switch(id) {
-                    case SL1_PAROE: bus = 0; /*Tri-state pull-down*/
-                    default:;
-            }
+        switch(id){
+                case SL1_PAROE: bus = 0; /*Tri-state pull-down*/
+                default:;
         }
-        else { /*Active-high on select*/
-            switch(id>>4){
-                    case SH0_NULL:;
-                    case SH1_PARLE:
-                            vm.pir = bus;
-                            break;
-                    case SH2_SMEMA0LE: smem.a0 = bus; break;
-                    case SH3_SMEMA1LE: smem.a1 = bus; break;
-                    case SH4_SMEMA2LE: smem.a2 = bus; break;
-                    default:;
-            }
+}
+
+
+void
+SH_enable(uchar id)
+{
+        switch(id){
+                case SH0_NULL:;
+                case SH1_PARLE: vm.pir = bus; break;
+                case SH2_SMEMA0LE: smem.a0 = bus; break;
+                case SH3_SMEMA1LE: smem.a1 = bus; break;
+                case SH4_SMEMA2LE: smem.a2 = bus; break;
+                default:;
+        }
+}
+
+
+void
+SH_disable(uchar id)
+{
+        switch(id){
+                default:;
         }
 }
 
 void
-active_high(uchar id)
+SL_active(uchar id)
 {
+        switch(id){
+                default:;
+        }
 }
 
 void
-active_low(uchar id)
+SH_active(uchar id)
 {
+        switch(id){
+                default:;
+        }
 }
 
 void
@@ -108,19 +117,19 @@ virtualio() /*Run this after each CPU step for device emulation*/
         hnybble_old = vm.e_old & 0xF0;
         hnybble_new = vm.e_new & 0xF0;
 
-        /*Active-low device newly selected*/
+        /*SL device selection changed*/
         if (lnybble_new != lnybble_old){
-                rising_edge(lnybble_old);
-                falling_edge(lnybble_new);
+                SL_disable(lnybble_old); // falling edge
+                SL_enable(lnybble_new); // rising edge
         } /*When level triggered*/
-        else active_low(lnybble_new);
+        else SL_active(lnybble_new);
 
-        /*Active-high device newly selected*/
+        /*SH device selection changed*/
         if (hnybble_new != hnybble_old){
-                falling_edge(hnybble_old);
-                rising_edge(hnybble_new);
+                SH_disable(hnybble_old); // falling edge
+                SH_enable(hnybble_new); // rising edge
         } /*When level triggered*/
-        else active_high(hnybble_new);
+        else SH_active(hnybble_new);
 }
 
 

@@ -1,12 +1,12 @@
 
 
 /*
-  Dispatch table implementation of a Myst emulator
+  Dispatch-table implementation of a Myst emulator
   Sonne 8 micro-controller Rev. Myth/LOX Project
   Author: mim@ok-schalter.de (Michael/Dosflange@github)
 
   Compile with GCC which has the required && operator
-  for dereferencing LABELs als void*
+  for dereferencing LABELs as void*
 
   In spirit, this should be made interchangeable
   with the myst.h emulator myth_step() function.

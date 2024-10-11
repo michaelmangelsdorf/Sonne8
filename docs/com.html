@@ -34,26 +34,17 @@
         <p>
           The 8-bit Enable register is used to control the enable state of devices
           attached to the serial or parallel bus lines.
-          To this end, the register is divided into two four-bit groups for
+          To this end, the register is divided into two independent four-bit groups for
           device selection.
          </p><p>
-          The low-order
-          four-bit group (EL) drives a 4-to-16 line inverted
-          decoder, which maps the bit pattern in EL 1 of 16 possible,
-          mutually exclusive active-low
-          select signals (SL0-15).
+          Each four-bit group drives a 4-to-16 line decoder,
+          which maps the bit pattern encoded by that group to 1 of 16 possible,
+          mutually exclusive active-high select signals (SL0-15 and SH0-15).
         </p><p>
-          Select signal SL0 is reserved to select a NULL device ("nothing").
+          Select signals SL0 and SH0 are reserved to select a NULL device ("nothing").
           SL1 corresponds to the internal POR register output enable signal (SL1_PAROE).
-          SL2-15 can be used freely for application hardware.</p>
-        <p>
-          The high-order four-bit group (EH) drives a 4-to-16 line non-inverted decoder,
-          which maps the bit pattern in EH to 1 of 16 possible, mutually exclusive
-          active-high select signals (SH0-15).
-        </p><p>
-          Select signal SH0 is reserved to select a NULL device ("nothing").
           SH1 corresponds to the internal PIR register latch enable signal (SH1_PARLE).
-          SH2-15 can be used freely for application hardware.
+          The remaining selectors can be used freely for application hardware.</p>
         </p>
         <h2>Communication Registers</h2>
         <h3>SOR (Serial Output Register)</h3>
@@ -86,7 +77,7 @@
           a 74HC574 chip.
           Writing an output byte onto the parallel bus is a two step process.
           First, the data byte must be latched into the register by writing it
-          into P. Then, the register output must be enabled by selecting PAR_OE
+          into P. Then, the register output must be enabled by selecting SL1
           in the E register, as described above.</p>
           <h3>
           PIR (Parallel Input Register)
@@ -96,7 +87,7 @@
           Latching the current 8-bit value of
           the parallel bus into the register is done by selecting SH1 in E.
           The latched data byte can then be read from P.
-          The bus is assumed to pull-down, so when all bus-devices are in
+          The bus operates in weak pull-down mode, so when all bus-devices are in
           tri-state mode, a zero value is registered.
           </p>
           <h2>
