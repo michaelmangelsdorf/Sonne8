@@ -20520,16 +20520,8 @@
 		(uuid "12b80f76-6681-4c65-9dca-0e4939bba6ae")
 	)
 	(no_connect
-		(at 965.2 806.45)
-		(uuid "1d31c0ab-a858-42d9-b51c-bdf46c975c13")
-	)
-	(no_connect
 		(at 137.16 384.81)
 		(uuid "21d8d195-27ca-49ef-b044-f3de579bd258")
-	)
-	(no_connect
-		(at 996.95 805.18)
-		(uuid "253daaa0-ad12-4295-b10f-c2b0d2f51c87")
 	)
 	(no_connect
 		(at 128.27 95.25)
@@ -27788,16 +27780,6 @@
 			(type default)
 		)
 		(uuid "9d0d7fad-ae19-42da-9fe9-87033a2e6358")
-	)
-	(wire
-		(pts
-			(xy 981.71 802.64) (xy 981.71 807.72)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9d11e59c-0ddb-4775-87d4-e25441b1a6df")
 	)
 	(wire
 		(pts
@@ -36310,17 +36292,6 @@
 		)
 		(uuid "4008a305-1b99-4288-80b5-4b2e613dfc20")
 	)
-	(label "GND"
-		(at 981.71 802.64 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "40b1c87e-d5d3-45b1-97c0-5642afd118c6")
-	)
 	(label "+5V"
 		(at 71.12 107.95 180)
 		(fields_autoplaced yes)
@@ -39598,17 +39569,6 @@
 			(justify right bottom)
 		)
 		(uuid "8857c6d9-c1be-4605-9d86-e3a27aba067a")
-	)
-	(label "GND"
-		(at 949.96 806.45 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "88a8b6a5-17a1-44cf-9d85-b04acfd28955")
 	)
 	(label "xW_pre"
 		(at 132.08 269.24 0)

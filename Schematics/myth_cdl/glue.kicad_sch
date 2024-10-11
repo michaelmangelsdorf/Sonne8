@@ -4686,6 +4686,298 @@
 				)
 			)
 		)
+		(symbol "Device:C_Polarized_Small"
+			(pin_numbers hide)
+			(pin_names
+				(offset 0.254) hide)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "C"
+				(at 0.254 1.778 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "C_Polarized_Small"
+				(at 0.254 -2.032 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Polarized capacitor, small symbol"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "cap capacitor"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "CP_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "C_Polarized_Small_0_1"
+				(rectangle
+					(start -1.524 -0.3048)
+					(end 1.524 -0.6858)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start -1.524 0.6858)
+					(end 1.524 0.3048)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 1.524) (xy -0.762 1.524)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.016 1.27) (xy -1.016 1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "C_Polarized_Small_1_1"
+				(pin passive line
+					(at 0 2.54 270)
+					(length 1.8542)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -2.54 90)
+					(length 1.8542)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
+		(symbol "Device:C_Small"
+			(pin_numbers hide)
+			(pin_names
+				(offset 0.254) hide)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "C"
+				(at 0.254 1.778 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "C_Small"
+				(at 0.254 -2.032 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Unpolarized capacitor, small symbol"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "capacitor cap"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "C_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "C_Small_0_1"
+				(polyline
+					(pts
+						(xy -1.524 -0.508) (xy 1.524 -0.508)
+					)
+					(stroke
+						(width 0.3302)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.524 0.508) (xy 1.524 0.508)
+					)
+					(stroke
+						(width 0.3048)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "C_Small_1_1"
+				(pin passive line
+					(at 0 2.54 270)
+					(length 2.032)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -2.54 90)
+					(length 2.032)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
 		(symbol "power:PWR_FLAG"
 			(power)
 			(pin_numbers hide)
@@ -4784,6 +5076,12 @@
 		)
 	)
 	(junction
+		(at 176.53 35.56)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "041c97d6-b047-4851-b140-a7f8a7446a9c")
+	)
+	(junction
 		(at 88.9 129.54)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -4796,10 +5094,28 @@
 		(uuid "0e9cf176-4db3-4b1e-b5fa-22ae1fa4aade")
 	)
 	(junction
+		(at 107.95 35.56)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "2029bd8c-3d82-48b7-957b-cced3ae43ad2")
+	)
+	(junction
 		(at 67.31 154.94)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "23d74213-20c5-4584-8a60-bebfc0e809cc")
+	)
+	(junction
+		(at 57.15 22.86)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "33c76c73-c0b4-41f4-bdbb-a21f7a4d5837")
+	)
+	(junction
+		(at 57.15 35.56)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "3b504ad7-3024-47cf-bb2a-79acfe818024")
 	)
 	(junction
 		(at 46.99 129.54)
@@ -4808,10 +5124,22 @@
 		(uuid "3cfc2dd1-6dea-46d2-af28-fe71e1c15760")
 	)
 	(junction
+		(at 72.39 22.86)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "4fdf88ca-0797-4af4-bf5e-c869166b95be")
+	)
+	(junction
 		(at 109.22 129.54)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "567d07c2-b813-45e8-8761-9f7c16d2d073")
+	)
+	(junction
+		(at 151.13 22.86)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "57971770-b567-46d6-b3f0-8e2a7c2c1988")
 	)
 	(junction
 		(at 130.81 129.54)
@@ -4820,10 +5148,28 @@
 		(uuid "6b37faaf-b76a-46d3-8b40-ba9cb894d6d1")
 	)
 	(junction
+		(at 151.13 35.56)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "79dd31f6-6c0c-42f0-baff-99be3788b40c")
+	)
+	(junction
+		(at 107.95 22.86)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "831f0a35-b2ff-41ec-b4af-d82222d41dab")
+	)
+	(junction
 		(at 67.31 129.54)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "8f34685a-6769-416d-9ed8-2ff781fd9ae6")
+	)
+	(junction
+		(at 135.89 35.56)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "8fc234d2-165b-44a2-a3a8-571b857cc0c5")
 	)
 	(junction
 		(at 88.9 154.94)
@@ -4832,10 +5178,34 @@
 		(uuid "90b059f1-895a-4006-8c81-b9806844d140")
 	)
 	(junction
+		(at 92.71 35.56)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "940bb30b-c03b-4c86-8601-6253df7fd08a")
+	)
+	(junction
+		(at 92.71 22.86)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "9689bfa1-ae11-4df8-af27-2ea2c32a7081")
+	)
+	(junction
+		(at 72.39 35.56)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "96bad020-e8d6-414e-a591-2363139ddee7")
+	)
+	(junction
 		(at 109.22 154.94)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "96d5c12c-3437-431d-98ed-75a576d9c950")
+	)
+	(junction
+		(at 135.89 22.86)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "98b8a884-1b67-4e31-b562-07b9114fcb7b")
 	)
 	(junction
 		(at 46.99 154.94)
@@ -4848,6 +5218,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "c5aea8b2-e806-4ee6-9c1d-7623592f4a2b")
+	)
+	(junction
+		(at 176.53 22.86)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "c962ca96-0ba5-4572-9e3b-ca317e96a5ff")
 	)
 	(junction
 		(at 153.67 129.54)
@@ -4897,6 +5273,86 @@
 	)
 	(wire
 		(pts
+			(xy 92.71 35.56) (xy 107.95 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "01e7c6da-ab85-4169-8edc-b53e30f96527")
+	)
+	(wire
+		(pts
+			(xy 135.89 31.75) (xy 135.89 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0642d020-96c1-4ce3-af4d-6f1fa7c38fb2")
+	)
+	(wire
+		(pts
+			(xy 135.89 35.56) (xy 151.13 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "081ab0f6-24c2-43f1-b874-223a81ce3c1d")
+	)
+	(wire
+		(pts
+			(xy 135.89 26.67) (xy 135.89 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0eb4b444-9ef1-46bd-befb-d79c6b5796dc")
+	)
+	(wire
+		(pts
+			(xy 176.53 22.86) (xy 191.77 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "13610b78-88d5-43be-97ad-16a70ac5d6c2")
+	)
+	(wire
+		(pts
+			(xy 151.13 22.86) (xy 176.53 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "175b22c2-a322-484a-b1d0-817437966f43")
+	)
+	(wire
+		(pts
+			(xy 72.39 31.75) (xy 72.39 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "17eedd24-f319-42c9-843c-5b7f0792ed8f")
+	)
+	(wire
+		(pts
+			(xy 107.95 31.75) (xy 107.95 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1b76a20c-72a3-49ab-8b58-e103ebe33ba6")
+	)
+	(wire
+		(pts
 			(xy 46.99 154.94) (xy 67.31 154.94)
 		)
 		(stroke
@@ -4904,6 +5360,46 @@
 			(type default)
 		)
 		(uuid "1cc8aa20-32cd-4271-9977-c4d7709ec0e4")
+	)
+	(wire
+		(pts
+			(xy 176.53 35.56) (xy 191.77 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1f8f8cb7-bcdf-4675-bdaf-1d79ae95617a")
+	)
+	(wire
+		(pts
+			(xy 72.39 35.56) (xy 92.71 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "26376832-f2c4-45b5-921b-6b3963a3b391")
+	)
+	(wire
+		(pts
+			(xy 107.95 26.67) (xy 107.95 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "28f48f4e-81a6-43ea-8bfd-35140a676e53")
+	)
+	(wire
+		(pts
+			(xy 151.13 31.75) (xy 151.13 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2c28cae4-d8b0-4a5d-9ca7-1470083a1ac0")
 	)
 	(wire
 		(pts
@@ -4917,6 +5413,16 @@
 	)
 	(wire
 		(pts
+			(xy 92.71 26.67) (xy 92.71 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4692b0eb-caa3-491d-b22d-6d94e33b8cc3")
+	)
+	(wire
+		(pts
 			(xy 153.67 152.4) (xy 153.67 154.94)
 		)
 		(stroke
@@ -4924,6 +5430,46 @@
 			(type default)
 		)
 		(uuid "4ae46ba2-c695-4f1d-ba38-165d39653890")
+	)
+	(wire
+		(pts
+			(xy 57.15 35.56) (xy 72.39 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4b9ea3fe-c31b-49cd-8816-31fef7e46715")
+	)
+	(wire
+		(pts
+			(xy 107.95 22.86) (xy 135.89 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4bae8d42-badf-4f4d-b081-70d7a03f929a")
+	)
+	(wire
+		(pts
+			(xy 57.15 22.86) (xy 72.39 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4f1e2022-1543-42d4-a2aa-f453494f7538")
+	)
+	(wire
+		(pts
+			(xy 135.89 22.86) (xy 151.13 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4fc32e48-c355-4053-bdda-56d08298f3f9")
 	)
 	(wire
 		(pts
@@ -4937,6 +5483,36 @@
 	)
 	(wire
 		(pts
+			(xy 176.53 31.75) (xy 176.53 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5219cd36-beb3-47dd-be03-2eaeb020e3ec")
+	)
+	(wire
+		(pts
+			(xy 107.95 35.56) (xy 135.89 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "59f7ac8f-fcba-4408-8e30-d47fc68dd04d")
+	)
+	(wire
+		(pts
+			(xy 57.15 31.75) (xy 57.15 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7180d158-acdd-4daa-9e51-b74f906b509d")
+	)
+	(wire
+		(pts
 			(xy 88.9 129.54) (xy 109.22 129.54)
 		)
 		(stroke
@@ -4944,6 +5520,26 @@
 			(type default)
 		)
 		(uuid "751ff7fe-f2f1-464b-a305-70bccdc6a27f")
+	)
+	(wire
+		(pts
+			(xy 176.53 26.67) (xy 176.53 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7842e3ed-f823-489b-9f9a-bdf22c5dc6ee")
+	)
+	(wire
+		(pts
+			(xy 92.71 31.75) (xy 92.71 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7a6990a5-021f-430e-b7f1-a2738344f07b")
 	)
 	(wire
 		(pts
@@ -4957,6 +5553,16 @@
 	)
 	(wire
 		(pts
+			(xy 72.39 26.67) (xy 72.39 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "94525c6c-0002-47e9-8de9-9d0ae8e49315")
+	)
+	(wire
+		(pts
 			(xy 80.01 67.31) (xy 80.01 69.85)
 		)
 		(stroke
@@ -4964,6 +5570,16 @@
 			(type default)
 		)
 		(uuid "94901f28-59c6-4838-a369-777d8b7f8517")
+	)
+	(wire
+		(pts
+			(xy 54.61 22.86) (xy 57.15 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "961d069a-80bf-47e2-a332-f19fd4c92bf0")
 	)
 	(wire
 		(pts
@@ -4977,6 +5593,26 @@
 	)
 	(wire
 		(pts
+			(xy 54.61 35.56) (xy 57.15 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b524fdad-e217-4612-b9c5-e47c0481c555")
+	)
+	(wire
+		(pts
+			(xy 151.13 26.67) (xy 151.13 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b5658a66-1446-45af-b42d-add511a36038")
+	)
+	(wire
+		(pts
 			(xy 76.2 87.63) (xy 80.01 87.63)
 		)
 		(stroke
@@ -4984,6 +5620,16 @@
 			(type default)
 		)
 		(uuid "bea3e339-a894-488f-84f2-1da516d9f458")
+	)
+	(wire
+		(pts
+			(xy 92.71 22.86) (xy 107.95 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bebce0cc-b5de-45a6-afd2-bb265bbea2a2")
 	)
 	(wire
 		(pts
@@ -5007,6 +5653,16 @@
 	)
 	(wire
 		(pts
+			(xy 57.15 26.67) (xy 57.15 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c979de09-7c12-48b7-b004-8175a77669ce")
+	)
+	(wire
+		(pts
 			(xy 67.31 154.94) (xy 88.9 154.94)
 		)
 		(stroke
@@ -5014,6 +5670,16 @@
 			(type default)
 		)
 		(uuid "d6215c43-4620-4190-8551-8ce066ca867e")
+	)
+	(wire
+		(pts
+			(xy 72.39 22.86) (xy 92.71 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d9103248-f914-4cf9-b814-1babebfbc904")
 	)
 	(wire
 		(pts
@@ -5047,6 +5713,26 @@
 	)
 	(wire
 		(pts
+			(xy 191.77 26.67) (xy 191.77 22.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e6d0d24b-c938-49a6-a5ee-6e0655eb219b")
+	)
+	(wire
+		(pts
+			(xy 191.77 31.75) (xy 191.77 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ecfcf566-2bb4-4f5b-824b-7155b1341605")
+	)
+	(wire
+		(pts
 			(xy 88.9 154.94) (xy 109.22 154.94)
 		)
 		(stroke
@@ -5054,6 +5740,16 @@
 			(type default)
 		)
 		(uuid "edc68dd6-6056-4788-8c8b-90c77753ed45")
+	)
+	(wire
+		(pts
+			(xy 151.13 35.56) (xy 176.53 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ee219eaa-52d2-44e4-8f9f-6a1db3ac73e0")
 	)
 	(wire
 		(pts
@@ -5207,6 +5903,28 @@
 			)
 		)
 	)
+	(global_label "+5V"
+		(shape input)
+		(at 54.61 22.86 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "350343ff-5aa2-4a8c-a0b0-db956db821b2")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 47.7543 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "GND"
 		(shape input)
 		(at 156.21 60.96 180)
@@ -5308,6 +6026,28 @@
 		(uuid "697cae4c-3f1a-4fe0-bfc3-5ebd1de56c5e")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 32.5143 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape input)
+		(at 54.61 35.56 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "7df7386d-01e6-4980-a237-c17815ec08b2")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 47.7543 35.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5497,7 +6237,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_LongPads"
 			(at 163.83 58.42 0)
 			(effects
 				(font
@@ -5603,7 +6343,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_LongPads"
 			(at 88.9 142.24 0)
 			(effects
 				(font
@@ -5677,6 +6417,75 @@
 				(path "/fc80d15a-8391-4108-8bee-dfbcee45d6bc/ae006b8b-5cd5-4118-8539-6fcf027a7cfa"
 					(reference "U5")
 					(unit 5)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C_Small")
+		(at 57.15 29.21 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "1bf0e8b5-ede6-4b3e-8073-37fa2460bcdb")
+		(property "Reference" "C1003"
+			(at 59.4868 28.0416 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "C 100nF"
+			(at 59.4868 30.353 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+			(at 57.15 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 57.15 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 57.15 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "42252955-2251-426f-b2e6-22c01b5f5d34")
+		)
+		(pin "2"
+			(uuid "001417ad-77b7-417a-baa5-3c4e6478f9f9")
+		)
+		(instances
+			(project "myth_cdl"
+				(path "/fc80d15a-8391-4108-8bee-dfbcee45d6bc/ae006b8b-5cd5-4118-8539-6fcf027a7cfa"
+					(reference "C1003")
+					(unit 1)
 				)
 			)
 		)
@@ -5775,7 +6584,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_LongPads"
 			(at 80.01 77.47 0)
 			(effects
 				(font
@@ -5881,7 +6690,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_LongPads"
 			(at 46.99 142.24 0)
 			(effects
 				(font
@@ -5960,6 +6769,75 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:C_Small")
+		(at 135.89 29.21 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "68a6caac-b671-4052-899b-48588b8c813a")
+		(property "Reference" "C1007"
+			(at 138.2268 28.0416 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "C 100nF"
+			(at 138.2268 30.353 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+			(at 135.89 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 135.89 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 135.89 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "83ee7600-7af9-4363-aaa4-306835f96af0")
+		)
+		(pin "2"
+			(uuid "c1c2e423-cc42-4c6f-a1c5-66418bd03c6e")
+		)
+		(instances
+			(project "myth_cdl"
+				(path "/fc80d15a-8391-4108-8bee-dfbcee45d6bc/ae006b8b-5cd5-4118-8539-6fcf027a7cfa"
+					(reference "C1007")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "74xx:74HC02")
 		(at 67.31 142.24 0)
 		(unit 5)
@@ -5987,7 +6865,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_LongPads"
 			(at 67.31 142.24 0)
 			(effects
 				(font
@@ -6066,6 +6944,76 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:C_Polarized_Small")
+		(at 191.77 29.21 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "6e563103-6d7e-426a-a92d-696a483242d1")
+		(property "Reference" "C1010"
+			(at 193.929 27.7554 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "CP 10μF"
+			(at 193.929 30.5305 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm"
+			(at 191.77 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 191.77 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 191.77 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d86bc68b-34c4-4934-b9aa-0ff340f82975")
+		)
+		(pin "2"
+			(uuid "8827a2f4-3861-4229-9611-42873790e289")
+		)
+		(instances
+			(project "myth_cdl"
+				(path "/fc80d15a-8391-4108-8bee-dfbcee45d6bc/ae006b8b-5cd5-4118-8539-6fcf027a7cfa"
+					(reference "C1010")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "74xx:74HC04")
 		(at 46.99 77.47 0)
 		(unit 4)
@@ -6091,7 +7039,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_LongPads"
 			(at 46.99 77.47 0)
 			(effects
 				(font
@@ -6170,6 +7118,75 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:C_Small")
+		(at 176.53 29.21 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "7433c89f-4ed2-45e0-be59-252e4ca7e358")
+		(property "Reference" "C1009"
+			(at 178.8668 28.0416 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "C 100nF"
+			(at 178.8668 30.353 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+			(at 176.53 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 176.53 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 176.53 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "55f7d797-fc28-4a10-986c-69676b0e5d73")
+		)
+		(pin "2"
+			(uuid "270d8fc2-6359-4856-aea3-6799eb1979f0")
+		)
+		(instances
+			(project "myth_cdl"
+				(path "/fc80d15a-8391-4108-8bee-dfbcee45d6bc/ae006b8b-5cd5-4118-8539-6fcf027a7cfa"
+					(reference "C1009")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "74xx:74HC00")
 		(at 163.83 76.2 0)
 		(unit 3)
@@ -6195,7 +7212,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_LongPads"
 			(at 163.83 76.2 0)
 			(effects
 				(font
@@ -6299,7 +7316,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_LongPads"
 			(at 46.99 104.14 0)
 			(effects
 				(font
@@ -6403,7 +7420,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_LongPads"
 			(at 121.92 82.55 0)
 			(effects
 				(font
@@ -6482,6 +7499,76 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:C_Polarized_Small")
+		(at 151.13 29.21 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "9f2235f8-fd2c-46a3-aa43-db6a459907c7")
+		(property "Reference" "C1008"
+			(at 153.289 27.7554 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "CP 10μF"
+			(at 153.289 30.5305 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm"
+			(at 151.13 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 151.13 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 151.13 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "fd46d5b8-7d7b-449a-b06c-1edcd1df9f68")
+		)
+		(pin "2"
+			(uuid "9b51ebc9-003a-46ad-b281-91ce02588a55")
+		)
+		(instances
+			(project "myth_cdl"
+				(path "/fc80d15a-8391-4108-8bee-dfbcee45d6bc/ae006b8b-5cd5-4118-8539-6fcf027a7cfa"
+					(reference "C1008")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "74xx:74HC04")
 		(at 46.99 63.5 0)
 		(unit 3)
@@ -6507,7 +7594,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_LongPads"
 			(at 46.99 63.5 0)
 			(effects
 				(font
@@ -6613,7 +7700,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_LongPads"
 			(at 153.67 142.24 0)
 			(effects
 				(font
@@ -6785,7 +7872,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_LongPads"
 			(at 130.81 142.24 0)
 			(effects
 				(font
@@ -6864,6 +7951,76 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:C_Polarized_Small")
+		(at 72.39 29.21 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c0b9c091-3806-4573-a617-00831dee3828")
+		(property "Reference" "C1004"
+			(at 74.549 27.7554 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "CP 10μF"
+			(at 74.549 30.5305 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm"
+			(at 72.39 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 72.39 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 72.39 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "035bb7c1-8eb6-4f3e-8b8f-9ea6f5464c1e")
+		)
+		(pin "2"
+			(uuid "1b07f12f-9a6c-4a01-bc0c-65435e57dd02")
+		)
+		(instances
+			(project "myth_cdl"
+				(path "/fc80d15a-8391-4108-8bee-dfbcee45d6bc/ae006b8b-5cd5-4118-8539-6fcf027a7cfa"
+					(reference "C1004")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "74xx:74HC04")
 		(at 46.99 90.17 0)
 		(unit 5)
@@ -6889,7 +8046,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_LongPads"
 			(at 46.99 90.17 0)
 			(effects
 				(font
@@ -6993,7 +8150,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_LongPads"
 			(at 163.83 95.25 0)
 			(effects
 				(font
@@ -7072,6 +8229,145 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:C_Small")
+		(at 92.71 29.21 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "e3434dc0-f31b-4fee-9e85-62bb95fc775c")
+		(property "Reference" "C1005"
+			(at 95.0468 28.0416 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "C 100nF"
+			(at 95.0468 30.353 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+			(at 92.71 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 92.71 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 92.71 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "46edfb92-92d9-4c83-a03f-1815d4ccb838")
+		)
+		(pin "2"
+			(uuid "181f15b8-ef7f-4ddc-b484-a624145978bf")
+		)
+		(instances
+			(project "myth_cdl"
+				(path "/fc80d15a-8391-4108-8bee-dfbcee45d6bc/ae006b8b-5cd5-4118-8539-6fcf027a7cfa"
+					(reference "C1005")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C_Polarized_Small")
+		(at 107.95 29.21 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "fb7ed98d-833f-4bd6-a7e8-ade5717bcb4d")
+		(property "Reference" "C1006"
+			(at 110.109 27.7554 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "CP 10μF"
+			(at 110.109 30.5305 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm"
+			(at 107.95 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 107.95 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 107.95 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "99770dd4-03b0-400c-8312-61bf2f77390f")
+		)
+		(pin "2"
+			(uuid "1b55a4b4-ea3e-4ec8-b66c-2d640ee075ac")
+		)
+		(instances
+			(project "myth_cdl"
+				(path "/fc80d15a-8391-4108-8bee-dfbcee45d6bc/ae006b8b-5cd5-4118-8539-6fcf027a7cfa"
+					(reference "C1006")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "74xx:74HC00")
 		(at 109.22 142.24 0)
 		(unit 5)
@@ -7099,7 +8395,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_LongPads"
 			(at 109.22 142.24 0)
 			(effects
 				(font

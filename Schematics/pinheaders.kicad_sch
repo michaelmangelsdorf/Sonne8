@@ -4068,7 +4068,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical"
 			(at 220.98 31.75 0)
 			(effects
 				(font
@@ -4140,7 +4140,7 @@
 			)
 			(project "myth_decoder"
 				(path "/cc431572-b987-4113-b719-2952a6ee3168/4a47d886-11a5-4437-bd08-9d99b37632a9"
-					(reference "J1015")
+					(reference "J1011")
 					(unit 1)
 				)
 			)
@@ -4184,7 +4184,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical"
 			(at 127 167.64 0)
 			(effects
 				(font
@@ -4256,7 +4256,7 @@
 			)
 			(project "myth_decoder"
 				(path "/cc431572-b987-4113-b719-2952a6ee3168/4a47d886-11a5-4437-bd08-9d99b37632a9"
-					(reference "J1011")
+					(reference "J1008")
 					(unit 1)
 				)
 			)
@@ -4300,7 +4300,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical"
 			(at 220.98 62.23 0)
 			(effects
 				(font
@@ -4372,7 +4372,7 @@
 			)
 			(project "myth_decoder"
 				(path "/cc431572-b987-4113-b719-2952a6ee3168/4a47d886-11a5-4437-bd08-9d99b37632a9"
-					(reference "J1016")
+					(reference "J1012")
 					(unit 1)
 				)
 			)
@@ -4416,7 +4416,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical"
 			(at 85.09 128.27 0)
 			(effects
 				(font
@@ -4488,7 +4488,7 @@
 			)
 			(project "myth_decoder"
 				(path "/cc431572-b987-4113-b719-2952a6ee3168/4a47d886-11a5-4437-bd08-9d99b37632a9"
-					(reference "J1008")
+					(reference "J1005")
 					(unit 1)
 				)
 			)
@@ -4532,7 +4532,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical"
 			(at 38.1 31.75 0)
 			(effects
 				(font
@@ -4648,7 +4648,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical"
 			(at 38.1 64.77 0)
 			(effects
 				(font
@@ -4764,7 +4764,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical"
 			(at 252.73 31.75 0)
 			(effects
 				(font
@@ -4836,7 +4836,7 @@
 			)
 			(project "myth_decoder"
 				(path "/cc431572-b987-4113-b719-2952a6ee3168/4a47d886-11a5-4437-bd08-9d99b37632a9"
-					(reference "J1019")
+					(reference "J1015")
 					(unit 1)
 				)
 			)
@@ -4880,7 +4880,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical"
 			(at 124.46 128.27 0)
 			(effects
 				(font
@@ -4952,7 +4952,7 @@
 			)
 			(project "myth_decoder"
 				(path "/cc431572-b987-4113-b719-2952a6ee3168/4a47d886-11a5-4437-bd08-9d99b37632a9"
-					(reference "J1010")
+					(reference "J1007")
 					(unit 1)
 				)
 			)
@@ -4996,7 +4996,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical"
 			(at 220.98 91.44 0)
 			(effects
 				(font
@@ -5068,7 +5068,7 @@
 			)
 			(project "myth_decoder"
 				(path "/cc431572-b987-4113-b719-2952a6ee3168/4a47d886-11a5-4437-bd08-9d99b37632a9"
-					(reference "J1017")
+					(reference "J1013")
 					(unit 1)
 				)
 			)
@@ -5112,7 +5112,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical"
 			(at 156.21 33.02 0)
 			(effects
 				(font
@@ -5184,7 +5184,7 @@
 			)
 			(project "myth_decoder"
 				(path "/cc431572-b987-4113-b719-2952a6ee3168/4a47d886-11a5-4437-bd08-9d99b37632a9"
-					(reference "J1012")
+					(reference "J1009")
 					(unit 1)
 				)
 			)
@@ -5228,7 +5228,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical"
 			(at 39.37 128.27 0)
 			(effects
 				(font
@@ -5300,7 +5300,7 @@
 			)
 			(project "myth_decoder"
 				(path "/cc431572-b987-4113-b719-2952a6ee3168/4a47d886-11a5-4437-bd08-9d99b37632a9"
-					(reference "J1004")
+					(reference "J1003")
 					(unit 1)
 				)
 			)
@@ -5416,7 +5416,7 @@
 			)
 			(project "myth_decoder"
 				(path "/cc431572-b987-4113-b719-2952a6ee3168/4a47d886-11a5-4437-bd08-9d99b37632a9"
-					(reference "J1005")
+					(reference "J1004")
 					(unit 1)
 				)
 			)
@@ -5460,7 +5460,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical"
 			(at 220.98 121.92 0)
 			(effects
 				(font
@@ -5532,7 +5532,7 @@
 			)
 			(project "myth_decoder"
 				(path "/cc431572-b987-4113-b719-2952a6ee3168/4a47d886-11a5-4437-bd08-9d99b37632a9"
-					(reference "J1018")
+					(reference "J1014")
 					(unit 1)
 				)
 			)
@@ -5648,7 +5648,7 @@
 			)
 			(project "myth_decoder"
 				(path "/cc431572-b987-4113-b719-2952a6ee3168/4a47d886-11a5-4437-bd08-9d99b37632a9"
-					(reference "J1013")
+					(reference "J1010")
 					(unit 1)
 				)
 			)
@@ -5692,7 +5692,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical"
 			(at 252.73 62.23 0)
 			(effects
 				(font
@@ -5764,7 +5764,7 @@
 			)
 			(project "myth_decoder"
 				(path "/cc431572-b987-4113-b719-2952a6ee3168/4a47d886-11a5-4437-bd08-9d99b37632a9"
-					(reference "J1020")
+					(reference "J1016")
 					(unit 1)
 				)
 			)
@@ -5808,7 +5808,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical"
 			(at 86.36 33.02 0)
 			(effects
 				(font
@@ -5880,7 +5880,7 @@
 			)
 			(project "myth_decoder"
 				(path "/cc431572-b987-4113-b719-2952a6ee3168/4a47d886-11a5-4437-bd08-9d99b37632a9"
-					(reference "J1014")
+					(reference "J1006")
 					(unit 1)
 				)
 			)

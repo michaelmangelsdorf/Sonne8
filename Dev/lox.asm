@@ -50,7 +50,7 @@ P[Interpret]20h (Look up a command name string in the dictionary and run it)
 ;************** *************************************************************
 
          OWN, i6
-         nd LOXBASE     (Page where the argument strings are stored)
+         ng LOXBASE     (Page where the argument strings are stored)
          no LOXBASE.ARG (Offset of variable which points to the current one)
          mo
          nc VSrch       (Load offset of search string and look it up)
@@ -186,21 +186,21 @@ P[VSrch]+  (Look-up a zero terminated string at pointer D/O)
 ;******* ********************************************************************
 
          OWN, i6
-         d0 o1               (String pointer)
-         d4 o5               (Create a copy of it)
-         nd BASEVOCAB, no 0  (Pointer to first entry in look-up table)
-         d2 o3               (Create a copy of it)
+         g0 o1               (String pointer)
+         g4 o5               (Create a copy of it)
+         ng BASEVOCAB, no 0  (Pointer to first entry in look-up table)
+         g2 o3               (Create a copy of it)
  
       O[VSrchNxtCh]
 
-         4d 5o, mr           (Current character in string)
-         2d 3o, mo           (Current character in table entry)
+         4g 5o, mr           (Current character in string)
+         2g 3o, mo           (Current character in table entry)
          
          REO nf >VSrchMismat (Compare the characters, skip if not equal)
          IDO nf >VSrchFound  (Characters match, we're done if both are NULL)
          
-         4d 5o, na 1, d4 o5  (Advance string ptr)
-         2d 3o, na 1, d2 o3  (Advance table entry ptr)
+         4g 5o, na 1, g4 o5  (Advance string ptr)
+         2g 3o, na 1, g2 o3  (Advance table entry ptr)
 
          nj <VSrchNxtCh      (Branch back, check next character)
 
@@ -208,10 +208,10 @@ P[VSrch]+  (Look-up a zero terminated string at pointer D/O)
 
          0r r4, 1r r5    (Reset string ptr for another round of matching)
 
-         2d 3o           (Seek to the NULL terminator of the current entry)
+         2g 3o           (Seek to the NULL terminator of the current entry)
          nc SkipToNULL
 
-         na 4, d2 o3     (Skip the current entry which didn't match)
+         na 4, g2 o3     (Skip the current entry which didn't match)
          mr              (Check if there's another entry - mustn't be NULL)
          
          nf >VSrchFail   (None of the entries matched)
@@ -219,11 +219,11 @@ P[VSrch]+  (Look-up a zero terminated string at pointer D/O)
 
       O[VSrchFound]
 
-         2d 3o, na 1  (Advance table pointer to type byte)
+         2g 3o, na 1  (Advance table pointer to type byte)
          mr r2, na 1  (Load type data)
          mr r3, na 1  (load page index data)
          mo           (load offset data)
-         3d 2r        (Return page index in D, type in R, offset in O)
+         3g 2r        (Return page index in D, type in R, offset in O)
          6i RET
 
       O[VSrchFail]
@@ -237,12 +237,12 @@ P[PrMsg]+  (Receives a message index in R, print the corresponding message)
 ;******* ********************************************************************
 
          OWN i6
-         r0, nd PrMsg d1      (Pointer to string table in L1/L2)
+         r0, ng PrMsg g1      (Pointer to string table in L1/L2)
          no >PrMsgTable o2
 
       O[PrMsgNxtCh]
 
-         1d 2o mr             (Load message ID of table entry)
+         1g 2o mr             (Load message ID of table entry)
          0o                   (Compare with requested message ID)
          REO
          nt >PrMsgFound       (If both numbers match)
@@ -264,25 +264,25 @@ P[PrMsg]+  (Receives a message index in R, print the corresponding message)
 
       O[PrMsgFound]
 
-           nd LOXBASE
+           ng LOXBASE
            no LOXBASE.POS
            mo o3              (Load and save current printing position)
 
       O[PrMsgCpy]
 
-           1d 2o              (Pointer to character)
+           1g 2o              (Pointer to character)
            mr                 (Put character into R for printing)
 
            nf >PrMsgDone      (It's the NULL byte, stop printing)
            na 1 o2            (Advance to next char) 
 
-           nd LOXBASE 3o, rm  (Store character)
+           ng LOXBASE 3o, rm  (Store character)
            na 1 o3            (Increment and save the printing position)
            nj <PrMsgCpy       (Print the next character)
 
       O[PrMsgDone]
 
-           nd LOXBASE         (Update POS variable)
+           ng LOXBASE         (Update POS variable)
            no LOXBASE.POS
            3r rm
 
@@ -316,7 +316,7 @@ P[NextArg]+  (Advance LOX ARG PTR to next string)
 
            OWN i6 
 
-           nd LOXBASE
+           ng LOXBASE
            no LOXBASE.ARG
            mo                   (O: byte offset of the current argstr)
 
@@ -1502,22 +1502,22 @@ P[BASEVOCAB]40h (List of predefined string literals)
 
     (DIRO Instructions)
 
-    "0d", 'NUL', 81h, 0, 40h
-    "1d", 'NUL', 81h, 0, 41h
-    "2d", 'NUL', 81h, 0, 42h
-    "3d", 'NUL', 81h, 0, 43h
-    "4d", 'NUL', 81h, 0, 44h
-    "5d", 'NUL', 81h, 0, 45h
-    "6d", 'NUL', 81h, 0, 46h
-    "7d", 'NUL', 81h, 0, 47h
-    "d0", 'NUL', 81h, 0, 48h
-    "d1", 'NUL', 81h, 0, 49h
-    "d2", 'NUL', 81h, 0, 4Ah
-    "d3", 'NUL', 81h, 0, 4Bh
-    "d4", 'NUL', 81h, 0, 4Ch
-    "d5", 'NUL', 81h, 0, 4Dh
-    "d6", 'NUL', 81h, 0, 4Eh
-    "d7", 'NUL', 81h, 0, 4Fh
+    "0g", 'NUL', 81h, 0, 40h
+    "1g", 'NUL', 81h, 0, 41h
+    "2g", 'NUL', 81h, 0, 42h
+    "3g", 'NUL', 81h, 0, 43h
+    "4g", 'NUL', 81h, 0, 44h
+    "5g", 'NUL', 81h, 0, 45h
+    "6g", 'NUL', 81h, 0, 46h
+    "7g", 'NUL', 81h, 0, 47h
+    "g0", 'NUL', 81h, 0, 48h
+    "g1", 'NUL', 81h, 0, 49h
+    "g2", 'NUL', 81h, 0, 4Ah
+    "g3", 'NUL', 81h, 0, 4Bh
+    "g4", 'NUL', 81h, 0, 4Ch
+    "g5", 'NUL', 81h, 0, 4Dh
+    "g6", 'NUL', 81h, 0, 4Eh
+    "g7", 'NUL', 81h, 0, 4Fh
     "0i", 'NUL', 81h, 0, 50h
     "1i", 'NUL', 81h, 0, 51h
     "2i", 'NUL', 81h, 0, 52h
@@ -1571,10 +1571,8 @@ P[BASEVOCAB]40h (List of predefined string literals)
 
     "no", 'NUL', 81h, 0, 80h
     "END", 'NUL', 81h, 0, 81h
-
     "SCROUNGE_NL", 'NUL', 81h, 0, 82h
-
-    "nd", 'NUL', 81h, 0, 83h
+    "ng", 'NUL', 81h, 0, 83h
     "nr", 'NUL', 81h, 0, 84h
     "ni", 'NUL', 81h, 0, 85h
     "ns", 'NUL', 81h, 0, 86h
@@ -1587,12 +1585,11 @@ P[BASEVOCAB]40h (List of predefined string literals)
     "nt", 'NUL', 81h, 0, 8Dh
     "nf", 'NUL', 81h, 0, 8Eh
     "nc", 'NUL', 81h, 0, 8Fh
-    "mo", 'NUL', 81h, 0, 90h
 
+    "mo", 'NUL', 81h, 0, 90h
     "SCROUNGE_MM", 'NUL', 81h, 0, 91h
     "SCROUNGE_ML", 'NUL', 81h, 0, 92h
-
-    "md", 'NUL', 81h, 0, 93h
+    "mg", 'NUL', 81h, 0, 93h
     "mr", 'NUL', 81h, 0, 94h
     "mi", 'NUL', 81h, 0, 95h
     "ms", 'NUL', 81h, 0, 96h
@@ -1605,12 +1602,11 @@ P[BASEVOCAB]40h (List of predefined string literals)
     "mt", 'NUL', 81h, 0, 9Dh
     "mf", 'NUL', 81h, 0, 9Eh
     "mc", 'NUL', 81h, 0, 9Fh
-    "lo", 'NUL', 81h, 0, A0h
 
+    "lo", 'NUL', 81h, 0, A0h
     "SCROUNGE_LM", 'NUL', 81h, 0, A1h
     "SCROUNGE_LL", 'NUL', 81h, 0, A2h
-
-    "ld", 'NUL', 81h, 0, A3h
+    "lg", 'NUL', 81h, 0, A3h
     "lr", 'NUL', 81h, 0, A4h
     "li", 'NUL', 81h, 0, A5h
     "ls", 'NUL', 81h, 0, A6h
@@ -1623,31 +1619,29 @@ P[BASEVOCAB]40h (List of predefined string literals)
     "lt", 'NUL', 81h, 0, ADh
     "lf", 'NUL', 81h, 0, AEh
     "lc", 'NUL', 81h, 0, AFh
-    "do", 'NUL', 81h, 0, B0h
-    "dm", 'NUL', 81h, 0, B1h
-    "dl", 'NUL', 81h, 0, B2h
 
-    "SCROUNGE_DD", 'NUL', 81h, 0, B3h
+    "go", 'NUL', 81h, 0, B0h
+    "gm", 'NUL', 81h, 0, B1h
+    "gl", 'NUL', 81h, 0, B2h
+    "SCROUNGE_GG", 'NUL', 81h, 0, B3h
+    "gr", 'NUL', 81h, 0, B4h
+    "gi", 'NUL', 81h, 0, B5h
+    "gs", 'NUL', 81h, 0, B6h
+    "gp", 'NUL', 81h, 0, B7h
+    "ge", 'NUL', 81h, 0, B8h
+    "ga", 'NUL', 81h, 0, B9h
+    "gb", 'NUL', 81h, 0, BAh
+    "gj", 'NUL', 81h, 0, BBh
+    "gw", 'NUL', 81h, 0, BCh
+    "gt", 'NUL', 81h, 0, BDh
+    "gf", 'NUL', 81h, 0, BEh
+    "gc", 'NUL', 81h, 0, BFh
 
-    "dr", 'NUL', 81h, 0, B4h
-    "di", 'NUL', 81h, 0, B5h
-    "ds", 'NUL', 81h, 0, B6h
-    "dp", 'NUL', 81h, 0, B7h
-    "de", 'NUL', 81h, 0, B8h
-    "da", 'NUL', 81h, 0, B9h
-    "db", 'NUL', 81h, 0, BAh
-    "dj", 'NUL', 81h, 0, BBh
-    "dw", 'NUL', 81h, 0, BCh
-    "dt", 'NUL', 81h, 0, BDh
-    "df", 'NUL', 81h, 0, BEh
-    "dc", 'NUL', 81h, 0, BFh
     "ro", 'NUL', 81h, 0, C0h
     "rm", 'NUL', 81h, 0, C1h
     "rl", 'NUL', 81h, 0, C2h
-    "rd", 'NUL', 81h, 0, C3h
-
+    "rg", 'NUL', 81h, 0, C3h
     "SCROUNGE_RR", 'NUL', 81h, 0, C4h
-
     "ri", 'NUL', 81h, 0, C5h
     "rs", 'NUL', 81h, 0, C6h
     "rp", 'NUL', 81h, 0, C7h
@@ -1659,14 +1653,13 @@ P[BASEVOCAB]40h (List of predefined string literals)
     "rt", 'NUL', 81h, 0, CDh
     "rf", 'NUL', 81h, 0, CEh
     "rc", 'NUL', 81h, 0, CFh
+
     "io", 'NUL', 81h, 0, D0h
     "im", 'NUL', 81h, 0, D1h
     "il", 'NUL', 81h, 0, D2h
-    "id", 'NUL', 81h, 0, D3h
+    "ig", 'NUL', 81h, 0, D3h
     "ir", 'NUL', 81h, 0, D4h
-
     "SCROUNGE_II", 'NUL', 81h, 0, D5h
-
     "is", 'NUL', 81h, 0, D6h
     "ip", 'NUL', 81h, 0, D7h
     "ie", 'NUL', 81h, 0, D8h
@@ -1677,10 +1670,11 @@ P[BASEVOCAB]40h (List of predefined string literals)
     "it", 'NUL', 81h, 0, DDh
     "if", 'NUL', 81h, 0, DEh
     "ic", 'NUL', 81h, 0, DFh
+
     "so", 'NUL', 81h, 0, E0h
     "sm", 'NUL', 81h, 0, E1h
     "sl", 'NUL', 81h, 0, E2h
-    "sd", 'NUL', 81h, 0, E3h
+    "sg", 'NUL', 81h, 0, E3h
     "sr", 'NUL', 81h, 0, E4h
     "si", 'NUL', 81h, 0, E5h
     "ss", 'NUL', 81h, 0, E6h
@@ -1693,10 +1687,11 @@ P[BASEVOCAB]40h (List of predefined string literals)
     "st", 'NUL', 81h, 0, EDh
     "sf", 'NUL', 81h, 0, EEh
     "sc", 'NUL', 81h, 0, EFh
+
     "po", 'NUL', 81h, 0, F0h
     "pm", 'NUL', 81h, 0, F1h
     "pl", 'NUL', 81h, 0, F2h
-    "pd", 'NUL', 81h, 0, F3h
+    "pg", 'NUL', 81h, 0, F3h
     "pr", 'NUL', 81h, 0, F4h
     "pi", 'NUL', 81h, 0, F5h
     "ps", 'NUL', 81h, 0, F6h

@@ -35,7 +35,7 @@ struct myth_vm /*Complete machine state including all ram*/
 
         uchar co;   /*Coroutine page index*/
         uchar c;    /*Code page index*/
-        uchar d;    /*Data page index*/
+        uchar g;    /*Global page index*/
         uchar l;    /*Local page index*/
 
         uchar scrounge; /*Set by VM if scrounge opcode executed, else zero*/
@@ -48,7 +48,7 @@ static uchar fetch(struct myth_vm *vm);
 static uchar srcval(struct myth_vm *vm, uchar srcreg);
 static int scrounge(uchar opcode);
 static void pair(struct myth_vm *vm, uchar opcode);
-static void diro(struct myth_vm *vm, uchar opcode);
+static void giro(struct myth_vm *vm, uchar opcode);
 static void trap(struct myth_vm *vm, uchar opcode);
 static void alu(struct myth_vm *vm, uchar opcode);
 static void fix(struct myth_vm *vm, uchar opcode);
@@ -63,7 +63,7 @@ static void call(struct myth_vm *vm, uchar dstpage);
 #define Nx 0 /*from code literal (NUMBER)*/
 #define Mx 1 /*from MEMORY via DATA page index*/
 #define Lx 2 /*from MEMORY via LOCAL page index*/
-#define Dx 3 /*from GLOBAL register*/
+#define Gx 3 /*from GLOBAL register*/
 #define Rx 4 /*from RESULT register*/
 #define Ix 5 /*from DATA page register*/
 #define Sx 6 /*from SERIAL input*/
@@ -77,7 +77,7 @@ static void call(struct myth_vm *vm, uchar dstpage);
 #define xO 0 /*to OFFSET register*/
 #define xM 1 /*to MEMORY via DATA page index*/
 #define xL 2 /*to MEMORY via LOCAL page index*/
-#define xD 3 /*to GLOBAL register*/
+#define xG 3 /*to GLOBAL register*/
 #define xR 4 /*to RESULT register*/
 #define xI 5 /*to INNER register*/
 #define xS 6 /*to SERIAL output*/
@@ -139,7 +139,7 @@ static void call(struct myth_vm *vm, uchar dstpage);
 #define M2 6
 #define M1 7
 
-#define DIRO_BASE_OFFSET 0xF8 /*Local-page offset used by DIRO instructions*/
+#define GIRO_BASE_OFFSET 0xF8 /*Local-page offset used by DIRO instructions*/
 
 void
 myth_reset(struct myth_vm *vm) /*Initialise machine state*/
@@ -167,7 +167,7 @@ myth_reset(struct myth_vm *vm) /*Initialise machine state*/
 
         vm->co = 0;
         vm->c = 0;
-        vm->d = 0;
+        vm->g = 0;
         vm->l = 0;
 
         vm->scrounge = 0;
@@ -189,7 +189,7 @@ myth_step(struct myth_vm *vm)
         if (vm->irq && (vm->c < 32)) trap(vm, 32); /*to page zero if FREE*/
         else
         if (opcode&0x80) pair(vm, opcode);
-        else if (opcode&0x40) diro(vm, opcode);
+        else if (opcode&0x40) giro(vm, opcode);
         else if (opcode&0x20) trap(vm, opcode);
         else if (opcode&0x10) alu(vm, opcode);
         else if (opcode&0x08) fix(vm, opcode);
@@ -247,9 +247,9 @@ srcval(struct myth_vm *vm, uchar srcreg)
 {
         switch(srcreg){
                 case Nx: return fetch(vm); /*pseudo reg*/
-                case Mx: return vm->ram[ vm->d][ vm->o]; /*pseudo reg*/
+                case Mx: return vm->ram[ vm->g][ vm->o]; /*pseudo reg*/
                 case Lx: return vm->ram[ vm->l][ vm->o]; /*pseudo reg*/
-                case Dx: return vm->d;
+                case Gx: return vm->g;
                 case Rx: return vm->r;
                 case Ix: return vm->i;
                 case Sx: return vm->sir;
@@ -274,7 +274,7 @@ scrounge(uchar opcode)
                 case 16*Mx + xL: return opcode; /*ML => NOP (reserved)*/
                 case 16*Lx + xM: return opcode; /*LM => NOP (reserved)*/
                 case 16*Lx + xL: return opcode; /*LL => NOP (reserved)*/
-                case 16*Dx + xD: return opcode; /*DD => NOP (reserved)*/
+                case 16*Gx + xG: return opcode; /*GG => NOP (reserved)*/
                 case 16*Rx + xR: return opcode; /*RR => NOP (reserved)*/
                 case 16*Ix + xI: return opcode; /*II => NOP (reserved)*/
         }
@@ -301,9 +301,9 @@ pair(struct myth_vm *vm, uchar opcode)
         int temp;
         switch(dst){
                 case xO: vm->o = v; break;
-                case xM: vm->ram[ vm->d][ vm->o] = v; break;
+                case xM: vm->ram[ vm->g][ vm->o] = v; break;
                 case xL: vm->ram[ vm->l][ vm->o] = v; break;
-                case xD: vm->d = v; break;
+                case xG: vm->g = v; break;
                 case xR: vm->r = v; break;
                 case xI: vm->i = v; break;
                 case xS: vm->sor = v; break;
@@ -314,7 +314,7 @@ pair(struct myth_vm *vm, uchar opcode)
                 case xA:
                         temp = vm->o + v;
                         vm->o = (uchar) (temp & 0xFF);
-                        if (temp>255) vm->d += 1;
+                        if (temp>255) vm->g += 1;
                         break;
                 case xB: vm->pc = vm->pc + v; break;
                 case xJ: vm->pc = v; break;
@@ -329,7 +329,7 @@ pair(struct myth_vm *vm, uchar opcode)
 }
 
 void
-diro(struct myth_vm *vm, uchar opcode) /*Execute DIRO instruction*/
+giro(struct myth_vm *vm, uchar opcode) /*Execute GIRO instruction*/
 {
         /* OPCODE
             BITS 0-2 encode byte address offset in local page (from F8)
@@ -342,18 +342,18 @@ diro(struct myth_vm *vm, uchar opcode) /*Execute DIRO instruction*/
         #define BITS02 opcode & 7
 
         uchar index = BITS02;              
-        uchar *mptr = &(vm->ram[vm->l][DIRO_BASE_OFFSET + index]);
+        uchar *mptr = &(vm->ram[vm->l][GIRO_BASE_OFFSET + index]);
 
         if(opcode & BIT3)
                 switch(BITS45){
-                        case 0: *mptr = vm->d; break;
+                        case 0: *mptr = vm->g; break;
                         case 1: *mptr = vm->i; break;
                         case 2: *mptr = vm->r; break;
                         case 3: *mptr = vm->o; break;
                 }
         else
         switch(BITS45){
-                case 0: vm->d = *mptr; break;
+                case 0: vm->g = *mptr; break;
                 case 1: vm->i = *mptr; break;
                 case 2: vm->r = *mptr; break;
                 case 3: vm->o = *mptr; break;
@@ -421,7 +421,7 @@ sys(struct myth_vm *vm, uchar opcode)
                 case SCL: vm->sclk = 0; break;
                 case SCH: vm->sclk = 1; break;
 
-                #define L7 (vm->ram[vm->l][DIRO_BASE_OFFSET +7])
+                #define L7 (vm->ram[vm->l][GIRO_BASE_OFFSET +7])
 
                 case RET:
                         vm->c = L7;
@@ -430,7 +430,7 @@ sys(struct myth_vm *vm, uchar opcode)
                         break;
 
                 case COR:
-                        vm->c = vm->d;
+                        vm->c = vm->g;
                         vm->pc = vm->i;
                         break;
 

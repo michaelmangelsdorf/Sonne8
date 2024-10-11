@@ -37,6 +37,8 @@
       8,
       9,
       10,
+      11,
+      12,
       13,
       15,
       16,
@@ -72,7 +74,7 @@
     "ssh_key": ""
   },
   "meta": {
-    "filename": "myth_counters.kicad_prl",
+    "filename": "myth.kicad_prl",
     "version": 3
   },
   "project": {

@@ -146,7 +146,7 @@ printregs()
         print( "co:%.02Xh(%d)(%b) ", vm.co, vm.co, vm.co);
         print( "pc:%.02Xh(%d)(%b) ", vm.pc, vm.pc, vm.pc);
         print( "i:%.02Xh(%d)(%b)\n", vm.i, vm.i, vm.i);
-        print( "d:%.02Xh(%d)(%b) ", vm.d, vm.d, vm.d);
+        print( "g:%.02Xh(%d)(%b) ", vm.g, vm.g, vm.g);
 
         print( "\te:%.02Xh(%d)(%b) ", vm.e_new, vm.e_new, vm.e_new);
         print( "sclk:%d ", vm.sclk ? 1:0);
@@ -159,7 +159,7 @@ printregs()
 
         print( "Locals @l%.02X: ", vm.l);
         for( i=0; i<8; i++){
-                n = vm.ram[vm.l][DIRO_BASE_OFFSET +i];
+                n = vm.ram[vm.l][GIRO_BASE_OFFSET +i];
                 print( "L%d:%X(%d)(%b) ", i, n, n, n);
         }
 
