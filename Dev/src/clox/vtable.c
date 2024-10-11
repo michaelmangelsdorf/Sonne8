@@ -105,9 +105,11 @@ main()
     C = PC = 0;
 
     /*
-      Firstly, load a program into RAM[][] here!
+      To do: Load a program into RAM[][] here!
+    */
 
-      Then enter instruction pump loop:
+    /*
+      Instruction pump loop:
       Fetch an opcode, run it, repeat.
     */
 
@@ -264,22 +266,22 @@ main()
     GIRO_O7: RAM[L][GIRO+7] = O; goto NEXT;
 
     /* PAIR */
-    PAIR_NO: O = RAM[C][PC++]; goto NEXT;
+    PAIR_NO: O = RAM[C][PC]; goto NEXT;
     SCROUNGE_NM: goto NEXT;
     SCROUNGE_NL: goto NEXT;
-    PAIR_NG: G = RAM[C][PC++]; goto NEXT;
-    PAIR_NR: R = RAM[C][PC++]; goto NEXT;
-    PAIR_NI: I = RAM[C][PC++]; goto NEXT;
-    PAIR_NS: SOR = RAM[C][PC++]; goto NEXT;
-    PAIR_NP: POR = RAM[C][PC++]; goto NEXT;
-    PAIR_NE: E = RAM[C][PC++]; goto NEXT;
-    PAIR_NA: TEMP = O + RAM[C][PC++]; O = (uint8_t)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
-    PAIR_NB: PC += RAM[C][PC+1]; goto EXEC;
-    PAIR_NJ: PC = RAM[C][PC+1]; goto EXEC;
-    PAIR_NW: if (I--) {PC = RAM[C][PC+1]; goto EXEC;} else goto NEXT;
-    PAIR_NT: if (R) {PC = RAM[C][PC+1]; goto EXEC;} else goto NEXT;
-    PAIR_NF: if (!R) {PC = RAM[C][PC+1]; goto EXEC;} else goto NEXT;
-    PAIR_NC: I = PC; CO = C; L--; PC = 0; C = RAM[C][PC++]; goto EXEC;
+    PAIR_NG: G = RAM[C][PC]; goto NEXT;
+    PAIR_NR: R = RAM[C][PC]; goto NEXT;
+    PAIR_NI: I = RAM[C][PC]; goto NEXT;
+    PAIR_NS: SOR = RAM[C][PC]; goto NEXT;
+    PAIR_NP: POR = RAM[C][PC]; goto NEXT;
+    PAIR_NE: E = RAM[C][PC]; goto NEXT;
+    PAIR_NA: TEMP = O + RAM[C][PC]; O = (uint8_t)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
+    PAIR_NB: PC += RAM[C][PC]; goto EXEC;
+    PAIR_NJ: PC = RAM[C][PC]; goto EXEC;
+    PAIR_NW: if (I--) {PC = RAM[C][PC]; goto EXEC;} else goto NEXT;
+    PAIR_NT: if (R) {PC = RAM[C][PC]; goto EXEC;} else goto NEXT;
+    PAIR_NF: if (!R) {PC = RAM[C][PC]; goto EXEC;} else goto NEXT;
+    PAIR_NC: I = PC; CO = C; L--; PC = 0; C = RAM[C][PC]; goto EXEC;
     PAIR_MO: O = RAM[G][O]; goto NEXT;
     SCROUNGE_MM: goto NEXT;
     SCROUNGE_ML: goto NEXT;
