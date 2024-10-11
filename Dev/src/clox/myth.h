@@ -381,7 +381,7 @@ alu(struct myth_vm *vm, uchar opcode)
                         vm->r = (uint) vm->r + (uint) vm->o > 255 ? 1 : 0;
                         break;
                 case RLO: vm->r = (vm->r < vm->o) ? 255 : 0; break;
-                case REO: vm->r = (vm->r == vm->o) ? 255 : 0;
+                case REO: vm->r = (vm->r == vm->o) ? 255 : 0; break;
                 case RGO: vm->r = (vm->r > vm->o) ? 255 : 0; break;
         }
 }
