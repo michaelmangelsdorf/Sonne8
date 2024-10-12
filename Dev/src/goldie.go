@@ -437,7 +437,7 @@ type myth_vm struct /*Complete machine state including all ram*/
 	i  byte /*Inner Counter*/
 	pc byte /*Program Counter*/
 
-	co byte /*Coroutine page index*/
+	d  byte /*Dupe latch*/
 	c  byte /*Code page index*/
 	g  byte /*Global page index*/
 	l  byte /*Local page index*/

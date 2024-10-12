@@ -5774,7 +5774,7 @@
 		)
 		(uuid "ff4f72c8-b303-4dfb-bd1d-0ece9d679419")
 	)
-	(text "                Instruction byte:\nall0: OPC_SYS       00000   xxx    See table @ SYS decoder\nelse: OPC_FIX       00001  x xx    b0-1 LSB, b2: Extended sign bit\n      OPC_ALU       0001   xxxx    See table @ ALU\n      OPC_TRAP      001   xxxxx    b0-4: DEST PAGE\n      OPC_DIRO      01 xx x xxx    b0-2 OFFS, b3:GET/PUT, B4-5:REG(DIRO)\n      OPC_PAIR      1  xxx xxxx    b0-3 DST, b4-6 SRC"
+	(text "                Instruction byte:\nall0: OPC_SYS       00000   xxx    See table @ SYS decoder\nelse: OPC_FIX       00001  x xx    b0-1 LSB, b2: Extended sign bit\n      OPC_ALU       0001   xxxx    See table @ ALU\n      OPC_TRAP      001   xxxxx    b0-4: DEST PAGE\n      OPC_GIRO      01 xx x xxx    b0-2 OFFS, b3:GET/PUT, B4-5:REG(GIRO)\n      OPC_PAIR      1  xxx xxxx    b0-3 DST, b4-6 SRC"
 		(exclude_from_sim no)
 		(at 67.564 181.102 0)
 		(effects
@@ -6471,7 +6471,7 @@
 			)
 		)
 	)
-	(global_label "~{opc_DIRO}"
+	(global_label "~{opc_GIRO}"
 		(shape input)
 		(at 260.35 54.61 0)
 		(fields_autoplaced yes)

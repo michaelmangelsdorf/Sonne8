@@ -33,7 +33,7 @@ struct myth_vm /*Complete machine state including all ram*/
         uchar i;    /*Inner Counter*/
         uchar pc;   /*Program Counter*/
 
-        uchar co;   /*Coroutine page index*/
+        uchar d;    /*Dupe latch*/
         uchar c;    /*Code page index*/
         uchar g;    /*Global page index*/
         uchar l;    /*Local page index*/
@@ -165,7 +165,7 @@ myth_reset(struct myth_vm *vm) /*Initialise machine state*/
         vm->i = 0;
         vm->pc = 0;
 
-        vm->co = 0;
+        vm->d = 0;
         vm->c = 0;
         vm->g = 0;
         vm->l = 0;
@@ -219,7 +219,7 @@ call(struct myth_vm *vm, uchar dstpage)
 {
         /*Save origin*/
         vm->i = vm->pc;
-        vm->co = vm->c;
+        vm->d = vm->c;
 
         /*Create stack frame*/
         vm->l--;
@@ -434,7 +434,7 @@ sys(struct myth_vm *vm, uchar opcode)
                         vm->pc = vm->i;
                         break;
 
-                case OWN: L7 = vm->co; break;
+                case OWN: L7 = vm->d; break;
         }
 }
 

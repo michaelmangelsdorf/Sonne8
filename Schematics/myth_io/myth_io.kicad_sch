@@ -7104,7 +7104,7 @@
 		)
 		(uuid "000f8e35-8596-4728-9732-75db9c017b8d")
 	)
-	(label "~{SL2}"
+	(label "SL2"
 		(at 223.52 68.58 0)
 		(fields_autoplaced yes)
 		(effects
@@ -7126,7 +7126,7 @@
 		)
 		(uuid "1df64073-21f1-4469-85fc-39f8ebeed3f9")
 	)
-	(label "~{SL1_PAROE}"
+	(label "SL1_PAROE"
 		(at 223.52 66.04 0)
 		(fields_autoplaced yes)
 		(effects
@@ -7137,7 +7137,7 @@
 		)
 		(uuid "223ba0bc-5eb3-4fe2-a0dd-5b701f456b4f")
 	)
-	(label "~{SL10}"
+	(label "SL10"
 		(at 223.52 88.9 0)
 		(fields_autoplaced yes)
 		(effects
@@ -7159,7 +7159,7 @@
 		)
 		(uuid "30e90575-aabe-4693-9d03-9259db24b8f4")
 	)
-	(label "~{SL15}"
+	(label "SL15"
 		(at 223.52 101.6 0)
 		(fields_autoplaced yes)
 		(effects
@@ -7181,7 +7181,7 @@
 		)
 		(uuid "3bd2ce24-2764-4c00-a149-01e5d5fd6a63")
 	)
-	(label "~{SL9}"
+	(label "SL9"
 		(at 223.52 86.36 0)
 		(fields_autoplaced yes)
 		(effects
@@ -7225,7 +7225,7 @@
 		)
 		(uuid "56a57786-ab46-45c6-bc04-93ee3481ff14")
 	)
-	(label "~{SL6}"
+	(label "SL6"
 		(at 223.52 78.74 0)
 		(fields_autoplaced yes)
 		(effects
@@ -7236,7 +7236,7 @@
 		)
 		(uuid "56f38938-ec5e-4e1f-b5b7-29b583fe6055")
 	)
-	(label "~{SL11}"
+	(label "SL11"
 		(at 223.52 91.44 0)
 		(fields_autoplaced yes)
 		(effects
@@ -7269,7 +7269,7 @@
 		)
 		(uuid "614f42f4-87f4-468c-832a-4e084584f238")
 	)
-	(label "~{SL14}"
+	(label "SL14"
 		(at 223.52 99.06 0)
 		(fields_autoplaced yes)
 		(effects
@@ -7280,7 +7280,7 @@
 		)
 		(uuid "6e0da21f-4e08-4ffc-8001-5bd63b1bbc56")
 	)
-	(label "~{SL12}"
+	(label "SL12"
 		(at 223.52 93.98 0)
 		(fields_autoplaced yes)
 		(effects
@@ -7313,7 +7313,7 @@
 		)
 		(uuid "7bec8329-cd93-4a52-b4f9-25092dc65a7b")
 	)
-	(label "~{SL3}"
+	(label "SL3"
 		(at 223.52 71.12 0)
 		(fields_autoplaced yes)
 		(effects
@@ -7467,7 +7467,7 @@
 		)
 		(uuid "b04765f2-a78f-4206-9d72-cf2e24f6a0f0")
 	)
-	(label "~{SL8}"
+	(label "SL8"
 		(at 223.52 83.82 0)
 		(fields_autoplaced yes)
 		(effects
@@ -7511,7 +7511,7 @@
 		)
 		(uuid "bb6eaa0e-5697-414b-8c99-6fd27949b9f5")
 	)
-	(label "~{SL13}"
+	(label "SL13"
 		(at 223.52 96.52 0)
 		(fields_autoplaced yes)
 		(effects
@@ -7522,7 +7522,7 @@
 		)
 		(uuid "bdfc27b0-a189-4fd9-820e-10715897ac14")
 	)
-	(label "~{SL0_NULL}"
+	(label "SL0_NULL"
 		(at 223.52 63.5 0)
 		(fields_autoplaced yes)
 		(effects
@@ -7544,7 +7544,7 @@
 		)
 		(uuid "ce4051e2-5e57-4d2e-898a-4a5101ba2951")
 	)
-	(label "~{SL5}"
+	(label "SL5"
 		(at 223.52 76.2 0)
 		(fields_autoplaced yes)
 		(effects
@@ -7566,7 +7566,7 @@
 		)
 		(uuid "e9dd2c48-04a7-4ecc-95a7-9681168b5980")
 	)
-	(label "~{SL7}"
+	(label "SL7"
 		(at 223.52 81.28 0)
 		(fields_autoplaced yes)
 		(effects
@@ -7610,7 +7610,7 @@
 		)
 		(uuid "f426915a-8570-4cf4-a9da-405b923d10c8")
 	)
-	(label "~{SL4}"
+	(label "SL4"
 		(at 223.52 73.66 0)
 		(fields_autoplaced yes)
 		(effects
@@ -8259,7 +8259,7 @@
 			)
 		)
 	)
-	(global_label "{~{SL0_NULL} ~{SL1_PAROE} ~{SL[15..2]}}"
+	(global_label "{SL0_NULL} {SL1_PAROE} {SL[15..2]}}"
 		(shape input)
 		(at 237.49 60.96 0)
 		(fields_autoplaced yes)
@@ -8271,7 +8271,7 @@
 		)
 		(uuid "dd69d007-d51f-4b0f-bcb4-2722d5eaae00")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 272.5276 60.96 0)
+			(at 276.7611 60.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8401,7 +8401,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2c44720c-4c74-48ef-8e79-affa4bc80950")
-		(property "Reference" "U3"
+		(property "Reference" "U1004"
 			(at 111.2394 93.8235 0)
 			(effects
 				(font
@@ -8497,7 +8497,7 @@
 		(instances
 			(project "myth_io"
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316"
-					(reference "U3")
+					(reference "U1004")
 					(unit 1)
 				)
 			)
@@ -8513,7 +8513,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "362e3f76-7464-42b5-9255-2a7cc5120ece")
-		(property "Reference" "U1"
+		(property "Reference" "U1001"
 			(at 67.31 43.18 0)
 			(effects
 				(font
@@ -8601,7 +8601,7 @@
 		(instances
 			(project ""
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316"
-					(reference "U1")
+					(reference "U1001")
 					(unit 5)
 				)
 			)
@@ -8617,7 +8617,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3e9998bc-e1d1-4c50-adba-47e79c918919")
-		(property "Reference" "J1003"
+		(property "Reference" "J1004"
 			(at 245.745 22.86 0)
 			(effects
 				(font
@@ -8687,7 +8687,7 @@
 		(instances
 			(project "myth_io"
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316"
-					(reference "J1003")
+					(reference "J1004")
 					(unit 1)
 				)
 			)
@@ -8772,7 +8772,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "43affdd9-ba13-4537-8bca-6e0b2367ccfc")
-		(property "Reference" "U4"
+		(property "Reference" "U1005"
 			(at 154.5941 92.71 0)
 			(effects
 				(font
@@ -8868,7 +8868,7 @@
 		(instances
 			(project ""
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316"
-					(reference "U4")
+					(reference "U1005")
 					(unit 1)
 				)
 			)
@@ -8884,7 +8884,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4b362ef5-b6dc-4311-9373-8cf3313855bd")
-		(property "Reference" "X1"
+		(property "Reference" "X1001"
 			(at 64.4321 117.1916 0)
 			(effects
 				(font
@@ -8942,7 +8942,7 @@
 		(instances
 			(project "myth_io"
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316"
-					(reference "X1")
+					(reference "X1001")
 					(unit 1)
 				)
 			)
@@ -8957,7 +8957,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "4c51cb60-9252-4f14-bfaf-af38c874f36a")
-		(property "Reference" "J1"
+		(property "Reference" "J1001"
 			(at 68.58 95.3602 0)
 			(effects
 				(font
@@ -9009,7 +9009,7 @@
 		(instances
 			(project "myth_io"
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316"
-					(reference "J1")
+					(reference "J1001")
 					(unit 1)
 				)
 			)
@@ -9025,7 +9025,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "651e8c99-925b-4581-b720-4c3784fca429")
-		(property "Reference" "U1"
+		(property "Reference" "U1001"
 			(at 82.55 43.18 0)
 			(effects
 				(font
@@ -9113,7 +9113,7 @@
 		(instances
 			(project ""
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316"
-					(reference "U1")
+					(reference "U1001")
 					(unit 6)
 				)
 			)
@@ -9128,7 +9128,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "a5036638-0993-4e47-8f92-332c13b463cf")
-		(property "Reference" "R1"
+		(property "Reference" "R1001"
 			(at 59.8678 48.26 90)
 			(effects
 				(font
@@ -9180,7 +9180,7 @@
 		(instances
 			(project "myth_io"
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316"
-					(reference "R1")
+					(reference "R1001")
 					(unit 1)
 				)
 			)
@@ -9196,7 +9196,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ad757762-5823-434d-b7a1-44cd09b4da4e")
-		(property "Reference" "U2"
+		(property "Reference" "U1002"
 			(at 142.24 134.62 0)
 			(effects
 				(font
@@ -9284,7 +9284,7 @@
 		(instances
 			(project ""
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316"
-					(reference "U2")
+					(reference "U1002")
 					(unit 2)
 				)
 			)
@@ -9300,7 +9300,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "bc577dc3-a9ff-4a66-bb01-7ca02c968be9")
-		(property "Reference" "J1007"
+		(property "Reference" "J1003"
 			(at 219.075 106.68 0)
 			(effects
 				(font
@@ -9394,7 +9394,7 @@
 		(instances
 			(project "myth_io"
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316"
-					(reference "J1007")
+					(reference "J1003")
 					(unit 1)
 				)
 			)
@@ -9410,7 +9410,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "bdf8969a-58e6-45e7-8501-6e0319c37d15")
-		(property "Reference" "J1006"
+		(property "Reference" "J1002"
 			(at 219.075 58.42 0)
 			(effects
 				(font
@@ -9504,7 +9504,7 @@
 		(instances
 			(project "myth_io"
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316"
-					(reference "J1006")
+					(reference "J1002")
 					(unit 1)
 				)
 			)
@@ -9520,7 +9520,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c765e076-27ed-4f35-9310-03c00917c2bd")
-		(property "Reference" "U2"
+		(property "Reference" "U1002"
 			(at 88.9 123.19 0)
 			(effects
 				(font
@@ -9608,7 +9608,7 @@
 		(instances
 			(project ""
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316"
-					(reference "U2")
+					(reference "U1002")
 					(unit 1)
 				)
 			)
@@ -9623,7 +9623,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "de8a8ee1-8732-4e6a-bdb7-b430699924b2")
-		(property "Reference" "RN1"
+		(property "Reference" "RN1001"
 			(at 186.69 71.755 90)
 			(effects
 				(font
@@ -9696,7 +9696,7 @@
 		(instances
 			(project "myth_io"
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316"
-					(reference "RN1")
+					(reference "RN1001")
 					(unit 1)
 				)
 			)
@@ -9782,7 +9782,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f403fc46-0a62-441a-8093-e9c5705da835")
-		(property "Reference" "U1001"
+		(property "Reference" "U1003"
 			(at 106.68 43.18 0)
 			(effects
 				(font
@@ -9870,7 +9870,7 @@
 		(instances
 			(project "myth_io"
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316"
-					(reference "U1001")
+					(reference "U1003")
 					(unit 6)
 				)
 			)

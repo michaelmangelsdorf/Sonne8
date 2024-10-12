@@ -112,7 +112,7 @@ insertOrExitAt(int *offs)
 void
 greet()
 {
-        print("CLI Lox C version Dosflange/2409\n");
+        print("CLI Lox C version Dosflange/2411\n");
 }
 
 void

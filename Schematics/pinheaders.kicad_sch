@@ -2260,7 +2260,7 @@
 			)
 		)
 	)
-	(global_label "~{Dx}"
+	(global_label "~{Gx}"
 		(shape input)
 		(at 226.06 91.44 0)
 		(fields_autoplaced yes)
@@ -2590,7 +2590,7 @@
 			)
 		)
 	)
-	(global_label "~{PUTD}"
+	(global_label "~{PUTG}"
 		(shape input)
 		(at 257.81 64.77 0)
 		(fields_autoplaced yes)
@@ -3118,7 +3118,7 @@
 			)
 		)
 	)
-	(global_label "~{GETD}"
+	(global_label "~{GETG}"
 		(shape input)
 		(at 257.81 54.61 0)
 		(fields_autoplaced yes)
@@ -3294,7 +3294,7 @@
 			)
 		)
 	)
-	(global_label "~{xD}"
+	(global_label "~{xG}"
 		(shape input)
 		(at 226.06 31.75 0)
 		(fields_autoplaced yes)
@@ -4244,7 +4244,7 @@
 			)
 			(project "myth_io"
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316/95b8575f-ea13-4da8-aaa7-78fdcde116f0"
-					(reference "J1011")
+					(reference "J1012")
 					(unit 1)
 				)
 			)
@@ -4476,7 +4476,7 @@
 			)
 			(project "myth_io"
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316/95b8575f-ea13-4da8-aaa7-78fdcde116f0"
-					(reference "J1008")
+					(reference "J1009")
 					(unit 1)
 				)
 			)
@@ -4592,7 +4592,7 @@
 			)
 			(project "myth_io"
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316/95b8575f-ea13-4da8-aaa7-78fdcde116f0"
-					(reference "J1001")
+					(reference "J1005")
 					(unit 1)
 				)
 			)
@@ -4708,7 +4708,7 @@
 			)
 			(project "myth_io"
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316/95b8575f-ea13-4da8-aaa7-78fdcde116f0"
-					(reference "J1002")
+					(reference "J1006")
 					(unit 1)
 				)
 			)
@@ -4940,7 +4940,7 @@
 			)
 			(project "myth_io"
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316/95b8575f-ea13-4da8-aaa7-78fdcde116f0"
-					(reference "J1010")
+					(reference "J1011")
 					(unit 1)
 				)
 			)
@@ -5172,7 +5172,7 @@
 			)
 			(project "myth_io"
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316/95b8575f-ea13-4da8-aaa7-78fdcde116f0"
-					(reference "J1012")
+					(reference "J1013")
 					(unit 1)
 				)
 			)
@@ -5288,7 +5288,7 @@
 			)
 			(project "myth_io"
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316/95b8575f-ea13-4da8-aaa7-78fdcde116f0"
-					(reference "J1004")
+					(reference "J1007")
 					(unit 1)
 				)
 			)
@@ -5404,7 +5404,7 @@
 			)
 			(project "myth_io"
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316/95b8575f-ea13-4da8-aaa7-78fdcde116f0"
-					(reference "J1005")
+					(reference "J1008")
 					(unit 1)
 				)
 			)
@@ -5636,7 +5636,7 @@
 			)
 			(project "myth_io"
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316/95b8575f-ea13-4da8-aaa7-78fdcde116f0"
-					(reference "J1013")
+					(reference "J1014")
 					(unit 1)
 				)
 			)
@@ -5868,7 +5868,7 @@
 			)
 			(project "myth_io"
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316/95b8575f-ea13-4da8-aaa7-78fdcde116f0"
-					(reference "J1014")
+					(reference "J1010")
 					(unit 1)
 				)
 			)
