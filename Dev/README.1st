@@ -5,6 +5,9 @@ In order to develop with the current system, do the following.
 
 *   Run 'goldie lox.asm' to assemble this file into a machine image
     file ('corestate.myst') which contains the resulting object code.
+    Make sure to specify the .asm extension so it doesn't assemble
+    the lox binary.
+
     This image is created in the current folder and contains
     the complete state of the machine, including the registers, flags,
     64k of memory, etc.

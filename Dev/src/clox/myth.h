@@ -10,20 +10,21 @@
 #include <u.h>
 #include <libc.h>
 
-struct myth_vm /*Complete machine state including all ram*/
+struct myth_vm /*Complete machine state including all RAM*/
 {
         uchar ram[256][256]; /*MemoryByte[page][offset]*/
+
+        uchar irq;  /*Interrupt request bit - set by PERIPHERY*/
 
         uchar e_old; /*Device ENABLE register previous value - set by VM */
         uchar e_new; /*Device ENABLE register current value - set by VM */
 
-        uchar irq;  /*Interrupt request bit - set by PERIPHERY*/
         uchar sclk; /*Serial clock state bit - set by VM*/
         uchar miso; /*Serial input line state bit - set by PERIPHERY*/
         uchar mosi; /*Serial output line state bit - set by VM*/
-
         uchar sir;  /*Serial input register - set by VM*/
         uchar sor;  /*Serial output register - set by VM*/
+
         uchar pir;  /*Parallel input register - set by PERIPHERY*/
         uchar por;  /*Parallel output register - set by VM*/
 
@@ -146,14 +147,14 @@ myth_reset(struct myth_vm *vm) /*Initialise machine state*/
 {
         memset(vm->ram, 0, 256*256);
 
-        vm->e_old = 0; /*Clear signal edges*/
-        vm->e_new = 0; /*Deselect any device*/
-
         vm->irq = 0;
+
+        vm->e_old = 0; /*Clear signal edges*/
+        vm->e_new = 0; /*Deselect all devices*/
+
         vm->sclk = 0;
         vm->miso = 0;
         vm->mosi = 0;
-
         vm->sir = 0;
         vm->sor = 0;
 
