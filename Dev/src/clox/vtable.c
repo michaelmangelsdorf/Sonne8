@@ -45,8 +45,9 @@ main()
   outside of instruction or literal fetching, and this
   register is also one of the two ALU input operands.
 
-  I is the inner counter register. It is a hardware
-  loop counter and is used during function calls.
+  I is the inner counter register. It can function as
+  a hardware loop counter but is also used for storing
+  the return address during function calls.
 
   PC is the program counter, which for this CPU means
   that it contains the offset within the current code page.
