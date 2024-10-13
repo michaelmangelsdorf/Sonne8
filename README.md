@@ -13,9 +13,8 @@ The PCB is shown below.
 Since then, I've redesigned the architecture. All this is in the top-level folders.
 The work in the "Schematics" folder is based on the KiCad files I used for PCB production, but it's diverged a lot, and I am mainly using it to document my progress. It shouldn't be hard to test it out and make another board though.
 
-Probably the quickest way to understand what this little CPU does is by reading the high-level decoder-based
-reference implementation [reference implementation](https://github.com/Dosflange/Myth/blob/main/Dev/src/clox/myth.h),
-or the [one](https://github.com/Dosflange/Myth/blob/main/Dev/src/clox/vtable.c) using a dispatch table for a more direct, low-level look-up of individual instructions.
+Probably the quickest way to understand what this little CPU does is by reading the decoder-based [reference implementation](https://github.com/Dosflange/Myth/blob/main/Dev/src/clox/myth.h) which is more high-level,
+or the [one](https://github.com/Dosflange/Myth/blob/main/Dev/src/clox/vtable.c) which use a dispatch table, for a more direct, low-level look-up of individual instructions.
 
 __Update Sep.24__:
 
