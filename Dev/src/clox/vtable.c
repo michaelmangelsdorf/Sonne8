@@ -65,10 +65,9 @@ main()
 
   L is the local page index register.
   It contains the implied
-  page index for memory operations using the L-prefix,
-  and this register is used as a stack frame pointer
-  in conjunction with function calls. This register
-  is hidden.
+  page index for memory operations using the L-prefix.
+  This page index represents the stack frame during
+  function calls. This register is hidden.
 */
   
   
