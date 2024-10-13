@@ -121,7 +121,7 @@ main()
       Each one of them has a dispatch_table[] entry.
      */
 
-    #define GIRO 0xF8 /*Local-page offset used by DIRO instructions*/
+    #define GIRO 0xF8 /*Local-page offset used by GIRO instructions*/
 
     unsigned TEMP;
 
