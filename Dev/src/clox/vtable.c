@@ -54,19 +54,21 @@ main()
 
   D is the "dupe" register. It contains a copy of the
   code page index that is strategically updated.
-  This register is maintained by the CPU only.
+  This register is hidden.
 
   C contains the code page index. Instruction fetch always
   occurs at RAM[C][PC].
 
-  G is the global register. It contains the implied
+  G is the global page index register.
+  It contains the implied
   page index for memory operations using the M-prefix.
 
-  L is the local register. It contains the implied
+  L is the local page index register.
+  It contains the implied
   page index for memory operations using the L-prefix,
   and this register is used as a stack frame pointer
-  in conjunction with function calls. It is maintained
-  by the CPU only.
+  in conjunction with function calls. This register
+  is hidden.
 */
   
   
