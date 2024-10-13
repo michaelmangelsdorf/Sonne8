@@ -74,7 +74,7 @@ SH_enable(uchar id)
 {
         switch(id){
                 case SH0_NULL:;
-                case SH1_PARLE: vm.pir = bus; break;
+                case SH1_PARLE: vm.pir = bus;             break;
                 case SH2_SMEMA0LE: smem.a0 = bus; break;
                 case SH3_SMEMA1LE: smem.a1 = bus; break;
                 case SH4_SMEMA2LE: smem.a2 = bus; break;
