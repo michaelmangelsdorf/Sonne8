@@ -18,9 +18,7 @@ main()
     uint8_t E, SCLK, MISO, MOSI, SIR, SOR, PIR, POR;
     uint8_t R, O, I, PC, D, C, G, L;
 
-/*
-  Quick which-is-which:
-  
+/* 
   RAM[][] is organised as [page][offset];
   
   E is the enable register. The low-order nybble is called
