@@ -33,8 +33,8 @@ main()
   SCLK is the CPU driven serial clock state bit.
   MISO is the device driven serial data input bit.
   MOSI is the CPU driven serial data output bit.
-  SIR is the serialisation input register.
-  SOR is the serialisation output register.
+  SIR is the serialisation byte input register.
+  SOR is the serialisation byte output register.
   PIR is the parallel bus input register.
   POR is the parallel bus output register.
   
@@ -53,6 +53,7 @@ main()
 
   D is the "dupe" register. It contains a copy of the
   code page index that is strategically updated.
+  This register is maintained by the CPU only.
 
   C contains the code page index. Instruction fetch always
   occurs at RAM[C][PC].
@@ -63,7 +64,8 @@ main()
   L is the local register. It contains the implied
   page index for memory operations using the L-prefix,
   and this register is used as a stack frame pointer
-  in conjunction with function calls.
+  in conjunction with function calls. It is maintained
+  by the CPU only.
 */
   
   
