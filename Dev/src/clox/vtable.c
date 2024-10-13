@@ -68,6 +68,9 @@ main()
   page index for memory operations using the L-prefix.
   This page index represents the stack frame during
   function calls. This register is hidden.
+
+  See the decoder-based reference implementation (myth.h)
+  for more comments.
 */
   
   
