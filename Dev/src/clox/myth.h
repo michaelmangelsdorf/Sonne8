@@ -175,7 +175,7 @@ static void call(struct myth_vm *vm, uchar dstpage);
 #define SCL 3 /*Set serial Clock Low*/
 #define SCH 4 /*Set serial Clock High*/
 #define RET 5 /*Return to L7:I from nested call*/
-#define COR 6 /*Coroutine jump to D:I*/
+#define COR 6 /*Coroutine jump to G:I*/
 #define OWN 7 /*Save code page index in L7*/
 
 
