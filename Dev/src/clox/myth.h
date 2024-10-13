@@ -42,6 +42,57 @@ struct myth_vm /*Complete machine state including all RAM*/
         uchar scrounge; /*Set by VM if scrounge opcode executed, else zero*/
 };
 
+/*
+  RAM[][] is organised as [page][offset];
+  
+  E is the enable register. The low-order nybble is called
+  the low-order selector, and it encodes device select
+  signals LS0-15. Device LS0 is the null device.
+  The high-order nybble is called the high-order selector,
+  and it encodes device select signals HS0-15.
+  Device HS0 is the null device.
+
+  SCLK is the CPU driven serial clock state bit.
+  MISO is the device driven serial data input bit.
+  MOSI is the CPU driven serial data output bit.
+  SIR is the serialisation byte input register.
+  SOR is the serialisation byte output register.
+  PIR is the parallel bus input register.
+  POR is the parallel bus output register.
+  
+  R is the result register receiving ALU results and
+  this register is also one of the two ALU input operands.
+  
+  O is the implied offset register for all memory operations
+  outside of instruction or literal fetching, and this
+  register is also one of the two ALU input operands.
+
+  I is the inner counter register. It can function as
+  a hardware loop counter but is also used for storing
+  the return address during function calls.
+
+  PC is the program counter, which for this CPU means
+  that it contains the offset within the current code page.
+
+  D is the "dupe" register. It contains a copy of the
+  code page index that is strategically updated.
+  This register is hidden.
+
+  C contains the code page index. Instruction fetch always
+  occurs at RAM[C][PC].
+
+  G is the global page index register.
+  It contains the implied
+  page index for memory operations using the M-prefix.
+
+  L is the local page index register.
+  It contains the implied
+  page index for memory operations using the L-prefix.
+  This page index represents the stack frame during
+  function calls. This register is hidden.
+*/
+
+
 void myth_reset(struct myth_vm *vm);
 void myth_step(struct myth_vm *vm);
 
