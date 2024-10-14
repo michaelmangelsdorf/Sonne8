@@ -5,7 +5,8 @@ There are design files for a working single-board computer built around it in th
 The current reference schematics I'm using are ![here](https://github.com/Dosflange/Myth/blob/main/docs/static/myth.pdf).
 If I were to build another board, it would probably be based on the KiCad files in the 'Schematics' folder.
 
-So what this image shows is not an application board with an Arduino or anything, it is the actual microcontroller.
+So what this image shows is not an application board with an Arduino or anything, it is the actual microcontroller. The current version
+has exactly 100 chips.
 
 ![CPU board](https://github.com/Dosflange/Myth/blob/main/Controller-Board_abu.jpg)
 
