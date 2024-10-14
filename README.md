@@ -1,6 +1,6 @@
 Computer project around an 8-bit microcontroller I've designed.
 
-There is a single-board computer built around it in the 'Prototype' folder. I've had the PCB for it manufactured by JLCPCB. The computer works fine at 8 MHz system clock, which corresponds to around 1 million instructions per second. The components are all 74HC-series CMOS chips. I basically wanted to design a CPU I could actually build, not an FPGA fantasy like [my previous](https://github.com/Dosflange/Paver) one (which I still like and it works fine).
+There are design files for a working single-board computer built around it in the 'Prototype' folder. I've had the PCB for it manufactured by JLCPCB. The computer works fine at 8 MHz system clock, which corresponds to around 1 million instructions per second. The components are all 74HC-series CMOS chips. I basically wanted to design a CPU I could actually build, not an FPGA fantasy like [my previous](https://github.com/Dosflange/Paver) one (which I still like and it works fine).
 
 The current reference schematics I'm using are ![here](https://github.com/Dosflange/Myth/blob/main/docs/static/myth.pdf).
 If I were to build another board, it would probably be based on the KiCad files in the 'Schematics' folder.
