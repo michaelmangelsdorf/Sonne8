@@ -5,6 +5,7 @@
    *Myth* Project
    Author: mim@ok-schalter.de (Michael/Dosflange@github)
 
+   This is my first Golang program, brace for impact.
 */
 
 package main
