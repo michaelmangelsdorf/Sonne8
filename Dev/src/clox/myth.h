@@ -482,7 +482,7 @@ sys(struct myth_vm *vm, uchar opcode)
                         break;
 
                 case COR:
-                        vm->c = vm->g;
+                        vm->c = vm->r;
                         vm->pc = vm->i;
                         break;
 

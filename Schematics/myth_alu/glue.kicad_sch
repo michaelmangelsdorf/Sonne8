@@ -4468,10 +4468,6 @@
 		(uuid "e4d38a7c-27ae-4bda-8e37-f438d2a6ef39")
 	)
 	(no_connect
-		(at 236.22 101.6)
-		(uuid "ee2cecc8-f16b-4536-b470-c5b59b2c9bfc")
-	)
-	(no_connect
 		(at 142.24 68.58)
 		(uuid "f8cd6861-f1b7-4915-a0f3-b2cd54edecf1")
 	)
@@ -5043,28 +5039,6 @@
 	)
 	(global_label "GND"
 		(shape input)
-		(at 220.98 104.14 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "61b383d4-0bd3-4aa8-ade6-ab850915b2ac")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 214.1243 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape input)
 		(at 160.02 90.17 180)
 		(fields_autoplaced yes)
 		(effects
@@ -5142,28 +5116,6 @@
 		(uuid "a336fd47-4da1-4b2b-a56f-e740aeece372")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 88.3943 85.09 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "GND"
-		(shape input)
-		(at 220.98 99.06 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "a355bff9-e21e-472d-8fe0-7a1cd14663a2")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 214.1243 99.06 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5840,110 +5792,6 @@
 				(path "/dc50927e-cadd-41f6-9ed1-9781b4a3fe94/fccc726a-f35b-4dec-b550-8b01869cab59"
 					(reference "U4")
 					(unit 6)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "74xx:74LS08")
-		(at 228.6 101.6 0)
-		(unit 4)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "40b5f502-407d-4e95-a5ee-58477937afc5")
-		(property "Reference" "U7"
-			(at 228.5917 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "74LS08"
-			(at 228.5917 95.25 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 228.6 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74LS08"
-			(at 228.6 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Quad And2"
-			(at 228.6 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "3661ec70-736d-4c0e-a00d-51633fb596fb")
-		)
-		(pin "2"
-			(uuid "22ed8137-99b7-41a6-b703-533b2ab06269")
-		)
-		(pin "3"
-			(uuid "01a0d67e-0b7a-4afc-a251-d900dde02c1f")
-		)
-		(pin "4"
-			(uuid "c2e24cbb-e749-4656-b05d-9545dcf8541a")
-		)
-		(pin "5"
-			(uuid "208b2470-0c0e-47af-8136-50deb21c29ab")
-		)
-		(pin "6"
-			(uuid "3e6a659a-771a-41e5-8c9b-d959dc3bffd6")
-		)
-		(pin "10"
-			(uuid "472b3ecc-5afb-4612-9611-04d10a43e1c1")
-		)
-		(pin "8"
-			(uuid "88e312ba-bc89-4251-8587-d9cb6b8a76c5")
-		)
-		(pin "9"
-			(uuid "7a81141f-75f6-441a-ae5a-5079aaaea42e")
-		)
-		(pin "11"
-			(uuid "7652026a-d46d-4056-96f5-7c746afbd5ee")
-		)
-		(pin "12"
-			(uuid "098cbe6f-627e-4ca7-a7ca-8be5ae4bf85b")
-		)
-		(pin "13"
-			(uuid "f8b4ddeb-37be-40ff-800c-80b3cb8a7b46")
-		)
-		(pin "14"
-			(uuid "c46e0d05-7a15-456d-98c7-f4a89ee0f207")
-		)
-		(pin "7"
-			(uuid "2359c9ef-dba2-4a2a-96ff-9b408f8f9cdf")
-		)
-		(instances
-			(project "myth_alu"
-				(path "/dc50927e-cadd-41f6-9ed1-9781b4a3fe94/fccc726a-f35b-4dec-b550-8b01869cab59"
-					(reference "U7")
-					(unit 4)
 				)
 			)
 		)

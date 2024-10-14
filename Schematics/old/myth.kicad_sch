@@ -6,7 +6,7 @@
 	(paper "A0")
 	(title_block
 		(title "Sonne-8 Micro-Controller")
-		(date "2024-10-12")
+		(date "2024-10-14")
 		(rev "Myth")
 		(company "Contact: mim@ok-schalter.de")
 		(comment 1 "Author: Michael Mangelsdorf")
@@ -36615,13 +36615,13 @@
 		(uuid "47fa9d04-6fd9-4d9b-bda6-fcf21f057267")
 	)
 	(label "~{COR}"
-		(at 886.46 486.41 0)
+		(at 1021.08 252.73 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "4841f7b8-bfd1-4a67-9b03-5e3277208091")
 	)
@@ -36912,7 +36912,7 @@
 		(uuid "4ce120b8-c100-4eef-a9d4-380bf0c9ffc8")
 	)
 	(label "~{PUTG}"
-		(at 886.46 481.33 0)
+		(at 871.22 483.87 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -44590,7 +44590,7 @@
 		(uuid "f3a201d2-542c-459c-afe6-adf915bbfa64")
 	)
 	(label "~{PUTR}"
-		(at 1036.32 255.27 180)
+		(at 1021.08 257.81 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -69476,7 +69476,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74LS08")
-		(at 878.84 483.87 180)
+		(at 1028.7 255.27 0)
 		(unit 4)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -69485,7 +69485,7 @@
 		(fields_autoplaced yes)
 		(uuid "c0f281bc-6e85-4eb1-a885-4ee88b09cf43")
 		(property "Reference" "U28"
-			(at 878.8483 475.9155 0)
+			(at 1028.6917 263.2245 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -69493,7 +69493,7 @@
 			)
 		)
 		(property "Value" "74LS08"
-			(at 878.8483 478.3398 0)
+			(at 1028.6917 260.8002 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -69501,7 +69501,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 878.84 483.87 0)
+			(at 1028.7 255.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -69510,7 +69510,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74LS08"
-			(at 878.84 483.87 0)
+			(at 1028.7 255.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -69519,7 +69519,7 @@
 			)
 		)
 		(property "Description" "Quad And2"
-			(at 878.84 483.87 0)
+			(at 1028.7 255.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)

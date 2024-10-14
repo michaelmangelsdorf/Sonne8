@@ -3906,16 +3906,6 @@
 	)
 	(wire
 		(pts
-			(xy 161.29 107.95) (xy 166.37 107.95)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2bf5a174-5336-4447-af1f-b2db0f813649")
-	)
-	(wire
-		(pts
 			(xy 247.65 78.74) (xy 243.84 78.74)
 		)
 		(stroke
@@ -5543,7 +5533,7 @@
 	)
 	(global_label "~{PUTG}"
 		(shape input)
-		(at 181.61 105.41 0)
+		(at 161.29 107.95 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -5553,7 +5543,7 @@
 		)
 		(uuid "20c8d778-f8a0-4ed1-b91d-d0e02657d769")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 189.4333 105.41 0)
+			(at 169.1133 107.95 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5713,28 +5703,6 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "~{COR}"
-		(shape input)
-		(at 181.61 110.49 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "73a15831-a131-429c-b55b-d31e72c3acea")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 188.4657 110.49 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
 				(hide yes)
 			)
 		)
@@ -6441,110 +6409,6 @@
 			(project "myth_cgl"
 				(path "/fc80d15a-8391-4108-8bee-dfbcee45d6bc/99537f26-a95b-4a0f-9442-409c0e5998d5"
 					(reference "U7")
-					(unit 3)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "74xx:74LS08")
-		(at 173.99 107.95 180)
-		(unit 3)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "ca693119-1130-444d-885b-366cef4a9e9c")
-		(property "Reference" "U5"
-			(at 173.9983 99.06 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "74LS08"
-			(at 173.9983 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_LongPads"
-			(at 173.99 107.95 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74LS08"
-			(at 173.99 107.95 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Quad And2"
-			(at 173.99 107.95 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "f3861ecc-0f2b-422e-9e46-2cbde0e55974")
-		)
-		(pin "11"
-			(uuid "0cc59411-e859-42d6-84af-ea2294563272")
-		)
-		(pin "4"
-			(uuid "96f8f35d-f863-4729-9a80-678bae93ebfc")
-		)
-		(pin "12"
-			(uuid "ffa2f5df-7939-4881-9872-a64158d71642")
-		)
-		(pin "13"
-			(uuid "5e38f9cd-d1f4-4737-9065-9949c192d53b")
-		)
-		(pin "1"
-			(uuid "0e4ff813-21fc-4b86-ac48-1bf888550de4")
-		)
-		(pin "3"
-			(uuid "2eb9e315-af96-4105-a8fc-2ecaa47b6e3d")
-		)
-		(pin "8"
-			(uuid "f9477eab-24b9-49e4-a3ad-341a4557f613")
-		)
-		(pin "9"
-			(uuid "1484276b-f369-480b-8e78-fadd5817e87f")
-		)
-		(pin "5"
-			(uuid "d3c9c1c3-7cbc-4712-8acd-5ade37cb417e")
-		)
-		(pin "10"
-			(uuid "b0f1f6a9-8822-4857-b943-ac2eb0f94076")
-		)
-		(pin "6"
-			(uuid "bcc50a1e-e2ed-4160-92f0-f16105b47915")
-		)
-		(pin "14"
-			(uuid "f29116dc-1ccd-4539-a89a-233572066712")
-		)
-		(pin "7"
-			(uuid "e5b0c5f7-6856-4f9e-985a-7dc26da7d9ff")
-		)
-		(instances
-			(project "myth_cgl"
-				(path "/fc80d15a-8391-4108-8bee-dfbcee45d6bc/99537f26-a95b-4a0f-9442-409c0e5998d5"
-					(reference "U5")
 					(unit 3)
 				)
 			)

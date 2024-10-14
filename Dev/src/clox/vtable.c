@@ -21,7 +21,7 @@ main()
 /* 
   RAM[][] is organised as [page][offset];
   
-  E is the enable register. The low-order nybble is called
+  Es the enable register. The low-order nybble is called
   the low-order selector, and it encodes device select
   signals LS0-15. Device LS0 is the null device.
   The high-order nybble is called the high-order selector,
@@ -186,8 +186,8 @@ main()
     /*02h*/   SYS_SSO:  MOSI = SOR & 0x80 ? 1 : 0; SOR <<= 1; goto NEXT;
     /*03h*/   SYS_SCL:  SCLK = 0; goto NEXT;
     /*04h*/   SYS_SCH:  SCLK = 1; goto NEXT;
-    /*05h*/   SYS_RET:  C = RAM[L][GIRO+7]; PC = I; L++; goto NEXT;
-    /*06h*/   SYS_COR:  C = G; PC = I; goto NEXT;
+    /*05h*/   SYS_RET:  C = RAM[L][GIRO+7]; PC = I; L++; goto EXEC;
+    /*06h*/   SYS_COR:  C = R; PC = I; goto EXEC;
     /*07h*/   SYS_OWN:  RAM[L][GIRO+7] = D; goto NEXT;
 
     /* FIX */

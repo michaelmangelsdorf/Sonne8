@@ -72,7 +72,8 @@ P[Interpret]20h (Look up a command name string in the dictionary and run it)
 
          (Jump to CMD)
          0i    (Restore target offset)
-         COR   (Target page still in D)
+         gr
+         COR
 
       O[InterpRFail]
 
@@ -169,20 +170,20 @@ P[DivMod8]+  (Divide R by G, return quotient in R, remainder in G)
 P[SkipToNULL]+
 ;************ ***************************************************************
 
-         OWN i6  (Advance string pointer D/O to next NULL char)
+         OWN i6  (Advance string pointer G/O to next NULL char)
 
       O[SkipNFind0]
       
-         mr              (D:O points to char, load it into R)
+         mr              (G:O points to char, load it into R)
          nf >SkipNAt0    (If char zero, done)
-         na 1            (Else increment D/O and check again)
+         na 1            (Else increment G/O and check again)
          nj <SkipNFind0
 
       O[SkipNAt0] 6i RET
 
 
 ;******* ********************************************************************
-P[VSrch]+  (Look-up a zero terminated string at pointer D/O)
+P[VSrch]+  (Look-up a zero terminated string at pointer G/O)
 ;******* ********************************************************************
 
          OWN, i6
@@ -223,7 +224,7 @@ P[VSrch]+  (Look-up a zero terminated string at pointer D/O)
          mr r2, na 1  (Load type data)
          mr r3, na 1  (load page index data)
          mo           (load offset data)
-         3g 2r        (Return page index in D, type in R, offset in O)
+         3g 2r        (Return page index in G, type in R, offset in O)
          6i RET
 
       O[VSrchFail]
@@ -320,10 +321,10 @@ P[NextArg]+  (Advance LOX ARG PTR to next string)
            no LOXBASE.ARG
            mo                   (O: byte offset of the current argstr)
 
-           nc SkipToNULL        (D/O points to NULL character)
+           nc SkipToNULL        (G/O points to NULL character)
            na 1                 (Advance by 1)
 
-           IDO, no LOXBASE.ARG  (Offset of new argstr in R, D still LOXBASE)
+           IDO, no LOXBASE.ARG  (Offset of new argstr in R, G still LOXBASE)
            rm                   (Store updated offset in ARG variable)
            ro, mr               (Return first character of this argstr in R.
                                  If zero, end of argument list)
