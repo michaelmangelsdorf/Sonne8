@@ -231,7 +231,7 @@ main()
     /*25h*/   TRAP_5: I = PC; D = C; L--; PC = 0; C = 5; goto EXEC;
     /*26h*/   TRAP_6: I = PC; D = C; L--; PC = 0; C = 6; goto EXEC;
     /*27h*/   TRAP_7: I = PC; D = C; L--; PC = 0; C = 7; goto EXEC;
-    /*28h*/  h TRAP_8: I = PC; D = C; L--; PC = 0; C = 8; goto EXEC;
+    /*28h*/   TRAP_8: I = PC; D = C; L--; PC = 0; C = 8; goto EXEC;
     /*29h*/   TRAP_9: I = PC; D = C; L--; PC = 0; C = 9; goto EXEC;
     /*2Ah*/   TRAP_10: I = PC; D = C; L--; PC = 0; C = 10; goto EXEC;
     /*2Bh*/   TRAP_11: I = PC; D = C; L--; PC = 0; C = 11; goto EXEC;
