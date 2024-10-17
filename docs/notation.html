@@ -71,7 +71,7 @@
             Such label references will generate an opcode that will trigger a TRAP and call the handler function referenced by the label.
           </p>
           <h2>Constants</h2>
-          <p>P[label]value defines a constant.</p>
+          <p>C[label]value defines a constant.</p>
           <h2>Label References</h2>
           <p>
             Page and offset labels are referenced by prefixing their identifier
@@ -97,9 +97,9 @@
           They are referred to as L0 (local page offset F8h) to L7 (offset FFh).
           The RET instruction expects the page index of the caller-code to be in L7.
           There is a group of instructions that copy values between
-          registers D, I, R, O and the local variables L0-L7.
+          registers G, I, R, O and the local variables L0-L7.
           </p>
-          <h2>Local variable shortcuts (DIRO get/put)</h2>
+          <h2>Local variable shortcuts (GIRO get/put)</h2>
           <p>
             Examples: r0 ("PUT R into local var L0"), 4o ("GET O from local var L4").
           </p>

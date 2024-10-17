@@ -25,19 +25,19 @@
       </h2>
       <ul>
         <li>Group: <a href="../pair.html">PAIR</a></li>
-        <li>Mnemonic: df</li>
+        <li>Mnemonic: gf</li>
         <li>Opcode: 190d, BEh</li>
         <li>Encoding: 1_011_1110b (TRAP_SRC_DST)</li>
-        <li class="pseudo">Pseudo-code: if r==0 then pc=d else pc++</li>
+        <li class="pseudo">Pseudo-code: if r==0 then pc=g else pc++</li>
         <li class="aside">
-          <a href="letters/D.html">D:DATA</a>
+          <a href="letters/D.html">G:GLOBAL</a>
           <a href="pair/letters/F.html">F:FALSE</a>
         </li>
       </ul>
       <p desc>
         <ul class="pair">
           <li class="from">
-            Source is the D register.
+            Source is the G register.
           </li>
           <li class="to">
             If R IS zero, set the Program Counter to source.
@@ -45,7 +45,7 @@
         </ul>
       </p>
       <p further>
-        The 'D' source is the page index used for memory operations via the 'M' source or destination.
+        The 'G' source is the page index used for memory operations via the 'M' source or destination.
         The 'F' destination takes the source value as the target offset of a conditional jump (R==0) to within the current code page.
         See <a href="../jumps.html">In-Page Branching</a> for more on this.
       </p>

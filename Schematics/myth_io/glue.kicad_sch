@@ -3559,7 +3559,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "370af5a1-663a-4f57-99c1-d04678d495bf")
-		(property "Reference" "C1006"
+		(property "Reference" "C1007"
 			(at 105.029 168.7254 0)
 			(effects
 				(font
@@ -3613,7 +3613,7 @@
 		(instances
 			(project "myth_io"
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316/23f7cdcd-5710-47e5-9933-2b44d7b8056b"
-					(reference "C1006")
+					(reference "C1007")
 					(unit 1)
 				)
 			)
@@ -4286,7 +4286,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ac9194e9-444e-4c21-a1f1-c05c8608e580")
-		(property "Reference" "C1004"
+		(property "Reference" "C1005"
 			(at 65.659 168.7254 0)
 			(effects
 				(font
@@ -4340,7 +4340,7 @@
 		(instances
 			(project "myth_io"
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316/23f7cdcd-5710-47e5-9933-2b44d7b8056b"
-					(reference "C1004")
+					(reference "C1005")
 					(unit 1)
 				)
 			)
@@ -4356,7 +4356,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "af9b6460-2174-4e72-947f-67fc7f7baf18")
-		(property "Reference" "C1008"
+		(property "Reference" "C1009"
 			(at 145.669 168.7254 0)
 			(effects
 				(font
@@ -4410,7 +4410,7 @@
 		(instances
 			(project "myth_io"
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316/23f7cdcd-5710-47e5-9933-2b44d7b8056b"
-					(reference "C1008")
+					(reference "C1009")
 					(unit 1)
 				)
 			)
@@ -4425,7 +4425,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "c67d34bc-fe25-43a4-bd3f-598ec8533fdc")
-		(property "Reference" "C1005"
+		(property "Reference" "C1006"
 			(at 89.9668 169.0116 0)
 			(effects
 				(font
@@ -4479,7 +4479,7 @@
 		(instances
 			(project "myth_io"
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316/23f7cdcd-5710-47e5-9933-2b44d7b8056b"
-					(reference "C1005")
+					(reference "C1006")
 					(unit 1)
 				)
 			)
@@ -4600,7 +4600,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "d7ffd3d9-f817-433f-9514-600e69e9582d")
-		(property "Reference" "C1003"
+		(property "Reference" "C1004"
 			(at 50.5968 169.0116 0)
 			(effects
 				(font
@@ -4654,7 +4654,7 @@
 		(instances
 			(project "myth_io"
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316/23f7cdcd-5710-47e5-9933-2b44d7b8056b"
-					(reference "C1003")
+					(reference "C1004")
 					(unit 1)
 				)
 			)
@@ -4773,7 +4773,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "f6362e36-4475-491b-bf25-f38a15835f3d")
-		(property "Reference" "C1007"
+		(property "Reference" "C1008"
 			(at 130.6068 169.0116 0)
 			(effects
 				(font
@@ -4827,7 +4827,7 @@
 		(instances
 			(project "myth_io"
 				(path "/a907dd88-e0e4-4e6e-a291-053f6213a316/23f7cdcd-5710-47e5-9933-2b44d7b8056b"
-					(reference "C1007")
+					(reference "C1008")
 					(unit 1)
 				)
 			)

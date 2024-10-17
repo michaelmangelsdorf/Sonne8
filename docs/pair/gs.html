@@ -25,19 +25,19 @@
       </h2>
       <ul>
         <li>Group: <a href="../pair.html">PAIR</a></li>
-        <li>Mnemonic: ds</li>
+        <li>Mnemonic: gs</li>
         <li>Opcode: 182d, B6h</li>
         <li>Encoding: 1_011_0110b (TRAP_SRC_DST)</li>
-        <li class="pseudo">Pseudo-code: sor=d; pc++</li>
+        <li class="pseudo">Pseudo-code: sor=g; pc++</li>
         <li class="aside">
-          <a href="letters/D.html">D:DATA</a>
+          <a href="letters/D.html">G:GLOBAL</a>
           <a href="pair/letters/S.html">S:SERIAL</a>
         </li>
       </ul>
       <p desc>
         <ul class="pair">
           <li class="from">
-            Source is the D register.
+            Source is the G register.
           </li>
           <li class="to">
             Destination is the Serial Output register SOR.
@@ -45,7 +45,7 @@
         </ul>
       </p>
       <p further>
-        The 'D' source is the page index used for memory operations via the 'M' source or destination.
+        The 'G' source is the page index used for memory operations via the 'M' source or destination.
         The 'S' destination takes the source value as a data byte to be serialised as output onto the serial bus.
         See <a href="../com.html">Device Communication</a> for how this works.
       </p>

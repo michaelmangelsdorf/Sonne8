@@ -25,12 +25,6 @@ struct SMem smem;
 
 uchar bus; /*Byte value on parallel bus, assume pull-down*/
 
-int
-isactive(uchar id)
-{
-        if(id>15) return (vm.e_new & 0xF0) == id ? 1:0;
-        else return (vm.e_new & 0x0F) == id ? 1:0;
-}
 
 uchar
 get_smemdata()
@@ -112,24 +106,25 @@ virtualio() /*Run this after each CPU step for device emulation*/
 {
         /*Handle virtual IO operation*/
         
-        lnybble_old = vm.e_old & 0x0F;
-        lnybble_new = vm.e_new & 0x0F;
-        hnybble_old = vm.e_old & 0xF0;
-        hnybble_new = vm.e_new & 0xF0;
+        lnybble_old = vm.e_old & 0xF;
+        lnybble_new = vm.e_new & 0xF;
+        hnybble_old = (vm.e_old >> 4) & 0xF;
+        hnybble_new = (vm.e_new >> 4) & 0xF;
 
         /*SL device selection changed*/
         if (lnybble_new != lnybble_old){
                 SL_disable(lnybble_old); // falling edge
                 SL_enable(lnybble_new); // rising edge
         } /*When level triggered*/
-        else SL_active(lnybble_new);
+        else
+        if (lnybble_new) SL_active(lnybble_new);
 
         /*SH device selection changed*/
         if (hnybble_new != hnybble_old){
                 SH_disable(hnybble_old); // falling edge
                 SH_enable(hnybble_new); // rising edge
         } /*When level triggered*/
-        else SH_active(hnybble_new);
+        if (hnybble_new) else SH_active(hnybble_new);
 }
 
 

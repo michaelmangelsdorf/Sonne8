@@ -25,19 +25,19 @@
       </h2>
       <ul>
         <li>Group: <a href="../pair.html">PAIR</a></li>
-        <li>Mnemonic: db</li>
+        <li>Mnemonic: gb</li>
         <li>Opcode: 186d, BAh</li>
         <li>Encoding: 1_011_1010b (TRAP_SRC_DST)</li>
-        <li class="pseudo">Pseudo-code: pc+=d</li>
+        <li class="pseudo">Pseudo-code: pc+=g</li>
         <li class="aside">
-          <a href="letters/D.html">D:DATA</a>
+          <a href="letters/D.html">G:GLOBAL</a>
           <a href="pair/letters/B.html">B:BRANCH</a>
         </li>
       </ul>
       <p desc>
         <ul class="pair">
           <li class="from">
-            Source is the D register.
+            Source is the G register.
           </li>
           <li class="to">
             Add source to the Program Counter.
@@ -45,7 +45,7 @@
         </ul>
       </p>
       <p further>
-        The 'D' source is the page index used for memory operations via the 'M' source or destination.
+        The 'G' source is the page index used for memory operations via the 'M' source or destination.
         The 'B' destination takes the source value as the offset relative to the current value of the Program Counter. Writing to 'B' triggers an unconditional jump to the address offset that is the sum of the Program Counter and the source byte within the current code page.
         See <a href="../jumps.html">In-Page Branching</a> for more on this.
       </p>

@@ -364,6 +364,54 @@ P[SPI_WrByte]+ (Write one byte to SPI bus / 25LC EEPROM)
            RET
 
 
+;Todo: Port these routines over from Paver project
+
+;@SPI_reset
+ ;CS LOW, MOSI HIGH, CS HIGH
+ ;Toggle clock 74 cycles: write FF dummy byte
+ ;CS LOW
+ ;Send CMD 0: 40 00 00 00 00 95
+ ;Wait response = 0, else re-reset
+ ;Card is now idle mode
+
+;@SPI_init
+ ;reset
+ ;cmd8
+ ;cmd55 (prefix)
+ ;cmd41 (SDHC)
+
+;@SPI_sdcmd8 ; for newer cards
+ ;Toggle CS
+ ;Send FF dummy byte
+ ;Send CMD8: 48h 0 0 1 AAh 87h
+ ;If response not zero redo
+
+;@SPI_rdresp ; shift in response bytes until either not FFh, or timeout occurs
+ ; Set timeout 255 (Loop ctr)
+ ; Call readbyte
+ ; compare result to FFh
+ ; return result if not FFh
+ ; if not timeout repeat
+
+;@SPI_rdblk
+ ;Send CMD17, read single block
+ ;receive FEh data token
+ ;rdbyte high order
+ ;rdbyte low order
+ ;Receive 2-byte CRC
+
+;@SPI_wrblk
+ ;Send CMD24, write single block
+ ;REceive FE data token
+ ;wrbyte high order
+ ;wrbyte low order
+ ;Send 2 byte CRC
+ ;Read data response byte (should be 5)
+ ;Wait until SD card pulls MISO low
+
+
+
+
 ;************** *************************************************************
 P[BASEVOCAB]40h (List of predefined string literals)
 ;************** *************************************************************

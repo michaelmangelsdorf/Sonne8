@@ -25,19 +25,19 @@
       </h2>
       <ul>
         <li>Group: <a href="../pair.html">PAIR</a></li>
-        <li>Mnemonic: dp</li>
+        <li>Mnemonic: gp</li>
         <li>Opcode: 183d, B7h</li>
         <li>Encoding: 1_011_0111b (TRAP_SRC_DST)</li>
-        <li class="pseudo">Pseudo-code: por=d; pc++</li>
+        <li class="pseudo">Pseudo-code: por=g; pc++</li>
         <li class="aside">
-          <a href="letters/D.html">D:DATA</a>
+          <a href="letters/D.html">G:GLOBAL</a>
           <a href="pair/letters/P.html">P:PARALLEL</a>
         </li>
       </ul>
       <p desc>
         <ul class="pair">
           <li class="from">
-            Source is the D register.
+            Source is the G register.
           </li>
           <li class="to">
             Destination is the Parallel Output register POR.
@@ -45,7 +45,7 @@
         </ul>
       </p>
       <p further>
-        The 'D' source is the page index used for memory operations via the 'M' source or destination.
+        The 'G' source is the page index used for memory operations via the 'M' source or destination.
         The 'P' destination takes the source value as a data byte to be output on the parallel bus.
         See <a href="../com.html">Device Communication</a> for how this works.
       </p>
