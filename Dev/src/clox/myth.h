@@ -73,6 +73,7 @@ struct myth_vm /*Complete machine state including all RAM*/
 
   PC is the program counter, which for this CPU means
   that it contains the offset within the current code page.
+  This register is hidden.
 
   D is the "dupe" register. It contains a copy of the
   code page index that is strategically updated.
