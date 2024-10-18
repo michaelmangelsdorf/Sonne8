@@ -338,7 +338,7 @@ main()
     /*87h*/   PAIR_NP: POR = RAM[C][PC]; goto NEXT;
     /*88h*/   PAIR_NE: E = RAM[C][PC]; goto NEXT;
     /*89h*/   PAIR_NA: TEMP = O + RAM[C][PC]; O = (uint8_t)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
-    /*8Ah*/   PAIR_NB: PC += RAM[C][PC]; goto EXEC;
+    /*8Ah*/   PAIR_NB: L += RAM[C][PC]; goto EXEC;
     /*8Bh*/   PAIR_NJ: PC = RAM[C][PC]; goto EXEC;
     /*8Ch*/   PAIR_NW: if (I--) {PC = RAM[C][PC]; goto EXEC;} else goto NEXT;
     /*8Dh*/   PAIR_NT: if (R) {PC = RAM[C][PC]; goto EXEC;} else goto NEXT;
@@ -355,7 +355,7 @@ main()
     /*97h*/   PAIR_MP: POR = RAM[G][O]; goto NEXT;
     /*98h*/   PAIR_ME: E = RAM[G][O]; goto NEXT;
     /*99h*/   PAIR_MA: TEMP = O + RAM[G][O]; O = (uint8_t)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
-    /*9Ah*/   PAIR_MB: PC += RAM[G][O]; goto EXEC;
+    /*9Ah*/   PAIR_MB: L += RAM[G][O]; goto EXEC;
     /*9Bh*/   PAIR_MJ: PC = RAM[G][O]; goto EXEC;
     /*9Ch*/   PAIR_MW: if (I--) {PC = RAM[G][O]; goto EXEC;} else goto NEXT;
     /*9Dh*/   PAIR_MT: if (R) {PC = RAM[G][O]; goto EXEC;} else goto NEXT;
@@ -372,7 +372,7 @@ main()
     /*A7h*/   PAIR_LP: POR = RAM[L][O]; goto NEXT;
     /*A8h*/   PAIR_LE: E = RAM[L][O]; goto NEXT;
     /*A9h*/   PAIR_LA: TEMP = O + RAM[L][O]; O = (uint8_t)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
-    /*AAh*/   PAIR_LB: PC += RAM[L][O]; goto EXEC;
+    /*AAh*/   PAIR_LB: L += RAM[L][O]; goto EXEC;
     /*ABh*/   PAIR_LJ: PC = RAM[L][O]; goto EXEC;
     /*ACh*/   PAIR_LW: if (I--) {PC = RAM[L][O]; goto EXEC;} else goto NEXT;
     /*ADh*/   PAIR_LT: if (R) {PC = RAM[L][O]; goto EXEC;} else goto NEXT;
@@ -389,7 +389,7 @@ main()
     /*B7h*/   PAIR_GP: POR = G; goto NEXT;
     /*B8h*/   PAIR_GE: E = G; goto NEXT;
     /*B9h*/   PAIR_GA: TEMP = O + G; O = (uint8_t)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
-    /*BAh*/   PAIR_GB: PC += G; goto EXEC;
+    /*BAh*/   PAIR_GB: L += G; goto EXEC;
     /*BBh*/   PAIR_GJ: PC = G; goto EXEC;
     /*BCh*/   PAIR_GW: if (I--) {PC = G; goto EXEC;} else goto NEXT;
     /*BDh*/   PAIR_GT: if (R) {PC = G; goto EXEC;} else goto NEXT;
@@ -406,7 +406,7 @@ main()
     /*C7h*/   PAIR_RP: POR = R; goto NEXT;
     /*C8h*/   PAIR_RE: E = R; goto NEXT;
     /*C9h*/   PAIR_RA: TEMP = O + R; O = (uint8_t)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
-    /*CAh*/   PAIR_RB: PC += R; goto EXEC;
+    /*CAh*/   PAIR_RB: L += R; goto EXEC;
     /*CBh*/   PAIR_RJ: PC = R; goto EXEC;
     /*CCh*/   PAIR_RW: if (I--) {PC = R; goto EXEC;} else goto NEXT;
     /*CDh*/   PAIR_RT: if (R) {PC = R; goto EXEC;} else goto NEXT;
@@ -423,7 +423,7 @@ main()
     /*D7h*/   PAIR_IP: POR = I; goto NEXT;
     /*D8h*/   PAIR_IE: E = I; goto NEXT;
     /*D9h*/   PAIR_IA: TEMP = O + I; O = (uint8_t)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
-    /*DAh*/   PAIR_IB: PC += I; goto EXEC;
+    /*DAh*/   PAIR_IB: L += I; goto EXEC;
     /*DBh*/   PAIR_IJ: PC = I; goto EXEC;
     /*DCh*/   PAIR_IW: if (I--) {PC = I; goto EXEC;} else goto NEXT;
     /*DDh*/   PAIR_IT: if (R) {PC = I; goto EXEC;} else goto NEXT;
@@ -440,7 +440,7 @@ main()
     /*E7h*/   PAIR_SP: POR = SIR; goto NEXT;
     /*E8h*/   PAIR_SE: E = SIR; goto NEXT;
     /*E9h*/   PAIR_SA: TEMP = O + SIR; O = (uint8_t)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
-    /*EAh*/   PAIR_SB: PC += SIR; goto EXEC;
+    /*EAh*/   PAIR_SB: L += SIR; goto EXEC;
     /*EBh*/   PAIR_SJ: PC = SIR; goto EXEC;
     /*ECh*/   PAIR_SW: if (I--) {PC = SIR; goto EXEC;} else goto NEXT;
     /*EDh*/   PAIR_ST: if (R) {PC = SIR; goto EXEC;} else goto NEXT;
@@ -457,12 +457,11 @@ main()
     /*F7h*/   PAIR_PP: POR = PIR; goto NEXT;
     /*F8h*/   PAIR_PE: E = PIR; goto NEXT;
     /*F9h*/   PAIR_PA: TEMP = O + PIR; O = (uint8_t)(TEMP & 0xFF); if (TEMP>0xFF) G++; goto NEXT;
-    /*FAh*/   PAIR_PB: PC += PIR; goto EXEC;
+    /*FAh*/   PAIR_PB: L += PIR; goto EXEC;
     /*FBh*/   PAIR_PJ: PC = PIR; goto EXEC;
     /*FCh*/   PAIR_PW: if (I--) {PC = PIR; goto EXEC;} else goto NEXT;
     /*FDh*/   PAIR_PT: if (R) {PC = PIR; goto EXEC;} else goto NEXT;
     /*FEh*/   PAIR_PF: if (!R) {PC = PIR; goto EXEC;} else goto NEXT;
     /*FFh*/   PAIR_PC: I = PC; CO = C; L--; PC = 0; C = PIR; goto EXEC;
 }
-
 

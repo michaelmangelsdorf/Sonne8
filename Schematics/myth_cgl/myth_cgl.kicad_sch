@@ -6861,7 +6861,7 @@
 		)
 		(uuid "b4abd3e8-206b-427b-bdc4-f9512ff921ff")
 	)
-	(label "~{xLFIX}"
+	(label "~{xNEAR}"
 		(at 83.82 104.14 180)
 		(fields_autoplaced yes)
 		(effects

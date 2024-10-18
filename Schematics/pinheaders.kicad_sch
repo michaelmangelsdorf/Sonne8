@@ -2304,7 +2304,7 @@
 			)
 		)
 	)
-	(global_label "xJWIT_pre"
+	(global_label "xJITD_pre"
 		(shape input)
 		(at 44.45 177.8 0)
 		(fields_autoplaced yes)
@@ -2326,7 +2326,7 @@
 			)
 		)
 	)
-	(global_label "xJWIT"
+	(global_label "xJITD"
 		(shape input)
 		(at 226.06 64.77 0)
 		(fields_autoplaced yes)
@@ -2744,7 +2744,7 @@
 			)
 		)
 	)
-	(global_label "xLFIX"
+	(global_label "xNEAR"
 		(shape input)
 		(at 226.06 59.69 0)
 		(fields_autoplaced yes)

@@ -14,8 +14,6 @@ struct myth_vm /*Complete machine state including all RAM*/
 {
         uchar ram[256][256]; /*MemoryByte[page][offset]*/
 
-        uchar irq;  /*Interrupt request bit - set by PERIPHERY*/
-
         uchar e_old; /*Device ENABLE register previous value - set by VM */
         uchar e_new; /*Device ENABLE register current value - set by VM */
 
@@ -30,7 +28,6 @@ struct myth_vm /*Complete machine state including all RAM*/
 
         uchar r;    /*Result*/
         uchar o;    /*Offset*/
-
         uchar i;    /*Inner Counter*/
         uchar pc;   /*Program Counter*/
 
@@ -113,9 +110,9 @@ static void call(struct myth_vm *vm, uchar dstpage);
    i.e. REG is a source
 */
 
-#define Nx 0 /*from code literal (NUMBER)*/
-#define Mx 1 /*from MEMORY via DATA page index*/
-#define Lx 2 /*from MEMORY via LOCAL page index*/
+#define FETCHx 0 /*from code literal (NUMBER)*/
+#define MGx 1 /*from MEMORY via DATA page index*/
+#define MLx 2 /*from MEMORY via LOCAL page index*/
 #define Gx 3 /*from GLOBAL register*/
 #define Rx 4 /*from RESULT register*/
 #define Ix 5 /*from DATA page register*/
@@ -128,8 +125,8 @@ static void call(struct myth_vm *vm, uchar dstpage);
 */
 
 #define xO 0 /*to OFFSET register*/
-#define xM 1 /*to MEMORY via DATA page index*/
-#define xL 2 /*to MEMORY via LOCAL page index*/
+#define xMG 1 /*to MEMORY via DATA page index*/
+#define xML 2 /*to MEMORY via LOCAL page index*/
 #define xG 3 /*to GLOBAL register*/
 #define xR 4 /*to RESULT register*/
 #define xI 5 /*to INNER register*/
@@ -137,13 +134,13 @@ static void call(struct myth_vm *vm, uchar dstpage);
 #define xP 7 /*to PARALLEL output*/
 
 #define xE 8 /*to ENABLE register*/
-#define xA 9 /*to O and D (ADD byte to 16-bit register pair)*/
-#define xB 10 /*to DATA page register*/
-#define xJ 11 /*write JUMP program counter*/
-#define xW 12 /*write JUMP WHILE I not zero, decrement I*/
-#define xT 13 /*write JUMP if R not zero*/
-#define xF 14 /*write JUMP if R zero*/
-#define xC 15 /*write CALL page index*/
+#define xSKIP 9 /*to O and D (ADD byte to 16-bit register pair)*/
+#define xNEAR 10 /*to DATA page register*/
+#define xJUMP 11 /*write JUMP program counter*/
+#define xJITD 12 /*write JUMP WHILE I not zero, decrement I*/
+#define xJRT 13 /*write JUMP if R not zero*/
+#define xJRF 14 /*write JUMP if R zero*/
+#define xCALL 15 /*write CALL page index*/
 
 
 /*ALU Instructions
@@ -199,8 +196,6 @@ myth_reset(struct myth_vm *vm) /*Initialise machine state*/
 {
         memset(vm->ram, 0, 256*256);
 
-        vm->irq = 0;
-
         vm->e_old = 0; /*Clear signal edges*/
         vm->e_new = 0; /*Deselect all devices*/
 
@@ -227,9 +222,6 @@ myth_reset(struct myth_vm *vm) /*Initialise machine state*/
 }
 
 
-/* Single-step 1 instruction cycle
-*/
-
 void
 myth_step(struct myth_vm *vm)
 {
@@ -239,8 +231,6 @@ myth_step(struct myth_vm *vm)
         /*Decode priority encoded opcode*/
         /*Execute decoded instruction*/
 
-        if (vm->irq && (vm->c < 32)) trap(vm, 32); /*to page zero if FREE*/
-        else
         if (opcode&0x80) pair(vm, opcode);
         else if (opcode&0x40) giro(vm, opcode);
         else if (opcode&0x20) trap(vm, opcode);
@@ -251,7 +241,7 @@ myth_step(struct myth_vm *vm)
 
 
 /* Fetch next byte in CODE stream, then increment PC.
-   Fetches either an instruction, or an instruction literal (Nx)
+   Fetches either an instruction, or an instruction literal (FETCHx)
 */
 
 uchar
@@ -274,12 +264,12 @@ call(struct myth_vm *vm, uchar dstpage)
         vm->i = vm->pc;
         vm->co = vm->c;
 
-        /*Create stack frame*/
-        vm->l--;
-
         /*Branch to page head*/
         vm->pc = 0;
         vm->c = dstpage;
+
+        /*Create stack frame*/
+        vm->l--;
 }
 
 
@@ -299,9 +289,9 @@ uchar
 srcval(struct myth_vm *vm, uchar srcreg)
 {
         switch(srcreg){
-                case Nx: return fetch(vm); /*pseudo reg*/
-                case Mx: return vm->ram[ vm->g][ vm->o]; /*pseudo reg*/
-                case Lx: return vm->ram[ vm->l][ vm->o]; /*pseudo reg*/
+                case FETCHx: return fetch(vm); /*pseudo reg*/
+                case MGx: return vm->ram[ vm->g][ vm->o]; /*pseudo reg*/
+                case MLx: return vm->ram[ vm->l][ vm->o]; /*pseudo reg*/
                 case Gx: return vm->g;
                 case Rx: return vm->r;
                 case Ix: return vm->i;
@@ -321,12 +311,12 @@ int
 scrounge(uchar opcode)
 {
         switch(opcode & 0x7F /*0111_1111 zero b7*/){
-                case 16*Nx + xM: return opcode; /*NM => NOP (reserved)*/
-                case 16*Nx + xL: return opcode; /*NL => NOP (reserved)*/
-                case 16*Mx + xM: return opcode; /*MM => NOP (reserved)*/
-                case 16*Mx + xL: return opcode; /*ML => NOP (reserved)*/
-                case 16*Lx + xM: return opcode; /*LM => NOP (reserved)*/
-                case 16*Lx + xL: return opcode; /*LL => NOP (reserved)*/
+                case 16*FETCHx + xMG: return opcode; /*NM => NOP (reserved)*/
+                case 16*FETCHx + xML: return opcode; /*NL => NOP (reserved)*/
+                case 16*MGx + xMG: return opcode; /*MM => NOP (reserved)*/
+                case 16*MGx + xML: return opcode; /*ML => NOP (reserved)*/
+                case 16*MLx + xMG: return opcode; /*LM => NOP (reserved)*/
+                case 16*MLx + xML: return opcode; /*LL => NOP (reserved)*/
                 case 16*Gx + xG: return opcode; /*GG => NOP (reserved)*/
                 case 16*Rx + xR: return opcode; /*RR => NOP (reserved)*/
                 case 16*Ix + xI: return opcode; /*II => NOP (reserved)*/
@@ -354,8 +344,8 @@ pair(struct myth_vm *vm, uchar opcode)
         int temp;
         switch(dst){
                 case xO: vm->o = v; break;
-                case xM: vm->ram[ vm->g][ vm->o] = v; break;
-                case xL: vm->ram[ vm->l][ vm->o] = v; break;
+                case xMG: vm->ram[ vm->g][ vm->o] = v; break;
+                case xML: vm->ram[ vm->l][ vm->o] = v; break;
                 case xG: vm->g = v; break;
                 case xR: vm->r = v; break;
                 case xI: vm->i = v; break;
@@ -364,20 +354,20 @@ pair(struct myth_vm *vm, uchar opcode)
                 case xE: vm->e_old = vm->e_new;
                          vm->e_new = v;
                          break;
-                case xA:
+                case xSKIP:
                         temp = vm->o + v;
                         vm->o = (uchar) (temp & 0xFF);
                         if (temp>255) vm->g += 1;
                         break;
-                case xB: vm->l += v; break;
-                case xJ: vm->pc = v; break;
-                case xW:
+                case xNEAR: vm->l += v; break;
+                case xJUMP: vm->pc = v; break;
+                case xJITD:
                         if (vm->i) vm->pc = v;
                         (vm->i)--; /*Post decrement, either case!*/
                         break; 
-                case xT: if (vm->r) vm->pc = v; break;
-                case xF: if (!vm->r) vm->pc = v; break;
-                case xC: call(vm, v); break;
+                case xJRT: if (vm->r) vm->pc = v; break;
+                case xJRF: if (!vm->r) vm->pc = v; break;
+                case xCALL: call(vm, v); break;
         }
 }
 

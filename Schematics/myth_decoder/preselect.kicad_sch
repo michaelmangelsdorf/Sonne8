@@ -5683,7 +5683,7 @@
 			)
 		)
 	)
-	(global_label "xJWIT_pre"
+	(global_label "xJITD_pre"
 		(shape input)
 		(at 90.17 48.26 0)
 		(fields_autoplaced yes)
