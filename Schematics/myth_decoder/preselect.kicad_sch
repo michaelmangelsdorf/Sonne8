@@ -5264,7 +5264,7 @@
 		)
 		(uuid "024be680-7937-4567-a17d-595df9a352be")
 	)
-	(text "Remap (\"scrounge\") DD, RR, II etc,\nand impracticable opcodes such as NM"
+	(text "Remap (\"scrounge\") GG, RR, II etc,\nand impracticable opcodes such as NM"
 		(exclude_from_sim no)
 		(at 138.43 65.532 0)
 		(effects
@@ -5352,7 +5352,7 @@
 		)
 		(uuid "ec772598-4a57-49fa-8d71-14b8f48d5a05")
 	)
-	(text "NM => END (LOX)\nNL => NOP (reserved)\nLM => NOP (reserved)\nLL => NOP (reserved)\nMM => NOP (reserved)\nML => NOP (reserved)\nDD => NOP (reserved)\nRR => NOP (reserved)\nII => NOP (reserved)"
+	(text "NM => END (LOX)\nNL => NOP (reserved)\nLM => NOP (reserved)\nLL => NOP (reserved)\nMM => NOP (reserved)\nML => NOP (reserved)\nGG => NOP (reserved)\nRR => NOP (reserved)\nII => NOP (reserved)"
 		(exclude_from_sim no)
 		(at 227.584 64.008 0)
 		(effects
