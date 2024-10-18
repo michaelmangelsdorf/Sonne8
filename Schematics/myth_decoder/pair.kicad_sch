@@ -2007,7 +2007,7 @@
 			)
 		)
 	)
-	(global_label "~{Nx}"
+	(global_label "~{FETCHx}"
 		(shape input)
 		(at 132.08 153.67 0)
 		(fields_autoplaced yes)
@@ -2029,7 +2029,7 @@
 			)
 		)
 	)
-	(global_label "xF"
+	(global_label "xJRF"
 		(shape input)
 		(at 134.62 97.79 0)
 		(fields_autoplaced yes)
@@ -2073,7 +2073,7 @@
 			)
 		)
 	)
-	(global_label "xJ"
+	(global_label "xJMP"
 		(shape input)
 		(at 134.62 90.17 0)
 		(fields_autoplaced yes)
@@ -2293,7 +2293,7 @@
 			)
 		)
 	)
-	(global_label "xW"
+	(global_label "xJWIT"
 		(shape input)
 		(at 134.62 92.71 0)
 		(fields_autoplaced yes)
@@ -2535,7 +2535,7 @@
 			)
 		)
 	)
-	(global_label "~{xD}"
+	(global_label "~{xG}"
 		(shape input)
 		(at 134.62 52.07 0)
 		(fields_autoplaced yes)
@@ -2557,7 +2557,7 @@
 			)
 		)
 	)
-	(global_label "xC"
+	(global_label "xCALL"
 		(shape input)
 		(at 134.62 100.33 0)
 		(fields_autoplaced yes)
@@ -2601,7 +2601,7 @@
 			)
 		)
 	)
-	(global_label "xA"
+	(global_label "xSKIP"
 		(shape input)
 		(at 134.62 85.09 0)
 		(fields_autoplaced yes)
@@ -2645,7 +2645,7 @@
 			)
 		)
 	)
-	(global_label "xT"
+	(global_label "xJRT"
 		(shape input)
 		(at 134.62 95.25 0)
 		(fields_autoplaced yes)

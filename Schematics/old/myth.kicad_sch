@@ -32096,7 +32096,7 @@
 		)
 		(uuid "19170ee6-f4a9-4dca-b1b5-12c2eb58eb84")
 	)
-	(text "Mapped to NOP,\nbut reserved for\ninstruction set\nextensions"
+	(text "Mapped to NOP,\nbut reserved for\ninstruction set\nexJRTensions"
 		(exclude_from_sim no)
 		(at 190.5 246.38 0)
 		(effects
@@ -32458,7 +32458,7 @@
 		)
 		(uuid "5e8d2a9d-7fc0-4273-bcd1-00c323430272")
 	)
-	(text "                Instruction byte:\nall0: OPC_SYS       00000   xxx    See table @ SYS decoder\nelse: opc_RFIX       00001  x xx    b0-1 LSB, b2: Extended sign bit\n      OPC_ALU       0001   xxxx    See table @ ALU\n      OPC_TRAP      001   xxxxx    b0-4: DEST PAGE\n      OPC_GIRO      01 xx x xxx    b0-2 OFFS, b3:GET/PUT, B4-5:REG(GIRO)\n      OPC_PAIR      1  xxx xxxx    b0-3 DST, b4-6 SRC"
+	(text "                Instruction byte:\nall0: OPC_SYS       00000   xxx    See table @ SYS decoder\nelse: opc_RFIX       00001  x xx    b0-1 LSB, b2: ExJRTended sign bit\n      OPC_ALU       0001   xxxx    See table @ ALU\n      OPC_TRAP      001   xxxxx    b0-4: DEST PAGE\n      OPC_GIRO      01 xx x xxx    b0-2 OFFS, b3:GET/PUT, B4-5:REG(GIRO)\n      OPC_PAIR      1  xxx xxxx    b0-3 DST, b4-6 SRC"
 		(exclude_from_sim no)
 		(at 146.05 571.5 0)
 		(effects
@@ -32912,7 +32912,7 @@
 		)
 		(uuid "ab9d7952-8ff6-493c-88b7-3c2fc99e350c")
 	)
-	(text "xA adds DB val to O\nand carries over into D"
+	(text "xSKIP adds DB val to O\nand carries over into D"
 		(exclude_from_sim no)
 		(at 796.29 392.43 0)
 		(effects
@@ -32945,7 +32945,7 @@
 		)
 		(uuid "b7c0493b-9a6e-4b64-bbd5-9e19f0c94c60")
 	)
-	(text "Else sign extend\nbit 2"
+	(text "Else sign exJRTend\nbit 2"
 		(exclude_from_sim no)
 		(at 848.36 161.29 0)
 		(effects
@@ -33231,7 +33231,7 @@
 		)
 		(uuid "e01d1759-031a-4d00-89b7-f78b95978811")
 	)
-	(text " 8 AND (R:=R&O)\n 9 IOR (R:=R|O)\n10 EOR (R:=R^O)\n11 ADD (Add\" / R:=R+O, bits 0-7)\n12 CAR (\"Carry Bit\" / R:= Carry, 9th bit of R+O) 00h or 01h\n13 RLO (\"Flag: R less than O\" / R:= (R<O)? 0xFF:0\n14 REO (\"Flag: R equals O\" / R:= (R==O)? 0xFF:0\n15 RGO (\"Flag: R greater than O\" / R:= (R>O)? 0xFF:0\n"
+	(text " 8 AND (R:=R&O)\n 9 IOR (R:=R|O)\n10 EOR (R:=R^O)\n11 ADD (Add\" / R:=R+O, bits 0-7)\n12 CAR (\"Carry Bit\" / R:= Carry, 9th bit of R+O) 00h or 01h\n13 RLO (\"Flag: R less than O\" / R:= (R<O)? 0xJRFF:0\n14 REO (\"Flag: R equals O\" / R:= (R==O)? 0xJRFF:0\n15 RGO (\"Flag: R greater than O\" / R:= (R>O)? 0xJRFF:0\n"
 		(exclude_from_sim no)
 		(at 1053.846 418.084 0)
 		(effects
@@ -33715,7 +33715,7 @@
 		)
 		(uuid "068febb4-81f3-405a-b5c8-a37a63e21feb")
 	)
-	(label "Nx"
+	(label "FETCHx"
 		(at 1127.76 709.93 0)
 		(fields_autoplaced yes)
 		(effects
@@ -33869,7 +33869,7 @@
 		)
 		(uuid "0ac5440f-ec6e-4c6f-9204-ed33c9d96ef3")
 	)
-	(label "~{Nx}"
+	(label "~{FETCHx}"
 		(at 697.23 317.5 180)
 		(fields_autoplaced yes)
 		(effects
@@ -34463,7 +34463,7 @@
 		)
 		(uuid "198642f2-8db4-475b-ac24-9da65c994a3a")
 	)
-	(label "xT"
+	(label "xJRT"
 		(at 63.5 196.85 180)
 		(fields_autoplaced yes)
 		(effects
@@ -34518,7 +34518,7 @@
 		)
 		(uuid "1ad22eea-22b9-4759-babc-4e0d5c14a985")
 	)
-	(label "xW"
+	(label "xJWIT"
 		(at 745.49 125.73 180)
 		(fields_autoplaced yes)
 		(effects
@@ -35211,7 +35211,7 @@
 		)
 		(uuid "2a04aa18-d3b7-4a79-bbda-03955ad70428")
 	)
-	(label "xA"
+	(label "xSKIP"
 		(at 364.49 304.8 0)
 		(fields_autoplaced yes)
 		(effects
@@ -35365,7 +35365,7 @@
 		)
 		(uuid "2deb32bd-12b1-47c5-9e56-9abe312f3c3e")
 	)
-	(label "xJ"
+	(label "xJMP"
 		(at 63.5 194.31 180)
 		(fields_autoplaced yes)
 		(effects
@@ -35519,7 +35519,7 @@
 		)
 		(uuid "3096ed5f-2813-409a-9389-7392efe97438")
 	)
-	(label "xJ"
+	(label "xJMP"
 		(at 364.49 309.88 0)
 		(fields_autoplaced yes)
 		(effects
@@ -35684,7 +35684,7 @@
 		)
 		(uuid "3383463f-7cd4-488f-9b2c-cee6aa5569eb")
 	)
-	(label "xW_pre"
+	(label "xJWIT_pre"
 		(at 63.5 191.77 180)
 		(fields_autoplaced yes)
 		(effects
@@ -35948,7 +35948,7 @@
 		)
 		(uuid "37f67055-8ed6-46fd-8670-6b9916c44ce3")
 	)
-	(label "Nx"
+	(label "FETCHx"
 		(at 712.47 317.5 0)
 		(fields_autoplaced yes)
 		(effects
@@ -37389,7 +37389,7 @@
 		)
 		(uuid "537a481e-d87e-488b-88e2-f3f824372add")
 	)
-	(label "xA"
+	(label "xSKIP"
 		(at 889 374.65 180)
 		(fields_autoplaced yes)
 		(effects
@@ -37774,7 +37774,7 @@
 		)
 		(uuid "5cd9c925-9640-49cd-b141-74d044a7e512")
 	)
-	(label "xC"
+	(label "xCALL"
 		(at 364.49 320.04 0)
 		(fields_autoplaced yes)
 		(effects
@@ -38203,7 +38203,7 @@
 		)
 		(uuid "65bd5a09-5e7a-40d3-b76e-05abe106256a")
 	)
-	(label "xC"
+	(label "xCALL"
 		(at 358.14 182.88 180)
 		(fields_autoplaced yes)
 		(effects
@@ -38687,7 +38687,7 @@
 		)
 		(uuid "701257f8-28f9-4eee-838b-691a54ce5e03")
 	)
-	(label "Nx_pre"
+	(label "FETCHx_pre"
 		(at 203.2 276.86 180)
 		(fields_autoplaced yes)
 		(effects
@@ -39182,7 +39182,7 @@
 		)
 		(uuid "7d3bd71d-eeb4-4d9a-808f-bfd305a591f0")
 	)
-	(label "~{xW}"
+	(label "~{xJWIT}"
 		(at 760.73 125.73 0)
 		(fields_autoplaced yes)
 		(effects
@@ -39622,7 +39622,7 @@
 		)
 		(uuid "87964d91-061b-4a89-b807-ab237a8b8ec0")
 	)
-	(label "Nx_pre"
+	(label "FETCHx_pre"
 		(at 251.46 284.48 180)
 		(fields_autoplaced yes)
 		(effects
@@ -39666,7 +39666,7 @@
 		)
 		(uuid "884981ad-28ca-40b3-a2cf-97b21ca5fbcc")
 	)
-	(label "Nx_pre_clean"
+	(label "FETCHx_pre_clean"
 		(at 675.64 554.99 180)
 		(fields_autoplaced yes)
 		(effects
@@ -39677,7 +39677,7 @@
 		)
 		(uuid "8857c6d9-c1be-4605-9d86-e3a27aba067a")
 	)
-	(label "xW_pre"
+	(label "xJWIT_pre"
 		(at 132.08 269.24 0)
 		(fields_autoplaced yes)
 		(effects
@@ -39930,7 +39930,7 @@
 		)
 		(uuid "8d1f3136-47a6-4620-a01d-a7c061c19eac")
 	)
-	(label "xT"
+	(label "xJRT"
 		(at 364.49 314.96 0)
 		(fields_autoplaced yes)
 		(effects
@@ -40425,7 +40425,7 @@
 		)
 		(uuid "96ef76a5-90c3-4767-98ba-2b61887e28d3")
 	)
-	(label "xA"
+	(label "xSKIP"
 		(at 854.71 317.5 180)
 		(fields_autoplaced yes)
 		(effects
@@ -40656,7 +40656,7 @@
 		)
 		(uuid "9bac5a37-2a55-41dd-96ea-ec02b69e3ef4")
 	)
-	(label "xF"
+	(label "xJRF"
 		(at 364.49 317.5 0)
 		(fields_autoplaced yes)
 		(effects
@@ -42020,7 +42020,7 @@
 		)
 		(uuid "b91a24dc-d722-4e5f-bd18-0b9a9bf97150")
 	)
-	(label "~{xW}"
+	(label "~{xJWIT}"
 		(at 557.53 168.91 180)
 		(fields_autoplaced yes)
 		(effects
@@ -42240,7 +42240,7 @@
 		)
 		(uuid "be98f6ed-27c9-4c6f-9897-2e61943ea9ca")
 	)
-	(label "xA"
+	(label "xSKIP"
 		(at 854.71 374.65 180)
 		(fields_autoplaced yes)
 		(effects
@@ -42570,7 +42570,7 @@
 		)
 		(uuid "c5209b9f-2628-4305-9e29-02c4fe2f3c17")
 	)
-	(label "~{Nx}"
+	(label "~{FETCHx}"
 		(at 361.95 373.38 0)
 		(fields_autoplaced yes)
 		(effects
@@ -43219,7 +43219,7 @@
 		)
 		(uuid "d331559f-d6df-4ff7-8e63-58ab42a91d39")
 	)
-	(label "xW"
+	(label "xJWIT"
 		(at 364.49 312.42 0)
 		(fields_autoplaced yes)
 		(effects
@@ -43373,7 +43373,7 @@
 		)
 		(uuid "d66a629b-7921-40c5-b5c5-74d151b1a76f")
 	)
-	(label "xF"
+	(label "xJRF"
 		(at 63.5 199.39 180)
 		(fields_autoplaced yes)
 		(effects
@@ -44143,7 +44143,7 @@
 		)
 		(uuid "e54c466d-9717-4c7d-844d-42a53f8bf5df")
 	)
-	(label "Nx_pre"
+	(label "FETCHx_pre"
 		(at 137.16 377.19 0)
 		(fields_autoplaced yes)
 		(effects
@@ -44198,7 +44198,7 @@
 		)
 		(uuid "e7363d7d-15ff-4fd2-a17e-3f8c30f096d7")
 	)
-	(label "Nx_pre_clean"
+	(label "FETCHx_pre_clean"
 		(at 270.51 289.56 180)
 		(fields_autoplaced yes)
 		(effects
