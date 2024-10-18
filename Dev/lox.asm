@@ -44,7 +44,6 @@ P[DemoCode]1Fh (User code, invoke with command line argument 'demo')
 
          6i RET
 
-
 ;************** *************************************************************
 P[Interpret]20h (Look up a command name string in the dictionary and run it)
 ;************** *************************************************************

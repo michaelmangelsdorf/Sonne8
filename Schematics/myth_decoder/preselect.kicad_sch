@@ -5319,7 +5319,7 @@
 		)
 		(uuid "7ead07c9-0c63-49d3-be7b-4875a2c875df")
 	)
-	(text "Mx"
+	(text "MGOx"
 		(exclude_from_sim no)
 		(at 135.89 95.25 0)
 		(effects
@@ -5341,7 +5341,7 @@
 		)
 		(uuid "c142df60-410c-470a-a487-092792de575c")
 	)
-	(text "xM"
+	(text "xMGO"
 		(exclude_from_sim no)
 		(at 135.89 123.19 0)
 		(effects
@@ -5485,7 +5485,7 @@
 			)
 		)
 	)
-	(global_label "Mx_pre"
+	(global_label "MGOx_pre"
 		(shape input)
 		(at 90.17 142.24 0)
 		(fields_autoplaced yes)
@@ -5529,7 +5529,7 @@
 			)
 		)
 	)
-	(global_label "Mx_pre"
+	(global_label "MGOx_pre"
 		(shape input)
 		(at 120.65 99.06 180)
 		(fields_autoplaced yes)
@@ -5705,7 +5705,7 @@
 			)
 		)
 	)
-	(global_label "Lx_pre"
+	(global_label "MLOx_pre"
 		(shape input)
 		(at 90.17 144.78 0)
 		(fields_autoplaced yes)
@@ -5749,7 +5749,7 @@
 			)
 		)
 	)
-	(global_label "xL_pre"
+	(global_label "xMLO_pre"
 		(shape input)
 		(at 88.9 80.01 0)
 		(fields_autoplaced yes)
@@ -5881,7 +5881,7 @@
 			)
 		)
 	)
-	(global_label "xM_pre"
+	(global_label "xMGO_pre"
 		(shape input)
 		(at 88.9 77.47 0)
 		(fields_autoplaced yes)
@@ -5969,7 +5969,7 @@
 			)
 		)
 	)
-	(global_label "xL_pre"
+	(global_label "xMLO_pre"
 		(shape input)
 		(at 120.65 116.84 180)
 		(fields_autoplaced yes)
@@ -5991,7 +5991,7 @@
 			)
 		)
 	)
-	(global_label "xM_pre"
+	(global_label "xMGO_pre"
 		(shape input)
 		(at 120.65 121.92 180)
 		(fields_autoplaced yes)
@@ -6189,7 +6189,7 @@
 			)
 		)
 	)
-	(global_label "Lx_pre"
+	(global_label "MLOx_pre"
 		(shape input)
 		(at 120.65 93.98 180)
 		(fields_autoplaced yes)

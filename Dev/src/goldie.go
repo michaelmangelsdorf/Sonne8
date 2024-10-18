@@ -420,16 +420,16 @@ type myth_vm struct /*Complete machine state including all ram*/
 {
 	ram [256][256]byte /*MemoryByte[page][offset]*/
 
-	irq  byte /*Interrupt request bit - set by PERIPHERY*/
+	irq byte /*Interrupt request bit - set by PERIPHERY*/
 
-	e_old byte; /*Device ENABLE register previous value - set by VM */
-	e_new byte; /*Device ENABLE register current value - set by VM */
+	e_old byte /*Device ENABLE register previous value - set by VM */
+	e_new byte /*Device ENABLE register current value - set by VM */
 
 	sclk byte /*Serial clock state bit - set by VM*/
 	miso byte /*Serial input line state bit - set by PERIPHERY*/
 	mosi byte /*Serial output line state bit - set by VM*/
-	sir byte /*Serial input register - set by VM*/
-	sor byte /*Serial output register - set by VM*/
+	sir  byte /*Serial input register - set by VM*/
+	sor  byte /*Serial output register - set by VM*/
 
 	pir byte /*Parallel input register - set by PERIPHERY*/
 	por byte /*Parallel output register - set by VM*/
@@ -440,8 +440,8 @@ type myth_vm struct /*Complete machine state including all ram*/
 	i  byte /*Inner Counter*/
 	pc byte /*Program Counter*/
 
-	d  byte /*Coroutine page index*/
-	c  byte /*Code page index*/
+	co byte /*Coroutine Page Index*/
+	c  byte /*Code Page Index*/
 	g  byte /*Data page index*/
 	l  byte /*Local page index*/
 

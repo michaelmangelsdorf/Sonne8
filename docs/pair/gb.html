@@ -30,7 +30,7 @@
         <li>Encoding: 1_011_1010b (PAIR_SRC_DST)</li>
         <li class="pseudo">Pseudo-code: pc+=g</li>
         <li class="aside">
-          <a href="letters/D.html">G:GLOBAL</a>
+          <a href="letters/G.html">G:GLOBAL</a>
           <a href="pair/letters/B.html">B:BRANCH</a>
         </li>
       </ul>
@@ -40,14 +40,12 @@
             Source is the G register.
           </li>
           <li class="to">
-            Add source to the Program Counter.
+            Add source to the local page index register (L).
           </li>
         </ul>
       </p>
       <p further>
         The 'G' source is the page index used for memory operations via the 'M' source or destination.
-        The 'B' destination takes the source value as the offset relative to the current value of the Program Counter. Writing to 'B' triggers an unconditional jump to the address offset that is the sum of the Program Counter and the source byte within the current code page.
-        See <a href="../jumps.html">In-Page Branching</a> for more on this.
       </p>
     </div>
     <footer>

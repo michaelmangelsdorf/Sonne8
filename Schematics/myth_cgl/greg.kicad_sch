@@ -4904,7 +4904,7 @@
 		)
 		(uuid "fb8059c8-6abd-4323-8454-eec5854d8387")
 	)
-	(text "(DATA)\nPage Index\nRegister"
+	(text "(GLOBAL)\nPage Index\nRegister"
 		(exclude_from_sim no)
 		(at 53.086 177.8 0)
 		(effects
@@ -4915,7 +4915,7 @@
 		)
 		(uuid "4e171b97-a98f-483b-8a36-37851603b91d")
 	)
-	(text "Register at CLOSE\n(MD is a valid instruction)"
+	(text "Register at CLOSE\n(MG is a valid instruction)"
 		(exclude_from_sim no)
 		(at 214.63 107.95 0)
 		(effects
@@ -4926,7 +4926,7 @@
 		)
 		(uuid "de711eb7-34f6-4d80-86a8-7f496b803d62")
 	)
-	(text "D"
+	(text "G"
 		(exclude_from_sim no)
 		(at 38.608 172.72 0)
 		(effects

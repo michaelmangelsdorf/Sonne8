@@ -16,7 +16,7 @@ main()
 {
     uint8_t RAM[256][256] __attribute__((aligned(8)));
     uint8_t E, SCLK, MISO, MOSI, SIR, SOR, PIR, POR;
-    uint8_t R, O, I, PC, D, C, G, L;
+    uint8_t R, O, I, PC, CO, C, G, L;
 
 /* 
   RAM[][] is organised as [page][offset];
@@ -51,7 +51,7 @@ main()
   that it contains the offset within the current code page.
   This register is hidden.
 
-  D is the "dupe" register. It contains a copy of the
+  CO is the coroutine latch. It contains a copy of the
   code page index that is strategically updated.
   This register is hidden.
 
@@ -189,7 +189,7 @@ main()
     /*04h*/   SYS_SCH:  SCLK = 1; goto NEXT;
     /*05h*/   SYS_RET:  C = RAM[L][GIRO+7]; PC = I; L++; goto EXEC;
     /*06h*/   SYS_COR:  C = R; PC = I; goto EXEC;
-    /*07h*/   SYS_OWN:  RAM[L][GIRO+7] = D; goto NEXT;
+    /*07h*/   SYS_OWN:  RAM[L][GIRO+7] = CO; goto NEXT;
 
     /* FIX */
 
@@ -223,38 +223,38 @@ main()
 
     /* TRAP */
 
-    /*20h*/   TRAP_0: I = PC; D = C; L--; PC = 0; C = 0; goto EXEC;
-    /*21h*/   TRAP_1: I = PC; D = C; L--; PC = 0; C = 1; goto EXEC;
-    /*22h*/   TRAP_2: I = PC; D = C; L--; PC = 0; C = 2; goto EXEC;
-    /*23h*/   TRAP_3: I = PC; D = C; L--; PC = 0; C = 3; goto EXEC;
-    /*24h*/   TRAP_4: I = PC; D = C; L--; PC = 0; C = 4; goto EXEC;
-    /*25h*/   TRAP_5: I = PC; D = C; L--; PC = 0; C = 5; goto EXEC;
-    /*26h*/   TRAP_6: I = PC; D = C; L--; PC = 0; C = 6; goto EXEC;
-    /*27h*/   TRAP_7: I = PC; D = C; L--; PC = 0; C = 7; goto EXEC;
-    /*28h*/   TRAP_8: I = PC; D = C; L--; PC = 0; C = 8; goto EXEC;
-    /*29h*/   TRAP_9: I = PC; D = C; L--; PC = 0; C = 9; goto EXEC;
-    /*2Ah*/   TRAP_10: I = PC; D = C; L--; PC = 0; C = 10; goto EXEC;
-    /*2Bh*/   TRAP_11: I = PC; D = C; L--; PC = 0; C = 11; goto EXEC;
-    /*2Ch*/   TRAP_12: I = PC; D = C; L--; PC = 0; C = 12; goto EXEC;
-    /*2Dh*/   TRAP_13: I = PC; D = C; L--; PC = 0; C = 13; goto EXEC;
-    /*2Eh*/   TRAP_14: I = PC; D = C; L--; PC = 0; C = 14; goto EXEC;
-    /*2Fh*/   TRAP_15: I = PC; D = C; L--; PC = 0; C = 15; goto EXEC;
-    /*30h*/   TRAP_16: I = PC; D = C; L--; PC = 0; C = 16; goto EXEC;
-    /*31h*/   TRAP_17: I = PC; D = C; L--; PC = 0; C = 17; goto EXEC;
-    /*32h*/   TRAP_18: I = PC; D = C; L--; PC = 0; C = 18; goto EXEC;
-    /*33h*/   TRAP_19: I = PC; D = C; L--; PC = 0; C = 19; goto EXEC;
-    /*34h*/   TRAP_20: I = PC; D = C; L--; PC = 0; C = 20; goto EXEC;
-    /*35h*/   TRAP_21: I = PC; D = C; L--; PC = 0; C = 21; goto EXEC;
-    /*36h*/   TRAP_22: I = PC; D = C; L--; PC = 0; C = 22; goto EXEC;
-    /*37h*/   TRAP_23: I = PC; D = C; L--; PC = 0; C = 23; goto EXEC;
-    /*38h*/   TRAP_24: I = PC; D = C; L--; PC = 0; C = 24; goto EXEC;
-    /*39h*/   TRAP_25: I = PC; D = C; L--; PC = 0; C = 25; goto EXEC;
-    /*3Ah*/   TRAP_26: I = PC; D = C; L--; PC = 0; C = 26; goto EXEC;
-    /*3Bh*/   TRAP_27: I = PC; D = C; L--; PC = 0; C = 27; goto EXEC;
-    /*3Ch*/   TRAP_28: I = PC; D = C; L--; PC = 0; C = 28; goto EXEC;
-    /*3Dh*/   TRAP_29: I = PC; D = C; L--; PC = 0; C = 29; goto EXEC;
-    /*3Eh*/   TRAP_30: I = PC; D = C; L--; PC = 0; C = 30; goto EXEC;
-    /*3Fh*/   TRAP_31: I = PC; D = C; L--; PC = 0; C = 31; goto EXEC;
+    /*20h*/   TRAP_0: I = PC; CO = C; L--; PC = 0; C = 0; goto EXEC;
+    /*21h*/   TRAP_1: I = PC; CO = C; L--; PC = 0; C = 1; goto EXEC;
+    /*22h*/   TRAP_2: I = PC; CO = C; L--; PC = 0; C = 2; goto EXEC;
+    /*23h*/   TRAP_3: I = PC; CO = C; L--; PC = 0; C = 3; goto EXEC;
+    /*24h*/   TRAP_4: I = PC; CO = C; L--; PC = 0; C = 4; goto EXEC;
+    /*25h*/   TRAP_5: I = PC; CO = C; L--; PC = 0; C = 5; goto EXEC;
+    /*26h*/   TRAP_6: I = PC; CO = C; L--; PC = 0; C = 6; goto EXEC;
+    /*27h*/   TRAP_7: I = PC; CO = C; L--; PC = 0; C = 7; goto EXEC;
+    /*28h*/   TRAP_8: I = PC; CO = C; L--; PC = 0; C = 8; goto EXEC;
+    /*29h*/   TRAP_9: I = PC; CO = C; L--; PC = 0; C = 9; goto EXEC;
+    /*2Ah*/   TRAP_10: I = PC; CO = C; L--; PC = 0; C = 10; goto EXEC;
+    /*2Bh*/   TRAP_11: I = PC; CO = C; L--; PC = 0; C = 11; goto EXEC;
+    /*2Ch*/   TRAP_12: I = PC; CO = C; L--; PC = 0; C = 12; goto EXEC;
+    /*2Dh*/   TRAP_13: I = PC; CO = C; L--; PC = 0; C = 13; goto EXEC;
+    /*2Eh*/   TRAP_14: I = PC; CO = C; L--; PC = 0; C = 14; goto EXEC;
+    /*2Fh*/   TRAP_15: I = PC; CO = C; L--; PC = 0; C = 15; goto EXEC;
+    /*30h*/   TRAP_16: I = PC; CO = C; L--; PC = 0; C = 16; goto EXEC;
+    /*31h*/   TRAP_17: I = PC; CO = C; L--; PC = 0; C = 17; goto EXEC;
+    /*32h*/   TRAP_18: I = PC; CO = C; L--; PC = 0; C = 18; goto EXEC;
+    /*33h*/   TRAP_19: I = PC; CO = C; L--; PC = 0; C = 19; goto EXEC;
+    /*34h*/   TRAP_20: I = PC; CO = C; L--; PC = 0; C = 20; goto EXEC;
+    /*35h*/   TRAP_21: I = PC; CO = C; L--; PC = 0; C = 21; goto EXEC;
+    /*36h*/   TRAP_22: I = PC; CO = C; L--; PC = 0; C = 22; goto EXEC;
+    /*37h*/   TRAP_23: I = PC; CO = C; L--; PC = 0; C = 23; goto EXEC;
+    /*38h*/   TRAP_24: I = PC; CO = C; L--; PC = 0; C = 24; goto EXEC;
+    /*39h*/   TRAP_25: I = PC; CO = C; L--; PC = 0; C = 25; goto EXEC;
+    /*3Ah*/   TRAP_26: I = PC; CO = C; L--; PC = 0; C = 26; goto EXEC;
+    /*3Bh*/   TRAP_27: I = PC; CO = C; L--; PC = 0; C = 27; goto EXEC;
+    /*3Ch*/   TRAP_28: I = PC; CO = C; L--; PC = 0; C = 28; goto EXEC;
+    /*3Dh*/   TRAP_29: I = PC; CO = C; L--; PC = 0; C = 29; goto EXEC;
+    /*3Eh*/   TRAP_30: I = PC; CO = C; L--; PC = 0; C = 30; goto EXEC;
+    /*3Fh*/   TRAP_31: I = PC; CO = C; L--; PC = 0; C = 31; goto EXEC;
 
     /* GIRO */
 
@@ -343,7 +343,7 @@ main()
     /*8Ch*/   PAIR_NW: if (I--) {PC = RAM[C][PC]; goto EXEC;} else goto NEXT;
     /*8Dh*/   PAIR_NT: if (R) {PC = RAM[C][PC]; goto EXEC;} else goto NEXT;
     /*8Eh*/   PAIR_NF: if (!R) {PC = RAM[C][PC]; goto EXEC;} else goto NEXT;
-    /*8Fh*/   PAIR_NC: I = PC; D = C; L--; PC = 0; C = RAM[C][PC]; goto EXEC;
+    /*8Fh*/   PAIR_NC: I = PC; CO = C; L--; PC = 0; C = RAM[C][PC]; goto EXEC;
 
     /*90h*/   PAIR_MO: O = RAM[G][O]; goto NEXT;
     /*91h*/   SCROUNGE_MM: goto NEXT;
@@ -360,7 +360,7 @@ main()
     /*9Ch*/   PAIR_MW: if (I--) {PC = RAM[G][O]; goto EXEC;} else goto NEXT;
     /*9Dh*/   PAIR_MT: if (R) {PC = RAM[G][O]; goto EXEC;} else goto NEXT;
     /*9Eh*/   PAIR_MF: if (!R) {PC = RAM[G][O]; goto EXEC;} else goto NEXT;
-    /*9Fh*/   PAIR_MC: I = PC; D = C; L--; PC = 0; C = RAM[G][O]; goto EXEC;
+    /*9Fh*/   PAIR_MC: I = PC; CO = C; L--; PC = 0; C = RAM[G][O]; goto EXEC;
 
     /*A0h*/   PAIR_LO: O = RAM[L][O]; goto NEXT;
     /*A1h*/   SCROUNGE_LM: goto NEXT;
@@ -377,7 +377,7 @@ main()
     /*ACh*/   PAIR_LW: if (I--) {PC = RAM[L][O]; goto EXEC;} else goto NEXT;
     /*ADh*/   PAIR_LT: if (R) {PC = RAM[L][O]; goto EXEC;} else goto NEXT;
     /*AEh*/   PAIR_LF: if (!R) {PC = RAM[L][O]; goto EXEC;} else goto NEXT;
-    /*AFh*/   PAIR_LC: I = PC; D = C; L--; PC = 0; C = RAM[L][O]; goto EXEC;
+    /*AFh*/   PAIR_LC: I = PC; CO = C; L--; PC = 0; C = RAM[L][O]; goto EXEC;
 
     /*B0h*/   PAIR_GO: O = G; goto NEXT;
     /*B1h*/   PAIR_GM: RAM[G][O] = G; goto NEXT;
@@ -394,7 +394,7 @@ main()
     /*BCh*/   PAIR_GW: if (I--) {PC = G; goto EXEC;} else goto NEXT;
     /*BDh*/   PAIR_GT: if (R) {PC = G; goto EXEC;} else goto NEXT;
     /*BEh*/   PAIR_GF: if (!R) {PC = G; goto EXEC;} else goto NEXT;
-    /*BFh*/   PAIR_GC: I = PC; D = C; L--; PC = 0; C = G; goto EXEC;
+    /*BFh*/   PAIR_GC: I = PC; CO = C; L--; PC = 0; C = G; goto EXEC;
 
     /*C0h*/   PAIR_RO: O = R; goto NEXT;
     /*C1h*/   PAIR_RM: RAM[G][O] = R; goto NEXT;
@@ -411,7 +411,7 @@ main()
     /*CCh*/   PAIR_RW: if (I--) {PC = R; goto EXEC;} else goto NEXT;
     /*CDh*/   PAIR_RT: if (R) {PC = R; goto EXEC;} else goto NEXT;
     /*CEh*/   PAIR_RF: if (!R) {PC = R; goto EXEC;} else goto NEXT;
-    /*CFh*/   PAIR_RC: I = PC; D = C; L--; PC = 0; C = R; goto EXEC;
+    /*CFh*/   PAIR_RC: I = PC; CO = C; L--; PC = 0; C = R; goto EXEC;
 
     /*D0h*/   PAIR_IO: O = I; goto NEXT;
     /*D1h*/   PAIR_IM: RAM[G][O] = I; goto NEXT;
@@ -428,7 +428,7 @@ main()
     /*DCh*/   PAIR_IW: if (I--) {PC = I; goto EXEC;} else goto NEXT;
     /*DDh*/   PAIR_IT: if (R) {PC = I; goto EXEC;} else goto NEXT;
     /*DEh*/   PAIR_IF: if (!R) {PC = I; goto EXEC;} else goto NEXT;
-    /*DFh*/   PAIR_IC: I = PC; D = C; L--; PC = 0; C = I; goto EXEC;
+    /*DFh*/   PAIR_IC: I = PC; CO = C; L--; PC = 0; C = I; goto EXEC;
 
     /*E0h*/   PAIR_SO: O = SIR; goto NEXT;
     /*E1h*/   PAIR_SM: RAM[G][O] = SIR; goto NEXT;
@@ -445,7 +445,7 @@ main()
     /*ECh*/   PAIR_SW: if (I--) {PC = SIR; goto EXEC;} else goto NEXT;
     /*EDh*/   PAIR_ST: if (R) {PC = SIR; goto EXEC;} else goto NEXT;
     /*EEh*/   PAIR_SF: if (!R) {PC = SIR; goto EXEC;} else goto NEXT;
-    /*EFh*/   PAIR_SC: I = PC; D = C; L--; PC = 0; C = SIR; goto EXEC;
+    /*EFh*/   PAIR_SC: I = PC; CO = C; L--; PC = 0; C = SIR; goto EXEC;
 
     /*F0h*/   PAIR_PO: O = PIR; goto NEXT;
     /*F1h*/   PAIR_PM: RAM[G][O] = PIR; goto NEXT;
@@ -462,7 +462,7 @@ main()
     /*FCh*/   PAIR_PW: if (I--) {PC = PIR; goto EXEC;} else goto NEXT;
     /*FDh*/   PAIR_PT: if (R) {PC = PIR; goto EXEC;} else goto NEXT;
     /*FEh*/   PAIR_PF: if (!R) {PC = PIR; goto EXEC;} else goto NEXT;
-    /*FFh*/   PAIR_PC: I = PC; D = C; L--; PC = 0; C = PIR; goto EXEC;
+    /*FFh*/   PAIR_PC: I = PC; CO = C; L--; PC = 0; C = PIR; goto EXEC;
 }
 
 

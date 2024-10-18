@@ -34,10 +34,10 @@ struct myth_vm /*Complete machine state including all RAM*/
         uchar i;    /*Inner Counter*/
         uchar pc;   /*Program Counter*/
 
-        uchar d;    /*Dupe latch*/
-        uchar c;    /*Code page index*/
-        uchar g;    /*Global page index*/
-        uchar l;    /*Local page index*/
+        uchar co;   /*Coroutine Latch*/
+        uchar c;    /*Code Page Index*/
+        uchar g;    /*Global Page Index*/
+        uchar l;    /*Local Page Index*/
 
         uchar scrounge; /*Set by VM if scrounge opcode executed, else zero*/
 };
@@ -75,7 +75,7 @@ struct myth_vm /*Complete machine state including all RAM*/
   that it contains the offset within the current code page.
   This register is hidden.
 
-  D is the "dupe" register. It contains a copy of the
+  CO is the coroutine register. It contains a copy of the
   code page index that is strategically updated.
   This register is hidden.
 
@@ -218,7 +218,7 @@ myth_reset(struct myth_vm *vm) /*Initialise machine state*/
         vm->i = 0;
         vm->pc = 0;
 
-        vm->d = 0;
+        vm->co = 0;
         vm->c = 0;
         vm->g = 0;
         vm->l = 0;
@@ -272,7 +272,7 @@ call(struct myth_vm *vm, uchar dstpage)
 {
         /*Save origin*/
         vm->i = vm->pc;
-        vm->d = vm->c;
+        vm->co = vm->c;
 
         /*Create stack frame*/
         vm->l--;
@@ -369,7 +369,7 @@ pair(struct myth_vm *vm, uchar opcode)
                         vm->o = (uchar) (temp & 0xFF);
                         if (temp>255) vm->g += 1;
                         break;
-                case xB: vm->pc = vm->pc + v; break;
+                case xB: vm->l += v; break;
                 case xJ: vm->pc = v; break;
                 case xW:
                         if (vm->i) vm->pc = v;
@@ -487,7 +487,7 @@ sys(struct myth_vm *vm, uchar opcode)
                         vm->pc = vm->i;
                         break;
 
-                case OWN: L7 = vm->d; break;
+                case OWN: L7 = vm->co; break;
         }
 }
 

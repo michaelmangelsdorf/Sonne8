@@ -40,15 +40,13 @@
             Source is the literal following the current opcode.
           </li>
           <li class="to">
-            Add source to the Program Counter.
+            Add source to the local page index register (L).
           </li>
         </ul>
       </p>
       <p further>
         The 'N' source is a literal byte embedded in the instruction stream.
         Reading 'N' acts in the same way as an instruction fetch, only it fetches a literal.
-        The 'B' destination takes the source value as the offset relative to the current value of the Program Counter. Writing to 'B' triggers an unconditional jump to the address offset that is the sum of the Program Counter and the source byte within the current code page.
-        See <a href="../jumps.html">In-Page Branching</a> for more on this.
       </p>
     </div>
     <footer>

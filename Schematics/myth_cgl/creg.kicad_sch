@@ -8286,10 +8286,10 @@
 	)
 	(text "Code Page\nIndex (C)\nRegister"
 		(exclude_from_sim no)
-		(at 131.318 92.456 0)
+		(at 246.126 41.656 0)
 		(effects
 			(font
-				(size 3.048 3.048)
+				(size 2.794 2.794)
 			)
 			(justify left bottom)
 		)
@@ -8317,12 +8317,12 @@
 		)
 		(uuid "48b7e5d6-f062-4e65-9267-5c325ef5692f")
 	)
-	(text "Dupe\nRegister (D)"
+	(text "Coroutine\nRegister (CO)"
 		(exclude_from_sim no)
-		(at 242.316 35.814 0)
+		(at 186.69 80.264 0)
 		(effects
 			(font
-				(size 3.81 3.81)
+				(size 2.54 2.54)
 			)
 			(justify left bottom)
 		)

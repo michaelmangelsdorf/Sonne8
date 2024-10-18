@@ -124,7 +124,7 @@ virtualio() /*Run this after each CPU step for device emulation*/
                 SH_disable(hnybble_old); // falling edge
                 SH_enable(hnybble_new); // rising edge
         } /*When level triggered*/
-        if (hnybble_new) else SH_active(hnybble_new);
+        if (hnybble_new) SH_active(hnybble_new);
 }
 
 

@@ -9133,7 +9133,7 @@
 			(color 0 0 0 0.0000)
 		)
 		(uuid "8bf22e0e-69ca-4e59-90cf-54f322e81c97")
-		(property "Sheetname" "Relative Addressing Switch"
+		(property "Sheetname" "Addressing Switch"
 			(at 106.68 23.4184 0)
 			(effects
 				(font
@@ -9142,7 +9142,7 @@
 				(justify left bottom)
 			)
 		)
-		(property "Sheetfile" "relative.kicad_sch"
+		(property "Sheetfile" "addr.kicad_sch"
 			(at 106.68 34.8746 0)
 			(effects
 				(font

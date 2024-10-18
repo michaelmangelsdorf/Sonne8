@@ -40,15 +40,13 @@
             Source is the memory cell at page L offset O.
           </li>
           <li class="to">
-            Add source to the Program Counter.
+            Add source to the local page index register (L).
           </li>
         </ul>
       </p>
       <p further>
         The 'L' source is the value of a memory cell in the L-page.
         See <a href="../pages.html">Page Registers</a> for more information on the three page register (D, L, C).
-        The 'B' destination takes the source value as the offset relative to the current value of the Program Counter. Writing to 'B' triggers an unconditional jump to the address offset that is the sum of the Program Counter and the source byte within the current code page.
-        See <a href="../jumps.html">In-Page Branching</a> for more on this.
       </p>
     </div>
     <footer>

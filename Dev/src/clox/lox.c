@@ -143,7 +143,7 @@ printregs()
         print( "r:%.02Xh(%d)(%b) ", vm.r, vm.r, vm.r);
         print( "o:%.02Xh(%d)(%b) ", vm.o, vm.o, vm.o);
         print( "c:%.02Xh(%d)(%b) ", vm.c, vm.c, vm.c);
-        print( "d:%.02Xh(%d)(%b) ", vm.d, vm.d, vm.d);
+        print( "co:%.02Xh(%d)(%b) ", vm.co, vm.co, vm.co);
         print( "pc:%.02Xh(%d)(%b) ", vm.pc, vm.pc, vm.pc);
         print( "i:%.02Xh(%d)(%b)\n", vm.i, vm.i, vm.i);
         print( "g:%.02Xh(%d)(%b) ", vm.g, vm.g, vm.g);
