@@ -19,7 +19,7 @@ the [dispatch table](https://github.com/Dosflange/Myth/blob/main/Dev/src/clox/vt
 
 __Update Sep.24__:
 
-I've written another assembler for this machine in Go(lang). The first thing I ported from the old format was
+I've written a new assembler for this machine in Go(lang). The first thing I ported from the old format was
 this multiplication routine. It multiplies two unsigned 8-bit numbers and returns a 16-bit result.
 You can try it out with the tools in the 'Dev' folder.
 
