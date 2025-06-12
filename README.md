@@ -17,7 +17,7 @@ There are two software emulators I've written for this system. The code is very 
 The decoder-based [implementation](https://github.com/Dosflange/Myth/blob/main/Dev/src/clox/myth.h) is more high-level, and
 the [dispatch table](https://github.com/Dosflange/Myth/blob/main/Dev/src/clox/vtable.c) version better suited to finding out about particular instructions.
 
-[Documentation WIP](https://michaelmangelsdorf.github.io/Myth/)
+[Documentation WIP](https://michaelmangelsdorf.github.io/Sonne8/)
 
 __Update Sep.24__:
 
